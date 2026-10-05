@@ -594,6 +594,72 @@ describe('Workspace execution history (P6a)', () => {
   });
 });
 
+describe('Workspace end of the run (P6b)', () => {
+  const executes = () => calls.filter((u) => u.endsWith('/execute'));
+  function withCatalog(mapProblem, mapExecute = () => null) {
+    vi.stubGlobal('fetch', vi.fn((url, init) => {
+      calls.push(url);
+      if (url === '/api/problems') return Promise.resolve(ok(CATALOG.map(mapProblem)));
+      const detail = url.match(/^\/api\/problems\/([^/]+)$/);
+      if (detail) {
+        const found = CATALOG.map(mapProblem).find((p) => p.id === detail[1]);
+        return Promise.resolve(found ? ok(found) : notFound());
+      }
+      const custom = mapExecute(url, init);
+      return Promise.resolve(custom ?? respondTo(url));
+    }));
+  }
+
+  it('offers Replay and the next problem only at the end of a complete run', async () => {
+    withCatalog((p) => (['two-sum', 'valid-anagram'].includes(p.id) ? { ...p, striverSheetSection: 'Warm-up' } : p));
+    renderApp();
+    await screen.findByText('two-sum step one');
+    expect(screen.queryByRole('group', { name: 'End of the run' })).toBeNull();
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    const end = screen.getByRole('group', { name: 'End of the run' });
+    expect(within(end).getByRole('button', { name: /^Next: Valid Anagram/ })).toBeInTheDocument();
+    fireEvent.click(within(end).getByRole('button', { name: 'Replay' }));
+    expect(narration()).toHaveTextContent('two-sum step one');
+    expect(screen.getByRole('button', { name: 'Pause' })).toBeInTheDocument();
+    expect(screen.queryByRole('group', { name: 'End of the run' })).toBeNull();
+  });
+
+  it('points to the library at the end of the last problem in a section', async () => {
+    renderApp();
+    await screen.findByText('two-sum step one');
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    const end = screen.getByRole('group', { name: 'End of the run' });
+    expect(within(end).getByRole('link', { name: 'Browse all algorithms' })).toHaveAttribute('href', '/');
+  });
+
+  it('never calls a truncated run finished', async () => {
+    withCatalog((p) => p, (url) => (url === '/api/problems/two-sum/execute'
+      ? ok({ encoding: 'full', truncated: true, steps: stepsFor('two-sum') })
+      : null));
+    renderApp();
+    await screen.findByText('two-sum step one');
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(narration()).toHaveTextContent('two-sum step two');
+    expect(screen.queryByRole('group', { name: 'End of the run' })).toBeNull();
+    expect(screen.getByText(/hit the step budget/)).toBeInTheDocument();
+  });
+
+  it('runs the declared other case from the end of the run', async () => {
+    const spec = { fields: [{ name: 'n', label: 'Count', type: 'INT', defaultValue: 1 }] };
+    const bodies = [];
+    withCatalog((p) => (p.id === 'two-sum' ? { ...p, inputSpec: spec, alternateInput: { n: 9 } } : p), (url, init) => {
+      if (url === '/api/problems/two-sum/execute') bodies.push(init?.body ? JSON.parse(init.body) : null);
+      return null;
+    });
+    renderApp();
+    await screen.findByText('two-sum step one');
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    fireEvent.click(within(screen.getByRole('group', { name: 'End of the run' })).getByRole('button', { name: 'Run the other case' }));
+    await waitFor(() => expect(bodies.at(-1)).toEqual({ n: 9 }));
+    expect(screen.getByLabelText('Count')).toHaveValue(9);
+  });
+});
+
 describe('Workspace Focus mode (P5b)', () => {
   const spec = { fields: [{ name: 'n', label: 'Count', type: 'INT', defaultValue: 1 }] };
   function withEditor() {
@@ -765,9 +831,9 @@ describe('Workspace comparison panel', () => {
   it('shows both runs stacked, each with its own step count, once opened; hides on a second click', async () => {
     renderApp();
     fireEvent.click(await screen.findByRole('button', { name: /compare other case/i }));
-    expect(await screen.findByText(/default input/i)).toHaveTextContent('2 steps');
-    await waitFor(() => expect(screen.getByText((_, el) => el?.tagName === 'P' && /other case/i.test(el.textContent))).toHaveTextContent('5 steps'));
+    expect(await screen.findByRole('heading', { name: /^Default input/ })).toHaveTextContent('2 steps');
+    expect(screen.getByRole('heading', { name: /^Other case/ })).toHaveTextContent('5 steps');
     fireEvent.click(screen.getByRole('button', { name: /hide comparison/i }));
-    expect(screen.queryByText(/default input/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: /^Default input/ })).not.toBeInTheDocument();
   });
 });

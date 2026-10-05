@@ -64,6 +64,10 @@
 .cardActions { display: flex; gap: 8px; flex-wrap: wrap; }
 /* Focus: the stage card alone, with the problem named in its heading. */
 .focusMain { padding-top: var(--space-md); }
+/* End of a genuine run: a row of next moves, never a blocking overlay. */
+.completion { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; padding: 10px 12px; border: 1px solid var(--rule-subtle); border-radius: 10px; }
+.completionText { font-weight: 650; margin-right: auto; }
+.completion a.control { text-decoration: none; }
 .focusFamily { color: var(--ink-secondary); font-weight: 600; }
 /* In Focus the stage takes the room the hidden panels gave back: the viewport less the card
    head, narration and controls (measured at 1366×768), never below the normal floor. */

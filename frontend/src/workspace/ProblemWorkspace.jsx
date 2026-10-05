@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Code2, Link2, Maximize2, Minimize2, Pencil, RefreshCw, Search, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Code2, GitBranch, Link2, Maximize2, Minimize2, Pencil, RefreshCw, RotateCcw, Search, Star } from 'lucide-react';
 import LearningHeader from '../components/LearningHeader';
 import SiteFooter from '../components/SiteFooter';
 import layout from '../components/LearningLayout.module.css';
@@ -33,6 +33,7 @@ import SourcePane from './SourcePane';
 import StateInspector from './StateInspector';
 import StepHistory from './StepHistory';
 import { curriculumNeighbours } from './curriculum';
+import { defaultInput } from '../input/randomizeInput';
 import { TRACE_ERROR_COPY, linkNoticeText, runFailureText } from './sessionCopy';
 import styles from './ProblemWorkspace.module.css';
 
@@ -251,7 +252,9 @@ export default function ProblemWorkspace() {
   const hasInputSpec = Boolean(session.inputSpec?.fields?.length);
   const showingOffline = run.offline && steps.length > 0;
   const showCapture = !CAPTURE_STRIP_REDUNDANT_FOR.has(dsType) && steps.length > 0;
-  const canCompare = Boolean(problem?.alternateInput) && !CAPTURE_STRIP_REDUNDANT_FOR.has(dsType);
+  // Every family can compare its default run with its other case; families without a capture
+  // strip compare as text (CompareStrip).
+  const canCompare = Boolean(problem?.alternateInput);
 
   const navLinks = (
     <>
@@ -406,6 +409,37 @@ export default function ProblemWorkspace() {
     </>
   );
 
+  // ── End of the run ───────────────────────────────────────────────────────
+  // Offered only for a genuine finish: a complete, live run of this problem at its last step,
+  // with nothing pending. A truncated or offline run's last visible step is not the end of the
+  // algorithm, so it gets no "finished" actions (its notice already says why).
+  const finished = completable && steps.length > 0 && currentStepIndex === steps.length - 1 && !pending && !traceLoading;
+  const runOtherCase = () => {
+    const values = { ...defaultInput(session.inputSpec), ...problem.alternateInput };
+    draft.replace(values);
+    runFromEditor(values);
+  };
+  const completion = finished && (
+    <div className={styles.completion} role="group" aria-label="End of the run">
+      <span className={styles.completionText}>End of the run.</span>
+      <button type="button" className={styles.control} onClick={() => { session.seek(0); session.togglePlay(); }}>
+        <RotateCcw size={16} aria-hidden="true" /> Replay
+      </button>
+      {hasInputSpec && problem?.alternateInput && (
+        <button type="button" className={styles.control} onClick={runOtherCase}>
+          <GitBranch size={16} aria-hidden="true" /> Run the other case
+        </button>
+      )}
+      {neighbours?.next ? (
+        <button type="button" className={styles.control} onClick={() => navigate(`/problem/${neighbours.next.id}`)}>
+          Next: {neighbours.next.title} <ChevronRight size={16} aria-hidden="true" />
+        </button>
+      ) : (
+        <Link to="/" className={styles.control}>Browse all algorithms</Link>
+      )}
+    </div>
+  );
+
   const inputUsed = (
     <div className={styles.inputUsed} data-tour="input-summary">
       <InputSummary resolvedInput={resolvedInput} label="Input used" comfortable />
@@ -554,6 +588,7 @@ export default function ProblemWorkspace() {
                 {notices}
                 {stageNode}
                 {narration}
+                {completion}
                 <PlaybackBar session={session} onSpeedChange={changeSpeed} />
               </section>
 
@@ -598,7 +633,8 @@ export default function ProblemWorkspace() {
               )}
               {canCompare && isCompareOpen && (
                 <section className={styles.card} aria-label="Comparison with the other case" hidden={isFocus}>
-                  <CompareStrip key={problemId} problemId={problemId} dsType={dsType} alternateInput={problem.alternateInput} />
+                  <CompareStrip key={problemId} problemId={problemId} dsType={dsType} alternateInput={problem.alternateInput}
+                    showCapture={!CAPTURE_STRIP_REDUNDANT_FOR.has(dsType)} mainIsCustom={Boolean(run.submittedInput)} />
                 </section>
               )}
             </>
@@ -618,6 +654,7 @@ export default function ProblemWorkspace() {
                 onSubview={(next) => { pause(); setCodeSubview(next); }}
               />
               {narration}
+              {completion}
               <PlaybackBar session={session} onSpeedChange={changeSpeed} />
             </section>
           )}
@@ -630,6 +667,7 @@ export default function ProblemWorkspace() {
               </div>
               {notices}
               {narration}
+              {completion}
               <PlaybackBar session={session} onSpeedChange={changeSpeed} compact />
               <StateInspector step={currentStep} steps={steps} problem={problem} dsType={dsType} />
             </section>

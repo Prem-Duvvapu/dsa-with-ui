@@ -712,3 +712,36 @@ Rollout total: 383 of 431 problems have full statements (#159, #163-#170). The 4
   - Full suite 649/649; build 352.56 kB / 112.01 kB gzip.
 - **Flaky under load.** One `Lifecycle.integration` test times out at 5 s when the host is saturated. It does so on `158e55d` too, so it is load-related, not this change.
 - **Browser.** `evidence/p6/history-journey.cjs` passes 22/22 (tracker row).
+
+## 2026-10-05 — P6b comparison for every family, and truthful end-of-run actions (P6 complete)
+
+**Comparison** (`CompareStrip`, `useComparisonTrace`):
+- Offered for every problem with a declared alternate input; it used to be withheld from Graph/Tree/DP.
+- Each side (Default input / Other case) is its own labelled region showing:
+  - its resolved input;
+  - its own Previous/slider/Next, with "Step i of N";
+  - that step's narration.
+- Families with a capture strip keep it on each side. The others are compared as text rather than not at all.
+- A scope line states what is compared, says that step numbers are positions within each run (not matching algorithm moments), and, when the main run was submitted (`run.submittedInput`), says that run is not part of the comparison.
+- The panel still fetches only when opened, and never touches the main run, its draft or its URL.
+- **Stale requests.** Each load has a request id and an `AbortController`. A retry, a problem change or closing the panel aborts what was in flight, and a late answer can no longer overwrite a newer one.
+  - Hook test: red on `26ed24a`, where the late answer won.
+  - In the dev build, StrictMode's double mount was sending the comparison pair twice. The first pair is now aborted.
+
+**End of the run:**
+- An "End of the run" group appears below the narration in all three views and in Focus, with:
+  - **Replay** (seek to step 1 and play);
+  - **Run the other case** (fills the draft and runs it once);
+  - **Next: ⟨title⟩**, or **Browse all algorithms** at the end of a curriculum section.
+- It appears only for a genuine finish: a live, untruncated run of this problem at its last step, with nothing pending or loading. It is a row, not an overlay.
+- Watched semantics are unchanged (the same `completable` rule).
+
+**Tests:**
+- 2 new component tests (labelled independent sides with a text-only graph comparison; scope line) and 1 hook test (late answer dropped).
+- 4 integration tests: 3 red on `26ed24a`. The truncated-run test passes on both, and guards that no row appears.
+- Existing comparison tests changed only to find the sides by heading, because the scope line now also mentions "default input".
+- Full suite 657/657; build 356.46 kB / 113.15 kB gzip.
+
+**Browser:** `evidence/p6/compare-completion-journey.cjs` passes 13/13 (tracker row).
+
+**P6 disposition:** done.
