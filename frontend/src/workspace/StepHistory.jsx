@@ -39,8 +39,10 @@ export default function StepHistory({ steps, current, onSeek }) {
   return (
     <div className={styles.history}>
       <div className={styles.bar}>
-        <p className={styles.range} aria-live="polite">
-          Steps {start + 1}–{end} of {total}
+        <p className={styles.range}>
+          {/* Announce deliberate paging, not every autoplay tick on another page. The
+              current position stays readable here; the session announces manual steps. */}
+          <span aria-live="polite" aria-atomic="true">Steps {start + 1}–{end} of {total}</span>
           {!currentShown && <span> · the current step, {current + 1}, is on page {currentPage + 1}</span>}
         </p>
         <div className={styles.pager}>

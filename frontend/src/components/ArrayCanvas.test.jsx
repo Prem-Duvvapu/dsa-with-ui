@@ -9,6 +9,13 @@ import ArrayCanvas from './ArrayCanvas';
 const cells = (...spec) => spec.map(([value, state, label], index) => ({ index, value, state, label }));
 
 describe('ArrayCanvas', () => {
+  it('uses readable text ink for values above bars, not a faint state border', () => {
+    render(<ArrayCanvas currentStep={{ arrayState: cells([2, 'default'], [7, 'current'], [11, 'visited']) }} />);
+    for (const value of ['2', '7', '11']) {
+      expect(screen.getByText(value).style.color).toBe('var(--text-primary)');
+    }
+  });
+
   it('shows the label a tracer attached to a cell', () => {
     // Three tracers set labels and none of them was ever drawn: candy's "0→1" (rating to
     // candies), job-sequencing's "J1 d2 p100", and minimum-platforms' A/D event kinds. The
