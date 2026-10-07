@@ -1529,3 +1529,26 @@ class, and the reason is worth stating rather than rediscovering.
 - **Lesson:**
   - "Truncated, and says so" is honest, but it is not the same as usable: an input the editor accepts should be able to finish. Bound inputs by what they cost, and give the reader a field error rather than a run that cannot end.
   - A constraint a tracer *declares* is not a constraint the validator *enforces*. A declared but unknown key should be found by a test, not by a 500.
+
+## RCA-057 — Real DP traces displayed placeholder Java instead of complete solutions
+
+- **Discovered:** 2026-10-07, after the owner reported `solve(Object input)` calling
+  `initialiseBaseCases`, `evaluateTransitionCandidates` and `extractAnswer`.
+- **Status:** Fixed in the complete-DP-source repair package.
+- **Scope:** all 431 live detail responses were scanned for that placeholder family;
+  27 matched. This scan does not independently certify completeness of the other 404.
+- **Root cause:** `RemainingDpTracer` supplied one shared sketch, with a second sketch
+  for reconstruction. The real `run()` methods computed answers, but the source API
+  returned inherited placeholder code. Anchor bounds/reachability and golden tests
+  accepted the sketch: neither proved that displayed Java could compile or solve a case.
+- **Fix:** each affected tracer loads its own complete, annotated Java 17 resource by
+  ID, with no fallback. Both placeholder constants are deleted. Separate buy/sell,
+  forward/reverse and palindrome/cuts phases now highlight their actual statements.
+  Algorithm results, narration and snapshot data are unchanged.
+- **Guard (RED first):** the initial 28 source-contract cases failed on the original
+  implementation. The final 57 cases compile the exact displayed sources without app
+  classes, execute default/alternate inputs and all 66 published examples, check typed
+  input bindings and results, verify HTTP detail/full/delta source agreement, and check
+  phase anchors. Registry-wide placeholder and resource-ownership guards prevent drift.
+- **Lesson:** a correct trace with in-bounds highlights can still teach fabricated
+  code. Displayed source needs its own executable contract, not just visual snapshots.

@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 18,
+    "fill" : 10,
+    "init" : 6
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "import java.util.Arrays;\n\npublic class Solution {\n    public long solve(int[] nums) {\n        int total = Arrays.stream(nums).sum();\n        boolean[][] reachable = new boolean[nums.length + 1][total + 1];\n        for (int i = 0; i <= nums.length; i++) reachable[i][0] = true;\n        for (int i = 1; i <= nums.length; i++) {\n            for (int sum = 1; sum <= total; sum++) {\n                reachable[i][sum] = reachable[i - 1][sum]\n                        || (sum >= nums[i - 1] && reachable[i - 1][sum - nums[i - 1]]);\n            }\n        }\n        int best = total;\n        for (int sum = 0; sum <= total / 2; sum++) {\n            if (reachable[nums.length][sum]) best = Math.min(best, total - 2 * sum);\n        }\n        return best;\n    }\n}\n",
   "problemId" : "partition-set-min-abs-diff",
   "resolvedInput" : {
     "nums" : [ 1, 2 ]
@@ -12,7 +12,7 @@
   "stepCount" : 8,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 6,
     "description" : "dp[i][s] records whether the first i values can form sum s; sum 0 is reachable.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -70,7 +70,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Using 1 value, sum 1 is reachable.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -131,7 +131,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Using 1 value, sum 2 is unreachable.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -192,7 +192,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Using 1 value, sum 3 is unreachable.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -253,7 +253,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Using 2 values, sum 1 is reachable.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -314,7 +314,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Using 2 values, sum 2 is reachable.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -375,7 +375,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Using 2 values, sum 3 is reachable.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -436,7 +436,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 4,
+    "activeLine" : 18,
     "description" : "The minimum partition difference is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],

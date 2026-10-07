@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 13,
+    "fill" : 8,
+    "init" : 5
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public long solve(String first, String second) {\n        int m = first.length(), n = second.length();\n        // Empty prefixes have LCS length zero.\n        long[][] dp = new long[m + 1][n + 1];\n        for (int i = 1; i <= m; i++) {\n            for (int j = 1; j <= n; j++) {\n                dp[i][j] = first.charAt(i - 1) == second.charAt(j - 1)\n                        ? 1 + dp[i - 1][j - 1]\n                        : Math.max(dp[i - 1][j], dp[i][j - 1]);\n            }\n        }\n        return dp[m][n];\n    }\n}\n",
   "problemId" : "longest-common-subsequence",
   "resolvedInput" : {
     "first" : "abcde",
@@ -13,7 +13,7 @@
   "stepCount" : 17,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 5,
     "description" : "dp[i][j] is the LCS length of the first i and j characters; empty prefixes have length 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -107,7 +107,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'a' and 'a': dp[1][1] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -205,7 +205,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'a' and 'c': dp[1][2] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -303,7 +303,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'a' and 'e': dp[1][3] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -401,7 +401,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'b' and 'a': dp[2][1] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -499,7 +499,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'b' and 'c': dp[2][2] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -597,7 +597,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'b' and 'e': dp[2][3] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -695,7 +695,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'c' and 'a': dp[3][1] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -793,7 +793,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'c' and 'c': dp[3][2] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -891,7 +891,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'c' and 'e': dp[3][3] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -989,7 +989,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'd' and 'a': dp[4][1] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1087,7 +1087,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'd' and 'c': dp[4][2] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1185,7 +1185,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'd' and 'e': dp[4][3] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1283,7 +1283,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'e' and 'a': dp[5][1] = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1381,7 +1381,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'e' and 'c': dp[5][2] = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1479,7 +1479,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Compare 'e' and 'e': dp[5][3] = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1577,7 +1577,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 4,
+    "activeLine" : 13,
     "description" : "The longest common subsequence length is 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],

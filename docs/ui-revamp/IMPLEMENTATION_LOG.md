@@ -934,3 +934,39 @@ keyboard coverage; 200% zoom and the broader browser/state matrix; measured long
 playback/seek/history performance; independent learner/owner feedback and the ~y280
 frame target. These automated expert checks are not user research. P8 remains in
 progress; P9 cleanup/preservation-ledger reconciliation/release work has not begun.
+
+## Complete DP solution source repair — 2026-10-07
+
+Owner-reported placeholder Java was traced to `RemainingDpTracer` and its two shared
+sketch constants. All 27 affected IDs now own complete Java 17 source resources,
+including real transitions, helpers and reconstruction. Missing resources fail clearly;
+no sketch fallback remains. Stock buy/sell, bitonic forward/reverse and palindrome/cuts
+events highlight distinct statements. No frontend production changes or dependencies.
+
+Review gates:
+
+1. **Backend:** full suite passes, 7,967 tests / zero failures or errors / 500 skipped.
+   All 27 resources compile without app classes and match default/alternate traces and
+   66 published examples. HTTP detail and both trace encodings serve matching source.
+   Existing validators, budgets and data contracts are unchanged.
+2. **Frontend:** 75 files / 675 tests pass; production build passes (JS 359.47kB, gzip
+   114.08; CSS 103.99kB, gzip 18.63). An earlier concurrent run hit one existing
+   lifecycle timeout; isolated 8/8 and full 675/675 reruns passed without weakening tests.
+3. **UI/UX:** real-backend Chromium journeys pass 24/24 across six representative
+   problems, phone/desktop and both themes. First/middle/final source highlighting,
+   keyboard ownership, view continuity and page overflow are checked; representative
+   source screenshots were inspected. Custom LCS and rejected rerun preserve source,
+   step and shared input, with HTTP 400 focus on the error summary.
+4. **Product:** source now teaches the algorithm that runs. API stats remain 431/431,
+   zero untraced/duplicates/orphans. Three-approach DP and P8/P9 outstanding gates are
+   not claimed complete; this repair is separate.
+5. **Architecture:** strict per-ID immutable source resources; ownership derived from
+   the tracer registry in tests. Both shared placeholders and all overrides removed.
+6. **QA:** initial 28 source tests failed before the fix; final source suite has 57
+   cases. Only 27 goldens regenerated. Parsed old/new comparison proves only source,
+   anchors and highlighted lines changed, not any narration, result or snapshot data.
+
+Plan/results: `COMPLETE_SOLUTION_CODE_REPAIR_PLAN.md`; root cause: RCA-057;
+reproducible browser and snapshot probes/results: `evidence/source-code/`.
+This certifies these 27 displayed sources, not every source in the catalogue. The
+owner authorized commit, push and merge; the linked PR records publication and CI.

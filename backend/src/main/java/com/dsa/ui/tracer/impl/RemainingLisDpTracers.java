@@ -34,7 +34,6 @@ abstract class LisRemainingTracer extends RemainingDpTracer {
 @Component
 class LongestStringChainRemainingTracer extends RemainingDpTracer {
     @Override public String id() { return "longest-string-chain"; }
-    @Override public String annotatedCode() { return DpTraceSupport.CODE_WITH_RECONSTRUCTION; }
     @Override public InputSpec inputSpec() {
         return InputSpec.of(InputField.of("words", FieldType.STRING).label("Comma-separated words")
                 .length(1, 100).constraint("pattern", "[a-z]+(,[a-z]+)*")
@@ -88,13 +87,13 @@ class LongestBitonicSubsequenceRemainingTracer extends LisRemainingTracer {
                 .dpTable(rows(dp, known, null, Set.of(), false, List.of("LIS→", "LDS←"), "bitonic[i] = lis[i] + lds[i] - 1", "all = 1")).step();
         for (int i = 0; i < n; i++) for (int j = 0; j < i; j++) {
             if (nums[j] < nums[i]) dp[0][i] = Math.max(dp[0][i], 1 + dp[0][j]);
-            emit.at("fill").say("Forward pair (%d,%d): increasing length at %d is %d.", j, i, i, dp[0][i])
+            emit.at("forward").say("Forward pair (%d,%d): increasing length at %d is %d.", j, i, i, dp[0][i])
                     .dpTable(rows(dp, known, new DpTraceSupport.Coord(0, i), Set.of(new DpTraceSupport.Coord(0, j)), false,
                             List.of("LIS→", "LDS←"), "nums[j] < nums[i] ? 1 + lis[j]", "lis = " + dp[0][i])).step();
         }
         for (int i = n - 1; i >= 0; i--) for (int j = n - 1; j > i; j--) {
             if (nums[j] < nums[i]) dp[1][i] = Math.max(dp[1][i], 1 + dp[1][j]);
-            emit.at("fill").say("Reverse pair (%d,%d): decreasing length at %d is %d.", i, j, i, dp[1][i])
+            emit.at("reverse").say("Reverse pair (%d,%d): decreasing length at %d is %d.", i, j, i, dp[1][i])
                     .dpTable(rows(dp, known, new DpTraceSupport.Coord(1, i), Set.of(new DpTraceSupport.Coord(1, j)), false,
                             List.of("LIS→", "LDS←"), "nums[j] < nums[i] ? 1 + lds[j]", "lds = " + dp[1][i])).step();
         }
@@ -133,7 +132,6 @@ class NumberOfLisRemainingTracer extends LisRemainingTracer {
 @Component
 class LargestDivisibleSubsetRemainingTracer extends LisRemainingTracer {
     @Override public String id() { return "largest-divisible-subset"; }
-    @Override public String annotatedCode() { return DpTraceSupport.CODE_WITH_RECONSTRUCTION; }
     @Override protected List<Integer> defaults() { return List.of(1, 2, 4, 8); }
     /** The problem's values are distinct; a repeated value made [2, 2, 4] a "subset". */
     @Override public InputSpec inputSpec() {

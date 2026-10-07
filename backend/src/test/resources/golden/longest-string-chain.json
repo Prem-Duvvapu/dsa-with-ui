@@ -1,11 +1,11 @@
 {
   "anchors" : {
-    "done" : 5,
-    "fill" : 3,
-    "init" : 2,
-    "reconstruct" : 4
+    "done" : 30,
+    "fill" : 17,
+    "init" : 12,
+    "reconstruct" : 28
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    reconstructChosenSolution();\n    return extractAnswer();\n}",
+  "code" : "import java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Collections;\nimport java.util.Comparator;\nimport java.util.List;\n\npublic class Solution {\n    public int solve(String words) {\n        String[] sorted = words.split(\",\");\n        Arrays.sort(sorted, Comparator.comparingInt(String::length).thenComparing(s -> s));\n        int[] length = new int[sorted.length], parent = new int[sorted.length];\n        Arrays.fill(length, 1);\n        Arrays.fill(parent, -1);\n        int best = 0, end = 0;\n        for (int i = 0; i < sorted.length; i++) {\n            for (int j = 0; j < i; j++) {\n                if (isPredecessor(sorted[j], sorted[i]) && length[j] + 1 > length[i]) {\n                    length[i] = length[j] + 1;\n                    parent[i] = j;\n                }\n            }\n            if (length[i] > best) {\n                best = length[i];\n                end = i;\n            }\n        }\n        List<String> chain = new ArrayList<>();\n        for (int at = end; at >= 0; at = parent[at]) chain.add(sorted[at]);\n        Collections.reverse(chain); // One chain attaining the returned length.\n        return best;\n    }\n\n    private boolean isPredecessor(String small, String large) {\n        if (large.length() != small.length() + 1) return false;\n        int i = 0, j = 0;\n        while (i < small.length() && j < large.length()) {\n            if (small.charAt(i) == large.charAt(j)) i++;\n            j++;\n        }\n        return i == small.length();\n    }\n}\n",
   "problemId" : "longest-string-chain",
   "resolvedInput" : {
     "words" : "a,b,ba,bca,bda,bdca"
@@ -13,7 +13,7 @@
   "stepCount" : 18,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 12,
     "description" : "Sort by length; chain[i] starts at 1 and parent[i] starts unset.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -71,7 +71,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"a\" -> \"b\": not a predecessor; chain length at 1 is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -132,7 +132,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"a\" -> \"ba\": valid predecessor; chain length at 2 is 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -193,7 +193,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"b\" -> \"ba\": valid predecessor; chain length at 2 is 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -254,7 +254,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"a\" -> \"bca\": not a predecessor; chain length at 3 is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -315,7 +315,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"b\" -> \"bca\": not a predecessor; chain length at 3 is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -376,7 +376,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"ba\" -> \"bca\": valid predecessor; chain length at 3 is 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -437,7 +437,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"a\" -> \"bda\": not a predecessor; chain length at 4 is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -498,7 +498,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"b\" -> \"bda\": not a predecessor; chain length at 4 is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -559,7 +559,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"ba\" -> \"bda\": valid predecessor; chain length at 4 is 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -620,7 +620,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"bca\" -> \"bda\": not a predecessor; chain length at 4 is 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -681,7 +681,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"a\" -> \"bdca\": not a predecessor; chain length at 5 is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -742,7 +742,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"b\" -> \"bdca\": not a predecessor; chain length at 5 is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -803,7 +803,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"ba\" -> \"bdca\": not a predecessor; chain length at 5 is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -864,7 +864,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"bca\" -> \"bdca\": valid predecessor; chain length at 5 is 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -925,7 +925,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare \"bda\" -> \"bdca\": valid predecessor; chain length at 5 is 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -986,7 +986,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 4,
+    "activeLine" : 28,
     "description" : "Follow parent links to reconstruct [a, ba, bca, bdca].",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1046,7 +1046,7 @@
     }
   }, {
     "stepNumber" : 18,
-    "activeLine" : 5,
+    "activeLine" : 30,
     "description" : "Longest string-chain length is 4: [a, ba, bca, bdca].",
     "queueOrStackState" : null,
     "callStack" : [ ],

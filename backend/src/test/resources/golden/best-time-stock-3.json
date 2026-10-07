@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 12,
+    "fill" : 9,
+    "init" : 4
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public long solve(int[] prices) {\n        int actions = 4; // At most two buy/sell pairs.\n        long[][] dp = new long[prices.length + 1][actions + 1];\n        for (int day = prices.length - 1; day >= 0; day--) {\n            for (int action = actions - 1; action >= 0; action--) {\n                long skip = dp[day + 1][action];\n                long trade = (action % 2 == 0 ? -prices[day] : prices[day]) + dp[day + 1][action + 1];\n                dp[day][action] = Math.max(skip, trade);\n            }\n        }\n        return dp[0][0];\n    }\n}\n",
   "problemId" : "best-time-stock-3",
   "resolvedInput" : {
     "prices" : [ 3, 3, 5, 0, 0, 3, 1, 4 ]
@@ -12,7 +12,7 @@
   "stepCount" : 34,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 4,
     "description" : "dp[day][action] stores maximum future profit; even actions buy, odd actions sell, and 2 transactions are allowed.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -169,7 +169,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 7 sell state 3: skip=0, execute=4, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -330,7 +330,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 7 buy state 2: skip=0, execute=-4, choose 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -491,7 +491,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 7 sell state 1: skip=0, execute=4, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -652,7 +652,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 7 buy state 0: skip=0, execute=-4, choose 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -813,7 +813,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 6 sell state 3: skip=4, execute=1, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -974,7 +974,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 6 buy state 2: skip=0, execute=3, choose 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1135,7 +1135,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 6 sell state 1: skip=4, execute=1, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1296,7 +1296,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 6 buy state 0: skip=0, execute=3, choose 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1457,7 +1457,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 5 sell state 3: skip=4, execute=3, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1618,7 +1618,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 5 buy state 2: skip=3, execute=1, choose 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1779,7 +1779,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 5 sell state 1: skip=4, execute=6, choose 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1940,7 +1940,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 5 buy state 0: skip=3, execute=1, choose 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2101,7 +2101,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 4 sell state 3: skip=4, execute=0, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2262,7 +2262,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 4 buy state 2: skip=3, execute=4, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2423,7 +2423,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 4 sell state 1: skip=6, execute=3, choose 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2584,7 +2584,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 4 buy state 0: skip=3, execute=6, choose 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2745,7 +2745,7 @@
     }
   }, {
     "stepNumber" : 18,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 3 sell state 3: skip=4, execute=0, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2906,7 +2906,7 @@
     }
   }, {
     "stepNumber" : 19,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 3 buy state 2: skip=4, execute=4, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3067,7 +3067,7 @@
     }
   }, {
     "stepNumber" : 20,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 3 sell state 1: skip=6, execute=4, choose 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3228,7 +3228,7 @@
     }
   }, {
     "stepNumber" : 21,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 3 buy state 0: skip=6, execute=6, choose 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3389,7 +3389,7 @@
     }
   }, {
     "stepNumber" : 22,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 2 sell state 3: skip=4, execute=5, choose 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3550,7 +3550,7 @@
     }
   }, {
     "stepNumber" : 23,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 2 buy state 2: skip=4, execute=-1, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3711,7 +3711,7 @@
     }
   }, {
     "stepNumber" : 24,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 2 sell state 1: skip=6, execute=9, choose 9.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3872,7 +3872,7 @@
     }
   }, {
     "stepNumber" : 25,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 2 buy state 0: skip=6, execute=1, choose 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4033,7 +4033,7 @@
     }
   }, {
     "stepNumber" : 26,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 1 sell state 3: skip=5, execute=3, choose 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4194,7 +4194,7 @@
     }
   }, {
     "stepNumber" : 27,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 1 buy state 2: skip=4, execute=2, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4355,7 +4355,7 @@
     }
   }, {
     "stepNumber" : 28,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 1 sell state 1: skip=9, execute=7, choose 9.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4516,7 +4516,7 @@
     }
   }, {
     "stepNumber" : 29,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 1 buy state 0: skip=6, execute=6, choose 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4677,7 +4677,7 @@
     }
   }, {
     "stepNumber" : 30,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 0 sell state 3: skip=5, execute=3, choose 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4838,7 +4838,7 @@
     }
   }, {
     "stepNumber" : 31,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 0 buy state 2: skip=4, execute=2, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4999,7 +4999,7 @@
     }
   }, {
     "stepNumber" : 32,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 0 sell state 1: skip=9, execute=7, choose 9.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5160,7 +5160,7 @@
     }
   }, {
     "stepNumber" : 33,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Day 0 buy state 0: skip=6, execute=6, choose 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5321,7 +5321,7 @@
     }
   }, {
     "stepNumber" : 34,
-    "activeLine" : 4,
+    "activeLine" : 12,
     "description" : "Maximum profit is 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],

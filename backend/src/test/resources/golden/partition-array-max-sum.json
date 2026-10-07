@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 21,
+    "fill" : 13,
+    "init" : 6
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public long solve(int[] nums, int k) {\n        int n = nums.length;\n        long[] best = new long[n + 1];\n        // choice[i] records the winning last-block length for prefix i.\n        int[] choice = new int[n + 1];\n        for (int i = 1; i <= n; i++) {\n            long value = 0;\n            int chosenLength = 0, blockMax = 0;\n            for (int length = 1; length <= Math.min(k, i); length++) {\n                blockMax = Math.max(blockMax, nums[i - length]);\n                long candidate = best[i - length] + (long) length * blockMax;\n                if (candidate > value) {\n                    value = candidate;\n                    chosenLength = length;\n                }\n                best[i] = value;\n                choice[i] = chosenLength;\n            }\n        }\n        return best[n];\n    }\n}\n",
   "problemId" : "partition-array-max-sum",
   "resolvedInput" : {
     "k" : 3,
@@ -13,7 +13,7 @@
   "stepCount" : 20,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 6,
     "description" : "best[i] is the maximum transformed sum for the first i values; choice[i] stores its final block length.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -83,7 +83,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 1, final block length 1 with max 1: candidate 1; best 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -157,7 +157,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 2, final block length 1 with max 15: candidate 16; best 16.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -231,7 +231,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 2, final block length 2 with max 15: candidate 30; best 30.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -305,7 +305,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 3, final block length 1 with max 7: candidate 37; best 37.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -379,7 +379,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 3, final block length 2 with max 15: candidate 31; best 37.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -453,7 +453,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 3, final block length 3 with max 15: candidate 45; best 45.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -527,7 +527,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 4, final block length 1 with max 9: candidate 54; best 54.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -601,7 +601,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 4, final block length 2 with max 9: candidate 48; best 54.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -675,7 +675,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 4, final block length 3 with max 15: candidate 46; best 54.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -749,7 +749,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 5, final block length 1 with max 2: candidate 56; best 56.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -823,7 +823,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 5, final block length 2 with max 9: candidate 63; best 63.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -897,7 +897,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 5, final block length 3 with max 9: candidate 57; best 63.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -971,7 +971,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 6, final block length 1 with max 5: candidate 68; best 68.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1045,7 +1045,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 6, final block length 2 with max 5: candidate 64; best 68.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1119,7 +1119,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 6, final block length 3 with max 9: candidate 72; best 72.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1193,7 +1193,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 7, final block length 1 with max 10: candidate 82; best 82.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1267,7 +1267,7 @@
     }
   }, {
     "stepNumber" : 18,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 7, final block length 2 with max 10: candidate 83; best 83.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1341,7 +1341,7 @@
     }
   }, {
     "stepNumber" : 19,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Prefix 7, final block length 3 with max 10: candidate 84; best 84.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1415,7 +1415,7 @@
     }
   }, {
     "stepNumber" : 20,
-    "activeLine" : 4,
+    "activeLine" : 21,
     "description" : "Maximum partition-array sum: 84.",
     "queueOrStackState" : null,
     "callStack" : [ ],
