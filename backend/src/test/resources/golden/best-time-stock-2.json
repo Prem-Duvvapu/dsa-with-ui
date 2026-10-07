@@ -1,10 +1,11 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "buy" : 6,
+    "done" : 9,
+    "init" : 4,
+    "sell" : 7
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public long solve(int[] prices) {\n        // Column 0: may buy. Column 1: holding a share, may sell.\n        long[][] dp = new long[prices.length + 1][2];\n        for (int day = prices.length - 1; day >= 0; day--) {\n            dp[day][0] = Math.max(dp[day + 1][0], -prices[day] + dp[day + 1][1]);\n            dp[day][1] = Math.max(dp[day + 1][1], prices[day] + dp[day + 1][0]);\n        }\n        return dp[0][0];\n    }\n}\n",
   "problemId" : "best-time-stock-2",
   "resolvedInput" : {
     "prices" : [ 7, 1, 5, 3, 6, 4 ]
@@ -12,7 +13,7 @@
   "stepCount" : 14,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 4,
     "description" : "dp[day][buy/sell] stores maximum future profit; terminal days contribute 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -76,7 +77,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 6,
     "description" : "Day 5 buy state: skip=0, buy=-4, choose 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -144,7 +145,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Day 5 sell state: skip=0, sell=4, choose 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -212,7 +213,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 6,
     "description" : "Day 4 buy state: skip=0, buy=-2, choose 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -280,7 +281,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Day 4 sell state: skip=4, sell=6, choose 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -348,7 +349,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 6,
     "description" : "Day 3 buy state: skip=0, buy=3, choose 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -416,7 +417,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Day 3 sell state: skip=6, sell=3, choose 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -484,7 +485,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 6,
     "description" : "Day 2 buy state: skip=3, buy=1, choose 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -552,7 +553,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Day 2 sell state: skip=6, sell=8, choose 8.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -620,7 +621,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 6,
     "description" : "Day 1 buy state: skip=3, buy=7, choose 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -688,7 +689,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Day 1 sell state: skip=8, sell=4, choose 8.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -756,7 +757,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 6,
     "description" : "Day 0 buy state: skip=7, buy=1, choose 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -824,7 +825,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Day 0 sell state: skip=8, sell=14, choose 14.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -892,7 +893,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 4,
+    "activeLine" : 9,
     "description" : "Maximum profit is 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],

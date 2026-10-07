@@ -1,11 +1,11 @@
 {
   "anchors" : {
-    "done" : 5,
-    "fill" : 3,
-    "init" : 2,
-    "reconstruct" : 4
+    "done" : 27,
+    "fill" : 17,
+    "init" : 12,
+    "reconstruct" : 25
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    reconstructChosenSolution();\n    return extractAnswer();\n}",
+  "code" : "import java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.Collections;\nimport java.util.List;\n\npublic class Solution {\n    // Input values are distinct positive integers.\n    public List<Integer> solve(int[] nums) {\n        Arrays.sort(nums);\n        int n = nums.length;\n        int[] length = new int[n], parent = new int[n];\n        Arrays.fill(length, 1);\n        Arrays.fill(parent, -1);\n        int end = 0;\n        for (int i = 0; i < n; i++) {\n            for (int j = 0; j < i; j++) {\n                if (nums[i] % nums[j] == 0 && length[j] + 1 > length[i]) {\n                    length[i] = length[j] + 1;\n                    parent[i] = j;\n                }\n            }\n            if (length[i] > length[end]) end = i;\n        }\n        List<Integer> subset = new ArrayList<>();\n        for (int at = end; at >= 0; at = parent[at]) subset.add(nums[at]);\n        Collections.reverse(subset);\n        return subset;\n    }\n}\n",
   "problemId" : "largest-divisible-subset",
   "resolvedInput" : {
     "nums" : [ 1, 2, 4, 8 ]
@@ -13,7 +13,7 @@
   "stepCount" : 9,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 12,
     "description" : "Sort values; every value begins a divisible subset of length 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -59,7 +59,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare 1 and 2: subset length at 1 is 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -105,7 +105,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare 1 and 4: subset length at 2 is 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -151,7 +151,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare 2 and 4: subset length at 2 is 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -197,7 +197,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare 1 and 8: subset length at 3 is 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -243,7 +243,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare 2 and 8: subset length at 3 is 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -289,7 +289,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 17,
     "description" : "Compare 4 and 8: subset length at 3 is 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -335,7 +335,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 4,
+    "activeLine" : 25,
     "description" : "Follow parent links to reconstruct [1, 2, 4, 8].",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -383,7 +383,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 5,
+    "activeLine" : 27,
     "description" : "Largest divisible subset: [1, 2, 4, 8] (length 4).",
     "queueOrStackState" : null,
     "callStack" : [ ],

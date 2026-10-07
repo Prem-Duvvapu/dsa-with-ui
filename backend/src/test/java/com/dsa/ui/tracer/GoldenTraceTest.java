@@ -62,7 +62,18 @@ class GoldenTraceTest {
             .enable(SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS);
 
     Stream<String> tracerIds() {
-        return registry.tracedIds().stream().sorted();
+        Stream<String> ids = registry.tracedIds().stream().sorted();
+        // Source-only repairs can update just their affected fixtures. Normal verification
+        // ALWAYS checks the entire registry, even if golden.ids was left in the environment.
+        String selected = System.getProperty("golden.ids");
+        if (REGENERATE && selected != null) {
+            var requested = java.util.Set.of(selected.split(","));
+            if (!registry.tracedIds().containsAll(requested)) {
+                throw new IllegalArgumentException("golden.ids contains an unregistered tracer: " + selected);
+            }
+            ids = ids.filter(requested::contains);
+        }
+        return ids;
     }
 
     @ParameterizedTest(name = "{0} matches its golden file")

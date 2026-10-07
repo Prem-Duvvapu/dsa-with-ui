@@ -64,14 +64,14 @@ abstract class StockStateRemainingTracer extends RemainingDpTracer {
         for (int day = prices.length - 1; day >= 0; day--) {
             long skipBuy = dp[day + 1][0], buy = -prices[day] + dp[day + 1][1];
             dp[day][0] = Math.max(skipBuy, buy); known[day][0] = true;
-            emit.at("fill").say("Day %d buy state: skip=%d, buy=%d, choose %d.", day, skipBuy, buy, dp[day][0])
+            emit.at("buy").say("Day %d buy state: skip=%d, buy=%d, choose %d.", day, skipBuy, buy, dp[day][0])
                     .var("day", day).var("state", "buy").var("profit", dp[day][0])
                     .dpTable(stockTable(dp, known, new DpTraceSupport.Coord(day, 0),
                             Set.of(new DpTraceSupport.Coord(day + 1, 0), new DpTraceSupport.Coord(day + 1, 1)), false,
                             "max(skip, -price + sellNext)", "max(" + skipBuy + ", " + buy + ") = " + dp[day][0])).step();
             int next = day + (cooldown ? 2 : 1); long skipSell = dp[day + 1][1], sell = prices[day] - fee + dp[next][0];
             dp[day][1] = Math.max(skipSell, sell); known[day][1] = true;
-            emit.at("fill").say("Day %d sell state: skip=%d, sell=%d, choose %d.", day, skipSell, sell, dp[day][1])
+            emit.at("sell").say("Day %d sell state: skip=%d, sell=%d, choose %d.", day, skipSell, sell, dp[day][1])
                     .var("day", day).var("state", "sell").var("profit", dp[day][1])
                     .dpTable(stockTable(dp, known, new DpTraceSupport.Coord(day, 1),
                             Set.of(new DpTraceSupport.Coord(day + 1, 1), new DpTraceSupport.Coord(next, 0)), false,

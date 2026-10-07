@@ -39,28 +39,6 @@ final class DpTraceSupport {
 
     record Coord(int row, int col) {}
 
-    static final String CODE = """
-            public Object solve(Object input) {
-                // @a init
-                initialiseBaseCases();
-                // @a fill
-                evaluateTransitionCandidates();
-                // @a done
-                return extractAnswer();
-            }""";
-
-    static final String CODE_WITH_RECONSTRUCTION = """
-            public Object solve(Object input) {
-                // @a init
-                initialiseBaseCases();
-                // @a fill
-                evaluateTransitionCandidates();
-                // @a reconstruct
-                reconstructChosenSolution();
-                // @a done
-                return extractAnswer();
-            }""";
-
     private DpTraceSupport() {}
 
     static InputField intArray(String name, String label, List<Integer> defaults, int minLength,

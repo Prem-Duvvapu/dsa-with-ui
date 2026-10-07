@@ -121,7 +121,7 @@ class PalindromePartitioningTwoRemainingTracer extends RemainingDpTracer {
             Set<DpTraceSupport.Coord> palReads = gap < 2
                     ? Set.of()
                     : Set.of(new DpTraceSupport.Coord(i + 1, j - 1));
-            emit.at("fill").say("Substring [%d,%d] \"%s\" is %sa palindrome.", i, j, text.substring(i, j + 1), palindrome ? "" : "not ")
+            emit.at("palindrome").say("Substring [%d,%d] \"%s\" is %sa palindrome.", i, j, text.substring(i, j + 1), palindrome ? "" : "not ")
                     .dpTable(DpTraceSupport.table(state, known, new DpTraceSupport.Coord(i, j), palReads, rows,
                             DpTraceSupport.labels("end", n), false,
                             "pal[i][j] = s[i]==s[j] && pal[i+1][j-1]",
@@ -148,7 +148,7 @@ class PalindromePartitioningTwoRemainingTracer extends RemainingDpTracer {
                     ? Set.of(new DpTraceSupport.Coord(0, end))
                     : Set.of(new DpTraceSupport.Coord(bestStart, end),
                             new DpTraceSupport.Coord(n, bestStart - 1));
-            emit.at("fill").say("Minimum cuts for prefix ending at %d: %d.", end, best).var("end", end).var("cuts", best)
+            emit.at("cuts").say("Minimum cuts for prefix ending at %d: %d.", end, best).var("end", end).var("cuts", best)
                     .dpTable(DpTraceSupport.table(state, known, new DpTraceSupport.Coord(n, end), cutReads, rows,
                             DpTraceSupport.labels("end", n), false,
                             "cuts[j] = min over palindromic suffix [i..j] of cuts[i-1] + 1",

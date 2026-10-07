@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 16,
+    "fill" : 13,
+    "init" : 8
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "import java.util.Arrays;\n\npublic class Solution {\n    public long solve(int[] greed, int[] cookies) {\n        Arrays.sort(greed);\n        Arrays.sort(cookies);\n        // Empty prefixes satisfy zero children.\n        long[][] dp = new long[greed.length + 1][cookies.length + 1];\n        for (int i = 1; i <= greed.length; i++) {\n            for (int j = 1; j <= cookies.length; j++) {\n                long skipCookie = dp[i][j - 1], skipChild = dp[i - 1][j];\n                long match = cookies[j - 1] >= greed[i - 1] ? 1 + dp[i - 1][j - 1] : -1;\n                dp[i][j] = Math.max(Math.max(skipCookie, skipChild), match);\n            }\n        }\n        return dp[greed.length][cookies.length];\n    }\n}\n",
   "problemId" : "assign-cookies-dp",
   "resolvedInput" : {
     "cookies" : [ 1, 1 ],
@@ -13,7 +13,7 @@
   "stepCount" : 8,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 8,
     "description" : "After sorting, dp[i][j] is the most satisfied among the first i children using the first j cookies.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -71,7 +71,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Child greed 1, cookie 1: best satisfied count is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -133,7 +133,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Child greed 1, cookie 1: best satisfied count is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -195,7 +195,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Child greed 2, cookie 1: best satisfied count is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -257,7 +257,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Child greed 2, cookie 1: best satisfied count is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -319,7 +319,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Child greed 3, cookie 1: best satisfied count is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -381,7 +381,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Child greed 3, cookie 1: best satisfied count is 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -443,7 +443,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 4,
+    "activeLine" : 16,
     "description" : "Maximum satisfied children: 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],

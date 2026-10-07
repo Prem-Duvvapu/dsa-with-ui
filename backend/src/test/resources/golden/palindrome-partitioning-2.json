@@ -1,10 +1,11 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "cuts" : 23,
+    "done" : 25,
+    "init" : 5,
+    "palindrome" : 10
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    // text is nonempty.\n    public long solve(String text) {\n        int n = text.length();\n        boolean[][] palindrome = new boolean[n][n];\n        long[] cuts = new long[n];\n        for (int gap = 0; gap < n; gap++) {\n            for (int i = 0; i + gap < n; i++) {\n                int j = i + gap;\n                palindrome[i][j] = text.charAt(i) == text.charAt(j)\n                        && (gap < 2 || palindrome[i + 1][j - 1]);\n            }\n        }\n        for (int end = 0; end < n; end++) {\n            long best = end;\n            if (palindrome[0][end]) {\n                best = 0;\n            } else {\n                for (int start = 1; start <= end; start++) {\n                    if (palindrome[start][end]) best = Math.min(best, cuts[start - 1] + 1);\n                }\n            }\n            cuts[end] = best;\n        }\n        return cuts[n - 1];\n    }\n}\n",
   "problemId" : "palindrome-partitioning-2",
   "resolvedInput" : {
     "text" : "aab"
@@ -12,7 +13,7 @@
   "stepCount" : 11,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 5,
     "description" : "First mark every palindromic interval, then compute minimum cuts for each prefix.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -70,7 +71,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Substring [0,0] \"a\" is a palindrome.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -128,7 +129,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Substring [1,1] \"a\" is a palindrome.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -186,7 +187,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Substring [2,2] \"b\" is a palindrome.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -244,7 +245,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Substring [0,1] \"aa\" is a palindrome.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -302,7 +303,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Substring [1,2] \"ab\" is not a palindrome.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -360,7 +361,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 10,
     "description" : "Substring [0,2] \"aab\" is not a palindrome.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -418,7 +419,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 23,
     "description" : "Minimum cuts for prefix ending at 0: 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -479,7 +480,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 23,
     "description" : "Minimum cuts for prefix ending at 1: 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -540,7 +541,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 23,
     "description" : "Minimum cuts for prefix ending at 2: 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -601,7 +602,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 4,
+    "activeLine" : 25,
     "description" : "Minimum palindrome-partition cuts: 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],

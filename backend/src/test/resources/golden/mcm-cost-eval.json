@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 18,
+    "fill" : 13,
+    "init" : 5
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public long solve(int[] dimensions) {\n        int n = dimensions.length - 1;\n        // One matrix requires no scalar multiplications.\n        long[][] dp = new long[n][n];\n        for (int gap = 1; gap < n; gap++) {\n            for (int i = 0; i + gap < n; i++) {\n                int j = i + gap;\n                long best = Long.MAX_VALUE;\n                for (int k = i; k < j; k++) {\n                    long candidate = dp[i][k] + dp[k + 1][j]\n                            + (long) dimensions[i] * dimensions[k + 1] * dimensions[j + 1];\n                    best = Math.min(best, candidate);\n                }\n                dp[i][j] = best;\n            }\n        }\n        return dp[0][n - 1];\n    }\n}\n",
   "problemId" : "mcm-cost-eval",
   "resolvedInput" : {
     "dimensions" : [ 40, 20, 30, 10, 30 ]
@@ -12,7 +12,7 @@
   "stepCount" : 12,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 5,
     "description" : "dp[i][j] is the minimum cost to multiply matrices i through j; one matrix costs 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -82,7 +82,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Interval [0,1], split 0: candidate 24000; running minimum 24000.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -157,7 +157,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Interval [1,2], split 1: candidate 6000; running minimum 6000.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -232,7 +232,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Interval [2,3], split 2: candidate 9000; running minimum 9000.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -307,7 +307,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Interval [0,2], split 0: candidate 14000; running minimum 14000.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -382,7 +382,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Interval [0,2], split 1: candidate 36000; running minimum 14000.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -457,7 +457,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Interval [1,3], split 1: candidate 27000; running minimum 27000.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -532,7 +532,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Interval [1,3], split 2: candidate 12000; running minimum 12000.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -607,7 +607,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Interval [0,3], split 0: candidate 36000; running minimum 36000.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -682,7 +682,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Interval [0,3], split 1: candidate 69000; running minimum 36000.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -757,7 +757,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 13,
     "description" : "Interval [0,3], split 2: candidate 26000; running minimum 26000.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -832,7 +832,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 4,
+    "activeLine" : 18,
     "description" : "Minimum matrix-chain multiplication cost: 26000.",
     "queueOrStackState" : null,
     "callStack" : [ ],

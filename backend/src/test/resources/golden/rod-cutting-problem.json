@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 14,
+    "fill" : 11,
+    "init" : 4
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public long solve(int[] prices) {\n        int n = prices.length;\n        long[][] dp = new long[n + 1][n + 1];\n        for (int piece = 1; piece <= n; piece++) {\n            for (int length = 1; length <= n; length++) {\n                long skip = dp[piece - 1][length];\n                // Reuse the same row because a piece length may be taken again.\n                long take = length >= piece\n                        ? prices[piece - 1] + dp[piece][length - piece] : Long.MIN_VALUE / 4;\n                dp[piece][length] = Math.max(skip, take);\n            }\n        }\n        return dp[n][n];\n    }\n}\n",
   "problemId" : "rod-cutting-problem",
   "resolvedInput" : {
     "prices" : [ 2, 5, 7, 8, 10 ]
@@ -12,7 +12,7 @@
   "stepCount" : 27,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 4,
     "description" : "dp[i][length] is the best price using piece lengths 1 through i; pieces may repeat.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -142,7 +142,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 1 at price 2, rod length 1: best value 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -276,7 +276,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 1 at price 2, rod length 2: best value 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -410,7 +410,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 1 at price 2, rod length 3: best value 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -544,7 +544,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 1 at price 2, rod length 4: best value 8.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -678,7 +678,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 1 at price 2, rod length 5: best value 10.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -812,7 +812,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 2 at price 5, rod length 1: best value 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -946,7 +946,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 2 at price 5, rod length 2: best value 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1080,7 +1080,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 2 at price 5, rod length 3: best value 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1214,7 +1214,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 2 at price 5, rod length 4: best value 10.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1348,7 +1348,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 2 at price 5, rod length 5: best value 12.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1482,7 +1482,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 3 at price 7, rod length 1: best value 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1616,7 +1616,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 3 at price 7, rod length 2: best value 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1750,7 +1750,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 3 at price 7, rod length 3: best value 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1884,7 +1884,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 3 at price 7, rod length 4: best value 10.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2018,7 +2018,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 3 at price 7, rod length 5: best value 12.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2152,7 +2152,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 4 at price 8, rod length 1: best value 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2286,7 +2286,7 @@
     }
   }, {
     "stepNumber" : 18,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 4 at price 8, rod length 2: best value 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2420,7 +2420,7 @@
     }
   }, {
     "stepNumber" : 19,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 4 at price 8, rod length 3: best value 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2554,7 +2554,7 @@
     }
   }, {
     "stepNumber" : 20,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 4 at price 8, rod length 4: best value 10.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2688,7 +2688,7 @@
     }
   }, {
     "stepNumber" : 21,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 4 at price 8, rod length 5: best value 12.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2822,7 +2822,7 @@
     }
   }, {
     "stepNumber" : 22,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 5 at price 10, rod length 1: best value 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2956,7 +2956,7 @@
     }
   }, {
     "stepNumber" : 23,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 5 at price 10, rod length 2: best value 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3090,7 +3090,7 @@
     }
   }, {
     "stepNumber" : 24,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 5 at price 10, rod length 3: best value 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3224,7 +3224,7 @@
     }
   }, {
     "stepNumber" : 25,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 5 at price 10, rod length 4: best value 10.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3358,7 +3358,7 @@
     }
   }, {
     "stepNumber" : 26,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Piece length 5 at price 10, rod length 5: best value 12.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3492,7 +3492,7 @@
     }
   }, {
     "stepNumber" : 27,
-    "activeLine" : 4,
+    "activeLine" : 14,
     "description" : "Maximum revenue for rod length 5 is 12.",
     "queueOrStackState" : null,
     "callStack" : [ ],
