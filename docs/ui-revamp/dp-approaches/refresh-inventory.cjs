@@ -32,9 +32,10 @@ async function get(route) {
       alternativeStatus: detail.approaches?.length > 1 ? 'backend-pilot; UI pending'
         : reviewed.get(problem.id).plannedForms.length ? 'planned' : 'requires-different-formulation',
       alternativeSafetyBounds: detail.approaches?.length > 1
-        ? detail.approaches.filter(a => !a.isDefault).map(a => ({ id: a.id, inputSpec: a.inputSpec,
-          measurements: 'See d2-results.json for the Climbing Stairs pilot; this is not a rollout-wide safety claim.' }))
-        : 'Not measured yet; canonical caps do not authorize exponential recursion.' });
+        ? 'Published pilot bounds below; measured Climbing Stairs traces are in d2-results.json. Not a rollout-wide safety claim.'
+        : 'Not measured yet; canonical caps do not authorize exponential recursion.',
+      ...(detail.approaches?.length > 1 ? { publishedAlternativeInputSpecs:
+        detail.approaches.filter(a => !a.isDefault).map(a => ({ id: a.id, inputSpec: a.inputSpec })) } : {}) });
   }
   const stats = await get('/api/problems/stats');
   fs.writeFileSync(path.join(__dirname, 'inventory.json'), JSON.stringify({

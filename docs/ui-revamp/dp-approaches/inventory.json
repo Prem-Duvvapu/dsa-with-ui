@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-07T19:38:42.294Z",
+  "generated": "2026-10-07T19:39:41.280Z",
   "stats": {
     "catalogued": 431,
     "traced": 431,
@@ -401,7 +401,8 @@
         "dataStructureSpace": "DP table"
       },
       "alternativeStatus": "backend-pilot; UI pending",
-      "alternativeSafetyBounds": [
+      "alternativeSafetyBounds": "Published pilot bounds below; measured Climbing Stairs traces are in d2-results.json. Not a rollout-wide safety claim.",
+      "publishedAlternativeInputSpecs": [
         {
           "id": "recursion",
           "inputSpec": {
@@ -420,8 +421,7 @@
             ],
             "maxSteps": 5000,
             "maxBytes": 2000000
-          },
-          "measurements": "See d2-results.json for the Climbing Stairs pilot; this is not a rollout-wide safety claim."
+          }
         },
         {
           "id": "memoization",
@@ -441,8 +441,7 @@
             ],
             "maxSteps": 5000,
             "maxBytes": 2000000
-          },
-          "measurements": "See d2-results.json for the Climbing Stairs pilot; this is not a rollout-wide safety claim."
+          }
         }
       ]
     },
