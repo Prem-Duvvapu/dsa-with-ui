@@ -5,6 +5,15 @@ import { describe, expect, it } from 'vitest';
 import StepStateSummary, { describeStep } from './StepStateSummary';
 
 describe('StepStateSummary', () => {
+  it('describes recursive frames and real memo entries, keeping unknown distinct from zero', () => {
+    const text = describeStep({ callStack: ['ways(5) #1'], dpTable: {
+      rowLabels: ['memo'], colLabels: ['0', '1'], cells: [[{ value: '0', state: 'known' }, { value: '·', state: 'void' }]]
+    } }, 'RecursionTree');
+    expect(text).toContain('ways(5) #1');
+    expect(text).toMatch(/column 0.*0.*known/i);
+    expect(text).toMatch(/column 1.*unknown/i);
+    expect(describeStep({ callStack: [] }, 'RecursionTree')).toMatch(/call stack is empty/i);
+  });
   it('says what the array holds and where the pointers are', () => {
     render(<StepStateSummary step={{
       arrayState: [

@@ -1032,3 +1032,52 @@ Six review gates:
 Reproducible evidence: `dp-approaches/d2-journey.cjs`, `d2-results.json`,
 `d2-golden-check.cjs`, `d2-golden-results.json`. D1's recorded one-option probe is historical.
 D3–D7 and the existing P8/P9 human/performance/release gates remain open.
+
+## DP approaches D3 — committed approach session and pilot UX — 2026-10-07
+
+Climbing Stairs now has a labelled Recursion / Memoization / Tabulation selector. Selection
+prepares and pauses; only a successful explicit run commits the approach together with
+input, source, anchors, renderer and complexity. Preparation and rejected runs retain the
+prior displayed result/link. Shared links restore approach/input before step; old links
+remain canonical. Retry owns its original approach and input. Code/Analysis, source
+follow/scroll, presets and the existing input comparison respect the committed/candidate
+boundary. This is not D4's two-approach comparison.
+
+Memo cache cells and recursive text alternatives come from actual step snapshots. Empty
+call stacks finish all tree frames; unrelated canonical demo arrays/trees are not inherited.
+Screenshot inspection caught a wide SVG squeezed into the workspace's generic max-width
+rule despite passing page-overflow checks. Native tree widths are now retained inside a
+keyboard-accessible scrolling region capped at 480px high, with both ends reachable.
+
+Six review gates:
+
+1. Backend: selected summaries now publish their own alternate input. The strengthened
+   API case failed before this seam. Isolated full suite: 8,007 tests, zero failures/errors,
+   unchanged 500 skips. No algorithm, source listing or golden changes in D3.
+2. Frontend: 78 files / 706 tests pass. Production build JS371.55kB/gzip118.32,
+   CSS104.90kB/gzip18.77. Session tests cover StrictMode, decode races, late detail,
+   navigation, refused/partial/wrong-identity responses and restoration after default failure.
+3. UI/UX: ten real-backend Chromium rows (320/390/768/1366/1440px, both themes) pass;
+   all three answers, source/complexity, 400 focus/retained draft/link, shared restoration,
+   presentation-only changes, 44px selector and no page overflow/errors checked. Four
+   max-tree checks verify native SVG width and local scrolling. Screenshots inspected.
+4. Product: one of 56 candidates has a verified three-form user journey; default tabulation
+   and canonical coverage remain unchanged. Missing complexity stays unavailable; absent
+   cache values are not zero. D4–D7 and original P8/P9 gaps remain explicitly open.
+5. Architecture: one shared URL writer, atomic run metadata and existing stage pipeline;
+   one primary canvas at a time. No dependency added. Inventory refresh preserves prior
+   JSON key order without preserving stale values; only date and pilot status changed.
+6. QA: 14/15 original session cases and all six original UI cases failed against D2;
+   summary, empty-stack, demo-inheritance, native-key ownership and missing-metadata
+   regressions also failed before fixes. The geometry probe failed before the SVG fix.
+   Existing tests were not weakened; two URL callback expectations add approachId:null.
+
+Verification incident: the first backend attempt overlapped our dev-server Maven compile,
+which removed DsaApplication while a Spring test scanned classes (one setup error). Stopped
+the dev compile and reran the full suite isolated: all 8,007 pass. No tests were changed to
+hide that failure. Backend was started only after verification for the final live matrix.
+
+Evidence: `dp-approaches/d3-journey.cjs`, `d3-results.json`, `d3-390-dark.png`,
+`d3-1366-light.png`; plan: `DP_SOLUTION_APPROACHES_PLAN.md`; RCA-054 follow-up.
+The matrix's viewport height is 900px, not proof of the original 768px stage-position gate.
+Cross-engine, real-device, human learning and broader-family certification remain pending.

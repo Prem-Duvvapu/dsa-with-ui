@@ -33,11 +33,30 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
 
   // The detail is keyed to its problem inside useTrace, so this merge cannot pair a new
   // problem's summary with the previous problem's code, spec or complexity.
-  const problem = useMemo(
+  const baseProblem = useMemo(
     () => (trace.detail ? { ...catalogEntry, ...trace.detail } : catalogEntry),
     [catalogEntry, trace.detail]
   );
-  const inputSpec = problem?.id === problemId ? problem?.inputSpec : null;
+  const approaches = baseProblem?.id === problemId && Array.isArray(baseProblem?.approaches) ? baseProblem.approaches : [];
+  const defaultApproachId = baseProblem?.defaultApproachId ?? null;
+  const [candidate, setCandidate] = useState({ problemId: null, id: null });
+  const candidateId = candidate.problemId === problemId ? candidate.id : defaultApproachId;
+  const selectedApproach = approaches.find(a => a.id === candidateId)
+    ?? approaches.find(a => a.id === defaultApproachId) ?? null;
+  const shownApproach = approaches.find(a => a.id === run.approachId) ?? null;
+  // Source, renderer, complexity and comparison belong to the COMMITTED executable.
+  // A slow canonical detail response or a prepared candidate cannot rewrite them.
+  const problem = useMemo(() => (run.problemId === problemId && run.hasApproachMetadata ? {
+    ...baseProblem, javaCode: run.code, dsType: run.dsType, complexity: run.complexity,
+    approachId: run.approachId, alternateInput: shownApproach?.alternateInput ?? null,
+    // These catalogue examples belong to the canonical executable, not another approach.
+    // Real alternative payloads still come from the steps/resolved input themselves.
+    ...(run.approachId !== defaultApproachId ? {
+      defaultArray: null, defaultGrid: null, defaultGraphNodes: null, defaultGraphEdges: null,
+      defaultTreeNodes: null, defaultList: null, defaultTrie: null
+    } : {})
+  } : baseProblem), [baseProblem, problemId, run, shownApproach, defaultApproachId]);
+  const inputSpec = baseProblem?.id === problemId ? selectedApproach?.inputSpec ?? baseProblem?.inputSpec : null;
   const draft = useInputDraft(problemId, inputSpec);
   const { replace: replaceDraft, defaults: draftDefaults } = draft;
 
@@ -63,7 +82,17 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
   const runRef = useRef(run);
   runRef.current = run;
   const defaultsRef = useRef(draftDefaults);
-  defaultsRef.current = draftDefaults;
+  defaultsRef.current = baseProblem?.inputSpec ? defaultInput(baseProblem.inputSpec) : draftDefaults;
+  const defaultApproachRef = useRef(defaultApproachId);
+  defaultApproachRef.current = defaultApproachId;
+  const selectedApproachRef = useRef(selectedApproach?.id ?? null);
+  selectedApproachRef.current = selectedApproach?.id ?? null;
+
+  const selectApproach = useCallback((id) => {
+    if (!approaches.some(a => a.id === id)) return;
+    trace.pause();
+    setCandidate({ problemId, id });
+  }, [approaches, problemId, trace.pause]);
 
   const ownRun = run.problemId === problemId;
   const route = useShareableView({
@@ -79,10 +108,13 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
       // A same-page link without input, while a custom run is on screen, describes the
       // default run - so the default has to run again, not the custom one be kept.
       const resetToDefault = view.samePage && view.input.status === 'absent'
-        && runRef.current.problemId === problemId && runRef.current.submittedInput !== null;
+        && runRef.current.problemId === problemId && (runRef.current.submittedInput !== null
+          || (runRef.current.approachId !== null && runRef.current.approachId !== (view.approachId ?? defaultApproachRef.current)));
       // Every same-page navigation is restored, even one with nothing but a step (or no
       // step at all): its step is applied explicitly rather than left from the old URL.
-      const needed = view.samePage || view.step !== null || view.input.status !== 'absent' || resetToDefault;
+      const needed = view.samePage || view.step !== null || view.input.status !== 'absent'
+        || view.approachId !== null || resetToDefault;
+      setCandidate({ problemId, id: view.approachId ?? defaultApproachRef.current });
       pendingRestore.current = needed
         ? { id: ++restoreSeq.current, problemId, ...view, resetToDefault, started: false }
         : null;
@@ -123,25 +155,32 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
       let honoured = true;
       // A refused link describes the matching committed run, including when none exists.
       // An offline sample has unknown input; it cannot be called the default execution.
-      const refuse = (reason) => {
+      const refuse = (reason, kind = 'input') => {
         honoured = false;
         const shown = runRef.current;
         const hasRun = shown.problemId === pending.problemId && shown.id > 0 && shown.steps.length > 0;
         const available = !hasRun ? 'none' : shown.offline ? 'offline'
           : shown.submittedInput !== null ? 'custom' : 'default';
-        const shared = shareInput(available === 'custom' ? shown.submittedInput : null);
+        const shared = shareInput(available === 'custom' ? shown.submittedInput : null,
+          shown.approachId, defaultApproachRef.current);
         setShareNote(shared ? null : 'too-long');
-        notices.push({ kind: 'input', reason, available, shared });
+        setCandidate({ problemId: pending.problemId, id: shown.approachId ?? defaultApproachRef.current });
+        notices.push({ kind, reason, available, shared, requested: pending.approachId });
       };
 
       if (pending.input.status === 'invalid') {
         refuse('unreadable');
-      } else if (pending.input.status === 'valid' || pending.resetToDefault) {
-        const values = pending.input.status === 'valid' ? pending.input.value : defaultsRef.current;
-        const outcome = await runInput(values ?? {});
+      } else if (pending.input.status === 'valid' || pending.resetToDefault || pending.approachId !== null) {
+        const values = pending.input.status === 'valid' ? pending.input.value
+          : pending.approachId !== null ? {} : defaultsRef.current;
+        const outcome = await runInput(values ?? {}, pending.approachId,
+          { asDefault: pending.input.status === 'absent' });
         if (!alive()) return;
-        if (outcome.ok) total = outcome.run.steps.length;
-        else refuse(outcome.kind);
+        if (outcome.ok) {
+          total = outcome.run.steps.length;
+          setShareNote(shareInput(outcome.run.submittedInput, outcome.run.approachId,
+            defaultApproachRef.current) ? null : 'too-long');
+        } else refuse(outcome.kind, outcome.kind === 'unavailable-approach' ? 'approach' : 'input');
       }
 
       // The step, decided for every restoration: the requested one when it exists in the run
@@ -176,17 +215,18 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
    * submission supersedes any link still being restored, and a page that has been left
    * (or switched to another problem) never shares or navigates on a late answer.
    */
-  const submit = useCallback(async (values) => {
+  const submit = useCallback(async (values, approachId = selectedApproachRef.current) => {
     if (pendingRestore.current) {
       pendingRestore.current = null;
       setRestoring(false);
     }
     const forProblem = problemIdRef.current;
     const forNavigation = navigationSeq.current;
-    const outcome = await runInput(values);
+    const outcome = await runInput(values, approachId);
     if (!mounted.current || problemIdRef.current !== forProblem || navigationSeq.current !== forNavigation) return outcome;
     if (outcome.ok) {
-      setShareNote(shareInput(outcome.run.submittedInput) ? null : 'too-long');
+      setShareNote(shareInput(outcome.run.submittedInput, outcome.run.approachId,
+        defaultApproachRef.current) ? null : 'too-long');
       setLinkNotices([]);
     }
     return outcome;
@@ -194,7 +234,7 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
 
   /** Retries exactly the submission that failed, not whatever the draft holds now. */
   const retry = useCallback(
-    () => (rerunFailure ? submit(rerunFailure.input) : Promise.resolve({ ok: false, kind: 'superseded' })),
+    () => (rerunFailure ? submit(rerunFailure.input, rerunFailure.approachId) : Promise.resolve({ ok: false, kind: 'superseded' })),
     [rerunFailure, submit]
   );
 
@@ -204,13 +244,19 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
   // left out (the server does the same). The default GET runs the defaults; an offline
   // sample's input is unknown, so no "changed" claim can be made against it.
   const committedInput = run.id > 0 && ownRun
-    ? (run.submittedInput ? { ...(draftDefaults ?? {}), ...run.submittedInput } : (run.offline ? null : draftDefaults))
+    ? (run.offline ? null : run.resolvedInput
+      ?? (run.submittedInput ? { ...(defaultsRef.current ?? {}), ...run.submittedInput } : defaultsRef.current))
     : null;
   const draftChanged = Boolean(draft.values && committedInput && !sameInput(draft.values, committedInput));
 
   return {
     ...trace,
     problem,
+    approaches,
+    selectedApproach,
+    shownApproach,
+    selectApproach,
+    selectedAlternateInput: selectedApproach?.alternateInput ?? baseProblem?.alternateInput,
     inputSpec,
     draft,
     draftChanged,

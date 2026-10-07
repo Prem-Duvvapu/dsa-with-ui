@@ -63,12 +63,13 @@ function CompareSide({ label, run, dsType, showCapture }) {
  * Step numbers are positions in each run. Step 5 here and step 5 there need not be the same
  * moment of the algorithm, and the panel says so.
  */
-export default function CompareStrip({ problemId, dsType, alternateInput, showCapture = true, mainIsCustom = false }) {
-  const { loading, error, defaultRun, alternateRun, retry } = useComparisonTrace(problemId, alternateInput, true);
+export default function CompareStrip({ problemId, dsType, alternateInput, approachId = null, approachLabel = null, showCapture = true, mainIsCustom = false }) {
+  const { loading, error, defaultRun, alternateRun, retry } = useComparisonTrace(problemId, alternateInput, true, approachId);
 
   const scope = (
     <p className={styles.scope}>
       Compares this problem&apos;s default input with its other case, each run separately.
+      {approachLabel && ` Both use ${approachLabel}.`}
       {mainIsCustom && ' The run above uses your own input and is not part of this comparison.'}
       {' '}Step numbers are positions within each run, not matching moments of the algorithm.
     </p>

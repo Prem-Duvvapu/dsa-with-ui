@@ -1,6 +1,6 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **implementation in progress: D0–D2 verified; D3–D7 pending.**
+Status: **implementation in progress: D0–D3 verified for the Climbing Stairs pilot; D4–D7 pending.**
 Prepared 2026-10-07 against merged main `9d0aa10` (PR #208).
 This is a separate feature from the unfinished P8/P9 revamp gates; it does not close them.
 The owner authorized implementation on 2026-10-07 after merging PR #210.
@@ -390,7 +390,7 @@ API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 | D0 | Classified | `dp-approaches/classifications.tsv` and generated `inventory.json`: all 56 candidates, current source digests, canonical specs/complexity, actual state/transition, reconstruction and applicability |
 | D1 | Verified | Provider registry, canonical adapters, optional API selection, committed execution metadata, normalized cache keys and refusal tests |
 | D2 | Verified | Genuine recursion/memoization/tabulation, independently compiled source, oracle and boundary tests; `dp-approaches/d2-results.json` |
-| D3 | Pending | Selector, committed approach identity, sharing/restoration, Code/Analysis binding and UI pilot |
+| D3 | Verified pilot | Explicit selector, committed metadata, approach-aware links/presets/input comparison, truthful memo/recursive views; `dp-approaches/d3-results.json` |
 | D4–D7 | Pending | Teaching/comparison, family rollout and final release gates |
 
 Inventory distinctions: binary-search LIS remains an optimized default; ninja-and-friends
@@ -463,6 +463,57 @@ CSS 103.99kB (gzip 18.63). Six of the initial seven pilot tests failed meaningfu
 against D1 (three assertions, three unavailable-approach errors); the canonical-anchor
 case preserved existing behavior. No dependency added.
 
-This is the backend pilot, not the complete user journey: the selector, committed
+At the D2 handoff this was the backend pilot, not the complete user journey: the selector, committed
 source/type/complexity, approach-aware sharing/presets/comparison and memo-cache UI
-remain D3. The other 55 candidates' alternatives remain unimplemented/unmeasured.
+were D3 work, verified below. The other 55 candidates' alternatives remain unimplemented/unmeasured.
+
+### D3 verification
+
+The Climbing Stairs user journey now offers a native labelled selector in all three views.
+Changing it pauses and prepares, without executing or changing the draft/run/share link.
+A selected-vs-shown notice and explicit Run make the boundary clear. Successful runs
+atomically carry source, anchors, type, complexity, approach and input; Code and Analysis
+read that committed metadata, never the candidate. Missing input/truncation metadata and
+substituted problem/approach identities are rejected; absent complexity stays unavailable.
+
+`approach` joins the one existing URL writer. Default approach is omitted; old links remain
+canonical. Restoration runs the requested approach/input before seeking. Unavailable or
+rejected links drop their step, label the refusal and share only the actually retained run.
+Same-page canonical navigation, Back, StrictMode, failed default loads, body-decode races,
+late detail and user edits during restoration are covered. Retry keeps its original approach
+and input. Presets run the candidate with its own bounds; Compare inputs uses the displayed
+approach and that approach's declared alternate (now served in the summary).
+
+Memo tables are real step snapshots, disclosed on demand in Playground/Code/Analysis.
+Unknown is distinct from zero. Recursion call/cache state has a text alternative. Returning
+an empty stack now finishes every tree frame. Other approaches cannot inherit canonical
+demo arrays/trees. Fixed-coordinate recursion SVGs keep their actual width and scroll in a
+keyboard-accessible region capped at 480px high; arrows scroll there rather than seeking.
+Source follow/scroll persists for preparation and view changes, but resets for a successful
+change of source identity. Only one primary stage mounts at a time.
+
+Evidence: real-backend Chromium `d3-journey.cjs` exercises all three algorithms, source and
+complexity, selected limits, HTTP400 focus/retained link/draft, shared approach/input/step
+restoration, and no re-execution from presentation at five widths (320/390/768/1366/1440)
+in both themes. Largest recursion n10 and memo n30 are checked at 390 dark /1366 light:
+native SVG widths7,920/2,728px stay intact, both ends are locally reachable, and the scroll
+region is480px, with no page-wide overflow. Screenshots inspected and retained beside the
+results. Selector target is44px or larger; existing token/focus/theme guards remain green.
+
+RED evidence:14/15 original approach-session cases failed against D2; all six original UI
+cases and the recursive-state summary failed before selector/parity wiring. Extra regressions
+failed for canonical demo inheritance (two), empty-stack completion (one), native scroll key
+ownership (one), missing input/truncation metadata (two), and selected alternate-input JSON
+(one API case). The tightened geometry probe failed: a7,920px tree was clipped into226px
+with no horizontal scroll. Assertions were strengthened after screenshots exposed it.
+
+This verifies one pilot, not all56 problems, cross-engine/real-device or human learning gates.
+D4 teaching/two-approach comparison and D5 family rollout still follow; D6/D7 broad polish,
+performance, ledger reconciliation and release remain open, as do P8/P9's original gaps.
+
+Final verification: 78 frontend files / 706 passing tests (28 more than D2), production
+build JS 371.55kB (gzip 118.32), CSS 104.90kB (gzip 18.77); 8,007 backend tests,
+zero failures/errors, unchanged 500 skips. The backend API test count is unchanged:
+an existing case now checks selected alternate-input metadata. The live matrix has ten
+rows and four maximum-tree geometry checks. Viewports are 900px high; this is not a
+certification of the original 768px-high stage-position target. No dependencies added.

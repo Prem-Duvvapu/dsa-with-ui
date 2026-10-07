@@ -28,6 +28,7 @@ import useLatestSearchParams from './useLatestSearchParams';
 const STEP = 'step';
 const INPUT = 'input';
 const VIEW = 'view';
+const APPROACH = 'approach';
 
 /**
  * Past this an input link stops being safely shareable: some servers and chat clients cut
@@ -106,6 +107,7 @@ export default function useShareableView({ problemId, stepIndex, totalSteps, mir
     onRestoreRef.current?.({
       step: Number.isInteger(rawStep) && rawStep > 0 ? rawStep - 1 : null,
       input: parseSharedInput(params.get(INPUT)),
+      approachId: params.get(APPROACH),
       samePage
     });
   }, [problemId, navigation, params]);
@@ -126,12 +128,15 @@ export default function useShareableView({ problemId, stepIndex, totalSteps, mir
    * URL. Returns false when the input cannot be represented in a link (encoding failed or
    * the result is too long), in which case the link carries no input rather than a wrong one.
    */
-  const shareInput = useCallback((values) => {
+  const shareInput = useCallback((values, approachId = null, defaultApproachId = null) => {
     const encoded = values ? encodeInput(values) : null;
     const fits = Boolean(encoded) && encoded.length <= MAX_SHARED_INPUT_LENGTH;
     update((next) => {
       if (fits) next.set(INPUT, encoded);
       else next.delete(INPUT);
+      // The approach and input describe ONE successful run and are written together.
+      if (approachId !== null && approachId !== defaultApproachId) next.set(APPROACH, approachId);
+      else next.delete(APPROACH);
     });
     return values ? fits : true;
   }, [update]);

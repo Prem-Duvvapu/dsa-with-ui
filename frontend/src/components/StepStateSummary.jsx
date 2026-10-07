@@ -35,6 +35,14 @@ function marked(elements) {
 export function describeStep(step, dsType) {
   if (!step) return '';
 
+  if (dsType === 'RecursionTree') {
+    const frames = Array.isArray(step.callStack) ? step.callStack : null;
+    const stack = frames ? frames.length
+      ? `Call stack, outermost first: ${listOf(frames)}. Current frame is ${frames.at(-1)}.`
+      : 'Call stack is empty.' : '';
+    return [stack, describeTable(step.dpTable)].filter(Boolean).join(' ');
+  }
+
   if (Array.isArray(step.arrayState) && step.arrayState.length) {
     const a = step.arrayState;
     return `${dsType === 'Bits' ? 'Bits' : 'Array'} of ${a.length}: `
@@ -75,11 +83,18 @@ export function describeStep(step, dsType) {
     return `${noun} holding ${items.length}: ${listOf(items)}. ${end}`;
   }
 
-  if (step.dpTable?.rows?.length) {
-    return `DP table, ${step.dpTable.rows.length} rows.`;
-  }
+  if (step.dpTable?.cells?.length) return describeTable(step.dpTable);
 
   return '';
+}
+
+function describeTable(table) {
+  if (!Array.isArray(table?.cells) || table.cells.length === 0) return '';
+  return `DP table, ${table.cells.length} rows. ` + table.cells.map((row, r) =>
+    `Row ${table.rowLabels?.[r] ?? r}: ${listOf(row.map((cell, c) =>
+      `column ${table.colLabels?.[c] ?? c}: ${cell?.state === 'void' ? 'unknown'
+        : `${cell?.value ?? 'unavailable'} (${cell?.state ?? 'state unavailable'})`}`))}`
+  ).join('. ') + '.';
 }
 
 /** Variables carry the answer for problems whose whole state is scalar. */

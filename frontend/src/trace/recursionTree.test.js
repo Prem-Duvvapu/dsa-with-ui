@@ -4,6 +4,10 @@ import { buildRecursionTree, layoutRecursionTree } from './recursionTree';
 const stack = (...frames) => ({ callStack: frames });
 
 describe('buildRecursionTree', () => {
+  it('treats an explicit empty stack as all calls returned, not absent commentary', () => {
+    const steps = [stack('ways(2) #1'), stack('ways(2) #1', 'ways(1) #2'), stack('ways(2) #1'), stack()];
+    expect(buildRecursionTree(steps, 3).nodes.map(n => n.state)).toEqual(['done', 'done']);
+  });
   it('turns a descending stack into a chain', () => {
     const { nodes } = buildRecursionTree([stack('a'), stack('a', 'b'), stack('a', 'b', 'c')], 2);
     expect(nodes.map((n) => n.label)).toEqual(['a', 'b', 'c']);

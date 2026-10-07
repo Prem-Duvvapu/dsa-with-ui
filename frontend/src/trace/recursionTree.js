@@ -39,7 +39,7 @@ export function buildRecursionTree(steps, upTo, maxNodes = 220) {
   const last = Math.min(upTo ?? steps.length - 1, steps.length - 1);
   for (let i = 0; i <= last; i += 1) {
     const stack = steps[i]?.callStack;
-    if (!Array.isArray(stack) || stack.length === 0) continue;
+    if (!Array.isArray(stack)) continue;
 
     const shared = commonPrefix(previous, stack);
 

@@ -15,11 +15,11 @@ const MANUAL_KEYS = new Set(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 
  * (`scrollMemory`, both axes, tagged with the problem) on unmount so leaving and re-entering
  * the view keeps the reader's place.
  */
-export default function SourcePane({ problemId, problem, currentStep, anchors, steps, scrollMemory }) {
+export default function SourcePane({ problemId, sourceKey = problemId, problem, currentStep, anchors, steps, scrollMemory }) {
   const sourceRef = useRef(null);
   // The memory belongs to one problem. The workspace keys this pane by problem too, so a new
   // problem always starts following, at the top (INDEPENDENT_REVIEW_DB8683B.md S4).
-  const remembered = scrollMemory.current?.problemId === problemId ? scrollMemory.current : null;
+  const remembered = (scrollMemory.current?.sourceKey ?? scrollMemory.current?.problemId) === sourceKey ? scrollMemory.current : null;
   const [following, setFollowing] = useState(remembered?.following ?? true);
   const activeLine = Number.isInteger(currentStep?.activeLine) ? currentStep.activeLine : null;
   const followingRef = useRef(following);
@@ -35,6 +35,7 @@ export default function SourcePane({ problemId, problem, currentStep, anchors, s
     return () => {
       scrollMemory.current = {
         problemId,
+        sourceKey,
         top: node?.scrollTop ?? 0,
         left: node?.scrollLeft ?? 0,
         following: followingRef.current

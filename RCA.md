@@ -1434,6 +1434,16 @@ class, and the reason is worth stating rather than rediscovering.
 - **Lesson:** when a screen describes a run, every part of that description must be read
   from the run itself, never from the component that happened to submit it.
 
+### RCA-054 follow-up — 2026-10-07 DP approach identity
+
+Approach selection extends the same atomic-run contract: preparing another solution must
+not replace source/type/complexity above a retained trace. Those fields now travel with
+the committed executable and are checked after body decode. Approach and input share in
+one URL write only after success; restoration executes before seeking; retry preserves its
+original executable. Canonical demo structures are cleared for alternatives, not relabelled
+as live state. Regression coverage is in `useProblemSession.approaches.test.jsx` and
+`Approaches.integration.test.jsx`, with RED evidence and real-backend matrix in the DP plan.
+
 ### RCA-054 follow-up — 2026-10-03 re-audit R1/R2
 
 - **Status:** Fixed and verified in the `fix/ui-revamp-reaudit` change set.
