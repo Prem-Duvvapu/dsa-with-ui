@@ -76,6 +76,13 @@
    head, narration and controls (measured at 1366×768), never below the normal floor. */
 .focusMain .stage :global(.shell-stage) { min-height: max(360px, calc(100dvh - 340px)); }
 .hint { color: var(--ink-secondary); margin-top: -8px; }
+.approachSetup { min-width: 0; display: grid; gap: 4px; }
+.approachRow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; min-width: 0; }
+.approachRow label { font-size: var(--type-control); font-weight: 600; }
+.approachSelect { min-height: var(--target-min); max-width: 100%; min-width: 0; padding: 0 12px; border: 1px solid var(--control-border); border-radius: var(--radius-control); background: var(--surface-panel); color: var(--ink-strong); font: inherit; }
+.approachHelp { min-width: 0; color: var(--ink-secondary); font-size: var(--type-meta); }
+.approachHelp summary { display: flex; align-items: center; min-height: var(--target-min); cursor: pointer; }
+.approachHelp p { max-width: var(--width-reading); overflow-wrap: anywhere; margin-block: 6px; }
 
 /* Controls shared by the workspace */
 .control { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--target-min); padding: 0 14px; border: 1px solid var(--control-border); border-radius: var(--radius-control); background: var(--surface-panel); color: var(--ink-strong); font: inherit; font-size: var(--type-control); font-weight: 600; cursor: pointer; white-space: nowrap; }
@@ -107,6 +114,9 @@
    stage instead of pushing the whole page sideways. */
 .stage :global(.shell-stage) { min-width: 0; grid-template-columns: minmax(0, 1fr); }
 .stage :global(.shell-stage svg) { max-width: 100%; }
+/* A derived tree has fixed node coordinates, not a responsive viewBox. Keep its native
+   width inside its own scrolling region; squeezing the SVG clipped almost every call. */
+.stage :global(.shell-stage svg[data-recursion-diagram]) { max-width: none; flex: none; }
 .stage :global(.shell-title) { display: none; }
 .stage :global(.shell-meta) { display: none; }
 .stage :global(.shell-head) { display: none; }

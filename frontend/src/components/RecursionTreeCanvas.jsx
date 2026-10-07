@@ -9,6 +9,7 @@ const NODE_W = 88;
 const NODE_H = 26;
 const ROW_H = 62;
 const LABEL_CHARS = 13;
+const SCROLL_KEYS = new Set(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
 
 /**
  * What to write in a node.
@@ -47,7 +48,7 @@ function DerivedRecursionTree({ steps, currentStepIndex }) {
 
   return (
     <div className={derived.wrap} data-testid="derived-recursion-tree">
-      <svg width={svgW} height={svgH} role="img" aria-label={`Recursion tree, ${nodes.length} calls explored`}>
+      <svg data-recursion-diagram="true" width={svgW} height={svgH} role="img" aria-label={`Recursion tree, ${nodes.length} calls explored`}>
         {nodes.filter((n) => n.parentId !== null).map((n) => {
           const parent = nodes[n.parentId];
           return (
@@ -119,7 +120,8 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
   return (
     <div className={styles.wrap}>
       {/* Main SVG Recursion Tree Canvas */}
-      <div className={styles.stage} data-testid="recursion-tree-stage">
+      <div className={styles.stage} data-testid="recursion-tree-stage" role="region" aria-label="Recursive calls" tabIndex={0}
+        onKeyDown={event => { if (event.target === event.currentTarget && SCROLL_KEYS.has(event.key)) event.stopPropagation(); }}>
         {!hasOwnTree ? (
           <DerivedRecursionTree steps={steps} currentStepIndex={currentStepIndex} />
         ) : treeNodes.length > 0 ? (
@@ -197,13 +199,13 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
           </svg>
         ) : (
           <div className={styles.emptyNote}>
-            Recursion Call Stack Active
+            {activeStep?.callStack?.length ? 'The current call stack is shown in Analysis.' : 'No active recursive calls at this step.'}
           </div>
         )}
       </div>
 
       {/* Subarray State Bar Visualizer */}
-      <div className={styles.strip}>
+      {arrayState.length > 0 && <div className={styles.strip}>
         <span className={styles.stripLabel}>
           Live Array State:
         </span>
@@ -224,7 +226,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
             </div>
           ))}
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

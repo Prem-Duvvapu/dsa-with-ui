@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ProblemWorkspace.module.css';
+import MemoTable from './MemoTable';
 
 /**
  * The Analysis view's reading columns: what the algorithm holds at this step, and what it
@@ -123,6 +124,7 @@ export default function StateInspector({ step, steps = [], problem, dsType }) {
             marker={(index, length) => (index === length - 1 ? 'Current frame' : null)} />
         )}
         {container && <Sequence title={containerTitle} items={container} marker={containerMark} order={containerOrder} />}
+        <MemoTable step={step} steps={steps} dsType={dsType} />
       </div>
       <section className={styles.inspectorColumn} aria-label="Algorithm complexity">
         <h3 className={styles.inspectorTitle}>Algorithm complexity</h3>

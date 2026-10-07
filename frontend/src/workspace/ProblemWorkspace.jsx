@@ -32,6 +32,8 @@ import { stageFor } from './stageFamily';
 import CodeWalkthrough from './CodeWalkthrough';
 import SourcePane from './SourcePane';
 import StateInspector from './StateInspector';
+import ApproachSelector from './ApproachSelector';
+import MemoTable from './MemoTable';
 import StepHistory from './StepHistory';
 import { curriculumNeighbours } from './curriculum';
 import { defaultInput } from '../input/randomizeInput';
@@ -338,7 +340,7 @@ export default function ProblemWorkspace() {
   ) : TRACE_ERROR_COPY[traceError] && !showingOffline ? (
     <div className={styles.stageState}>Nothing to draw: the trace did not load.</div>
   ) : (
-    <ErrorBoundary resetKey={problemId}>{renderCanvas()}</ErrorBoundary>
+    <ErrorBoundary resetKey={`${problemId}:${run.approachId ?? ''}`}>{renderCanvas()}</ErrorBoundary>
   );
 
   const stageNode = (
@@ -347,6 +349,7 @@ export default function ProblemWorkspace() {
       <CanvasShell title={problem?.title} meta={steps.length ? `Step ${currentStepIndex + 1} of ${steps.length}` : null} legend={SHELL_LEGEND_DRAWN_BY.has(dsType)}>
         {stageBody}
       </CanvasShell>
+      <MemoTable step={currentStep} steps={steps} dsType={dsType} />
     </div>
   );
 
@@ -418,7 +421,7 @@ export default function ProblemWorkspace() {
   // algorithm, so it gets no "finished" actions (its notice already says why).
   const finished = completable && steps.length > 0 && currentStepIndex === steps.length - 1 && !pending && !traceLoading;
   const runOtherCase = () => {
-    const values = { ...defaultInput(session.inputSpec), ...problem.alternateInput };
+    const values = { ...defaultInput(session.inputSpec), ...session.selectedAlternateInput };
     draft.replace(values);
     runFromEditor(values);
   };
@@ -553,6 +556,7 @@ export default function ProblemWorkspace() {
       {/* <main> keeps its landmark role; the tab panel is the element the tabs point at. */}
       <main id="workspace-view" className={`${styles.width}${isFocus ? ` ${styles.focusMain}` : ''}`} tabIndex={-1} data-focus={isFocus || undefined}>
         <div id={panelId} className={styles.panel} role="tabpanel" aria-labelledby={tabId(view)} tabIndex={-1}>
+          {session.approaches.length > 1 && <div hidden={isFocus}><ApproachSelector session={session} onRun={runFromEditor} /></div>}
           {view === 'playground' && (
             <>
               <section className={styles.card} aria-labelledby="stage-title">
@@ -564,6 +568,7 @@ export default function ProblemWorkspace() {
                   ) : (
                     <h2 id="stage-title" ref={stageHeadingRef} tabIndex={-1} className={styles.cardTitle}>{stage.label}</h2>
                   )}
+                  {isFocus && run.approachLabel && <span className={styles.meta}>Showing: {run.approachLabel}</span>}
                   <div className={styles.cardActions}>
                     {hasInputSpec && !isFocus && (
                       <button type="button" className={styles.control} onClick={openEditor}>
@@ -605,7 +610,7 @@ export default function ProblemWorkspace() {
                     variant="section"
                     problemId={problemId}
                     inputSpec={session.inputSpec}
-                    alternateInput={problem?.alternateInput}
+                    alternateInput={session.selectedAlternateInput}
                     fieldErrors={fieldErrors}
                     running={traceLoading || pending}
                     values={draft.values}
@@ -636,7 +641,8 @@ export default function ProblemWorkspace() {
               )}
               {canCompare && isCompareOpen && (
                 <section className={styles.card} aria-label="Comparison with the other case" hidden={isFocus}>
-                  <CompareStrip key={problemId} problemId={problemId} dsType={dsType} alternateInput={problem.alternateInput}
+                  <CompareStrip key={`${problemId}:${run.approachId ?? ''}`} problemId={problemId} dsType={dsType} alternateInput={problem.alternateInput}
+                    approachId={run.approachId} approachLabel={run.approachLabel}
                     showCapture={!CAPTURE_STRIP_REDUNDANT_FOR.has(dsType)} mainIsCustom={Boolean(run.submittedInput)} />
                 </section>
               )}
@@ -646,13 +652,13 @@ export default function ProblemWorkspace() {
           {view === 'code' && (
             <section className={styles.card} aria-labelledby="code-title">
               <div className={styles.cardHead}>
-                <h2 id="code-title" className={styles.cardTitle}>Code walkthrough</h2>
+                <h2 id="code-title" ref={stageHeadingRef} tabIndex={-1} className={styles.cardTitle}>Code walkthrough</h2>
                 <button type="button" className={styles.control} onClick={() => selectView('playground')}>Back to visualization</button>
               </div>
               {notices}
               <CodeWalkthrough
                 diagram={stageNode}
-                source={<SourcePane key={problemId} problemId={problemId} problem={problem} currentStep={currentStep} anchors={anchors} steps={steps} scrollMemory={sourceScroll} />}
+                source={<SourcePane key={`${problemId}:${run.approachId ?? ''}`} sourceKey={`${problemId}:${run.approachId ?? ''}`} problemId={problemId} problem={problem} currentStep={currentStep} anchors={anchors} steps={steps} scrollMemory={sourceScroll} />}
                 subview={codeSubview}
                 onSubview={(next) => { pause(); setCodeSubview(next); }}
               />
@@ -665,7 +671,7 @@ export default function ProblemWorkspace() {
           {view === 'analysis' && (
             <section className={styles.card} aria-labelledby="analysis-title">
               <div className={styles.cardHead}>
-                <h2 id="analysis-title" className={styles.cardTitle}>Analysis</h2>
+                <h2 id="analysis-title" ref={stageHeadingRef} tabIndex={-1} className={styles.cardTitle}>Analysis</h2>
                 <button type="button" className={styles.control} onClick={() => selectView('playground')}>Back to visualization</button>
               </div>
               {notices}

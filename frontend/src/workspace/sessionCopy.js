@@ -13,6 +13,7 @@ export const TRACE_ERROR_COPY = Object.freeze({
 export const RUN_FAILURE_COPY = Object.freeze({
   fetch: 'the backend could not be reached',
   malformed: 'the backend returned a malformed trace',
+  'unavailable-approach': 'this solution approach is unavailable; no other approach was substituted',
   empty: 'the backend returned an empty trace',
   untraced: 'this problem has no execution trace',
   'rate-limited': 'too many runs in a short time; wait a moment and retry'
@@ -20,6 +21,9 @@ export const RUN_FAILURE_COPY = Object.freeze({
 
 /** What a shared link asked for that could not be honoured, in the learner's terms. */
 export function linkNoticeText(notice) {
+  if (notice.kind === 'approach') {
+    return `The solution approach “${notice.requested}” in this link is unavailable, so it was not run. The previous/default run is still shown when available.`;
+  }
   // Never infer a default execution merely from the absence of a custom submission.
   const outcome = {
     custom: notice.shared

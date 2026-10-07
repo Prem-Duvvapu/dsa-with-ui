@@ -19,13 +19,14 @@
   flex: 1;
   width: 100%;
   min-height: 260px;
+  max-height: 480px;
   background: var(--canvas-well);
   border-radius: var(--radius-md);
   overflow: auto;
   padding: 16px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 /* --- tree svg and the array strip beneath it --- */

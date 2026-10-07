@@ -1,8 +1,9 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { decodeTrace } from '../trace/decodeTrace';
 
-async function fetchRun(problemId, body, signal) {
-  const res = await fetch(`/api/problems/${problemId}/execute`, {
+async function fetchRun(problemId, body, signal, approachId) {
+  const query = approachId ? `?approach=${encodeURIComponent(approachId)}` : '';
+  const res = await fetch(`/api/problems/${problemId}/execute${query}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body || {}),
@@ -10,6 +11,9 @@ async function fetchRun(problemId, body, signal) {
   });
   if (!res.ok) throw new Error(`execute failed: ${res.status}`);
   const data = await res.json();
+  if (approachId && (data?.approachId !== approachId || data?.problemId !== problemId)) {
+    throw new Error('Comparison returned a different executable');
+  }
   return {
     steps: decodeTrace(data),
     resolvedInput: data?.resolvedInput ?? null
@@ -22,7 +26,7 @@ async function fetchRun(problemId, body, signal) {
  * triggers it, not merely having a problem with an alternateInput selected — the compare
  * panel is off by default, and most sessions never open it.
  */
-export default function useComparisonTrace(problemId, alternateInput, isActive) {
+export default function useComparisonTrace(problemId, alternateInput, isActive, approachId = null) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [defaultRun, setDefaultRun] = useState(null);
@@ -52,8 +56,8 @@ export default function useComparisonTrace(problemId, alternateInput, isActive) 
     setAlternateRun(null);
     try {
       const [defaultResult, alternateResult] = await Promise.all([
-        fetchRun(problemId, {}, controller?.signal),
-        fetchRun(problemId, alternateInputRef.current, controller?.signal)
+        fetchRun(problemId, {}, controller?.signal, approachId),
+        fetchRun(problemId, alternateInputRef.current, controller?.signal, approachId)
       ]);
       if (request !== requestRef.current) return;
       setDefaultRun(defaultResult);
@@ -65,7 +69,7 @@ export default function useComparisonTrace(problemId, alternateInput, isActive) 
     } finally {
       if (request === requestRef.current) setLoading(false);
     }
-  }, [problemId, isActive]);
+  }, [problemId, isActive, approachId]);
 
   useEffect(() => {
     load();
