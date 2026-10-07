@@ -1552,3 +1552,21 @@ class, and the reason is worth stating rather than rediscovering.
   phase anchors. Registry-wide placeholder and resource-ownership guards prevent drift.
 - **Lesson:** a correct trace with in-bounds highlights can still teach fabricated
   code. Displayed source needs its own executable contract, not just visual snapshots.
+
+## RCA-058 — A bounded default-trace cache used unbounded caller encoding strings
+
+- **Discovered:** 2026-10-07 while implementing the DP approach API (D1).
+- **Symptom:** omitted encoding, `delta`, and `DELTA` produced the same response but
+  occupied separate entries. Arbitrary `?encoding=...` values were also accepted as
+  delta and became distinct lifetime cache keys, contrary to the documented two-encoding
+  bound. Rate limiting slowed requests but did not bound accumulated keys.
+- **Root cause:** the controller keyed by raw requested encoding while `TraceResponse`
+  chose an effective encoding later. Validation and cache identity disagreed.
+- **Fix:** resolve the registered approach and normalize supported encoding before
+  lookup. Cache keys are typed `(problem, approach, effectiveEncoding)` records. Unknown
+  encodings return a documented 400; no custom-input response enters this cache.
+- **Guard (RED first):** `SolutionApproachesApiTest.encodingAliasesDoNotMultiplyDefaultCacheEntries`
+  and `unsupportedEncodingIsRefusedBeforeCaching` failed on the prior code. Selected
+  executable/cache separation is also checked with distinct registered test executables.
+- **Lesson:** a cache is bounded by trusted identities only when those identities are
+  validated and canonicalized before lookup, not after a value has been computed.

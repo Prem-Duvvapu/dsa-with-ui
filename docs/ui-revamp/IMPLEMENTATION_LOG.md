@@ -970,3 +970,33 @@ Plan/results: `COMPLETE_SOLUTION_CODE_REPAIR_PLAN.md`; root cause: RCA-057;
 reproducible browser and snapshot probes/results: `evidence/source-code/`.
 This certifies these 27 displayed sources, not every source in the catalogue. The
 owner authorized commit, push and merge; the linked PR records publication and CI.
+
+## DP solution approaches D0/D1 — 2026-10-07
+
+Following PR #210 (Speed Insights, merged with production URL redaction), refreshed the
+DP feature baseline to `10ed4fc`. Classified all 56 candidates in the generated coverage
+ledger with actual state/recurrence, reconstruction, canonical bounds/complexity/source
+digests and applicability. The ledger distinguishes histogram stacks, binary-search
+tails, rolling DP and in-place Matrix DP. Print LIS's omitted display helpers are recorded
+as a later source-repair prerequisite. Alternatives' safety caps remain unmeasured.
+
+D1 introduces an immutable provider registry separate from the canonical tracer registry.
+The pilot's existing Climbing Stairs executable is identified as `tabulation`; other
+canonical algorithms retain an honest “Current solution” identity. No new alternatives
+or selector are advertised in this package. Optional `approach` is served by detail,
+input-spec and GET/POST execute. Responses carry source, approach ID/label, type and
+complexity from the selected executable. Unknown approaches are refused, not substituted.
+Default trace cache keys now include approach and normalized supported encoding. Custom
+input is uncached; unknown encoding is a documented 400. RCA-058 records the previous
+unbounded raw-encoding key defect.
+
+Six review gates: HTTP metadata/dispatch/input validation checked; frontend full suite
+and real workspace checked; canonical UX unchanged and both themes inspected; inventory
+stats remain 431/431 with no false coverage claim; alternatives do not become canonical
+Spring tracer beans and source ownership is explicit; seven API regressions and the typed
+array-ceiling guard were proved red, all goldens stay unchanged. Final verification:
+7,999 backend tests / zero failures or errors / 500 skipped; 76 frontend files / 678 tests;
+production build and startup process cleanup passed. Live probe inspected 431 details,
+full/delta/custom/refusal API responses and four phone/desktop × light/dark browser rows.
+No new dependency. The frontend approach session/selector and genuine pilot forms remain
+D2/D3 work. See `DP_SOLUTION_APPROACHES_PLAN.md` and `dp-approaches/d1-results.json`.
