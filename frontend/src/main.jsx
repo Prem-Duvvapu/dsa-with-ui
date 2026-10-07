@@ -3,6 +3,7 @@ import { redactAnalyticsUrl } from './analytics';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import AppRouter from './AppRouter.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import './index.css';
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <AppRouter />
         {import.meta.env.PROD && <Analytics beforeSend={redactAnalyticsUrl} />}
+        {import.meta.env.PROD && <SpeedInsights beforeSend={redactAnalyticsUrl} />}
       </BrowserRouter>
     </ErrorBoundary>
   </React.StrictMode>
