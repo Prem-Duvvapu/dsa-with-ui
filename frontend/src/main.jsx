@@ -1,3 +1,5 @@
+import { Analytics } from '@vercel/analytics/react';
+import { redactAnalyticsUrl } from './analytics';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
@@ -16,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ErrorBoundary>
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <AppRouter />
+        {import.meta.env.PROD && <Analytics beforeSend={redactAnalyticsUrl} />}
       </BrowserRouter>
     </ErrorBoundary>
   </React.StrictMode>
