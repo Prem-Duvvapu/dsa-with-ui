@@ -1,6 +1,9 @@
 package com.dsa.ui.tracer.wire;
 
 import com.dsa.ui.tracer.ExecutionTrace;
+import com.dsa.ui.approach.SolutionApproach;
+import com.dsa.ui.approach.ApproachComplexity;
+import com.dsa.ui.model.DsType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
@@ -35,9 +38,13 @@ public final class TraceResponse {
     private final String code;
     private final Map<String, Integer> anchors;
     private final Map<String, Object> resolvedInput;
+    private final String approachId;
+    private final String approachLabel;
+    private final DsType dsType;
+    private final ApproachComplexity complexity;
 
     private TraceResponse(ExecutionTrace trace, String encoding, Integer keyframeInterval,
-                          List<?> steps) {
+                          List<?> steps, SolutionApproach approach) {
         this.problemId = trace.getProblemId();
         this.encoding = encoding;
         this.keyframeInterval = keyframeInterval;
@@ -50,20 +57,33 @@ public final class TraceResponse {
         this.code = trace.getCode();
         this.anchors = trace.getAnchors();
         this.resolvedInput = trace.getResolvedInput();
+        this.approachId = approach == null ? null : approach.id();
+        this.approachLabel = approach == null ? null : approach.label();
+        this.dsType = approach == null ? null : approach.tracer().dsType();
+        this.complexity = approach == null ? null : approach.complexity();
     }
 
     public static TraceResponse delta(ExecutionTrace trace) {
         return new TraceResponse(trace, DELTA, TraceEncoder.KEYFRAME_INTERVAL,
-                TraceEncoder.encode(trace.getSteps()));
+                TraceEncoder.encode(trace.getSteps()), null);
     }
 
     public static TraceResponse full(ExecutionTrace trace) {
-        return new TraceResponse(trace, FULL, null, trace.getSteps());
+        return new TraceResponse(trace, FULL, null, trace.getSteps(), null);
     }
 
     /** Picks the encoding a caller asked for; anything unrecognised gets the default. */
     public static TraceResponse of(ExecutionTrace trace, String requested) {
         return FULL.equalsIgnoreCase(requested) ? full(trace) : delta(trace);
+    }
+
+    public static TraceResponse of(ExecutionTrace trace, String requested, SolutionApproach approach) {
+        if (!trace.getProblemId().equals(approach.problemId())) {
+            throw new IllegalArgumentException("Trace and approach belong to different problems");
+        }
+        return FULL.equalsIgnoreCase(requested)
+                ? new TraceResponse(trace, FULL, null, trace.getSteps(), approach)
+                : new TraceResponse(trace, DELTA, TraceEncoder.KEYFRAME_INTERVAL, TraceEncoder.encode(trace.getSteps()), approach);
     }
 
     public String getProblemId() { return problemId; }
@@ -81,4 +101,8 @@ public final class TraceResponse {
     public String getCode() { return code; }
     public Map<String, Integer> getAnchors() { return anchors; }
     public Map<String, Object> getResolvedInput() { return resolvedInput; }
+    public String getApproachId() { return approachId; }
+    public String getApproachLabel() { return approachLabel; }
+    public DsType getDsType() { return dsType; }
+    public ApproachComplexity getComplexity() { return complexity; }
 }

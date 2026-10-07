@@ -1,6 +1,7 @@
 package com.dsa.ui.controller;
 
 import com.dsa.ui.tracer.InputValidationException;
+import com.dsa.ui.approach.UnavailableApproachException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +18,18 @@ import java.util.Map;
  */
 @RestControllerAdvice
 public class ApiExceptionHandler {
+
+    @ExceptionHandler(UnavailableApproachException.class)
+    public ResponseEntity<Map<String, Object>> onUnavailableApproach(UnavailableApproachException e) {
+        return ResponseEntity.badRequest().body(Map.of("error", "unavailable_approach",
+                "message", e.getMessage(), "problemId", e.getProblemId(),
+                "availableApproaches", e.getAvailable()));
+    }
+
+    @ExceptionHandler(UnsupportedEncodingException.class)
+    public ResponseEntity<Map<String, Object>> onUnsupportedEncoding(UnsupportedEncodingException e) {
+        return ResponseEntity.badRequest().body(Map.of("error", "unsupported_encoding", "message", e.getMessage()));
+    }
 
     @ExceptionHandler(InputValidationException.class)
     public ResponseEntity<Map<String, Object>> onInvalidInput(InputValidationException e) {

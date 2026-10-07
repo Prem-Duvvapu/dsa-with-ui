@@ -1,0 +1,3279 @@
+{
+  "generated": "2026-10-07T19:17:23.192Z",
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "candidates": 56,
+  "safetyNotes": "Preserve declared input rules and joint DP table budgets; measure every new approach independently.",
+  "rows": [
+    {
+      "id": "assign-cookies-dp",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "matches(childPrefix,cookiePrefix)",
+      "transition": "max(skip child, skip cookie, compatible diagonal+1)",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Sort both arrays as existing source does; DP version must not be replaced by greedy.",
+      "codeDigest": "139700b64bed92e5ab14d5092e2820aa86bee90f979543c2faaa728a4619d620",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "greed",
+            "label": "Child greed",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              2,
+              3
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 10,
+              "maxValue": 20,
+              "minValue": 1
+            }
+          },
+          {
+            "name": "cookies",
+            "label": "Cookie sizes",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              1
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 10,
+              "maxValue": 20,
+              "minValue": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "best-time-stock-1",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "profit(day,action)",
+      "transition": "max(skip, signed trade plus next action), action cap=2",
+      "resultReconstruction": "profit",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Existing source really uses action-state DP; single-transaction linear greedy would be a separate option.",
+      "codeDigest": "d03bffa030abe009af29e71ca50a7110ca2a4e40aab07b8c80f6d65929a3b4ad",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "prices",
+            "label": "Daily prices",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              7,
+              1,
+              5,
+              3,
+              6,
+              4
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 15,
+              "maxValue": 100,
+              "minValue": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "best-time-stock-2",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "profit(day,buyOrSell)",
+      "transition": "max(skip, buy/sell plus next-day opposite state)",
+      "resultReconstruction": "profit",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Unlimited transactions with one held stock; terminal day has zero future value.",
+      "codeDigest": "c53e3cf43c2008cec1a53aa7af28c841dee7a782459fdc280170ed8defcfbb97",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "prices",
+            "label": "Daily prices",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              7,
+              1,
+              5,
+              3,
+              6,
+              4
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 15,
+              "maxValue": 100,
+              "minValue": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "best-time-stock-3",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "profit(day,action)",
+      "transition": "trade/skip with action cap=4",
+      "resultReconstruction": "profit",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Two complete transactions, no simultaneous holdings.",
+      "codeDigest": "41decdffa6c7d5b6873810157127860a1638a894a2cc6ebe245bf1b4b62ab577",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "prices",
+            "label": "Daily prices",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              3,
+              3,
+              5,
+              0,
+              0,
+              3,
+              1,
+              4
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 15,
+              "maxValue": 100,
+              "minValue": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "best-time-stock-4",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "profit(day,action)",
+      "transition": "trade/skip with action cap=2*k",
+      "resultReconstruction": "profit",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Joint days/actions budget; do not silently switch to unlimited trades.",
+      "codeDigest": "7fea50ef60507512a2f915d737daa5c3677135af95fe9c4334e8febe36e93e5a",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "prices",
+            "label": "Daily prices",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              3,
+              2,
+              6,
+              5,
+              0,
+              3
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 15,
+              "maxValue": 100,
+              "minValue": 0
+            }
+          },
+          {
+            "name": "k",
+            "label": "Maximum transactions",
+            "type": "INT",
+            "defaultValue": 2,
+            "help": "",
+            "constraints": {
+              "max": 5,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "burst-balloons",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "coins(left,right)",
+      "transition": "max choosing the last balloon in each padded interval",
+      "resultReconstruction": "value",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Use last-balloon interval state, padded boundaries and correct multiplication domain.",
+      "codeDigest": "05e69d3aab2e5af1f849a67d0706648b6e1e423bc8fefffd5f6deaf4604176e6",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Balloons",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              3,
+              1,
+              5,
+              8
+            ],
+            "help": "Bursting a balloon pays coins[left] * coins[i] * coins[right], the neighbors it had left.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 7,
+              "maxValue": 100,
+              "minValue": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "climbing-stairs",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "ways(i)",
+      "transition": "ways(i)=ways(i-1)+ways(i-2), bases 0 and 1 are 1",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Pilot; recursion cap must be measured separately from canonical n<=30.",
+      "codeDigest": "816c12d2832d60a29c6dd7d424bc24d34f1928e8eab0e62d348e789f771080ce",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "n",
+            "label": "Stairs",
+            "type": "INT",
+            "defaultValue": 5,
+            "help": "ways[i] = ways[i-1] + ways[i-2] — Fibonacci, arrived at from first principles.",
+            "constraints": {
+              "max": 30,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N)",
+        "timeExplanation": "Fills one cell per stair, each from two already-known cells.",
+        "timeWhy": "1D tabulation",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Keeps the whole ways table so every dependency stays visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "coin-change-2",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "count(type,amount)",
+      "transition": "skip type plus take same type at smaller amount",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Distinct coin denominations; combinations, not permutations.",
+      "codeDigest": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "coins",
+            "label": "Coin denominations",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              2,
+              5
+            ],
+            "help": "Unlimited supply of each — a coin may be used more than once.",
+            "constraints": {
+              "maxValue": 25,
+              "maxLength": 8,
+              "minValue": 1,
+              "minLength": 1,
+              "requireDistinct": true
+            }
+          },
+          {
+            "name": "amount",
+            "label": "Target amount",
+            "type": "INT",
+            "defaultValue": 5,
+            "help": "Count combinations (not permutations) of coins that sum to exactly this amount.",
+            "constraints": {
+              "max": 40,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * Amount)",
+        "timeExplanation": "Fills one cell per (denomination count, amount) pair; counts add rather than compare, but the same same-row reuse read applies.",
+        "timeWhy": "Unbounded-knapsack tabulation",
+        "spaceComplexity": "O(N * Amount)",
+        "spaceExplanation": "Keeps the whole (N+1) by (Amount+1) table of combination counts.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N * Amount)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "count-palindromic-subsequences",
+      "category": "Strings",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "count(left,right)",
+      "transition": "equal ends add adjacent counts+1; unequal ends subtract overlapping inner count",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Strings category exception; counts non-distinct palindromic subsequences, not distinct strings.",
+      "codeDigest": "c4d5489ad13b5b650155d5de91cafd21647141105e3dfe065e9e88421b0c909e",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "s",
+            "label": "String",
+            "type": "STRING",
+            "defaultValue": "bccb",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 10,
+              "patternHint": "Use lowercase letters a-z."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(V + E)",
+        "timeExplanation": "Time Complexity: Standard optimal graph traversal.",
+        "timeWhy": "Graph Algorithm",
+        "spaceComplexity": "O(V + E)",
+        "spaceExplanation": "Space Complexity: Visited arrays and recursion call stack.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(V)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "count-partitions-given-diff",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "count(item,(total+difference)/2)",
+      "transition": "check sign/parity then count subsets of transformed sum",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Canonical uses the larger subset target; input values are positive, unlike count-subsets-with-sum-k.",
+      "codeDigest": "da6cc78d25c20e6bf535e6f790a051ecb10a9f5b093de03037f1844f6238077d",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Values",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              1,
+              2,
+              3
+            ],
+            "help": "Non-negative integers; kept away from zero here so every subset stays uniquely countable.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 10,
+              "maxValue": 15,
+              "minValue": 1
+            }
+          },
+          {
+            "name": "d",
+            "label": "Difference D",
+            "type": "INT",
+            "defaultValue": 1,
+            "help": "How many ways to split the array so S1 - S2 = D, S1 >= S2.",
+            "constraints": {
+              "max": 60,
+              "min": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * Target)",
+        "timeExplanation": "Reduces algebraically to counting subsets summing to (totalSum + D) / 2, then fills that same (N+1) by (Target+1) count table.",
+        "timeWhy": "2D counting tabulation via algebraic reduction",
+        "spaceComplexity": "O(N * Target)",
+        "spaceExplanation": "Keeps the whole (N+1) by (Target+1) count table so both the skip and take contributions stay visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N * Target)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "count-square-submatrices",
+      "category": "Dynamic Programming",
+      "dsType": "Matrix",
+      "canonicalImplementation": "in-place-tabulation",
+      "state": "maxSquareEnding(row,col)",
+      "transition": "one plus min(left,top,diagonal) for a one cell; sum ending sizes",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Matrix renderer is truthful DP. New recursive forms must read original matrix without using mutated values as input.",
+      "codeDigest": "3db87861fe20c386835908d0e7af853810099718d6823c9e6fe0f8ac9e925f7c",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "grid",
+            "label": "Grid",
+            "type": "INT_GRID",
+            "defaultValue": [
+              [
+                0,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                0,
+                1,
+                1,
+                1
+              ]
+            ],
+            "help": "Cells are rewritten in place with the largest square ending at each position.",
+            "constraints": {
+              "minValue": 0,
+              "maxRows": 8,
+              "maxValue": 1,
+              "maxCols": 8
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "count(item,sum)",
+      "transition": "skip count plus take count from previous row",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Zero doubles choices; do not collapse equal reads into one branch.",
+      "codeDigest": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Values",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              2,
+              2,
+              3
+            ],
+            "help": "Non-negative integers; kept away from zero here so every subset stays uniquely countable.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 10,
+              "maxValue": 15,
+              "minValue": 1
+            }
+          },
+          {
+            "name": "k",
+            "label": "Target sum K",
+            "type": "INT",
+            "defaultValue": 3,
+            "help": "How many subsets sum to exactly this value.",
+            "constraints": {
+              "max": 60,
+              "min": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * Target)",
+        "timeExplanation": "Fills one cell per (item count, sum) pair, each from two predecessors.",
+        "timeWhy": "2D counting tabulation",
+        "spaceComplexity": "O(N * Target)",
+        "spaceExplanation": "Keeps the whole (N+1) by (Target+1) count table so both the skip and take contributions stay visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N * Target)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "distinct-subsequences",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "count(sourcePrefix,targetPrefix)",
+      "transition": "skip source character plus matching diagonal; empty target count is one",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Use long counts and identical string domain.",
+      "codeDigest": "7f94195767bc07cdd95668cf87df56b60c1f7f9f9d1c5d7836637a50c6aa57ba",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "source",
+            "label": "Source",
+            "type": "STRING",
+            "defaultValue": "rabbbit",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          },
+          {
+            "name": "target",
+            "label": "Target",
+            "type": "STRING",
+            "defaultValue": "rabbit",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 10,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "edit-distance",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "cost(firstPrefix,secondPrefix)",
+      "transition": "match diagonal; mismatch one plus min(delete,insert,replace)",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Length<=14 plus joint table budget; naive recursion needs smaller measured bounds.",
+      "codeDigest": "450ba30a80ad4513363e2cd647cc0689881555d65cba8c6f8f6b3fd3c13e28cd",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "word1",
+            "label": "Word 1 (source)",
+            "type": "STRING",
+            "defaultValue": "horse",
+            "help": "Lowercase letters only.",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 14,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          },
+          {
+            "name": "word2",
+            "label": "Word 2 (target)",
+            "type": "STRING",
+            "defaultValue": "ros",
+            "help": "Lowercase letters only.",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 14,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "evaluate-boolean-expression",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "count(leftOperand,rightOperand,truth)",
+      "transition": "combine true/false counts for each operator and split",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "All truth tables and both truth states; cap operands/splits jointly for recursion.",
+      "codeDigest": "f11e0c596a6bdb87e9bf8a3a64969771dad5b60d792477a9ba4b893d51bd1e0e",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "expression",
+            "label": "Boolean expression",
+            "type": "STRING",
+            "defaultValue": "T|F&T^T",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "([TF])([&|^][TF])*",
+              "maxLength": 15,
+              "patternHint": "Alternate T/F operands with &, |, or ^."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "frog-jump",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "energy(i)",
+      "transition": "minimum predecessor energy plus absolute height difference for jumps 1 or 2",
+      "resultReconstruction": "cost",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Use identical height inputs; bound branching by array length.",
+      "codeDigest": "49baaf1ecc92875611520728f3a04246bacfe4e44a0c71d972017675e8504151",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "heights",
+            "label": "Stair heights",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              10,
+              50,
+              40,
+              30
+            ],
+            "help": "Energy for a jump is the height difference, so a tall stair next door can cost more than a short one two away.",
+            "constraints": {
+              "minLength": 2,
+              "maxLength": 20,
+              "maxValue": 999,
+              "minValue": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N)",
+        "timeExplanation": "Decides each stair once by comparing its two reachable predecessors.",
+        "timeWhy": "1D tabulation",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Keeps the whole energy table so both candidate transitions stay visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "frog-jump-k-distance",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "energy(i)",
+      "transition": "minimum energy(i-j)+height difference over valid j<=k",
+      "resultReconstruction": "cost",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Combined length and k determine recursion cost.",
+      "codeDigest": "f8c86237e6c1e861be3fc706ca3b962636dbd5a20c2dbded3b73aeb69592cfb4",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "heights",
+            "label": "Stair heights",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              10,
+              30,
+              40,
+              20,
+              50
+            ],
+            "help": "A dip in the middle rewards long jumps, which is where K earns its cost.",
+            "constraints": {
+              "minLength": 2,
+              "maxLength": 16,
+              "maxValue": 999,
+              "minValue": 0
+            }
+          },
+          {
+            "name": "k",
+            "label": "Max jump distance",
+            "type": "INT",
+            "defaultValue": 3,
+            "help": "K = 2 reduces this to plain frog jump; raise it and each cell reads more predecessors.",
+            "constraints": {
+              "max": 8,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Weighs up to K reachable predecessors for each of the N stairs.",
+        "timeWhy": "1D tabulation over a K-wide window",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Keeps one energy cell per stair.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "grid-unique-paths",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "paths(row,col)",
+      "transition": "paths above plus paths left, with one path at origin",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Measure combined rows and columns for recursive branching.",
+      "codeDigest": "f5c728b8931421f32a33bdedd12f5670245eb4677cf2e60e7728dd2b6e20e143",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "rows",
+            "label": "Rows",
+            "type": "INT",
+            "defaultValue": 3,
+            "help": "The robot starts top-left and may only move right or down.",
+            "constraints": {
+              "max": 8,
+              "min": 1
+            }
+          },
+          {
+            "name": "cols",
+            "label": "Columns",
+            "type": "INT",
+            "defaultValue": 3,
+            "help": "",
+            "constraints": {
+              "max": 8,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(M * N)",
+        "timeExplanation": "Fills one cell per grid position, each from two neighbours.",
+        "timeWhy": "2D tabulation",
+        "spaceComplexity": "O(M * N)",
+        "spaceExplanation": "Keeps the whole M by N table so both directions of dependency stay visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(M * N)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "house-robber-2",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "two-pass-tabulation",
+      "state": "best(i,start,end)",
+      "transition": "maximum of linear recurrence excluding first or excluding last house",
+      "resultReconstruction": "sum",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Keep circular boundary choice; existing editor accepts at least two nonnegative house values.",
+      "codeDigest": "f88ca497d0c0e318d6430630504def0fd72cf0b57e28323780b3170d9a6f75d3",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "House values",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              2,
+              7,
+              9,
+              3,
+              1
+            ],
+            "help": "Arranged in a circle, so house 0 and the last house are adjacent and cannot both be robbed.",
+            "constraints": {
+              "minLength": 2,
+              "maxLength": 16,
+              "maxValue": 999,
+              "minValue": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N)",
+        "timeExplanation": "Runs the linear non-adjacent recurrence twice, each over N-1 houses.",
+        "timeWhy": "Circle broken into two linear passes",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Keeps one row per pass.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "knapsack-01",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "value(item,capacity)",
+      "transition": "max(skip item, item value+previous-item row at reduced capacity)",
+      "resultReconstruction": "value",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Equal weights/values lengths; combined table-cell budget; no item reuse.",
+      "codeDigest": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "weights",
+            "label": "Weights",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              2,
+              4,
+              5
+            ],
+            "help": "One weight per item, paired by index with values.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 8,
+              "maxValue": 20,
+              "minValue": 1
+            }
+          },
+          {
+            "name": "values",
+            "label": "Values",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              5,
+              4,
+              8,
+              6
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 8,
+              "maxValue": 100,
+              "minValue": 1
+            }
+          },
+          {
+            "name": "capacity",
+            "label": "Capacity",
+            "type": "INT",
+            "defaultValue": 5,
+            "help": "",
+            "constraints": {
+              "max": 30,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * W)",
+        "timeExplanation": "Time Complexity: N items x Capacity W table.",
+        "timeWhy": "2D/1D DP",
+        "spaceComplexity": "O(W)",
+        "spaceExplanation": "Space Complexity: 1D array space-optimized DP table.",
+        "spaceWhy": "DP Array",
+        "auxiliarySpace": "Auxiliary Space: O(W)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "largest-divisible-subset",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation-with-reconstruction",
+      "state": "length(sortedIndex),parent(sortedIndex)",
+      "transition": "extend previous value when current is divisible",
+      "resultReconstruction": "sequence",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Distinct positive values, sorted parent path; validate actual subset, not just length.",
+      "codeDigest": "5ccf7f89de26880a60e11376d6bd7f928cf2dbd848556f65ea0d04ae446ad775",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Numbers",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              2,
+              4,
+              8
+            ],
+            "help": "",
+            "constraints": {
+              "maxValue": 100,
+              "maxLength": 15,
+              "minValue": 1,
+              "minLength": 1,
+              "requireDistinct": true
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "lis-binary-search",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "binary-search-tails",
+      "state": "minimumTail(length)",
+      "transition": "lower-bound replacement or extension of sorted tails",
+      "resultReconstruction": "length",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Keep current O(n log n) method as an optimized default; add classic recurrence as additional approaches, never call tails tabulation.",
+      "codeDigest": "7de2a0291d156db472ef346d295a60f44d28388abd5bb359c3ae827a49e7d5c0",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Array",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              10,
+              9,
+              2,
+              5,
+              3,
+              7,
+              101,
+              18
+            ],
+            "help": "tails[k] = smallest tail of an increasing subsequence of length k+1.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 30,
+              "maxValue": 999,
+              "minValue": -999
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N log N)",
+        "timeExplanation": "Binary-searches the sorted tails prefix once for each input value.",
+        "timeWhy": "Patience sorting / lower_bound",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Stores at most N candidate tails.",
+        "spaceWhy": "Tails array",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Tails array"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "longest-bitonic-subsequence",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "two-pass-tabulation",
+      "state": "increasing(index),decreasing(index)",
+      "transition": "strict forward/reverse LIS then max(inc+dec-1)",
+      "resultReconstruction": "length",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Forward/reverse anchors stay distinct; allow purely increasing/decreasing under existing definition.",
+      "codeDigest": "2f75049001e3d47c0ba8a4917dc0bcc913f3157ad2cc6d9d1708d983cd2a5e1f",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Numbers",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              11,
+              2,
+              10,
+              4,
+              5,
+              2,
+              1
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 15,
+              "maxValue": 100,
+              "minValue": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "longest-common-subsequence",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "length(firstPrefix,secondPrefix)",
+      "transition": "matching diagonal+1; otherwise max(above,left)",
+      "resultReconstruction": "length",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Joint string-length table budget; do not conflate substring and subsequence.",
+      "codeDigest": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "first",
+            "label": "First string",
+            "type": "STRING",
+            "defaultValue": "abcde",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          },
+          {
+            "name": "second",
+            "label": "Second string",
+            "type": "STRING",
+            "defaultValue": "ace",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(M * N)",
+        "timeExplanation": "Time Complexity: Table size M x N.",
+        "timeWhy": "2D String DP",
+        "spaceComplexity": "O(M * N)",
+        "spaceExplanation": "Space Complexity: 2D DP matrix table.",
+        "spaceWhy": "Matrix",
+        "auxiliarySpace": "Auxiliary Space: O(M * N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "longest-common-substring",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "endingLength(firstEnd,secondEnd)",
+      "transition": "matching diagonal+1; mismatch resets to zero; retain global maximum",
+      "resultReconstruction": "length",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Memo recursion must cover all endpoint states, not only the final cell.",
+      "codeDigest": "a0190ee7f063c727426e18fe412f64bc96d579c74b36e9bf928b0bfc9a36efad",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "first",
+            "label": "First string",
+            "type": "STRING",
+            "defaultValue": "abcd",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          },
+          {
+            "name": "second",
+            "label": "Second string",
+            "type": "STRING",
+            "defaultValue": "abzd",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "longest-increasing-subsequence",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "best(index,previousTakenIndex+1)",
+      "transition": "max(skip index, take index plus next row with new predecessor), when strictly increasing",
+      "resultReconstruction": "length",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Actual canonical is a two-dimensional take/skip table; preserve that state definition.",
+      "codeDigest": "d8ce802770ff902711317b45196803b297c76cd94dc83cf6198d4014746de51f",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Array",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              10,
+              9,
+              2,
+              5,
+              3,
+              7,
+              101,
+              18
+            ],
+            "help": "dp[i][p] fills bottom-up: best LIS from index i when the last taken index is p-1.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 16,
+              "maxValue": 999,
+              "minValue": -999
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N^2)",
+        "timeExplanation": "Fills one reachable state for each (index, previous-index) pair.",
+        "timeWhy": "Two-dimensional LIS recurrence",
+        "spaceComplexity": "O(N^2)",
+        "spaceExplanation": "Stores (N+1) x (N+1) value and computed-state tables.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N^2)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "longest-palindromic-subsequence",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation-via-lcs",
+      "state": "length(originalPrefix,reversedPrefix)",
+      "transition": "LCS of input and its reverse",
+      "resultReconstruction": "length",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Preserve the actual LCS formulation; direct interval DP is a separate optional formulation.",
+      "codeDigest": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "text",
+            "label": "Text",
+            "type": "STRING",
+            "defaultValue": "bbbab",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "longest-string-chain",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation-with-reconstruction",
+      "state": "length(wordIndex),parent(wordIndex)",
+      "transition": "sort by length then extend a one-character predecessor",
+      "resultReconstruction": "length-and-chain",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Include real predecessor helper and preserve deterministic sort order.",
+      "codeDigest": "3d12a54956df429d6278edf1c6c8b555ccec186644c1440b09a7425ae58fa80a",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "words",
+            "label": "Comma-separated words",
+            "type": "STRING",
+            "defaultValue": "a,b,ba,bca,bda,bdca",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+(,[a-z]+)*",
+              "maxLength": 100,
+              "patternHint": "Lowercase words separated by commas."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "matrix-chain-multiplication",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "cost(leftMatrix,rightMatrix)",
+      "transition": "min over split of left cost+right cost+dimension product",
+      "resultReconstruction": "cost",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Interval length order; dimensions are one longer than matrix count.",
+      "codeDigest": "4f768f8435f76e323c5041d1ae91eb06eb597ea76b99a033c9257041acd130c8",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "dims",
+            "label": "Matrix dimensions",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              10,
+              20,
+              30,
+              40,
+              30
+            ],
+            "help": "N+1 numbers describe N matrices: dims[i-1] x dims[i] is matrix i.",
+            "constraints": {
+              "minLength": 2,
+              "maxLength": 8,
+              "maxValue": 100,
+              "minValue": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "matrix-chain-multiplication-theory",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "cost(leftMatrix,rightMatrix)",
+      "transition": "interval split minimization of multiplication cost",
+      "resultReconstruction": "cost",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "An executable existing problem despite title; its real source must remain complete.",
+      "codeDigest": "2fb7bf8b1b8a138d6f32f824c8815d4705b02a704625b9020cef857026c797c4",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "dimensions",
+            "label": "Matrix dimensions",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              10,
+              30,
+              5,
+              60
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 2,
+              "maxLength": 9,
+              "maxValue": 100,
+              "minValue": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "max-rectangle-area-all-ones",
+      "category": "Dynamic Programming",
+      "dsType": "Array",
+      "canonicalImplementation": "histogram-monotonic-stack",
+      "state": "height(column),increasingStack",
+      "transition": "accumulate consecutive ones by row and pop histogram rectangles",
+      "resultReconstruction": "area",
+      "plannedForms": [],
+      "notes": "No direct recursion/memoization/tabulation transformation of the current stack algorithm. Retain canonical; a different rectangle-DP formulation requires its own explicit audit.",
+      "codeDigest": "c19b8acf86b4a1da31097f66ad374cb0c0718e43305b6281a9cc1ca240a14127",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "grid",
+            "label": "Grid",
+            "type": "INT_GRID",
+            "defaultValue": [
+              [
+                1,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              [
+                1,
+                0,
+                0,
+                1,
+                0
+              ]
+            ],
+            "help": "Each row turns the problem into largest-rectangle-in-histogram over running heights.",
+            "constraints": {
+              "minValue": 0,
+              "maxRows": 6,
+              "maxValue": 1,
+              "maxCols": 8
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "requires-different-formulation",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "max-sum-non-adjacent",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "best(i)",
+      "transition": "max(skip previous prefix, nums[i]+best(i-2))",
+      "resultReconstruction": "sum",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Existing values are nonnegative; first entry initializes the base case.",
+      "codeDigest": "3c47b47c54c0a1a9fdfe2625b20eed0734d6bc862ff7a4831fc806493ea01be0",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Values",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              2,
+              1,
+              4,
+              9,
+              4,
+              1,
+              8
+            ],
+            "help": "Adjacent picks are forbidden, so a large value can be worth less than the two smaller ones it blocks.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 20,
+              "maxValue": 999,
+              "minValue": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N)",
+        "timeExplanation": "Decides each index once between taking it and skipping it.",
+        "timeWhy": "1D tabulation",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Keeps one best-sum cell per index.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "mcm-cost-eval",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "cost(leftMatrix,rightMatrix)",
+      "transition": "min split cost with dimensions[left-1]*dimensions[split]*dimensions[right]",
+      "resultReconstruction": "cost",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Retain this catalogue entry; no ID consolidation in feature.",
+      "codeDigest": "85b98f3adf06bb4c689872ac94b592a44767a1e8a488b84335ee6067111f4960",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "dimensions",
+            "label": "Matrix dimensions",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              40,
+              20,
+              30,
+              10,
+              30
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 2,
+              "maxLength": 9,
+              "maxValue": 100,
+              "minValue": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "min-insertions-deletions-a-b",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation-via-lcs",
+      "state": "length(firstPrefix,secondPrefix)",
+      "transition": "len(first)+len(second)-2*LCS",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Both strings and their edit direction remain explicit.",
+      "codeDigest": "3c326c0d080a70e91038b50c2d39880d80e66e53c4560dfc6c1040e4409c2f11",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "first",
+            "label": "First string",
+            "type": "STRING",
+            "defaultValue": "heap",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          },
+          {
+            "name": "second",
+            "label": "Second string",
+            "type": "STRING",
+            "defaultValue": "pea",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "min-insertions-palindrome",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation-via-lcs",
+      "state": "length(originalPrefix,reversedPrefix)",
+      "transition": "input length minus LCS with reverse",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Explain the reduction without relabelling its result as an LCS string.",
+      "codeDigest": "3b36c0c1c6246e31e090d94cd149814ccf10e6f546d4217516b259340699d84f",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "text",
+            "label": "Text",
+            "type": "STRING",
+            "defaultValue": "mbadm",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "minimum-coins-dp",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "coins(type,amount)",
+      "transition": "min(skip type, one coin+same-row smaller amount)",
+      "resultReconstruction": "count-or-minus-one",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Unlimited reuse; preserve impossible-state sentinel and final -1.",
+      "codeDigest": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "coins",
+            "label": "Coin denominations",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              2,
+              5
+            ],
+            "help": "Unlimited supply of each — a coin may be used more than once.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 8,
+              "maxValue": 25,
+              "minValue": 1
+            }
+          },
+          {
+            "name": "amount",
+            "label": "Target amount",
+            "type": "INT",
+            "defaultValue": 11,
+            "help": "The exact amount to make with the fewest coins.",
+            "constraints": {
+              "max": 40,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * Amount)",
+        "timeExplanation": "Fills one cell per (denomination count, amount) pair; reusing a coin reads back along the same row instead of climbing to a new one.",
+        "timeWhy": "Unbounded-knapsack tabulation",
+        "spaceComplexity": "O(N * Amount)",
+        "spaceExplanation": "Keeps the whole (N+1) by (Amount+1) table so both the reuse read and the skip read stay visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N * Amount)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "minimum-falling-path-sum",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "cost(row,col)",
+      "transition": "cell plus minimum of three valid predecessor columns",
+      "resultReconstruction": "cost",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Negative cells and boundary columns must agree.",
+      "codeDigest": "b9ba9cb0279995df98f48e0ddd2f0df3e339744993f36599b0a3c07876a9b8c6",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "matrix",
+            "label": "Matrix",
+            "type": "INT_GRID",
+            "defaultValue": [
+              [
+                2,
+                1,
+                3
+              ],
+              [
+                6,
+                5,
+                4
+              ],
+              [
+                7,
+                8,
+                9
+              ]
+            ],
+            "help": "A fall may start at any column of the top row and move down, each step landing directly below or one column to either side.",
+            "constraints": {
+              "minValue": -100,
+              "maxRows": 8,
+              "maxValue": 100,
+              "maxCols": 8
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N^2)",
+        "timeExplanation": "Fills one cell per matrix position, each from up to three predecessors, then reduces across the last row.",
+        "timeWhy": "2D tabulation with a final row-wide minimum",
+        "spaceComplexity": "O(N^2)",
+        "spaceExplanation": "Keeps the whole N by N table so every candidate predecessor stays visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N^2)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "ninja-and-his-friends",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "rolling-tabulation",
+      "state": "best(row,col1,col2)",
+      "transition": "current collection plus maximum of nine valid next-position pairs",
+      "resultReconstruction": "score",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Canonical keeps two row slices; preserve it as an optimized option when adding full tabulation. Count shared cell once.",
+      "codeDigest": "308bfeb2120dc61eff75aaff801c5e662726a050fdfa4f8e473fc671c64edb3a",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "grid",
+            "label": "Chocolate Grid",
+            "type": "INT_GRID",
+            "defaultValue": [
+              [
+                3,
+                1,
+                1
+              ],
+              [
+                2,
+                5,
+                1
+              ],
+              [
+                1,
+                5,
+                5
+              ],
+              [
+                2,
+                1,
+                1
+              ]
+            ],
+            "help": "Robot 1 starts at (row 0, col 0), robot 2 at (row 0, col cols-1). Each row, both move to column-1, column, or column+1. A cell both robots occupy is collected once.",
+            "constraints": {
+              "minValue": 0,
+              "maxRows": 8,
+              "maxValue": 100,
+              "maxCols": 6
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "ninjas-training",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "best(day,activity)",
+      "transition": "points(day,activity)+max(previous day with different activity)",
+      "resultReconstruction": "score",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Exactly three activity columns; minCols validation remains authoritative.",
+      "codeDigest": "48c7b8d457150225b287771b5e878f26edf1364be90e2967b73f87ca3cc84977",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "points",
+            "label": "Daily merit points",
+            "type": "INT_GRID",
+            "defaultValue": [
+              [
+                10,
+                40,
+                70
+              ],
+              [
+                20,
+                50,
+                80
+              ],
+              [
+                30,
+                10,
+                20
+              ]
+            ],
+            "help": "Three activities per day. The same activity cannot be done on two consecutive days.",
+            "constraints": {
+              "maxValue": 100,
+              "maxRows": 10,
+              "minCols": 3,
+              "minValue": 0,
+              "maxCols": 3
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N)",
+        "timeExplanation": "Fills three cells per day, each comparing exactly two predecessors.",
+        "timeWhy": "2D tabulation, three columns wide",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Keeps the whole N by 3 table so the excluded predecessor stays visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "number-of-lis",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "length(index),count(index)",
+      "transition": "longer predecessor replaces count; equal best length adds counts",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Counting subsequences by indices; duplicates need independent reference cases.",
+      "codeDigest": "6a20c752b3ef25212b2e2a15040f41b28af604278dcd060d7b96e051f1d523bb",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Numbers",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              3,
+              5,
+              4,
+              7
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 15,
+              "maxValue": 100,
+              "minValue": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "palindrome-partitioning-2",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "palindrome(left,right),cuts(prefixEnd)",
+      "transition": "compute palindrome intervals then minimum valid previous-prefix cuts",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Keep palindrome preprocessing separate from cut recurrence and empty-prefix convention.",
+      "codeDigest": "2c0f9a690861f1c72d8c2077caf8cfff245b6b2cdf9111f4aab41ab73ffb82ba",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "text",
+            "label": "Text",
+            "type": "STRING",
+            "defaultValue": "aab",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 14,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "partition-array-max-sum",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "best(prefixLength)",
+      "transition": "max over final block length<=k of previous best+blockMax*length",
+      "resultReconstruction": "value",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Joint array length and k branching; do not confuse with partition feasibility.",
+      "codeDigest": "9e3648996780b81892af06077afc18edca1edc0613d1cd52417e52d4f8fd5c48",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Numbers",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              15,
+              7,
+              9,
+              2,
+              5,
+              10
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 15,
+              "maxValue": 100,
+              "minValue": 0
+            }
+          },
+          {
+            "name": "k",
+            "label": "Maximum partition length",
+            "type": "INT",
+            "defaultValue": 3,
+            "help": "",
+            "constraints": {
+              "max": 10,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "partition-equal-subset-sum",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "possible(item,total/2)",
+      "transition": "odd total is impossible; otherwise subset-sum recurrence",
+      "resultReconstruction": "boolean",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Do not execute or fabricate a half-integer target.",
+      "codeDigest": "41a3ba0d28cfd52cd4f7e15df54b90d8acc2cfa99b6c058a916b7e26bb844ca9",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Values",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              5,
+              11,
+              5
+            ],
+            "help": "Split into two subsets with equal sum, if possible.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 10,
+              "maxValue": 20,
+              "minValue": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * Target)",
+        "timeExplanation": "An odd total sum short-circuits in O(N); otherwise reduces to subset-sum with Target = totalSum / 2.",
+        "timeWhy": "Odd-sum short-circuit, else 2D boolean reachability tabulation",
+        "spaceComplexity": "O(N * Target)",
+        "spaceExplanation": "Keeps the whole N by Target table so both the skip and take predecessors stay visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N * Target)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "partition-set-min-abs-diff",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "possible(item,sum)",
+      "transition": "subset feasibility then minimize abs(total-2*reachableSum)",
+      "resultReconstruction": "difference",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Combined table budget; a minimum is extracted from the completed reachable sums.",
+      "codeDigest": "e3d29d5e2e5306fb0049dca5eb4260a097f4c5178e12522114c8a66c8ea45989",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Numbers",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              2
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 12,
+              "maxValue": 30,
+              "minValue": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "print-lis",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation-with-reconstruction",
+      "state": "length(endingIndex),parent(endingIndex)",
+      "transition": "strict predecessor updates then reverse parent chain",
+      "resultReconstruction": "sequence",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Preserve length<=22, index feasibility and ties. Existing display omits collect()/answer() implementations; repair that source before advertising approaches.",
+      "codeDigest": "1b8d4481eb354606005434a51658261b6255d04bdb09a289a61e2737cc5df9d8",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Array",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              10,
+              9,
+              2,
+              5,
+              3,
+              7,
+              101,
+              18
+            ],
+            "help": "parent[i] remembers which index i's best subsequence came from.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 22,
+              "maxValue": 999,
+              "minValue": -999
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N^2)",
+        "timeExplanation": "Compares each index with every earlier index before following parent links.",
+        "timeWhy": "Quadratic predecessor DP",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Stores N DP lengths, N parent links, and the reconstructed sequence.",
+        "spaceWhy": "DP and parent arrays",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "DP and parent arrays"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "print-longest-common-subsequence",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation-with-reconstruction",
+      "state": "length(firstPrefix,secondPrefix)",
+      "transition": "LCS length recurrence followed by parent choices",
+      "resultReconstruction": "string",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Preserve current tie choice during reconstruction, or validate equivalent optimal strings explicitly.",
+      "codeDigest": "ceba2855f735079eee714aa15c12e13e81831afebc485ff85be03d5de5a6bcfe",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "first",
+            "label": "First string",
+            "type": "STRING",
+            "defaultValue": "abcde",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          },
+          {
+            "name": "second",
+            "label": "Second string",
+            "type": "STRING",
+            "defaultValue": "bdgek",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "rod-cutting-problem",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "value(lengthType,totalLength)",
+      "transition": "max(skip length, its price+same-type reduced length)",
+      "resultReconstruction": "value",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Rod must be sold under the existing positive-price domain.",
+      "codeDigest": "19f8252cb2ff4eac28b4c0dd246f80f3a473c0b481f62404a5582f7355ee5403",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "prices",
+            "label": "Prices by piece length",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              2,
+              5,
+              7,
+              8,
+              10
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 12,
+              "maxValue": 100,
+              "minValue": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "shortest-common-supersequence",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation-with-reconstruction",
+      "state": "length(firstPrefix,secondPrefix)",
+      "transition": "LCS table then merge characters while walking backwards",
+      "resultReconstruction": "string",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Keep unmatched prefixes and deterministic tie handling; verify both subsequences in output.",
+      "codeDigest": "220e86e3dcef2626266b7b014ae90fbfdf4da8cc4f5257ac978aad9fe2fe1136",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "first",
+            "label": "First string",
+            "type": "STRING",
+            "defaultValue": "abac",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          },
+          {
+            "name": "second",
+            "label": "Second string",
+            "type": "STRING",
+            "defaultValue": "cab",
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "stock-cooldown",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "profit(day,buyOrSell)",
+      "transition": "buy advances one day; sale advances two days",
+      "resultReconstruction": "profit",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Reserve terminal day+1 slice and preserve cooldown exactly.",
+      "codeDigest": "b1ab664c8649d67071c0bce4c92c586fab139f9798501aa70911f5ea9a0b411d",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "prices",
+            "label": "Daily prices",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              2,
+              3,
+              0,
+              2
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 15,
+              "maxValue": 100,
+              "minValue": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "stock-transaction-fee",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "profit(day,buyOrSell)",
+      "transition": "sale subtracts fee; both branches compare with skip",
+      "resultReconstruction": "profit",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Fee is charged on sale in current code and anchors.",
+      "codeDigest": "575b382360f4c0e6364b1f2b9c9f47aea96f4a34e45bee983d7ce55146428b27",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "prices",
+            "label": "Daily prices",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              3,
+              2,
+              8,
+              4,
+              9
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 15,
+              "maxValue": 100,
+              "minValue": 0
+            }
+          },
+          {
+            "name": "fee",
+            "label": "Transaction fee",
+            "type": "INT",
+            "defaultValue": 2,
+            "help": "",
+            "constraints": {
+              "max": 30,
+              "min": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "possible(item,sum)",
+      "transition": "skip or take previous-row state",
+      "resultReconstruction": "boolean",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Zero entries may read the same cell; preserve boolean semantics.",
+      "codeDigest": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Values",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              2,
+              3,
+              7
+            ],
+            "help": "Non-negative values only — a subset either includes an item or it does not.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 10,
+              "maxValue": 20,
+              "minValue": 0
+            }
+          },
+          {
+            "name": "target",
+            "label": "Target sum K",
+            "type": "INT",
+            "defaultValue": 6,
+            "help": "The exact sum some subset must reach.",
+            "constraints": {
+              "max": 40,
+              "min": 0
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * Target)",
+        "timeExplanation": "Fills one cell per (items considered, sum) pair, each from two predecessors.",
+        "timeWhy": "2D boolean reachability tabulation",
+        "spaceComplexity": "O(N * Target)",
+        "spaceExplanation": "Keeps the whole N by Target table so both the skip and take predecessors stay visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N * Target)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "target-sum-dp",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "count(item,signedSum)",
+      "transition": "plus and minus choices from previous row using offset coordinates",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "+0 and -0 are separate assignments; sum width and item count jointly bounded.",
+      "codeDigest": "9bfab65bb67fe19b4d99004d64ea421139c595f1ecd993433f5be741eadaade4",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "nums",
+            "label": "Numbers",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              1
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 10,
+              "maxValue": 10,
+              "minValue": 0
+            }
+          },
+          {
+            "name": "target",
+            "label": "Target",
+            "type": "INT",
+            "defaultValue": 0,
+            "help": "",
+            "constraints": {
+              "max": 30,
+              "min": -30
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "triangle-min-path-sum",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "cost(row,col)",
+      "transition": "triangle cell plus minimum of the two reachable children",
+      "resultReconstruction": "cost",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Existing input is a rectangular padded grid; effective triangle depth is min(rows,columns).",
+      "codeDigest": "394b13e9d79bdacaf6d91d30afa2a1d86ae99bc55a49f24335895c26079a1db4",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "triangle",
+            "label": "Triangle",
+            "type": "INT_GRID",
+            "defaultValue": [
+              [
+                2,
+                0,
+                0,
+                0
+              ],
+              [
+                3,
+                4,
+                0,
+                0
+              ],
+              [
+                6,
+                5,
+                7,
+                0
+              ],
+              [
+                4,
+                1,
+                8,
+                3
+              ]
+            ],
+            "help": "Row i has i+1 real entries; only columns 0..i of each row are used, submitted as a square grid — the rest is ignored.",
+            "constraints": {
+              "minValue": -100,
+              "maxRows": 8,
+              "maxValue": 100,
+              "maxCols": 8
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N^2)",
+        "timeExplanation": "Fills one cell per triangle position, each from two children below it.",
+        "timeWhy": "2D tabulation, bottom-up",
+        "spaceComplexity": "O(N^2)",
+        "spaceExplanation": "Keeps the whole N by N table plus which cells fall outside the triangle's shape.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N^2)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "unbounded-knapsack",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "value(type,capacity)",
+      "transition": "max(skip type, value+same-type reduced capacity)",
+      "resultReconstruction": "value",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Equal parallel arrays; item reuse stays within current row.",
+      "codeDigest": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "weights",
+            "label": "Weights",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              2,
+              4,
+              6
+            ],
+            "help": "One weight per item type, paired by index with values. Any item type may be reused.",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 8,
+              "maxValue": 20,
+              "minValue": 1
+            }
+          },
+          {
+            "name": "values",
+            "label": "Values",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              5,
+              11,
+              13
+            ],
+            "help": "",
+            "constraints": {
+              "minLength": 1,
+              "maxLength": 8,
+              "maxValue": 100,
+              "minValue": 1
+            }
+          },
+          {
+            "name": "capacity",
+            "label": "Capacity",
+            "type": "INT",
+            "defaultValue": 10,
+            "help": "",
+            "constraints": {
+              "max": 30,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "unique-paths-2",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "paths(row,col)",
+      "transition": "blocked cell has zero paths; otherwise above plus left",
+      "resultReconstruction": "count",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Obstacle map is input, not computed data.",
+      "codeDigest": "a817daa8a62ea4cb65411bf4f9b9b5864fc542b57bfbd0180b658c2a2f47ec86",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "grid",
+            "label": "Grid",
+            "type": "INT_GRID",
+            "defaultValue": [
+              [
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "help": "1 is an obstacle. The robot starts top-left and may only move right or down.",
+            "constraints": {
+              "minValue": 0,
+              "maxRows": 8,
+              "maxValue": 1,
+              "maxCols": 8
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(M * N)",
+        "timeExplanation": "Fills one cell per grid position; an obstacle short-circuits to 0.",
+        "timeWhy": "2D tabulation with missing neighbours defaulting to 0",
+        "spaceComplexity": "O(M * N)",
+        "spaceExplanation": "Keeps the whole M by N table plus which cells are excluded.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(M * N)",
+        "dataStructureSpace": "DP table"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    },
+    {
+      "id": "wildcard-matching",
+      "category": "Dynamic Programming",
+      "dsType": "DpTable",
+      "canonicalImplementation": "tabulation",
+      "state": "matches(textPrefix,patternPrefix)",
+      "transition": "star takes above or left; question-mark/equal takes diagonal",
+      "resultReconstruction": "boolean",
+      "plannedForms": [
+        "recursion",
+        "memoization",
+        "tabulation"
+      ],
+      "notes": "Preserve empty-prefix and all-star base cases and actual pattern domain.",
+      "codeDigest": "229944ab87c3d93948a3c501ec6c85e8cd08e9e89adfb098025a2d6580256124",
+      "canonicalInputSpec": {
+        "fields": [
+          {
+            "name": "s",
+            "label": "Text",
+            "type": "STRING",
+            "defaultValue": "adceb",
+            "help": "Lowercase letters only.",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 14,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          },
+          {
+            "name": "p",
+            "label": "Pattern",
+            "type": "STRING",
+            "defaultValue": "*a*b",
+            "help": "Lowercase letters plus '?' (any one character) and '*' (any run, including none).",
+            "constraints": {
+              "minLength": 1,
+              "pattern": "[a-z?*]+",
+              "maxLength": 14,
+              "patternHint": "Lowercase letters, '?' and '*' only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "canonicalComplexity": {
+        "timeComplexity": "O(N * K)",
+        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
+        "timeWhy": "Dynamic Programming",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "alternativeStatus": "planned",
+      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+    }
+  ]
+}

@@ -1,10 +1,10 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **proposal only; implementation has not started.**
+Status: **implementation in progress: D0 and D1 verified; D2–D7 pending.**
 Prepared 2026-10-07 against merged main `9d0aa10` (PR #208).
 This is a separate feature from the unfinished P8/P9 revamp gates; it does not close them.
-The owner requested this plan and then a stop. Do not implement or publish this proposal
-until the owner asks to proceed.
+The owner authorized implementation on 2026-10-07 after merging PR #210.
+The original plan-only stop instruction has been superseded.
 
 ## 1. Outcome and boundaries
 
@@ -383,5 +383,50 @@ main/live inventory, create a new feature branch, and execute D0 → D1 → D2 �
 reviewable packages. Complete the pilot before expanding to D4/D5. Preserve the canonical
 API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 
-For this planning turn: **stop after creating this file. No feature changes, commit,
-push, PR or merge are authorized for the DP feature by the plan-only request.**
+## 11. Implementation progress — 2026-10-07
+
+| Package | Current status | Evidence / boundary |
+| --- | --- | --- |
+| D0 | Classified | `dp-approaches/classifications.tsv` and generated `inventory.json`: all 56 candidates, current source digests, canonical specs/complexity, actual state/transition, reconstruction and applicability |
+| D1 | Verified | Provider registry, canonical adapters, optional API selection, committed execution metadata, normalized cache keys and refusal tests |
+| D2 | Pending | Real recursion/memoization Climbing Stairs tracers and measured bounds |
+| D3 | Pending | Selector, committed approach identity, sharing/restoration, Code/Analysis binding and UI pilot |
+| D4–D7 | Pending | Teaching/comparison, family rollout and final release gates |
+
+Inventory distinctions: binary-search LIS remains an optimized default; ninja-and-friends
+uses rolling row slices; rectangle-all-ones uses histogram stacks rather than a DP table;
+count-square-submatrices is real in-place DP rendered as Matrix; palindromic-subsequence
+counting lives under Strings. Alternative safety limits are explicitly unmeasured.
+
+Print LIS still displays undefined `collect()`/`answer()` helpers. Its real parent-chain
+algorithm is classified, but the displayed-source repair is a prerequisite for its D5
+batch. The preceding repair certified only its known 27-source family, not all sources.
+
+D1 keeps omitted-approach requests on the existing executable. Climbing Stairs exposes
+one audited `tabulation` definition; other problems identify their existing executable
+as `canonical` / “Current solution” without guessing algorithm types. No extra solution
+option or selector is advertised until it has a real implementation. The frontend pilot
+and approach-aware shared URLs remain D3 work.
+
+The API accepts `approach` on detail, input-spec, GET execute and POST execute. Unknown
+or empty approach values are refused with `unavailable_approach` and available IDs;
+unknown problems remain 404 and untraced problems 501. Supported encodings are `delta`
+and `full` (case-insensitive), with omission meaning delta. Unsupported encoding strings
+now return `unsupported_encoding` rather than silently choosing delta. Validated effective
+encoding and approach ID enter the bounded default cache; custom inputs never do.
+
+Regression evidence so far: 7/9 new API cases failed against the prior implementation
+(the other two preserved existing validation/404 behavior). A separate array-ceiling
+guard failed before typed ceiling validation. Registry checks cover duplicate pairs,
+orphan/incorrect IDs, missing/multiple/default substitution, missing renderer/source,
+unsafe specs, invalid inputs, frozen metadata and real selected-executable dispatch.
+
+Final D0/D1 verification: 7,999 backend tests, zero failures/errors, 500 skipped;
+76 frontend files / 678 tests passed; production build passed (JS 364.60kB, gzip 116.09;
+CSS 103.99kB, gzip 18.63). Startup cleanup smoke passed. No dependencies, algorithm
+results, canonical sources or golden fixtures changed in this package. The 32 added
+tests include inventory/source drift detection, registry safety and API/cache seams.
+The real-backend `dp-approaches/d1-journey.cjs` inspected all 431 canonical detail
+identities, both encodings, custom input and refusal responses; four Chromium rows
+covered 320/1366px in both themes, source display, Code→Analysis step retention,
+page overflow and page errors. Results are in `dp-approaches/d1-results.json`.

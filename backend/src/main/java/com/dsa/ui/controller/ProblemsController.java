@@ -3,6 +3,8 @@ package com.dsa.ui.controller;
 import com.dsa.ui.catalog.CatalogEntry;
 import com.dsa.ui.catalog.ProblemCatalog;
 import com.dsa.ui.catalog.StatementCatalog;
+import com.dsa.ui.approach.SolutionApproach;
+import com.dsa.ui.approach.SolutionApproachRegistry;
 import com.dsa.ui.model.ProblemDetail;
 import com.dsa.ui.tracer.AlgorithmTracer;
 import com.dsa.ui.tracer.ExecutionTrace;
@@ -43,13 +45,15 @@ public class ProblemsController {
     private final TracerRegistry tracers;
     private final TraceRunner runner;
     private final StatementCatalog statements;
+    private final SolutionApproachRegistry approaches;
 
     public ProblemsController(ProblemCatalog catalog, TracerRegistry tracers, TraceRunner runner,
-                              StatementCatalog statements) {
+                              StatementCatalog statements, SolutionApproachRegistry approaches) {
         this.catalog = catalog;
         this.tracers = tracers;
         this.runner = runner;
         this.statements = statements;
+        this.approaches = approaches;
     }
 
     /**
@@ -149,9 +153,13 @@ public class ProblemsController {
     }
 
     @GetMapping("/{id}")
-    public Map<String, Object> detail(@PathVariable String id) {
+    public Map<String, Object> detail(@PathVariable String id,
+                                     @RequestParam(required = false) String approach) {
         CatalogEntry entry = require(id);
         ProblemDetail p = entry.getProblem();
+        SolutionApproach selected = entry.isTraced() ? selected(id, approach) : null;
+        // Preserve 501 for an explicit approach on an untraced problem.
+        if (selected == null && approach != null) selected(id, approach);
 
         Map<String, Object> out = new LinkedHashMap<>(summarize(entry));
         out.put("description", p.getDescription());
@@ -184,25 +192,23 @@ public class ProblemsController {
 
         // A traced problem's source comes from its tracer, with anchors stripped, so the
         // code on screen is provably the code the highlighted lines refer to.
-        tracers.find(id).ifPresentOrElse(
-                t -> {
-                    out.put("javaCode",
-                            com.dsa.ui.tracer.AnnotatedCode.parse(t.annotatedCode()).getDisplayCode());
-                    // The second input every tracer is required to declare. It existed only
-                    // for TracerContractTest, which meant the one input a visitor could
-                    // reach was the default - and for a good many problems the default
-                    // provably cannot exercise the whole algorithm. next-permutation's swap
-                    // and suffix-reverse are unreachable from any growable default;
-                    // word-break's memo can never hit on an input that succeeds; every
-                    // not-found branch is mutually exclusive with its found branch. The code
-                    // panel already greys those lines as "not taken on this input". Serving
-                    // the alternate is what lets someone go and take them.
-                    out.put("alternateInput", t.alternateInput());
-                },
-                () -> {
-                    out.put("javaCode", p.getJavaCode());
-                    out.put("alternateInput", null);
-                });
+        if (selected != null) {
+            var t = selected.tracer();
+            out.put("javaCode", com.dsa.ui.tracer.AnnotatedCode.parse(t.annotatedCode()).getDisplayCode());
+            // An approach's alternate exercises its own branches, not another solution's.
+            out.put("alternateInput", t.alternateInput());
+            out.put("inputSpec", t.inputSpec());
+            out.put("dsType", t.dsType());
+            out.put("complexity", selected.complexity());
+            out.put("approachId", selected.id());
+            out.put("defaultApproachId", approaches.resolve(id, null).id());
+            out.put("approaches", approaches.available(id).stream().map(SolutionApproach::summaryView).toList());
+        } else {
+            out.put("javaCode", p.getJavaCode());
+            out.put("alternateInput", null);
+            out.put("defaultApproachId", null);
+            out.put("approaches", List.of());
+        }
 
         return out;
     }
@@ -215,44 +221,61 @@ public class ProblemsController {
      */
     @GetMapping("/{id}/execute")
     public TraceResponse executeDefaults(@PathVariable String id,
-                                         @RequestParam(required = false) String encoding) {
+                                         @RequestParam(required = false) String encoding,
+                                         @RequestParam(required = false) String approach) {
         // Cached, because this is the hot path and it is deterministic. Most traffic is
         // "open a problem, press play", which re-ran the same 431 algorithms over and over
         // to produce byte-identical answers. A custom input still runs for real - see the
         // POST below, which is deliberately NOT cached.
         //
-        // TraceResponse is safe to share: all twelve of its fields are final and nothing
+        // TraceResponse is safe to share: its fields are final and nothing
         // mutates one after construction.
-        return defaultTraces.computeIfAbsent(
-                id + '\u0000' + (encoding == null ? "" : encoding),
-                key -> TraceResponse.of(runner.runDefaults(tracer(id)), encoding));
+        SolutionApproach selected = selected(id, approach);
+        String effectiveEncoding = effectiveEncoding(encoding);
+        return defaultTraces.computeIfAbsent(new DefaultTraceKey(id, selected.id(), effectiveEncoding),
+                key -> TraceResponse.of(runner.runDefaults(selected.tracer()), effectiveEncoding, selected));
     }
 
     /**
-     * Default traces, keyed by id and requested encoding.
+     * Default traces, keyed by validated problem, approach and effective encoding.
      *
-     * <p>Bounded only by the catalogue: 431 problems times the two encodings the API offers,
-     * so it cannot grow with traffic the way a key derived from caller input could. Measured
-     * at roughly 3 KB a trace, which is a few megabytes held for the life of the process.
+     * <p>Bounded by registered approach pairs times the two supported encodings. Null and
+     * case aliases normalize before lookup; arbitrary caller strings cannot create keys.
      *
      * <p>Never populated from {@code POST /execute}. A cache keyed on caller-supplied input
      * is a memory-exhaustion vector, and the rate limiter exists precisely because that path
      * has to do real work every time.
      */
-    private final Map<String, TraceResponse> defaultTraces = new ConcurrentHashMap<>();
+    private record DefaultTraceKey(String problemId, String approachId, String encoding) {}
+    private final Map<DefaultTraceKey, TraceResponse> defaultTraces = new ConcurrentHashMap<>();
 
     /** Runs the problem against caller-supplied input. */
     @PostMapping("/{id}/execute")
     public TraceResponse execute(@PathVariable String id,
                                  @RequestBody(required = false) Map<String, Object> input,
-                                 @RequestParam(required = false) String encoding) {
-        return TraceResponse.of(runner.run(tracer(id), input == null ? Map.of() : input), encoding);
+                                 @RequestParam(required = false) String encoding,
+                                 @RequestParam(required = false) String approach) {
+        SolutionApproach selected = selected(id, approach);
+        String effectiveEncoding = effectiveEncoding(encoding);
+        return TraceResponse.of(runner.run(selected.tracer(), input == null ? Map.of() : input),
+                effectiveEncoding, selected);
     }
 
     /** The input contract on its own, for a client that wants to build a form first. */
     @GetMapping("/{id}/input-spec")
-    public InputSpec inputSpec(@PathVariable String id) {
-        return tracer(id).inputSpec();
+    public InputSpec inputSpec(@PathVariable String id, @RequestParam(required = false) String approach) {
+        return selected(id, approach).tracer().inputSpec();
+    }
+
+    private SolutionApproach selected(String id, String approach) {
+        tracer(id); // Unknown problem is 404; an untraced problem is 501, before approach lookup.
+        return approaches.resolve(id, approach);
+    }
+
+    private static String effectiveEncoding(String encoding) {
+        if (encoding == null || TraceResponse.DELTA.equalsIgnoreCase(encoding)) return TraceResponse.DELTA;
+        if (TraceResponse.FULL.equalsIgnoreCase(encoding)) return TraceResponse.FULL;
+        throw new UnsupportedEncodingException(encoding);
     }
 
     private static Map<String, Object> summarize(CatalogEntry entry) {
