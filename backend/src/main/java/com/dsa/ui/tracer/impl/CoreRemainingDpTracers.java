@@ -9,6 +9,9 @@ import com.dsa.ui.tracer.Inputs;
 import com.dsa.ui.tracer.StepEmitter;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +19,23 @@ import java.util.Set;
 
 abstract class RemainingDpTracer implements AlgorithmTracer {
     @Override public DsType dsType() { return DsType.DP_TABLE; }
-    @Override public String annotatedCode() { return DpTraceSupport.CODE; }
+    private volatile String source;
+
+    /** Each problem owns a complete, independently compilable Java solution. No sketch fallback. */
+    @Override public final String annotatedCode() {
+        String loaded = source;
+        if (loaded != null) return loaded;
+        String path = "/solutions/dp/" + id() + ".java";
+        try (var stream = RemainingDpTracer.class.getResourceAsStream(path)) {
+            if (stream == null) throw new IllegalStateException("Missing complete Java solution: " + path);
+            loaded = new String(stream.readAllBytes(), StandardCharsets.UTF_8).replace("\r\n", "\n");
+            if (loaded.isBlank()) throw new IllegalStateException("Empty Java solution: " + path);
+            source = loaded;
+            return loaded;
+        } catch (IOException e) {
+            throw new IllegalStateException("Cannot read Java solution: " + path, e);
+        }
+    }
 
     static void bases(long[][] dp, boolean[][] known) {
         for (int r = 0; r < dp.length; r++) known[r][0] = true;

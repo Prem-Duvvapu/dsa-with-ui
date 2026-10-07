@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 12,
+    "fill" : 8,
+    "init" : 4
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public long solve(String first, String second) {\n        long best = 0;\n        long[][] dp = new long[first.length() + 1][second.length() + 1];\n        for (int i = 1; i <= first.length(); i++) {\n            for (int j = 1; j <= second.length(); j++) {\n                // A mismatch ends a contiguous substring.\n                dp[i][j] = first.charAt(i - 1) == second.charAt(j - 1) ? 1 + dp[i - 1][j - 1] : 0;\n                best = Math.max(best, dp[i][j]);\n            }\n        }\n        return best;\n    }\n}\n",
   "problemId" : "longest-common-substring",
   "resolvedInput" : {
     "first" : "abcd",
@@ -13,7 +13,7 @@
   "stepCount" : 18,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 4,
     "description" : "dp[i][j] is the common suffix length ending at characters i and j; empty prefixes are 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -110,7 +110,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'a' and 'a': suffix length 1; global best 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -211,7 +211,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'a' and 'b': suffix length 0; global best 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -312,7 +312,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'a' and 'z': suffix length 0; global best 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -413,7 +413,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'a' and 'd': suffix length 0; global best 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -514,7 +514,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'b' and 'a': suffix length 0; global best 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -615,7 +615,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'b' and 'b': suffix length 2; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -716,7 +716,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'b' and 'z': suffix length 0; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -817,7 +817,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'b' and 'd': suffix length 0; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -918,7 +918,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'c' and 'a': suffix length 0; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1019,7 +1019,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'c' and 'b': suffix length 0; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1120,7 +1120,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'c' and 'z': suffix length 0; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1221,7 +1221,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'c' and 'd': suffix length 0; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1322,7 +1322,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'd' and 'a': suffix length 0; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1423,7 +1423,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'd' and 'b': suffix length 0; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1524,7 +1524,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'd' and 'z': suffix length 0; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1625,7 +1625,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 3,
+    "activeLine" : 8,
     "description" : "Ending at 'd' and 'd': suffix length 1; global best 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1726,7 +1726,7 @@
     }
   }, {
     "stepNumber" : 18,
-    "activeLine" : 4,
+    "activeLine" : 12,
     "description" : "Longest common substring length: 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],

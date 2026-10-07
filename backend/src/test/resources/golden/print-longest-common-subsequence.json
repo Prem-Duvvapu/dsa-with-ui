@@ -1,11 +1,11 @@
 {
   "anchors" : {
-    "done" : 5,
-    "fill" : 3,
-    "init" : 2,
-    "reconstruct" : 4
+    "done" : 25,
+    "fill" : 7,
+    "init" : 4,
+    "reconstruct" : 15
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    reconstructChosenSolution();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public String solve(String first, String second) {\n        int m = first.length(), n = second.length();\n        long[][] dp = new long[m + 1][n + 1];\n        for (int i = 1; i <= m; i++) {\n            for (int j = 1; j <= n; j++) {\n                dp[i][j] = first.charAt(i - 1) == second.charAt(j - 1)\n                        ? 1 + dp[i - 1][j - 1] : Math.max(dp[i - 1][j], dp[i][j - 1]);\n            }\n        }\n        StringBuilder reversed = new StringBuilder();\n        int i = m, j = n;\n        while (i > 0 && j > 0) {\n            // Ties move up, matching the visualized reconstruction.\n            if (first.charAt(i - 1) == second.charAt(j - 1)) {\n                reversed.append(first.charAt(i - 1));\n                i--;\n                j--;\n            } else if (dp[i - 1][j] >= dp[i][j - 1]) {\n                i--;\n            } else {\n                j--;\n            }\n        }\n        return reversed.reverse().toString();\n    }\n}\n",
   "problemId" : "print-longest-common-subsequence",
   "resolvedInput" : {
     "first" : "abcde",
@@ -14,7 +14,7 @@
   "stepCount" : 33,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 4,
     "description" : "dp[i][j] compares prefixes of lengths i and j; empty prefixes have LCS length 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -144,7 +144,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'b': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -278,7 +278,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'd': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -412,7 +412,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'g': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -546,7 +546,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'e': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -680,7 +680,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'k': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -814,7 +814,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -948,7 +948,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'b' with 'd': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1082,7 +1082,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'b' with 'g': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1216,7 +1216,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'b' with 'e': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1350,7 +1350,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'b' with 'k': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1484,7 +1484,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'c' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1618,7 +1618,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'c' with 'd': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1752,7 +1752,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'c' with 'g': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1886,7 +1886,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'c' with 'e': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2020,7 +2020,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'c' with 'k': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2154,7 +2154,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'd' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2288,7 +2288,7 @@
     }
   }, {
     "stepNumber" : 18,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'd' with 'd': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2422,7 +2422,7 @@
     }
   }, {
     "stepNumber" : 19,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'd' with 'g': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2556,7 +2556,7 @@
     }
   }, {
     "stepNumber" : 20,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'd' with 'e': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2690,7 +2690,7 @@
     }
   }, {
     "stepNumber" : 21,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'd' with 'k': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2824,7 +2824,7 @@
     }
   }, {
     "stepNumber" : 22,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'e' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2958,7 +2958,7 @@
     }
   }, {
     "stepNumber" : 23,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'e' with 'd': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3092,7 +3092,7 @@
     }
   }, {
     "stepNumber" : 24,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'e' with 'g': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3226,7 +3226,7 @@
     }
   }, {
     "stepNumber" : 25,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'e' with 'e': prefix LCS length becomes 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3360,7 +3360,7 @@
     }
   }, {
     "stepNumber" : 26,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'e' with 'k': prefix LCS length becomes 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3494,7 +3494,7 @@
     }
   }, {
     "stepNumber" : 27,
-    "activeLine" : 4,
+    "activeLine" : 15,
     "description" : "Move left from (5,5) toward the larger predecessor.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3624,7 +3624,7 @@
     }
   }, {
     "stepNumber" : 28,
-    "activeLine" : 4,
+    "activeLine" : 15,
     "description" : "Characters match at (5,4); prepend 'e'.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3756,7 +3756,7 @@
     }
   }, {
     "stepNumber" : 29,
-    "activeLine" : 4,
+    "activeLine" : 15,
     "description" : "Move left from (4,3) toward the larger predecessor.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3886,7 +3886,7 @@
     }
   }, {
     "stepNumber" : 30,
-    "activeLine" : 4,
+    "activeLine" : 15,
     "description" : "Characters match at (4,2); prepend 'd'.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4018,7 +4018,7 @@
     }
   }, {
     "stepNumber" : 31,
-    "activeLine" : 4,
+    "activeLine" : 15,
     "description" : "Move up from (3,1) toward the larger predecessor.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4148,7 +4148,7 @@
     }
   }, {
     "stepNumber" : 32,
-    "activeLine" : 4,
+    "activeLine" : 15,
     "description" : "Characters match at (2,1); prepend 'b'.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4280,7 +4280,7 @@
     }
   }, {
     "stepNumber" : 33,
-    "activeLine" : 5,
+    "activeLine" : 25,
     "description" : "One longest common subsequence is \"bde\".",
     "queueOrStackState" : null,
     "callStack" : [ ],

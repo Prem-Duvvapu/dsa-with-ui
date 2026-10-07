@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 13,
+    "fill" : 9,
+    "init" : 5
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public long solve(String source, String target) {\n        long[][] dp = new long[source.length() + 1][target.length() + 1];\n        // There is exactly one way to choose the empty target.\n        for (int i = 0; i <= source.length(); i++) dp[i][0] = 1;\n        for (int i = 1; i <= source.length(); i++) {\n            for (int j = 1; j <= target.length(); j++) {\n                // Skip this source character, or take it when it matches.\n                dp[i][j] = dp[i - 1][j]\n                        + (source.charAt(i - 1) == target.charAt(j - 1) ? dp[i - 1][j - 1] : 0);\n            }\n        }\n        return dp[source.length()][target.length()];\n    }\n}\n",
   "problemId" : "distinct-subsequences",
   "resolvedInput" : {
     "source" : "rabbbit",
@@ -13,7 +13,7 @@
   "stepCount" : 44,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 5,
     "description" : "There is one way to form the empty target from any source prefix.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -203,7 +203,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'r', target 'r': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -397,7 +397,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'r', target 'a': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -591,7 +591,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'r', target 'b': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -785,7 +785,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'r', target 'b': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -979,7 +979,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'r', target 'i': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1173,7 +1173,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'r', target 't': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1367,7 +1367,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'a', target 'r': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1561,7 +1561,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'a', target 'a': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1755,7 +1755,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'a', target 'b': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1949,7 +1949,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'a', target 'b': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2143,7 +2143,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'a', target 'i': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2337,7 +2337,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'a', target 't': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2531,7 +2531,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'r': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2725,7 +2725,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'a': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2919,7 +2919,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'b': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3113,7 +3113,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'b': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3307,7 +3307,7 @@
     }
   }, {
     "stepNumber" : 18,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'i': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3501,7 +3501,7 @@
     }
   }, {
     "stepNumber" : 19,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 't': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3695,7 +3695,7 @@
     }
   }, {
     "stepNumber" : 20,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'r': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3889,7 +3889,7 @@
     }
   }, {
     "stepNumber" : 21,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'a': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4083,7 +4083,7 @@
     }
   }, {
     "stepNumber" : 22,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'b': 2 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4277,7 +4277,7 @@
     }
   }, {
     "stepNumber" : 23,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'b': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4471,7 +4471,7 @@
     }
   }, {
     "stepNumber" : 24,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'i': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4665,7 +4665,7 @@
     }
   }, {
     "stepNumber" : 25,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 't': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4859,7 +4859,7 @@
     }
   }, {
     "stepNumber" : 26,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'r': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5053,7 +5053,7 @@
     }
   }, {
     "stepNumber" : 27,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'a': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5247,7 +5247,7 @@
     }
   }, {
     "stepNumber" : 28,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'b': 3 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5441,7 +5441,7 @@
     }
   }, {
     "stepNumber" : 29,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'b': 3 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5635,7 +5635,7 @@
     }
   }, {
     "stepNumber" : 30,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 'i': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5829,7 +5829,7 @@
     }
   }, {
     "stepNumber" : 31,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'b', target 't': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -6023,7 +6023,7 @@
     }
   }, {
     "stepNumber" : 32,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'i', target 'r': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -6217,7 +6217,7 @@
     }
   }, {
     "stepNumber" : 33,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'i', target 'a': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -6411,7 +6411,7 @@
     }
   }, {
     "stepNumber" : 34,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'i', target 'b': 3 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -6605,7 +6605,7 @@
     }
   }, {
     "stepNumber" : 35,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'i', target 'b': 3 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -6799,7 +6799,7 @@
     }
   }, {
     "stepNumber" : 36,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'i', target 'i': 3 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -6993,7 +6993,7 @@
     }
   }, {
     "stepNumber" : 37,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 'i', target 't': 0 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -7187,7 +7187,7 @@
     }
   }, {
     "stepNumber" : 38,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 't', target 'r': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -7381,7 +7381,7 @@
     }
   }, {
     "stepNumber" : 39,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 't', target 'a': 1 way for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -7575,7 +7575,7 @@
     }
   }, {
     "stepNumber" : 40,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 't', target 'b': 3 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -7769,7 +7769,7 @@
     }
   }, {
     "stepNumber" : 41,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 't', target 'b': 3 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -7963,7 +7963,7 @@
     }
   }, {
     "stepNumber" : 42,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 't', target 'i': 3 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -8157,7 +8157,7 @@
     }
   }, {
     "stepNumber" : 43,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Source 't', target 't': 3 ways for these prefixes.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -8351,7 +8351,7 @@
     }
   }, {
     "stepNumber" : 44,
-    "activeLine" : 4,
+    "activeLine" : 13,
     "description" : "The target occurs as a subsequence 3 times.",
     "queueOrStackState" : null,
     "callStack" : [ ],

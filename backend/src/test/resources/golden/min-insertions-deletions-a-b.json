@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 13,
+    "fill" : 7,
+    "init" : 4
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public long solve(String first, String second) {\n        int m = first.length(), n = second.length();\n        long[][] dp = new long[m + 1][n + 1];\n        for (int i = 1; i <= m; i++) {\n            for (int j = 1; j <= n; j++) {\n                dp[i][j] = first.charAt(i - 1) == second.charAt(j - 1)\n                        ? 1 + dp[i - 1][j - 1] : Math.max(dp[i - 1][j], dp[i][j - 1]);\n            }\n        }\n        long lcs = dp[m][n];\n        // Keep an LCS, delete the other first-string characters, then insert the missing ones.\n        return (m - lcs) + (n - lcs);\n    }\n}\n",
   "problemId" : "min-insertions-deletions-a-b",
   "resolvedInput" : {
     "first" : "heap",
@@ -13,7 +13,7 @@
   "stepCount" : 14,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 4,
     "description" : "dp[i][j] compares prefixes of lengths i and j; empty prefixes have LCS length 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -95,7 +95,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'h' with 'p': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -181,7 +181,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'h' with 'e': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -267,7 +267,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'h' with 'a': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -353,7 +353,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'e' with 'p': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -439,7 +439,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'e' with 'e': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -525,7 +525,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'e' with 'a': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -611,7 +611,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'p': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -697,7 +697,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'e': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -783,7 +783,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'a': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -869,7 +869,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'p' with 'p': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -955,7 +955,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'p' with 'e': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1041,7 +1041,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'p' with 'a': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1127,7 +1127,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 4,
+    "activeLine" : 13,
     "description" : "Keep an LCS of 2: delete 2 and insert 1, 3 operations total.",
     "queueOrStackState" : null,
     "callStack" : [ ],

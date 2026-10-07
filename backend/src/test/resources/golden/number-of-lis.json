@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 23,
+    "fill" : 11,
+    "init" : 7
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "import java.util.Arrays;\n\npublic class Solution {\n    public long solve(int[] nums) {\n        int n = nums.length;\n        long[] length = new long[n], count = new long[n];\n        Arrays.fill(length, 1);\n        Arrays.fill(count, 1);\n        for (int i = 0; i < n; i++) {\n            for (int j = 0; j < i; j++) {\n                if (nums[j] < nums[i]) {\n                    if (length[j] + 1 > length[i]) {\n                        length[i] = length[j] + 1;\n                        count[i] = count[j];\n                    } else if (length[j] + 1 == length[i]) {\n                        count[i] += count[j];\n                    }\n                }\n            }\n        }\n        long longest = Arrays.stream(length).max().orElse(1), answer = 0;\n        for (int i = 0; i < n; i++) if (length[i] == longest) answer += count[i];\n        return answer;\n    }\n}\n",
   "problemId" : "number-of-lis",
   "resolvedInput" : {
     "nums" : [ 1, 3, 5, 4, 7 ]
@@ -12,7 +12,7 @@
   "stepCount" : 12,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 7,
     "description" : "Each index starts with LIS length 1 and one such subsequence.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -64,7 +64,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Process predecessor 0 for index 1: length=2, count=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -120,7 +120,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Process predecessor 0 for index 2: length=2, count=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -176,7 +176,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Process predecessor 1 for index 2: length=3, count=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -232,7 +232,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Process predecessor 0 for index 3: length=2, count=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -288,7 +288,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Process predecessor 1 for index 3: length=3, count=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -344,7 +344,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Process predecessor 2 for index 3: length=3, count=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -400,7 +400,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Process predecessor 0 for index 4: length=2, count=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -456,7 +456,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Process predecessor 1 for index 4: length=3, count=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -512,7 +512,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Process predecessor 2 for index 4: length=4, count=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -568,7 +568,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 11,
     "description" : "Process predecessor 3 for index 4: length=4, count=2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -624,7 +624,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 4,
+    "activeLine" : 23,
     "description" : "There are 2 longest increasing subsequences of length 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],

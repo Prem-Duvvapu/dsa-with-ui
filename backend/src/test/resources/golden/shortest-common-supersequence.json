@@ -1,11 +1,11 @@
 {
   "anchors" : {
-    "done" : 5,
-    "fill" : 3,
-    "init" : 2,
-    "reconstruct" : 4
+    "done" : 27,
+    "fill" : 7,
+    "init" : 4,
+    "reconstruct" : 15
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    reconstructChosenSolution();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public String solve(String first, String second) {\n        int m = first.length(), n = second.length();\n        long[][] dp = new long[m + 1][n + 1];\n        for (int i = 1; i <= m; i++) {\n            for (int j = 1; j <= n; j++) {\n                dp[i][j] = first.charAt(i - 1) == second.charAt(j - 1)\n                        ? 1 + dp[i - 1][j - 1] : Math.max(dp[i - 1][j], dp[i][j - 1]);\n            }\n        }\n        StringBuilder reversed = new StringBuilder();\n        int i = m, j = n;\n        while (i > 0 && j > 0) {\n            // Shared characters appear once; ties consume from the first string.\n            if (first.charAt(i - 1) == second.charAt(j - 1)) {\n                reversed.append(first.charAt(i - 1));\n                i--;\n                j--;\n            } else if (dp[i - 1][j] >= dp[i][j - 1]) {\n                reversed.append(first.charAt(--i));\n            } else {\n                reversed.append(second.charAt(--j));\n            }\n        }\n        while (i > 0) reversed.append(first.charAt(--i));\n        while (j > 0) reversed.append(second.charAt(--j));\n        return reversed.reverse().toString();\n    }\n}\n",
   "problemId" : "shortest-common-supersequence",
   "resolvedInput" : {
     "first" : "abac",
@@ -14,7 +14,7 @@
   "stepCount" : 18,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 4,
     "description" : "dp[i][j] compares prefixes of lengths i and j; empty prefixes have LCS length 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -96,7 +96,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'c': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -182,7 +182,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'a': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -268,7 +268,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -354,7 +354,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'b' with 'c': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -440,7 +440,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'b' with 'a': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -526,7 +526,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -612,7 +612,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'c': prefix LCS length becomes 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -698,7 +698,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'a': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -784,7 +784,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'a' with 'b': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -870,7 +870,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'c' with 'c': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -956,7 +956,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'c' with 'a': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1042,7 +1042,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 7,
     "description" : "Compare 'c' with 'b': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1128,7 +1128,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 4,
+    "activeLine" : 15,
     "description" : "Backtrack at (3,3); reversed supersequence prefix is \"c\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1213,7 +1213,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 4,
+    "activeLine" : 15,
     "description" : "Backtrack at (2,3); reversed supersequence prefix is \"ca\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1298,7 +1298,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 4,
+    "activeLine" : 15,
     "description" : "Backtrack at (1,2); reversed supersequence prefix is \"cab\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1383,7 +1383,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 4,
+    "activeLine" : 15,
     "description" : "Backtrack at (0,1); reversed supersequence prefix is \"caba\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1468,7 +1468,7 @@
     }
   }, {
     "stepNumber" : 18,
-    "activeLine" : 5,
+    "activeLine" : 27,
     "description" : "A shortest common supersequence is \"cabac\" (length 5).",
     "queueOrStackState" : null,
     "callStack" : [ ],

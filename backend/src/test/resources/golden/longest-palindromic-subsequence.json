@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "done" : 4,
-    "fill" : 3,
-    "init" : 2
+    "done" : 13,
+    "fill" : 9,
+    "init" : 6
   },
-  "code" : "public Object solve(Object input) {\n    initialiseBaseCases();\n    evaluateTransitionCandidates();\n    return extractAnswer();\n}",
+  "code" : "public class Solution {\n    public long solve(String text) {\n        String reversed = new StringBuilder(text).reverse().toString();\n        int n = text.length();\n        // The LCS length of a string and its reverse equals its LPS length.\n        long[][] dp = new long[n + 1][n + 1];\n        for (int i = 1; i <= n; i++) {\n            for (int j = 1; j <= n; j++) {\n                dp[i][j] = text.charAt(i - 1) == reversed.charAt(j - 1)\n                        ? 1 + dp[i - 1][j - 1] : Math.max(dp[i - 1][j], dp[i][j - 1]);\n            }\n        }\n        return dp[n][n];\n    }\n}\n",
   "problemId" : "longest-palindromic-subsequence",
   "resolvedInput" : {
     "text" : "bbbab"
@@ -12,7 +12,7 @@
   "stepCount" : 27,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 6,
     "description" : "dp[i][j] compares prefixes of lengths i and j; empty prefixes have LCS length 0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -142,7 +142,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -276,7 +276,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'a': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -410,7 +410,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -544,7 +544,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -678,7 +678,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -812,7 +812,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -946,7 +946,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'a': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1080,7 +1080,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1214,7 +1214,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1348,7 +1348,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1482,7 +1482,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1616,7 +1616,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'a': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1750,7 +1750,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1884,7 +1884,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2018,7 +2018,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2152,7 +2152,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'a' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2286,7 +2286,7 @@
     }
   }, {
     "stepNumber" : 18,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'a' with 'a': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2420,7 +2420,7 @@
     }
   }, {
     "stepNumber" : 19,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'a' with 'b': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2554,7 +2554,7 @@
     }
   }, {
     "stepNumber" : 20,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'a' with 'b': prefix LCS length becomes 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2688,7 +2688,7 @@
     }
   }, {
     "stepNumber" : 21,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'a' with 'b': prefix LCS length becomes 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2822,7 +2822,7 @@
     }
   }, {
     "stepNumber" : 22,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2956,7 +2956,7 @@
     }
   }, {
     "stepNumber" : 23,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'a': prefix LCS length becomes 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3090,7 +3090,7 @@
     }
   }, {
     "stepNumber" : 24,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3224,7 +3224,7 @@
     }
   }, {
     "stepNumber" : 25,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3358,7 +3358,7 @@
     }
   }, {
     "stepNumber" : 26,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Compare 'b' with 'b': prefix LCS length becomes 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3492,7 +3492,7 @@
     }
   }, {
     "stepNumber" : 27,
-    "activeLine" : 4,
+    "activeLine" : 13,
     "description" : "LCS with the reversed string gives palindromic subsequence length 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
