@@ -1,11 +1,11 @@
 {
   "anchors" : {
-    "base" : 3,
-    "combine" : 5,
-    "done" : 7,
-    "init" : 2
+    "base" : 4,
+    "combine" : 6,
+    "done" : 8,
+    "init" : 3
   },
-  "code" : "public int climbStairs(int n) {\n    int[] ways = new int[n + 1];\n    ways[0] = 1; ways[1] = 1;\n    for (int i = 2; i <= n; i++) {\n        ways[i] = ways[i - 1] + ways[i - 2];\n    }\n    return ways[n];\n}",
+  "code" : "public class Solution {\n    public int climbStairs(int n) {\n        int[] ways = new int[n + 1];\n        ways[0] = 1; ways[1] = 1;\n        for (int i = 2; i <= n; i++) {\n            ways[i] = ways[i - 1] + ways[i - 2];\n        }\n        return ways[n];\n    }\n}\n",
   "problemId" : "climbing-stairs",
   "resolvedInput" : {
     "n" : 5
@@ -13,7 +13,7 @@
   "stepCount" : 7,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 3,
     "description" : "One cell per stair, 0 through 5. Each cell will hold the number of distinct ways to be standing on that stair.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -55,7 +55,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 3,
+    "activeLine" : 4,
     "description" : "Two base cases, and they are not arbitrary: there is exactly one way to be at the bottom (take no steps), and exactly one way to reach stair 1 (a single 1-step). Everything else is derived from these.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -98,7 +98,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 5,
+    "activeLine" : 6,
     "description" : "To stand on stair 2 you arrived either with a 1-step from stair 1 (which holds 1) or a 2-step from stair 0 (which holds 1). No path is counted twice, so the two add: 1 + 1 = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -143,7 +143,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 5,
+    "activeLine" : 6,
     "description" : "To stand on stair 3 you arrived either with a 1-step from stair 2 (which holds 2) or a 2-step from stair 1 (which holds 1). No path is counted twice, so the two add: 2 + 1 = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -188,7 +188,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 5,
+    "activeLine" : 6,
     "description" : "To stand on stair 4 you arrived either with a 1-step from stair 3 (which holds 3) or a 2-step from stair 2 (which holds 2). No path is counted twice, so the two add: 3 + 2 = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -233,7 +233,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 5,
+    "activeLine" : 6,
     "description" : "To stand on stair 5 you arrived either with a 1-step from stair 4 (which holds 5) or a 2-step from stair 3 (which holds 3). No path is counted twice, so the two add: 5 + 3 = 8.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -278,7 +278,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 7,
+    "activeLine" : 8,
     "description" : "ways[5] = 8. No cell was ever computed twice, which is why 5 stairs cost 4 additions instead of the exponential recursion tree the naive definition unfolds into.",
     "queueOrStackState" : null,
     "callStack" : [ ],

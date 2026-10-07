@@ -23,6 +23,7 @@ import java.util.Set;
  */
 @Component
 public class ClimbingStairsTracer implements AlgorithmTracer {
+    private static final String CODE = SolutionSource.read("/solutions/dp-approaches/climbing-stairs/tabulation.java");
 
     @Override
     public String id() {
@@ -53,19 +54,7 @@ public class ClimbingStairsTracer implements AlgorithmTracer {
 
     @Override
     public String annotatedCode() {
-        return """
-               public int climbStairs(int n) {
-                   // @a init
-                   int[] ways = new int[n + 1];
-                   // @a base
-                   ways[0] = 1; ways[1] = 1;
-                   for (int i = 2; i <= n; i++) {
-                       // @a combine
-                       ways[i] = ways[i - 1] + ways[i - 2];
-                   }
-                   // @a done
-                   return ways[n];
-               }""";
+        return CODE;
     }
 
     @Override

@@ -1,0 +1,150 @@
+{
+  "generated": "2026-10-07T19:37:46.202Z",
+  "realBackend": true,
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "cases": [
+    {
+      "approach": "recursion",
+      "n": 1,
+      "steps": 5,
+      "fullBytes": 3030,
+      "deltaBytes": 2240,
+      "answer": "1",
+      "calls": "1",
+      "cacheHits": "0",
+      "computedStates": "1",
+      "fullDeltaEqual": true
+    },
+    {
+      "approach": "recursion",
+      "n": 5,
+      "steps": 61,
+      "fullBytes": 28329,
+      "deltaBytes": 16676,
+      "answer": "8",
+      "calls": "15",
+      "cacheHits": "0",
+      "computedStates": "6",
+      "fullDeltaEqual": true
+    },
+    {
+      "approach": "recursion",
+      "n": 10,
+      "steps": 709,
+      "fullBytes": 358446,
+      "deltaBytes": 204990,
+      "answer": "89",
+      "calls": "177",
+      "cacheHits": "0",
+      "computedStates": "11",
+      "fullDeltaEqual": true
+    },
+    {
+      "approach": "memoization",
+      "n": 1,
+      "steps": 6,
+      "fullBytes": 4674,
+      "deltaBytes": 3214,
+      "answer": "1",
+      "calls": "1",
+      "cacheHits": "0",
+      "computedStates": "1",
+      "fullDeltaEqual": true
+    },
+    {
+      "approach": "memoization",
+      "n": 5,
+      "steps": 38,
+      "fullBytes": 29440,
+      "deltaBytes": 16548,
+      "answer": "8",
+      "calls": "9",
+      "cacheHits": "3",
+      "computedStates": "6",
+      "fullDeltaEqual": true
+    },
+    {
+      "approach": "memoization",
+      "n": 30,
+      "steps": 238,
+      "fullBytes": 435653,
+      "deltaBytes": 230064,
+      "answer": "1346269",
+      "calls": "59",
+      "cacheHits": "28",
+      "computedStates": "31",
+      "fullDeltaEqual": true
+    },
+    {
+      "approach": "tabulation",
+      "n": 1,
+      "steps": 3,
+      "fullBytes": 2667,
+      "deltaBytes": 2239,
+      "answer": "1",
+      "calls": null,
+      "cacheHits": null,
+      "computedStates": null,
+      "fullDeltaEqual": true
+    },
+    {
+      "approach": "tabulation",
+      "n": 5,
+      "steps": 7,
+      "fullBytes": 6475,
+      "deltaBytes": 5335,
+      "answer": "8",
+      "calls": null,
+      "cacheHits": null,
+      "computedStates": null,
+      "fullDeltaEqual": true
+    },
+    {
+      "approach": "tabulation",
+      "n": 30,
+      "steps": 32,
+      "fullBytes": 57391,
+      "deltaBytes": 51801,
+      "answer": "1346269",
+      "calls": null,
+      "cacheHits": null,
+      "computedStates": null,
+      "fullDeltaEqual": true
+    }
+  ],
+  "boundaryRefusals": 3,
+  "productionDecoderRoundTrips": 9,
+  "rows": [
+    {
+      "width": 320,
+      "theme": "light",
+      "defaultApproach": "tabulation",
+      "passed": true
+    },
+    {
+      "width": 320,
+      "theme": "dark",
+      "defaultApproach": "tabulation",
+      "passed": true
+    },
+    {
+      "width": 1366,
+      "theme": "light",
+      "defaultApproach": "tabulation",
+      "passed": true
+    },
+    {
+      "width": 1366,
+      "theme": "dark",
+      "defaultApproach": "tabulation",
+      "passed": true
+    }
+  ],
+  "scope": "D2 backend pilot; D3 UI pending"
+}
