@@ -43,7 +43,7 @@ describe('useShareableView', () => {
       problemId: 'kadane-algo', stepIndex: 0, totalSteps: 0, onRestore
     });
     // 1-based in the URL, 0-based in the player: step=5 is index 4.
-    expect(onRestore).toHaveBeenCalledWith({ step: 4, input: { status: 'valid', value: { nums: [9] } }, samePage: false });
+    expect(onRestore).toHaveBeenCalledWith({ step: 4, input: { status: 'valid', value: { nums: [9] } }, approachId: null, samePage: false });
   });
 
   it('restores once per problem, not on every render', () => {
@@ -66,7 +66,7 @@ describe('useShareableView', () => {
     at('/problem/kadane-algo?step=abc', {
       problemId: 'kadane-algo', stepIndex: 0, totalSteps: 0, onRestore
     });
-    expect(onRestore).toHaveBeenCalledWith({ step: null, input: { status: 'absent' }, samePage: false });
+    expect(onRestore).toHaveBeenCalledWith({ step: null, input: { status: 'absent' }, approachId: null, samePage: false });
   });
 
   it('merges two writes made in the same tick instead of dropping the first', () => {

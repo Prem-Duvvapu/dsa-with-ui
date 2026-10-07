@@ -33,7 +33,13 @@ const EMPTY_RUN = Object.freeze({
   anchors: null,
   truncated: false,
   submittedInput: null,
-  offline: false
+  offline: false,
+  approachId: null,
+  approachLabel: null,
+  code: null,
+  dsType: null,
+  complexity: null,
+  hasApproachMetadata: false
 });
 
 /** A deep copy of an input map, so later edits to the draft cannot rewrite what ran. */
@@ -80,8 +86,32 @@ function runFrom(id, problemId, body, steps, submittedInput) {
     anchors: envelope?.anchors ?? null,
     truncated: envelope?.truncated === true,
     submittedInput,
-    offline: false
+    offline: false,
+    approachId: envelope?.approachId ?? null,
+    approachLabel: envelope?.approachLabel ?? null,
+    code: envelope?.code ?? null,
+    dsType: envelope?.dsType ?? null,
+    complexity: envelope?.complexity ?? null,
+    hasApproachMetadata: typeof envelope?.approachId === 'string'
   };
+}
+
+/** A selected approach cannot silently receive another executable or partial metadata. */
+function matchingExecution(body, problemId, approachId = null) {
+  if (body?.problemId != null && body.problemId !== problemId) return false;
+  if (approachId !== null && body?.approachId !== approachId) return false;
+  if (approachId !== null || body?.approachId != null) {
+    return body?.problemId === problemId && typeof body.code === 'string' && body.code.trim().length > 0
+      && typeof body.dsType === 'string'
+      && typeof body.truncated === 'boolean'
+      && body.resolvedInput && typeof body.resolvedInput === 'object' && !Array.isArray(body.resolvedInput)
+      && body.anchors && typeof body.anchors === 'object' && !Array.isArray(body.anchors);
+  }
+  return true; // Older canonical/bare-array contracts remain supported, not selected alternatives.
+}
+
+function executeUrl(problemId, approachId = null) {
+  return `/api/problems/${problemId}/execute${approachId === null ? '' : `?approach=${encodeURIComponent(approachId)}`}`;
 }
 
 /**
@@ -191,12 +221,12 @@ export default function useTrace(problemId, problem, options = {}) {
 
           if (!failure) {
             const classified = classifyExecValue(body);
-            if (classified.kind === 'ok') {
+            if (classified.kind === 'ok' && matchingExecution(body, problemId)) {
               commit(runFrom(++runIdRef.current, problemId, body, classified.steps, null));
               setError(null);
               return;
             }
-            failure = classified.kind;
+            failure = classified.kind === 'ok' ? 'malformed' : classified.kind;
           }
         }
       } catch (err) {
@@ -239,7 +269,7 @@ export default function useTrace(problemId, problem, options = {}) {
    *                                             prior run kept, `rerunFailure` set
    *   { ok: false, kind: 'superseded' }         a newer request or problem replaced it
    */
-  const runInput = useCallback(async (inputValues) => {
+  const runInput = useCallback(async (inputValues, approachId = null, { asDefault = false } = {}) => {
     if (!problemId) return { ok: false, kind: 'superseded' };
 
     const submitted = snapshot(inputValues);
@@ -259,12 +289,12 @@ export default function useTrace(problemId, problem, options = {}) {
 
     const fail = (kind) => {
       if (!isCurrent()) return { ok: false, kind: 'superseded' };
-      setRerunFailure({ kind, input: submitted });
+      setRerunFailure({ kind, input: submitted, approachId });
       return { ok: false, kind };
     };
 
     try {
-      const res = await fetch(`/api/problems/${problemId}/execute`, {
+      const res = await fetch(executeUrl(problemId, approachId), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submitted),
@@ -275,6 +305,7 @@ export default function useTrace(problemId, problem, options = {}) {
       if (res.status === 400) {
         const body = await res.json().catch(() => null);
         if (!isCurrent()) return { ok: false, kind: 'superseded' };
+        if (body?.error === 'unavailable_approach') return fail('unavailable-approach');
         const errors = body?.fieldErrors && typeof body.fieldErrors === 'object' ? body.fieldErrors : {};
         setFieldErrors(errors);
         return { ok: false, kind: 'invalid', fieldErrors: errors, message: body?.message ?? null };
@@ -293,8 +324,9 @@ export default function useTrace(problemId, problem, options = {}) {
 
       const classified = classifyExecValue(body);
       if (classified.kind !== 'ok') return fail(classified.kind);
+      if (!matchingExecution(body, problemId, approachId)) return fail('malformed');
 
-      const next = runFrom(++runIdRef.current, problemId, body, classified.steps, submitted);
+      const next = runFrom(++runIdRef.current, problemId, body, classified.steps, asDefault ? null : submitted);
       commit(next);
       setError(null);
       return { ok: true, run: next };

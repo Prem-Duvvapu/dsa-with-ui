@@ -34,6 +34,11 @@ class SolutionApproachesApiTest {
         assertEquals("DpTable", approach.path("dsType").asText());
         assertEquals(detail.path("inputSpec"), approach.path("inputSpec"));
         assertEquals(detail.path("complexity"), approach.path("complexity"));
+        assertEquals(detail.path("alternateInput"), approach.path("alternateInput"));
+        for (var option : detail.path("approaches")) {
+            var selected = getJson("/api/problems/climbing-stairs?approach=" + option.path("id").asText());
+            assertEquals(selected.path("alternateInput"), option.path("alternateInput"));
+        }
     }
 
     @Test void explicitDefaultAndOldLinksDescribeTheSameExecution() throws Exception {

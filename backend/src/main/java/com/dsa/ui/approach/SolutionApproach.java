@@ -17,6 +17,7 @@ public record SolutionApproach(String problemId, String id, String label, String
         out.put("isDefault", defaultApproach);
         out.put("dsType", tracer.dsType());
         out.put("inputSpec", tracer.inputSpec());
+        out.put("alternateInput", tracer.alternateInput());
         out.put("complexity", complexity);
         return Collections.unmodifiableMap(out);
     }
