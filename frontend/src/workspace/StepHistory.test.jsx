@@ -57,4 +57,19 @@ describe('StepHistory (P6a)', () => {
     render(<StepHistory steps={[]} current={0} onSeek={() => {}} />);
     expect(screen.getByText('There are no steps to list: no run is loaded.')).toBeInTheDocument();
   });
+
+  it('announces page changes without announcing every off-page playback tick', () => {
+    const steps = run(120);
+    const onSeek = vi.fn();
+    const { rerender } = render(<StepHistory steps={steps} current={0} onSeek={onSeek} />);
+    rerender(<StepHistory steps={steps} current={100} onSeek={onSeek} />);
+    expect(document.querySelector('[aria-live="polite"]')).toHaveTextContent(/^Steps 1–50 of 120$/);
+    expect(screen.getByText(/the current step, 101, is on page 3/)).toBeInTheDocument();
+    rerender(<StepHistory steps={steps} current={101} onSeek={onSeek} />);
+    expect(document.querySelector('[aria-live="polite"]')).toHaveTextContent(/^Steps 1–50 of 120$/);
+    expect(screen.getByText(/the current step, 102, is on page 3/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Next page' }));
+    expect(document.querySelector('[aria-live="polite"]')).toHaveTextContent(/^Steps 51–100 of 120$/);
+    expect(onSeek).not.toHaveBeenCalled();
+  });
 });

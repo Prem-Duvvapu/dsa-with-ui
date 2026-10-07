@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Code2, GitBranch, Link2, Maximize2, Minimize2, Pencil, RefreshCw, RotateCcw, Search, Star } from 'lucide-react';
 import LearningHeader from '../components/LearningHeader';
+import DisclosureMenu from '../components/DisclosureMenu';
 import SiteFooter from '../components/SiteFooter';
 import layout from '../components/LearningLayout.module.css';
 import CanvasShell from '../components/CanvasShell';
@@ -269,10 +270,9 @@ export default function ProblemWorkspace() {
   const header = (
     <LearningHeader>
       <nav className={styles.headerNav} aria-label="Workspace">{navLinks}</nav>
-      <details className={styles.headerMenu}>
-        <summary className={styles.headerLink}>Menu</summary>
+      <DisclosureMenu className={styles.headerMenu} summaryClassName={styles.headerLink} summary="Menu">
         <nav className={styles.headerMenuList} aria-label="Workspace">{navLinks}</nav>
-      </details>
+      </DisclosureMenu>
     </LearningHeader>
   );
 
@@ -355,7 +355,10 @@ export default function ProblemWorkspace() {
       <p className={styles.narrationLabel}>
         Current step{steps.length > 0 && <span> · Step {currentStepIndex + 1} of {steps.length}</span>}
       </p>
-      <p className={styles.narrationText} role="status" aria-live="polite">
+      {/* Autoplay keeps the visual/text alternative current, but holds live updates until
+          playback pauses or finishes. Manual stepping announces the whole current state. */}
+      <p className={styles.narrationText} role="status" aria-live="polite"
+        aria-busy={session.isPlaying} aria-atomic="true">
         {currentStep?.description || (traceLoading ? 'Loading…' : 'No trace steps available.')}
       </p>
     </div>
@@ -469,13 +472,13 @@ export default function ProblemWorkspace() {
             <button type="button" className={styles.control} onClick={retryCatalog}>Retry loading the catalogue</button>
           </div>
         )}
-        <header className={styles.context}>
+        <section className={styles.context} aria-labelledby="problem-title">
           <p className={styles.breadcrumb}>
             <Link to={`/?category=${encodeURIComponent(problem?.category ?? '')}`}>{problem?.category ?? '…'}</Link>
             <span aria-hidden="true"> / </span>{stage.label}
           </p>
           <div className={styles.titleRow}>
-            <h1 className={styles.title}>{title}</h1>
+            <h1 id="problem-title" className={styles.title}>{title}</h1>
             <div className={styles.titleMeta}>
               {DIFFICULTIES.has(problem?.difficulty) && <span className={styles.difficulty}>{problem.difficulty}</span>}
               {watched && <span className={styles.meta}>Watched</span>}
@@ -542,7 +545,7 @@ export default function ProblemWorkspace() {
               </nav>
             )}
           </div>
-        </header>
+        </section>
       </div>
 
       <div data-tour="view-rail" className={styles.railWrap} hidden={isFocus}><ViewRail view={view} onSelect={selectView} /></div>

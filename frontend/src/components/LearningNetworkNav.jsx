@@ -1,4 +1,6 @@
 import React from 'react';
+import { ChevronDown, Network } from 'lucide-react';
+import DisclosureMenu from './DisclosureMenu';
 import styles from './LearningNetworkNav.module.css';
 
 const subjects = [
@@ -10,6 +12,9 @@ const subjects = [
 
 export default function LearningNetworkNav() {
   return (
+    <DisclosureMenu className={styles.menu} summaryClassName={styles.toggle}
+      summaryLabel="Learning network"
+      summary={<><Network size={16} aria-hidden="true" /><span className={styles.label}>Learning network</span><ChevronDown size={14} className={styles.chevron} aria-hidden="true" /></>}>
     <nav className={styles['learning-network']} aria-label="Learning network">
       <a className={styles['learning-network-home']} href="https://learning-hub-with-ui.vercel.app/">
         <span aria-hidden="true">↖</span> Learning Home
@@ -22,5 +27,6 @@ export default function LearningNetworkNav() {
         ))}
       </div>
     </nav>
+    </DisclosureMenu>
   );
 }

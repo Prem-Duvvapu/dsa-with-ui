@@ -107,10 +107,10 @@ useEffect(() => {
       return;
     }
 
-    // A focused button activates on Space/Enter natively. Letting Space through here too
+    // A focused button or summary activates on Space/Enter natively. Letting Space through here too
     // would toggle playback twice; blocking every key while a button has focus - which is
     // what this used to do - meant one click on Play killed the keyboard for good.
-    const onButton = tag === 'BUTTON';
+    const onButton = tag === 'BUTTON' || tag === 'SUMMARY';
     if (inComposite && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'Space', 'Enter'].includes(e.code)) return;
 
     switch (e.code) {

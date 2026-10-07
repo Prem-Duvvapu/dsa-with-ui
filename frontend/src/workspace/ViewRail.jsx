@@ -21,7 +21,23 @@ export default function ViewRail({ view, onSelect }) {
   // returns to, while selection stays put until Enter, Space or a click. When focus leaves
   // the rail the stop goes back to the selected tab (INDEPENDENT_REVIEW_DB8683B.md S6).
   const [focused, setFocused] = useState(view);
-  useEffect(() => { setFocused(view); }, [view]);
+  useEffect(() => {
+    setFocused(view);
+    const revealSelected = () => {
+      const tab = refs.current[view];
+      const rail = tab?.parentElement;
+      if (!rail) return;
+      const bounds = rail.getBoundingClientRect();
+      const target = tab.getBoundingClientRect();
+      // Restore a linked/selected view inside the rail only: opening the page must not
+      // scroll past its problem context or move keyboard focus.
+      if (target.left < bounds.left) rail.scrollLeft -= bounds.left - target.left;
+      else if (target.right > bounds.right) rail.scrollLeft += target.right - bounds.right;
+    };
+    revealSelected();
+    window.addEventListener('resize', revealSelected);
+    return () => window.removeEventListener('resize', revealSelected);
+  }, [view]);
 
   const onKeyDown = (event) => {
     const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
@@ -54,7 +70,12 @@ export default function ViewRail({ view, onSelect }) {
             aria-selected={view === item.id}
             aria-controls={panelId}
             tabIndex={focused === item.id ? 0 : -1}
-            onFocus={() => setFocused(item.id)}
+            onFocus={(event) => {
+              setFocused(item.id);
+              // A partially visible tab does not always make native focus scroll the rail.
+              // Keep the full focused target visible, without selecting or seeking it.
+              event.currentTarget.scrollIntoView?.({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+            }}
             className={styles.tab}
             onClick={() => onSelect(item.id)}
           >
