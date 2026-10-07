@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
+import { act, render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { MemoryRouter, useLocation } from 'react-router-dom';
@@ -9,7 +9,7 @@ import { STAGE_BY_DSTYPE } from './stageFamily';
 
 /**
  * The P3 workspace (docs/ui-revamp/playground-concept.png), exercised through the real
- * router with the development flag on. The contract under test is the handoff's §6: one
+ * integrated problem route. The contract under test is the handoff's §6: one
  * session above the views, so presentation changes never touch the run, step or draft.
  */
 
@@ -217,6 +217,40 @@ describe('Workspace: one session above every view', () => {
     expect(playground).toHaveAttribute('tabindex', '-1');
     expect(playground).toHaveAttribute('aria-selected', 'true');
   });
+
+  it('brings a keyboard-focused tab into the local rail without selecting it', async () => {
+    await openAlpha();
+    const scroll = vi.fn();
+    Element.prototype.scrollIntoView = scroll;
+    const playground = screen.getByRole('tab', { name: 'Playground' });
+    playground.focus();
+    scroll.mockClear();
+    fireEvent.keyDown(playground, { key: 'End', code: 'End' });
+    expect(screen.getByRole('tab', { name: 'Analysis' })).toHaveFocus();
+    expect(scroll).toHaveBeenCalledWith({ block: 'nearest', inline: 'nearest', behavior: 'instant' });
+    expect(playground).toHaveAttribute('aria-selected', 'true');
+    expect(narration()).toHaveTextContent('alpha n=3 step 1');
+    expect(executes).toEqual(['GET']);
+  });
+
+  it('reveals a restored selected tab on load and after resize without scrolling the page', async () => {
+    vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function () {
+      if (this.getAttribute('role') === 'tablist') return { left: 16, right: 304 };
+      if (this.id === 'workspace-tab-analysis') return { left: 288, right: 370 };
+      return { left: 0, right: 0, width: 0, height: 0, top: 0, bottom: 0 };
+    });
+    const scroll = vi.fn();
+    Element.prototype.scrollIntoView = scroll;
+    await openAlpha('/problem/alpha?view=analysis');
+    const rail = screen.getByRole('tablist', { name: 'Learning views' });
+    expect(rail.scrollLeft).toBe(66);
+    rail.scrollLeft = 0;
+    fireEvent(window, new Event('resize'));
+    expect(rail.scrollLeft).toBe(66);
+    expect(scroll).not.toHaveBeenCalled();
+    expect(screen.getByRole('tab', { name: 'Analysis' })).toHaveAttribute('aria-selected', 'true');
+    expect(executes).toEqual(['GET']);
+  });
 });
 
 describe('Workspace: Playground', () => {
@@ -271,5 +305,76 @@ describe('Workspace: Playground', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Next' }));
     await waitFor(() => expect(JSON.parse(window.localStorage.getItem('dsa-ui:progress')).alpha.watched).toBe(true));
     expect(screen.getByText('Watched')).toBeInTheDocument();
+  });
+});
+
+describe('Narration announcements', () => {
+  it.each(['playground', 'code', 'analysis'])('holds autoplay announcements in %s and releases the current step on pause', async (view) => {
+    await openAlpha(`/problem/alpha?view=${view}`);
+    vi.useFakeTimers();
+    try {
+      const status = narration();
+      expect(status).toHaveAttribute('aria-busy', 'false');
+      expect(status).toHaveAttribute('aria-atomic', 'true');
+      fireEvent.click(screen.getByRole('button', { name: 'Play' }));
+      expect(status).toHaveAttribute('aria-busy', 'true');
+      await act(async () => { vi.advanceTimersByTime(1000); });
+      expect(status).toHaveTextContent('alpha n=3 step 2');
+      expect(status).toHaveAttribute('aria-busy', 'true');
+      fireEvent.click(screen.getByRole('button', { name: 'Pause' }));
+      expect(status).toHaveAttribute('aria-busy', 'false');
+      fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+      expect(status).toHaveTextContent('alpha n=3 step 3');
+      expect(status).toHaveAttribute('aria-busy', 'false');
+      expect(executes).toEqual(['GET']);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('releases the final narration when autoplay finishes', async () => {
+    await openAlpha();
+    vi.useFakeTimers();
+    try {
+      fireEvent.click(screen.getByRole('button', { name: 'Play' }));
+      for (let i = 0; i < 6; i += 1) {
+        await act(async () => { vi.advanceTimersByTime(1000); });
+      }
+      expect(narration()).toHaveTextContent('alpha n=3 step 6');
+      expect(narration()).toHaveAttribute('aria-busy', 'false');
+      expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+});
+
+describe('Native disclosure controls', () => {
+  it('leaves navigation keys inside an open Menu without seeking the trace', async () => {
+    await openAlpha();
+    const summary = screen.getByText('Menu', { selector: 'summary' });
+    const details = summary.closest('details');
+    details.open = true;
+    const link = within(details).getByRole('link', { name: 'All algorithms' });
+    link.focus();
+    fireEvent.keyDown(link, { key: 'End', code: 'End' });
+    expect(narration()).toHaveTextContent('alpha n=3 step 1');
+    fireEvent.keyDown(link, { key: 'Escape', code: 'Escape' });
+    expect(details).not.toHaveAttribute('open');
+    expect(summary).toHaveFocus();
+  });
+
+  it('leaves Space to the phone Menu instead of toggling playback', async () => {
+    await openAlpha();
+    const menu = screen.getByText('Menu', { selector: 'summary' });
+    menu.focus();
+    expect(fireEvent.keyDown(menu, { key: ' ', code: 'Space' })).toBe(true);
+    expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument();
+    expect(narration()).toHaveTextContent('alpha n=3 step 1');
+  });
+
+  it('has one page banner, with the problem context outside that landmark', async () => {
+    await openAlpha();
+    expect(screen.getAllByRole('banner')).toHaveLength(1);
   });
 });

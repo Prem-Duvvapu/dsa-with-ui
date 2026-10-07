@@ -836,3 +836,101 @@ A backend contract defect found by the P7 input journey, fixed as its own change
   - three single-letter palindromes;
   - a 0 that doubles the sign count.
 - **Text fixes.** shortest-common-supersequence now notes that "geeke" is equally correct. mcm-cost-eval drops an internal-commentary sentence; its title stays an open owner decision.
+
+## 2026-10-07 — P8 bounded accessibility and chrome iteration (phase remains open)
+
+Branch: `feat/p8-workspace-polish`, based on merged main `46d98fb` (#207).
+The original checkout's untracked handoff documents were left untouched; work is in a
+separate worktree. The owner authorized publishing this bounded package through a PR;
+the remaining P8 phase gates below are not waived by publishing it.
+
+### Reproduced friction and implemented fixes
+
+- At 320px, keyboard focus could reach an Analysis tab whose right edge was outside
+  the rail (370px versus 304px). Focused tabs now reveal locally, and a linked/selected
+  tab is revealed on entry and resize without changing selection or moving focus.
+  The focus ring is inset so the scrolling rail does not clip it.
+- Narration remained a live region on every autoplay tick. It now stays visually
+  current but uses `aria-busy` during playback, releasing the atomic current narration
+  on pause/end. History announces deliberate page-range changes, not an off-page
+  current-step hint on every tick. Actual speech behavior still needs a screen reader.
+- An explicitly labelled stress fixture (112-character variable name, 175-character
+  value) produced 609px of page overflow at 320px and a zero-width value disclosure.
+  The variable-name column is bounded, names and values wrap, disclosures remain
+  reachable, and their summary targets are at least 44px. This is layout evidence,
+  not a claim about an algorithm's output.
+- Space on a native phone Menu summary also reached the player. End on a focused
+  link inside the open Menu sought to the final trace step. Native summaries now own
+  Space; open disclosures own navigation keys without cancelling the browser's
+  action. Escape closes the disclosure and returns focus; blur/outside pointer close
+  it without trapping Tab. Both menus clean up their document listeners.
+- The problem context and canvas chrome no longer appear as additional page banners.
+- Array values above bars used the bar-border color: default values were nearly
+  invisible on the light canvas. Values now use `--text-primary`; role colors still
+  identify bars. A regression test fails on the old border-ink implementation.
+
+### Compact header and measurements
+
+The five native, same-tab learning-network links are preserved in a labelled
+disclosure inside the shared header instead of a separate strip. The phone theme
+and network controls are labelled 44px icons. Context/card spacing is reduced; an
+empty canvas chrome row is removed, while the DP legend remains visible.
+
+At 1366×768, Two Sum/BFS's drawing frame starts at **y358.39**, versus **y464.39** on
+the fresh main baseline: 106px earlier. The stage/card starts at **y357.39/y288.39**.
+The DP drawing frame starts at **y391.39**, because its legend is retained. Desktop
+minimum drawing heights remain 360px (Array) / 440px (spatial families), and phone
+minimum heights are unchanged. **The ~y280 drawing-frame gate is still not met**;
+this is progress, not a waiver or a redefinition of the frame as the outer card.
+The historical P3 y389 measurement predates the later learning-network strip.
+
+`evidence/p8/chrome-journey.cjs` captures three default runs from the real backend,
+then replays those responses for repeatable native-menu/geometry checks. Its final
+`chrome-results.json` has **50/50 passing rows**: three problem routes plus library
+and not-found, five viewport widths (320/390/768/1366/1440), both themes. All 50 rows
+check page overflow. The 30 problem rows additionally check one banner,
+closed network navigation absent from the
+browser accessibility tree, five network links, Escape/focus return, native phone
+Menu Space, 44px theme/network controls, and no executions caused by disclosures.
+Representative before/after and stress screenshots accompany the manifest.
+
+### Verification and remaining gates
+
+Fresh main baseline: 75 frontend files / 663 tests pass; production JS 356.99kB
+(gzip 113.33), CSS 102.73kB (gzip 18.46). The unchanged backend suite passes:
+7,910 tests, zero failures/errors, 500 skipped. API stats remain 431 traced/catalogued,
+zero untraced, no duplicate/orphan ids. Startup smoke passes. No dependencies added.
+
+Current production build passes: JS 359.48kB (gzip 114.08), CSS 103.99kB (gzip 18.64).
+Compared with the refreshed main baseline, that is +2.49kB JS / +0.75kB compressed
+and +1.26kB CSS / +0.18kB compressed; it is a bundle measurement, not a latency claim.
+
+Final candidate frontend suite: **75 files / 675 tests passed** (663 on main).
+The added guards cover autoplay narration (all three views and final release),
+focused/linked tab reveal, quiet history pagination, native Menu Space/navigation-key
+ownership, a single page banner, network disclosure dismissal, and array value ink.
+The narration/tab/history/Menu/array-ink regressions were checked red before their
+fixes; the exact-link test retains its original five href and same-tab assertions.
+
+The real-backend renderer re-sweep completes **200/200 passing rows**, all 17 dsTypes,
+50 problems, default+alternate inputs, desktop dark/phone light, first/middle/final
+steps. `evidence/p8/renderer-manifest.json` records this run without replacing the
+historical P7 manifest. The reusable probe now checkpoints incomplete runs, closes
+the browser in `finally`, and paces executions under the server's normal 60/minute
+limit. Aborted requests count toward pacing too. This certifies drawing/overflow/
+page errors for those rows, not independent answer correctness or all legal inputs.
+
+The final `accessibility-journey.cjs` run passes **40/40 rows**, across the same five
+widths and both themes: three real-backend problems plus the explicitly labelled
+long-variable/container fixture. It checks manual tab activation and focus/selected
+tab visibility, narration busy/atomic state in all three views, reachable 44px value
+disclosures, and no page overflow before/after expansion. The retained baseline
+subset (`accessibility-before.json`, 320/1366, both themes) fails 16/16 rows on main;
+it is not represented as a full five-width baseline matrix. Final results/screenshots
+are in `evidence/p8/accessibility-results.json` and the accompanying PNGs.
+
+Still open: an actual screen-reader speech pass; second-engine and real-device/virtual
+keyboard coverage; 200% zoom and the broader browser/state matrix; measured long-trace
+playback/seek/history performance; independent learner/owner feedback and the ~y280
+frame target. These automated expert checks are not user research. P8 remains in
+progress; P9 cleanup/preservation-ledger reconciliation/release work has not begun.

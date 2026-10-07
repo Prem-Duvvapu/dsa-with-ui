@@ -16,7 +16,7 @@
 .kbd { font: 11px var(--font-code); color: var(--ink-secondary); border: 1px solid var(--rule-strong); border-radius: 4px; padding: 1px 5px; }
 
 /* Context */
-.context { padding: var(--space-lg) 0 var(--space-md); }
+.context { padding: var(--space-md) 0 var(--space-sm); }
 .breadcrumb { font-size: var(--type-meta); color: var(--ink-secondary); margin-bottom: 2px; }
 .breadcrumb a { color: inherit; }
 .titleRow { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
@@ -26,7 +26,7 @@
 .star { width: var(--target-min); height: var(--target-min); display: grid; place-items: center; border: 1px solid var(--control-border); border-radius: var(--radius-control); background: var(--surface-panel); color: var(--ink-secondary); cursor: pointer; }
 .star[aria-pressed="true"] { color: var(--ink-strong); }
 .summary { margin-top: 4px; color: var(--ink-secondary); }
-.contextRow { display: flex; align-items: flex-start; gap: 12px; margin-top: var(--space-md); }
+.contextRow { display: flex; align-items: flex-start; gap: 12px; margin-top: var(--space-sm); }
 .statement { flex: 1 1 auto; min-width: 0; border: 1px solid var(--rule-subtle); border-radius: 10px; background: var(--surface-panel); }
 .statement summary { min-height: var(--target-min); display: flex; align-items: center; gap: 10px; padding: 0 16px; font-weight: 650; cursor: pointer; list-style: none; }
 .statement summary::-webkit-details-marker { display: none; }
@@ -54,9 +54,9 @@
 .tab[aria-selected="true"] { color: var(--ink-strong); border-bottom-color: var(--accent-line); }
 
 /* Panels and cards */
-.panel { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); padding: var(--space-lg) 0 var(--space-4xl); }
+.panel { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); padding: var(--space-md) 0 var(--space-4xl); }
 #workspace-view:focus, .panel:focus { outline: none; }
-.card { background: var(--surface-panel); border: 1px solid var(--rule-subtle); border-radius: 12px; padding: var(--space-xl) var(--space-2xl); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-md); min-width: 0; scroll-margin-top: 64px; }
+.card { background: var(--surface-panel); border: 1px solid var(--rule-subtle); border-radius: 12px; padding: var(--space-md) var(--space-2xl); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-md); min-width: 0; scroll-margin-top: 64px; }
 .cardHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .cardTitle { font-size: var(--type-heading); letter-spacing: -.02em; font-weight: 680; scroll-margin-top: 72px; }
 .cardTitle:focus { outline: none; }
@@ -90,6 +90,8 @@
 .spacer { flex: 1; }
 .width :is(button, a, input, select, summary, [tabindex]):focus-visible,
 .rail :is(button):focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+/* The rail scrolls locally. Keep its focus ring inside the tab so overflow cannot clip it. */
+.rail .tab:focus-visible { outline-offset: calc(-1 * (var(--focus-ring-width) + 1px)); }
 
 /* Status */
 .notice { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 14px; border: 1px solid var(--rule-subtle); border-left: 3px solid var(--probe); border-radius: 8px; background: var(--surface-recessed); font-size: var(--type-control); }
@@ -107,6 +109,8 @@
 .stage :global(.shell-stage svg) { max-width: 100%; }
 .stage :global(.shell-title) { display: none; }
 .stage :global(.shell-meta) { display: none; }
+.stage :global(.shell-head) { display: none; }
+.stage :global(.shell-head:has(.shell-legend)) { display: flex; }
 .stage :global(.shell-stage) { min-height: 360px; }
 .stage[data-family="spatial"] :global(.shell-stage) { min-height: 440px; }
 
@@ -162,14 +166,21 @@
 .inspectorSection { display: grid; gap: 8px; min-width: 0; }
 .inspectorTitle { font-size: var(--type-control); font-weight: 700; }
 .variables { display: grid; gap: 6px; }
-.variables > div { display: grid; grid-template-columns: minmax(80px, max-content) minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--rule-subtle); }
+.variables > div { display: grid; grid-template-columns: minmax(0, min(35%, 180px)) minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--rule-subtle); }
+.variables dt { min-width: 0; overflow-wrap: anywhere; }
+.variables dd { min-width: 0; }
 .variables dt code { font: 600 14px var(--font-code); color: var(--ink-secondary); }
 .value { font: 14px var(--font-code); color: var(--ink-strong); overflow-wrap: anywhere; }
-.longValue summary { cursor: pointer; list-style: none; }
+.longValue { min-width: 0; }
+.longValue summary { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; min-height: var(--target-min); cursor: pointer; list-style: none; }
+.longValue summary .value { flex: 1 1 120px; min-width: 0; }
 .valueFull { font: 13px/1.5 var(--font-code); white-space: pre-wrap; overflow-wrap: anywhere; margin-top: 6px; padding: 10px; border: 1px solid var(--rule-subtle); border-radius: 8px; background: var(--surface-recessed); max-height: 320px; overflow: auto; }
 .sequence { list-style: none; display: grid; gap: 4px; counter-reset: frame; }
 .sequence li { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border: 1px solid var(--rule-subtle); border-radius: 8px; }
 .sequence li.marked { border-color: var(--control-border); background: var(--surface-recessed); }
+.sequence li > .longValue { flex: 1; }
+.sequence li > .value { min-width: 0; }
+.sequence li > .badge { flex-shrink: 0; }
 .complexity { display: grid; gap: 4px; padding: 12px 0; border-bottom: 1px solid var(--rule-subtle); }
 .reading { max-width: var(--width-reading); color: var(--ink-secondary); }
 
@@ -184,6 +195,7 @@
 @media (max-width: 640px) {
   .headerNav { display: none; }
   .headerMenu { display: block; }
+  .headerMenu summary { padding-inline: 0; width: var(--target-min); justify-content: center; }
   .summary { display: none; }
   .tab { padding: 0 10px; }
   .stage :global(.stage-with-companions) { flex-direction: column; }

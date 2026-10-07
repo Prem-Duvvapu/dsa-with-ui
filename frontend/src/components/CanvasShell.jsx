@@ -23,7 +23,7 @@ const LEGEND = [
 export default function CanvasShell({ title, meta, legend = true, children, footer }) {
   return (
     <section className="shell" aria-label={title ?? 'Visualization'}>
-      <header className="shell-head">
+      <div className="shell-head">
         <span className="shell-title">{title}</span>
         {meta && <span className="shell-meta">{meta}</span>}
         {legend && (
@@ -37,7 +37,7 @@ export default function CanvasShell({ title, meta, legend = true, children, foot
             ))}
           </ul>
         )}
-      </header>
+      </div>
 
       <div className="shell-stage">{children}</div>
 

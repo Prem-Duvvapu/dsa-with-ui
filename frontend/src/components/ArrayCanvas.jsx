@@ -86,7 +86,7 @@ export default function ArrayCanvas({ problem, currentStep, step, steps, current
           return (
             <div key={idx} className={layout.barColumn}>
               {/* Value label on top of bar */}
-              <span style={{ fontSize: '0.78rem', fontWeight: '800', color: colorInfo.border, lineHeight: '1' }}>
+              <span style={{ fontSize: '0.78rem', fontWeight: '800', color: 'var(--text-primary)', lineHeight: '1' }}>
                 {el.value}
               </span>
 

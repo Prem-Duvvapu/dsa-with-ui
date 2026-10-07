@@ -1,8 +1,8 @@
-/* Shared chrome for the learning pages: library now, problem workspace next.
+/* Shared chrome for the library and integrated problem workspace.
    Sizes and roles come from the foundation tokens in index.css (REFERENCE_DESIGN.md D1-D5). */
 .page { min-height: 100dvh; background: var(--surface-page); color: var(--ink-strong); line-height: var(--leading-body); font-size: var(--type-body); }
 .width { width: min(var(--width-library), calc(100% - 2 * var(--gutter))); margin-inline: auto; }
-.header { min-height: 64px; padding: 10px max(var(--gutter), calc((100% - var(--width-library)) / 2)); display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--rule-subtle); background: var(--surface-panel); }
+.header { min-height: 56px; padding: 6px max(var(--gutter), calc((100% - var(--width-library)) / 2)); display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--rule-subtle); background: var(--surface-panel); }
 .brand { display: inline-flex; align-items: center; gap: 12px; min-height: var(--target-min); color: var(--ink-strong); font-size: 17px; font-weight: 750; text-decoration: none; flex-shrink: 0; }
 .brand small { display: block; font: 9px var(--font-code); letter-spacing: .14em; color: var(--ink-secondary); margin-top: 3px; }
 .brandMark { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--rule-strong); border-radius: var(--radius-control); background: var(--surface-recessed); }
@@ -18,11 +18,13 @@
 .page :is(button, a, input, select, summary, [tabindex]):focus-visible { outline: var(--focus-ring-width) solid var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 .alert { border: 1px solid var(--rule-strong); border-left: 4px solid var(--probe); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-block: 16px; background: var(--surface-panel); }
 @media (max-width: 640px) {
-  .header { min-height: 56px; padding: 8px var(--gutter); gap: 10px; }
-  .brand { font-size: 14px; gap: 8px; }
-  .brand small { font-size: 8px; letter-spacing: .06em; }
+  .header { min-height: 56px; padding: 6px var(--gutter); gap: 8px; }
+  .brand { font-size: 14px; gap: 8px; flex-shrink: 1; min-width: 0; line-height: 1.25; }
+  .brand small { display: none; }
   .brandMark { width: 32px; height: 32px; }
-  .headerActions { gap: 6px; }
+  .headerActions { gap: 4px; flex-shrink: 0; }
+  .themeButton { padding: 0; width: var(--target-min); }
+  .themeLabel { display: none; }
   .alert { align-items: start; flex-direction: column; }
 }
 .siteFooter { border-top: 1px solid var(--rule-subtle); background: var(--surface-page); }
