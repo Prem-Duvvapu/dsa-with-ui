@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-07T19:17:23.192Z",
+  "generated": "2026-10-07T19:39:41.280Z",
   "stats": {
     "catalogued": 431,
     "traced": 431,
@@ -38,9 +38,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 10,
               "maxValue": 20,
+              "maxLength": 10,
+              "minLength": 1,
               "minValue": 1
             }
           },
@@ -54,9 +54,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 10,
               "maxValue": 20,
+              "maxLength": 10,
+              "minLength": 1,
               "minValue": 1
             }
           }
@@ -108,9 +108,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 15,
               "maxValue": 100,
+              "maxLength": 15,
+              "minLength": 1,
               "minValue": 0
             }
           }
@@ -162,9 +162,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 15,
               "maxValue": 100,
+              "maxLength": 15,
+              "minLength": 1,
               "minValue": 0
             }
           }
@@ -218,9 +218,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 15,
               "maxValue": 100,
+              "maxLength": 15,
+              "minLength": 1,
               "minValue": 0
             }
           }
@@ -272,9 +272,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 15,
               "maxValue": 100,
+              "maxLength": 15,
+              "minLength": 1,
               "minValue": 0
             }
           },
@@ -285,8 +285,8 @@
             "defaultValue": 2,
             "help": "",
             "constraints": {
-              "max": 5,
-              "min": 1
+              "min": 1,
+              "max": 5
             }
           }
         ],
@@ -335,9 +335,9 @@
             ],
             "help": "Bursting a balloon pays coins[left] * coins[i] * coins[right], the neighbors it had left.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 7,
               "maxValue": 100,
+              "maxLength": 7,
+              "minLength": 1,
               "minValue": 1
             }
           }
@@ -372,7 +372,7 @@
         "tabulation"
       ],
       "notes": "Pilot; recursion cap must be measured separately from canonical n<=30.",
-      "codeDigest": "816c12d2832d60a29c6dd7d424bc24d34f1928e8eab0e62d348e789f771080ce",
+      "codeDigest": "287b663ef34f1709cfe0ecc93144c8a6b695c1a7f935039fa21b10f5f8ad96ab",
       "canonicalInputSpec": {
         "fields": [
           {
@@ -382,8 +382,8 @@
             "defaultValue": 5,
             "help": "ways[i] = ways[i-1] + ways[i-2] — Fibonacci, arrived at from first principles.",
             "constraints": {
-              "max": 30,
-              "min": 1
+              "min": 1,
+              "max": 30
             }
           }
         ],
@@ -400,8 +400,50 @@
         "auxiliarySpace": "Auxiliary Space: O(N)",
         "dataStructureSpace": "DP table"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-pilot; UI pending",
+      "alternativeSafetyBounds": "Published pilot bounds below; measured Climbing Stairs traces are in d2-results.json. Not a rollout-wide safety claim.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "name": "n",
+                "label": "Stairs",
+                "type": "INT",
+                "defaultValue": 5,
+                "help": "Repeated states are recomputed. Up to 10 stairs keeps every call visible.",
+                "constraints": {
+                  "min": 1,
+                  "max": 10
+                }
+              }
+            ],
+            "maxSteps": 5000,
+            "maxBytes": 2000000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "name": "n",
+                "label": "Stairs",
+                "type": "INT",
+                "defaultValue": 5,
+                "help": "Each recursive state is computed once, then reused from memo.",
+                "constraints": {
+                  "min": 1,
+                  "max": 30
+                }
+              }
+            ],
+            "maxSteps": 5000,
+            "maxBytes": 2000000
+          }
+        }
+      ]
     },
     {
       "id": "coin-change-2",
@@ -431,11 +473,11 @@
             ],
             "help": "Unlimited supply of each — a coin may be used more than once.",
             "constraints": {
-              "maxValue": 25,
-              "maxLength": 8,
               "minValue": 1,
-              "minLength": 1,
-              "requireDistinct": true
+              "maxLength": 8,
+              "maxValue": 25,
+              "requireDistinct": true,
+              "minLength": 1
             }
           },
           {
@@ -445,8 +487,8 @@
             "defaultValue": 5,
             "help": "Count combinations (not permutations) of coins that sum to exactly this amount.",
             "constraints": {
-              "max": 40,
-              "min": 1
+              "min": 1,
+              "max": 40
             }
           }
         ],
@@ -490,9 +532,9 @@
             "defaultValue": "bccb",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 10,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Use lowercase letters a-z."
             }
           }
@@ -542,9 +584,9 @@
             ],
             "help": "Non-negative integers; kept away from zero here so every subset stays uniquely countable.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 10,
               "maxValue": 15,
+              "maxLength": 10,
+              "minLength": 1,
               "minValue": 1
             }
           },
@@ -555,8 +597,8 @@
             "defaultValue": 1,
             "help": "How many ways to split the array so S1 - S2 = D, S1 >= S2.",
             "constraints": {
-              "max": 60,
-              "min": 0
+              "min": 0,
+              "max": 60
             }
           }
         ],
@@ -619,10 +661,10 @@
             ],
             "help": "Cells are rewritten in place with the largest square ending at each position.",
             "constraints": {
-              "minValue": 0,
               "maxRows": 8,
-              "maxValue": 1,
-              "maxCols": 8
+              "minValue": 0,
+              "maxCols": 8,
+              "maxValue": 1
             }
           }
         ],
@@ -671,9 +713,9 @@
             ],
             "help": "Non-negative integers; kept away from zero here so every subset stays uniquely countable.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 10,
               "maxValue": 15,
+              "maxLength": 10,
+              "minLength": 1,
               "minValue": 1
             }
           },
@@ -684,8 +726,8 @@
             "defaultValue": 3,
             "help": "How many subsets sum to exactly this value.",
             "constraints": {
-              "max": 60,
-              "min": 0
+              "min": 0,
+              "max": 60
             }
           }
         ],
@@ -729,9 +771,9 @@
             "defaultValue": "rabbbit",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           },
@@ -742,9 +784,9 @@
             "defaultValue": "rabbit",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 10,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           }
@@ -789,9 +831,9 @@
             "defaultValue": "horse",
             "help": "Lowercase letters only.",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 14,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           },
@@ -802,9 +844,9 @@
             "defaultValue": "ros",
             "help": "Lowercase letters only.",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 14,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           }
@@ -849,9 +891,9 @@
             "defaultValue": "T|F&T^T",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "([TF])([&|^][TF])*",
               "maxLength": 15,
+              "pattern": "([TF])([&|^][TF])*",
+              "minLength": 1,
               "patternHint": "Alternate T/F operands with &, |, or ^."
             }
           }
@@ -901,9 +943,9 @@
             ],
             "help": "Energy for a jump is the height difference, so a tall stair next door can cost more than a short one two away.",
             "constraints": {
-              "minLength": 2,
-              "maxLength": 20,
               "maxValue": 999,
+              "maxLength": 20,
+              "minLength": 2,
               "minValue": 0
             }
           }
@@ -954,9 +996,9 @@
             ],
             "help": "A dip in the middle rewards long jumps, which is where K earns its cost.",
             "constraints": {
-              "minLength": 2,
-              "maxLength": 16,
               "maxValue": 999,
+              "maxLength": 16,
+              "minLength": 2,
               "minValue": 0
             }
           },
@@ -967,8 +1009,8 @@
             "defaultValue": 3,
             "help": "K = 2 reduces this to plain frog jump; raise it and each cell reads more predecessors.",
             "constraints": {
-              "max": 8,
-              "min": 1
+              "min": 1,
+              "max": 8
             }
           }
         ],
@@ -1012,8 +1054,8 @@
             "defaultValue": 3,
             "help": "The robot starts top-left and may only move right or down.",
             "constraints": {
-              "max": 8,
-              "min": 1
+              "min": 1,
+              "max": 8
             }
           },
           {
@@ -1023,8 +1065,8 @@
             "defaultValue": 3,
             "help": "",
             "constraints": {
-              "max": 8,
-              "min": 1
+              "min": 1,
+              "max": 8
             }
           }
         ],
@@ -1074,9 +1116,9 @@
             ],
             "help": "Arranged in a circle, so house 0 and the last house are adjacent and cannot both be robbed.",
             "constraints": {
-              "minLength": 2,
-              "maxLength": 16,
               "maxValue": 999,
+              "maxLength": 16,
+              "minLength": 2,
               "minValue": 0
             }
           }
@@ -1126,9 +1168,9 @@
             ],
             "help": "One weight per item, paired by index with values.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 8,
               "maxValue": 20,
+              "maxLength": 8,
+              "minLength": 1,
               "minValue": 1
             }
           },
@@ -1144,9 +1186,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 8,
               "maxValue": 100,
+              "maxLength": 8,
+              "minLength": 1,
               "minValue": 1
             }
           },
@@ -1157,8 +1199,8 @@
             "defaultValue": 5,
             "help": "",
             "constraints": {
-              "max": 30,
-              "min": 1
+              "min": 1,
+              "max": 30
             }
           }
         ],
@@ -1207,11 +1249,11 @@
             ],
             "help": "",
             "constraints": {
-              "maxValue": 100,
-              "maxLength": 15,
               "minValue": 1,
-              "minLength": 1,
-              "requireDistinct": true
+              "maxLength": 15,
+              "maxValue": 100,
+              "requireDistinct": true,
+              "minLength": 1
             }
           }
         ],
@@ -1264,9 +1306,9 @@
             ],
             "help": "tails[k] = smallest tail of an increasing subsequence of length k+1.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 30,
               "maxValue": 999,
+              "maxLength": 30,
+              "minLength": 1,
               "minValue": -999
             }
           }
@@ -1320,9 +1362,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 15,
               "maxValue": 100,
+              "maxLength": 15,
+              "minLength": 1,
               "minValue": 1
             }
           }
@@ -1367,9 +1409,9 @@
             "defaultValue": "abcde",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           },
@@ -1380,9 +1422,9 @@
             "defaultValue": "ace",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           }
@@ -1427,9 +1469,9 @@
             "defaultValue": "abcd",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           },
@@ -1440,9 +1482,9 @@
             "defaultValue": "abzd",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           }
@@ -1496,9 +1538,9 @@
             ],
             "help": "dp[i][p] fills bottom-up: best LIS from index i when the last taken index is p-1.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 16,
               "maxValue": 999,
+              "maxLength": 16,
+              "minLength": 1,
               "minValue": -999
             }
           }
@@ -1543,9 +1585,9 @@
             "defaultValue": "bbbab",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           }
@@ -1590,9 +1632,9 @@
             "defaultValue": "a,b,ba,bca,bda,bdca",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+(,[a-z]+)*",
               "maxLength": 100,
+              "pattern": "[a-z]+(,[a-z]+)*",
+              "minLength": 1,
               "patternHint": "Lowercase words separated by commas."
             }
           }
@@ -1643,9 +1685,9 @@
             ],
             "help": "N+1 numbers describe N matrices: dims[i-1] x dims[i] is matrix i.",
             "constraints": {
-              "minLength": 2,
-              "maxLength": 8,
               "maxValue": 100,
+              "maxLength": 8,
+              "minLength": 2,
               "minValue": 1
             }
           }
@@ -1695,9 +1737,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 2,
-              "maxLength": 9,
               "maxValue": 100,
+              "maxLength": 9,
+              "minLength": 2,
               "minValue": 1
             }
           }
@@ -1767,10 +1809,10 @@
             ],
             "help": "Each row turns the problem into largest-rectangle-in-histogram over running heights.",
             "constraints": {
-              "minValue": 0,
               "maxRows": 6,
-              "maxValue": 1,
-              "maxCols": 8
+              "minValue": 0,
+              "maxCols": 8,
+              "maxValue": 1
             }
           }
         ],
@@ -1822,9 +1864,9 @@
             ],
             "help": "Adjacent picks are forbidden, so a large value can be worth less than the two smaller ones it blocks.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 20,
               "maxValue": 999,
+              "maxLength": 20,
+              "minLength": 1,
               "minValue": 0
             }
           }
@@ -1875,9 +1917,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 2,
-              "maxLength": 9,
               "maxValue": 100,
+              "maxLength": 9,
+              "minLength": 2,
               "minValue": 1
             }
           }
@@ -1922,9 +1964,9 @@
             "defaultValue": "heap",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           },
@@ -1935,9 +1977,9 @@
             "defaultValue": "pea",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           }
@@ -1982,9 +2024,9 @@
             "defaultValue": "mbadm",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           }
@@ -2033,9 +2075,9 @@
             ],
             "help": "Unlimited supply of each — a coin may be used more than once.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 8,
               "maxValue": 25,
+              "maxLength": 8,
+              "minLength": 1,
               "minValue": 1
             }
           },
@@ -2046,8 +2088,8 @@
             "defaultValue": 11,
             "help": "The exact amount to make with the fewest coins.",
             "constraints": {
-              "max": 40,
-              "min": 1
+              "min": 1,
+              "max": 40
             }
           }
         ],
@@ -2107,10 +2149,10 @@
             ],
             "help": "A fall may start at any column of the top row and move down, each step landing directly below or one column to either side.",
             "constraints": {
-              "minValue": -100,
               "maxRows": 8,
-              "maxValue": 100,
-              "maxCols": 8
+              "minValue": -100,
+              "maxCols": 8,
+              "maxValue": 100
             }
           }
         ],
@@ -2175,10 +2217,10 @@
             ],
             "help": "Robot 1 starts at (row 0, col 0), robot 2 at (row 0, col cols-1). Each row, both move to column-1, column, or column+1. A cell both robots occupy is collected once.",
             "constraints": {
-              "minValue": 0,
               "maxRows": 8,
-              "maxValue": 100,
-              "maxCols": 6
+              "minValue": 0,
+              "maxCols": 6,
+              "maxValue": 100
             }
           }
         ],
@@ -2238,11 +2280,11 @@
             ],
             "help": "Three activities per day. The same activity cannot be done on two consecutive days.",
             "constraints": {
-              "maxValue": 100,
-              "maxRows": 10,
               "minCols": 3,
-              "minValue": 0,
-              "maxCols": 3
+              "maxRows": 10,
+              "maxValue": 100,
+              "maxCols": 3,
+              "minValue": 0
             }
           }
         ],
@@ -2292,9 +2334,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 15,
               "maxValue": 100,
+              "maxLength": 15,
+              "minLength": 1,
               "minValue": 1
             }
           }
@@ -2339,9 +2381,9 @@
             "defaultValue": "aab",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 14,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           }
@@ -2394,9 +2436,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 15,
               "maxValue": 100,
+              "maxLength": 15,
+              "minLength": 1,
               "minValue": 0
             }
           },
@@ -2407,8 +2449,8 @@
             "defaultValue": 3,
             "help": "",
             "constraints": {
-              "max": 10,
-              "min": 1
+              "min": 1,
+              "max": 10
             }
           }
         ],
@@ -2457,9 +2499,9 @@
             ],
             "help": "Split into two subsets with equal sum, if possible.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 10,
               "maxValue": 20,
+              "maxLength": 10,
+              "minLength": 1,
               "minValue": 0
             }
           }
@@ -2507,9 +2549,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 12,
               "maxValue": 30,
+              "maxLength": 12,
+              "minLength": 1,
               "minValue": 0
             }
           }
@@ -2563,9 +2605,9 @@
             ],
             "help": "parent[i] remembers which index i's best subsequence came from.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 22,
               "maxValue": 999,
+              "maxLength": 22,
+              "minLength": 1,
               "minValue": -999
             }
           }
@@ -2610,9 +2652,9 @@
             "defaultValue": "abcde",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           },
@@ -2623,9 +2665,9 @@
             "defaultValue": "bdgek",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           }
@@ -2676,9 +2718,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 12,
               "maxValue": 100,
+              "maxLength": 12,
+              "minLength": 1,
               "minValue": 0
             }
           }
@@ -2723,9 +2765,9 @@
             "defaultValue": "abac",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           },
@@ -2736,9 +2778,9 @@
             "defaultValue": "cab",
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           }
@@ -2789,9 +2831,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 15,
               "maxValue": 100,
+              "maxLength": 15,
+              "minLength": 1,
               "minValue": 0
             }
           }
@@ -2843,9 +2885,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 15,
               "maxValue": 100,
+              "maxLength": 15,
+              "minLength": 1,
               "minValue": 0
             }
           },
@@ -2856,8 +2898,8 @@
             "defaultValue": 2,
             "help": "",
             "constraints": {
-              "max": 30,
-              "min": 0
+              "min": 0,
+              "max": 30
             }
           }
         ],
@@ -2906,9 +2948,9 @@
             ],
             "help": "Non-negative values only — a subset either includes an item or it does not.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 10,
               "maxValue": 20,
+              "maxLength": 10,
+              "minLength": 1,
               "minValue": 0
             }
           },
@@ -2919,8 +2961,8 @@
             "defaultValue": 6,
             "help": "The exact sum some subset must reach.",
             "constraints": {
-              "max": 40,
-              "min": 0
+              "min": 0,
+              "max": 40
             }
           }
         ],
@@ -2967,9 +3009,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 10,
               "maxValue": 10,
+              "maxLength": 10,
+              "minLength": 1,
               "minValue": 0
             }
           },
@@ -2980,8 +3022,8 @@
             "defaultValue": 0,
             "help": "",
             "constraints": {
-              "max": 30,
-              "min": -30
+              "min": -30,
+              "max": 30
             }
           }
         ],
@@ -3050,10 +3092,10 @@
             ],
             "help": "Row i has i+1 real entries; only columns 0..i of each row are used, submitted as a square grid — the rest is ignored.",
             "constraints": {
-              "minValue": -100,
               "maxRows": 8,
-              "maxValue": 100,
-              "maxCols": 8
+              "minValue": -100,
+              "maxCols": 8,
+              "maxValue": 100
             }
           }
         ],
@@ -3101,9 +3143,9 @@
             ],
             "help": "One weight per item type, paired by index with values. Any item type may be reused.",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 8,
               "maxValue": 20,
+              "maxLength": 8,
+              "minLength": 1,
               "minValue": 1
             }
           },
@@ -3118,9 +3160,9 @@
             ],
             "help": "",
             "constraints": {
-              "minLength": 1,
-              "maxLength": 8,
               "maxValue": 100,
+              "maxLength": 8,
+              "minLength": 1,
               "minValue": 1
             }
           },
@@ -3131,8 +3173,8 @@
             "defaultValue": 10,
             "help": "",
             "constraints": {
-              "max": 30,
-              "min": 1
+              "min": 1,
+              "max": 30
             }
           }
         ],
@@ -3192,10 +3234,10 @@
             ],
             "help": "1 is an obstacle. The robot starts top-left and may only move right or down.",
             "constraints": {
-              "minValue": 0,
               "maxRows": 8,
-              "maxValue": 1,
-              "maxCols": 8
+              "minValue": 0,
+              "maxCols": 8,
+              "maxValue": 1
             }
           }
         ],
@@ -3239,9 +3281,9 @@
             "defaultValue": "adceb",
             "help": "Lowercase letters only.",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z]+",
               "maxLength": 14,
+              "pattern": "[a-z]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters a-z only."
             }
           },
@@ -3252,9 +3294,9 @@
             "defaultValue": "*a*b",
             "help": "Lowercase letters plus '?' (any one character) and '*' (any run, including none).",
             "constraints": {
-              "minLength": 1,
-              "pattern": "[a-z?*]+",
               "maxLength": 14,
+              "pattern": "[a-z?*]+",
+              "minLength": 1,
               "patternHint": "Lowercase letters, '?' and '*' only."
             }
           }

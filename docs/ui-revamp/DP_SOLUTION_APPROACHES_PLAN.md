@@ -1,6 +1,6 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **implementation in progress: D0 and D1 verified; D2–D7 pending.**
+Status: **implementation in progress: D0–D2 verified; D3–D7 pending.**
 Prepared 2026-10-07 against merged main `9d0aa10` (PR #208).
 This is a separate feature from the unfinished P8/P9 revamp gates; it does not close them.
 The owner authorized implementation on 2026-10-07 after merging PR #210.
@@ -389,7 +389,7 @@ API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 | --- | --- | --- |
 | D0 | Classified | `dp-approaches/classifications.tsv` and generated `inventory.json`: all 56 candidates, current source digests, canonical specs/complexity, actual state/transition, reconstruction and applicability |
 | D1 | Verified | Provider registry, canonical adapters, optional API selection, committed execution metadata, normalized cache keys and refusal tests |
-| D2 | Pending | Real recursion/memoization Climbing Stairs tracers and measured bounds |
+| D2 | Verified | Genuine recursion/memoization/tabulation, independently compiled source, oracle and boundary tests; `dp-approaches/d2-results.json` |
 | D3 | Pending | Selector, committed approach identity, sharing/restoration, Code/Analysis binding and UI pilot |
 | D4–D7 | Pending | Teaching/comparison, family rollout and final release gates |
 
@@ -430,3 +430,39 @@ The real-backend `dp-approaches/d1-journey.cjs` inspected all 431 canonical deta
 identities, both encodings, custom input and refusal responses; four Chromium rows
 covered 320/1366px in both themes, source display, Code→Analysis step retention,
 page overflow and page errors. Results are in `dp-approaches/d1-results.json`.
+That probe is a historical D1 baseline: its one-option/refused-memoization assertions
+are intentionally superseded by D2, not current acceptance assertions.
+
+### D2 verification
+
+Climbing Stairs now exposes real Recursion, Memoization and Tabulation, with Tabulation
+still the default. Alternatives are not canonical tracer beans. Their recursive state
+is `ways(n)`, with `ways(0)=ways(1)=1`; memoization adds an actual nullable cache.
+Every call has a unique ID, and cache-hit events return without expanding children.
+Each option owns a complete standalone Java 17 class with reachable source anchors.
+
+| Approach | Advertised `n` | Largest trace | Full / delta bytes | Answer at maximum |
+| --- | --- | --- | --- | --- |
+| Recursion | 1–10 | 709 steps, 177 calls | 358,446 / 204,990 | 89 |
+| Memoization | 1–30 | 238 steps, 59 calls, 28 hits, 31 computed states | 435,653 / 230,064 | 1,346,269 |
+| Tabulation | 1–30 (unchanged) | 32 steps | 57,391 / 51,801 | 1,346,269 |
+
+All advertised integers agree with an independent combinatorial oracle, and compiled
+displayed classes agree as well. Max+1 is refused for each form. A deliberately reduced
+3-step budget stops recursive expansion without an answer. Nine real HTTP full/delta
+pairs round-trip through the production frontend decoder; only absent null top-level
+fields are normalized in comparison (empty stacks and all memo snapshots must match).
+Four canonical UI rows cover 320/1366px and both themes; no overflow/page errors.
+
+Only the Climbing Stairs canonical golden is regenerated. Parsed before/after data is
+identical after removing source, anchors and active lines; the recurrence, snapshots,
+answer and narration do not change. Inventory source digest refreshed accordingly.
+Full verification: 8,007 backend tests, zero failures/errors, unchanged 500 skips;
+76 frontend files / 678 tests; production build unchanged at JS 364.60kB (gzip 116.09),
+CSS 103.99kB (gzip 18.63). Six of the initial seven pilot tests failed meaningfully
+against D1 (three assertions, three unavailable-approach errors); the canonical-anchor
+case preserved existing behavior. No dependency added.
+
+This is the backend pilot, not the complete user journey: the selector, committed
+source/type/complexity, approach-aware sharing/presets/comparison and memo-cache UI
+remain D3. The other 55 candidates' alternatives remain unimplemented/unmeasured.

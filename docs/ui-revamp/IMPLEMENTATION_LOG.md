@@ -1000,3 +1000,35 @@ production build and startup process cleanup passed. Live probe inspected 431 de
 full/delta/custom/refusal API responses and four phone/desktop × light/dark browser rows.
 No new dependency. The frontend approach session/selector and genuine pilot forms remain
 D2/D3 work. See `DP_SOLUTION_APPROACHES_PLAN.md` and `dp-approaches/d1-results.json`.
+
+## DP approaches D2 — real Climbing Stairs backend pilot — 2026-10-07
+
+Added actual recursive and memoized executables alongside unchanged canonical tabulation.
+All use the same base cases/recurrence, with per-request state, genuine cache hits/stores,
+distinct invocation IDs, and empty-stack returns. The listings are standalone Java 17
+classes, not sketches. Recursion caps n at 10; memoization at 30; canonical n<=30 remains.
+
+Six review gates:
+
+1. Backend: all advertised n agree with an independent combinatorial oracle; isolated
+   compiled displayed classes agree. API serves matching selected source/type/complexity.
+   Max+1 rejects, and a 3-step cap halts expansion without an answer. Full suite:
+   8,007 tests, zero failures/errors, unchanged 500 skips.
+2. Frontend: production JS decoder round-trips nine live full/delta pairs, including
+   clearing call stacks and immutable memo snapshots. Existing 76 files/678 tests pass;
+   build unchanged (JS364.60kB/gzip116.09, CSS103.99kB/gzip18.63).
+3. UI/UX: canonical UI preserves tabulation; four real Chromium phone/desktop × both
+   themes rows check complete source, Code/Analysis step continuity and no overflow/errors.
+   Selector and recursive/cache UI are D3, not certified here.
+4. Product: 431/431 canonical coverage remains; only one of 56 candidates gains alternatives.
+   Measured largest full payloads: recursion358,446 bytes; memoization435,653 bytes;
+   tabulation57,391 bytes. All finish without truncation at advertised maxima.
+5. Architecture: alternatives are non-bean tracers owned by the approach provider; no
+   duplicate canonical registration, endpoint or dependency. Source resources fail strictly.
+6. QA: corrected initial pilot tests failed 6/7 against D1; eight final pilot tests pass.
+   Only one canonical golden changes; parsed comparison proves source/highlights only.
+   Existing API assertions retain their behavioral checks while recognizing all three IDs.
+
+Reproducible evidence: `dp-approaches/d2-journey.cjs`, `d2-results.json`,
+`d2-golden-check.cjs`, `d2-golden-results.json`. D1's recorded one-option probe is historical.
+D3–D7 and the existing P8/P9 human/performance/release gates remain open.

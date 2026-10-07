@@ -27,8 +27,9 @@ class SolutionApproachesApiTest {
         JsonNode detail = getJson("/api/problems/climbing-stairs");
         assertEquals("tabulation", detail.path("defaultApproachId").asText());
         assertEquals("tabulation", detail.path("approachId").asText());
-        assertEquals(1, detail.path("approaches").size());
-        JsonNode approach = detail.path("approaches").get(0);
+        assertEquals(3, detail.path("approaches").size());
+        JsonNode approach = java.util.stream.StreamSupport.stream(detail.path("approaches").spliterator(), false)
+                .filter(value -> value.path("id").asText().equals("tabulation")).findFirst().orElseThrow();
         assertEquals("Tabulation", approach.path("label").asText());
         assertEquals("DpTable", approach.path("dsType").asText());
         assertEquals(detail.path("inputSpec"), approach.path("inputSpec"));
@@ -52,7 +53,7 @@ class SolutionApproachesApiTest {
             http.perform(get("/api/problems/climbing-stairs" + suffix).param("approach", "not-real"))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.error").value("unavailable_approach"))
-                    .andExpect(jsonPath("$.availableApproaches[0]").value("tabulation"));
+                    .andExpect(jsonPath("$.availableApproaches").value(org.hamcrest.Matchers.hasItem("tabulation")));
         }
         http.perform(post("/api/problems/climbing-stairs/execute").param("approach", "not-real")
                 .contentType(MediaType.APPLICATION_JSON).content("{\"n\":5}"))
