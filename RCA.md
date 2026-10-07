@@ -1455,6 +1455,21 @@ class, and the reason is worth stating rather than rediscovering.
 - **Lesson:** absence of a custom submission does not prove a default execution exists;
   describe only the matching run that was actually committed.
 
+### RCA-054 follow-up — 2026-10-07 native disclosure shortcut ownership
+
+- **Symptoms:** Space on the phone Menu summary also toggled playback. End on an
+  All algorithms link inside the open Menu sought to the final trace step.
+- **Cause:** the global shortcut handler exempted native buttons from Space, but not
+  summaries; disclosure navigation keys then bubbled to the document-level player.
+- **Fix:** native summaries retain Space activation. Open disclosure menus stop
+  navigation-key propagation without cancelling the browser's action; Escape closes
+  the menu and returns focus to its summary. Native Tab is not trapped.
+- **Guard (RED first):** the two native-disclosure cases in
+  `ProblemWorkspace.test.jsx` fail before the fixes (End changed step 1 to step 6).
+  Chromium checks native Space/open and Escape/focus in both themes at phone widths.
+- **Lesson:** a native control owns its activation and navigation keys even when it
+  is not represented by an ARIA composite-widget role.
+
 ## RCA-055 — Correct-looking traces with wrong answers, found by writing the problem statements
 
 - **Discovered:** 2026-10-02, while writing own-words statements for every problem (#163, #164

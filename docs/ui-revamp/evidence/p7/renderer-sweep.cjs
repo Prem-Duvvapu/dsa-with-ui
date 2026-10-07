@@ -6,12 +6,14 @@
 // Usage: PLAYWRIGHT_MODULE=<path to playwright> node renderer-sweep.cjs [outDir]
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const fs = require('fs');
+const installPacing = require('../pace-executions.cjs')();
 const out = process.argv[2] || __dirname;
 const BASE = 'http://localhost:5180';
 const API = 'http://localhost:8923';
 const b64url = (obj) => Buffer.from(JSON.stringify(obj)).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 
 (async () => {
+  fs.mkdirSync(out, { recursive: true });
   const catalogue = await (await fetch(`${API}/api/problems`)).json();
   const byType = {};
   for (const p of catalogue) (byType[p.dsType] ||= []).push(p.id);
@@ -22,10 +24,15 @@ const b64url = (obj) => Buffer.from(JSON.stringify(obj)).toString('base64').repl
   }
   const browser = await chromium.launch();
   const rows = [];
+  const save = (complete = false) => fs.writeFileSync(`${out}/renderer-manifest.json`, JSON.stringify({
+    generated: new Date().toISOString(), complete, picks, rows
+  }, null, 2));
+  try {
   for (const [width, height, scheme] of [[1366, 768, 'dark'], [390, 844, 'light']]) {
     const ctx = await browser.newContext({ viewport: { width, height }, colorScheme: scheme });
     await ctx.addInitScript(() => { try { localStorage.setItem('dsa-ui:seenWelcome', 'true'); } catch (e) {} });
     const p = await ctx.newPage();
+    await installPacing(p);
     let errors = [];
     p.on('pageerror', (e) => errors.push(e.message));
     const shotTaken = new Set();
@@ -83,14 +90,17 @@ const b64url = (obj) => Buffer.from(JSON.stringify(obj)).toString('base64').repl
         }
         if (errors.length) { row.ok = false; row.problems.push(`page errors: ${errors.join('; ')}`); }
         rows.push(row);
+        save();
         console.log(`${row.ok ? 'PASS' : 'FAIL'}  ${row.viewport} ${scheme} ${dsType} ${id} ${variant} (${row.steps ?? '?'} steps)${row.problems.length ? '  ' + row.problems.join(' | ') : ''}`);
       }
     }
     await ctx.close();
   }
-  await browser.close();
-  fs.writeFileSync(`${out}/renderer-manifest.json`, JSON.stringify({ generated: new Date().toISOString(), picks, rows }, null, 2));
+  save(true);
+  } finally {
+    await browser.close();
+  }
   const failed = rows.filter((r) => !r.ok);
   console.log(`\n${rows.length - failed.length}/${rows.length} pass across ${Object.keys(byType).length} dsTypes, ${picks.length} problems`);
   process.exitCode = failed.length ? 1 : 0;
-})();
+})().catch(error => { console.error(error); process.exitCode = 1; });
