@@ -84,6 +84,19 @@ class SolutionApproachRegistryTest {
             @Override public String annotatedCode() { return " "; }
         })));
     }
+    @Test void teachingCannotReferenceAnUndeclaredSourceAnchor() {
+        var teaching = new ApproachTeaching("State", "Bases", "Recurrence", "Order", null,
+                Map.of(), Map.of("not-a-real-anchor", "A note that cannot describe a source line"));
+        assertThrows(IllegalStateException.class, () -> registry(definition("tabulation", true, canonical),
+                definition("memoization", false, new Fixture()).withTeaching(teaching)));
+    }
+    @Test void teachingMayReferenceAnActualSourceAnchor() {
+        var teaching = new ApproachTeaching("State", "Bases", "Recurrence", "Order", null,
+                Map.of(), Map.of("result", "Return the recorded result"));
+        var selected = registry(definition("tabulation", true, canonical),
+                definition("memoization", false, new Fixture()).withTeaching(teaching)).resolve(canonical.id(), "memoization");
+        assertSame(teaching, selected.teaching());
+    }
     @Test void missingFieldCeilingIsRejected() {
         assertThrows(IllegalStateException.class, () -> registry(definition("memoization", false, new Fixture() {
             @Override public InputSpec inputSpec() { return InputSpec.of(InputField.of("n", FieldType.INT).defaultValue(5).build()); }

@@ -201,6 +201,7 @@ public class ProblemsController {
             out.put("dsType", t.dsType());
             out.put("complexity", selected.complexity());
             out.put("approachId", selected.id());
+            out.put("teaching", selected.teaching());
             out.put("defaultApproachId", approaches.resolve(id, null).id());
             out.put("approaches", approaches.available(id).stream().map(SolutionApproach::summaryView).toList());
         } else {

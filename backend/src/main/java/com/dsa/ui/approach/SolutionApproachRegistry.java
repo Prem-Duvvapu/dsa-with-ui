@@ -62,7 +62,10 @@ public final class SolutionApproachRegistry {
         if (tracer.annotatedCode() == null || tracer.annotatedCode().isBlank()) {
             throw new IllegalStateException("Missing approach source: " + approach.id());
         }
-        AnnotatedCode.parse(tracer.annotatedCode());
+        var source = AnnotatedCode.parse(tracer.annotatedCode());
+        if (approach.teaching() != null && !source.getAnchors().keySet().containsAll(approach.teaching().anchorNotes().keySet())) {
+            throw new IllegalStateException("Teaching references an undeclared source anchor: " + approach.id());
+        }
         var spec = tracer.inputSpec();
         if (spec == null || spec.getMaxSteps() <= 0 || spec.getMaxSteps() > InputSpec.DEFAULT_MAX_STEPS
                 || spec.getMaxBytes() <= 0 || spec.getMaxBytes() > InputSpec.DEFAULT_MAX_BYTES || spec.getFields().isEmpty()) {

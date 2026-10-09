@@ -8,7 +8,14 @@ import java.util.Map;
 /** A registered executable, not a label or a source-only alternative. */
 public record SolutionApproach(String problemId, String id, String label, String summary,
                                boolean defaultApproach, ApproachComplexity complexity,
-                               AlgorithmTracer tracer) {
+                               AlgorithmTracer tracer, ApproachTeaching teaching) {
+    public SolutionApproach(String problemId, String id, String label, String summary,
+                            boolean defaultApproach, ApproachComplexity complexity, AlgorithmTracer tracer) {
+        this(problemId, id, label, summary, defaultApproach, complexity, tracer, null);
+    }
+    public SolutionApproach withTeaching(ApproachTeaching value) {
+        return new SolutionApproach(problemId, id, label, summary, defaultApproach, complexity, tracer, value);
+    }
     public Map<String, Object> summaryView() {
         Map<String, Object> out = new LinkedHashMap<>();
         out.put("id", id);
@@ -19,6 +26,7 @@ public record SolutionApproach(String problemId, String id, String label, String
         out.put("inputSpec", tracer.inputSpec());
         out.put("alternateInput", tracer.alternateInput());
         out.put("complexity", complexity);
+        out.put("teaching", teaching);
         return Collections.unmodifiableMap(out);
     }
 }
