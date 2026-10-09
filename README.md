@@ -387,3 +387,11 @@ The suite is built to catch fake work, not just crashes:
 | [Reference design](docs/ui-revamp/REFERENCE_DESIGN.md) | Owner concept, reference layouts and design decisions. |
 | [Remaining phases execution plan](docs/ui-revamp/REMAINING_PHASES_EXECUTION_PLAN.md), [Opus completion prompt](docs/ui-revamp/OPUS_COMPLETION_PROMPT.md) | Step-by-step P5–P9 delivery and acceptance closure, with a reusable agent prompt. |
 | `PROMPT-E-canvases.md`, `PROMPT-F-visual-fidelity.md`, `PROMPT-J-full-roadmap.md` | Historical implementation prompts, kept for design rationale rather than as a live worklist — see each file's status header for what has since shipped. |
+
+## License
+
+This project's original code and documentation are licensed under the [MIT License](LICENSE).
+Copyright (c) 2026 Prem Duvvapu.
+
+Third-party dependencies and materials remain subject to their own licenses and notices;
+the project license does not replace those terms.
