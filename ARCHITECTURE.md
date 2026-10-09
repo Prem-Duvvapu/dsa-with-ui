@@ -4,7 +4,9 @@
 > Regenerate them with `curl -s localhost:8923/api/problems/stats`. If a figure below
 > disagrees with that endpoint, the endpoint is right.
 >
-> Verified 2026-09-13: **431 problems, 431 traced, 0 untraced, 0 duplicate ids, 17 topics.**
+> Verified against the local API 2026-10-09: **431 problems, 431 traced, 0 untraced,
+> 0 duplicate ids, no orphaned tracers.** Renderer counts below describe canonical
+> catalogue entries; an explicitly selected solution approach can use another renderer.
 
 ## The shape of it
 
@@ -16,17 +18,17 @@ is produced by running the real algorithm on demand.
 flowchart TB
     subgraph browser["Browser — React 18 + Vite"]
         Router["AppRouter<br/>/problem/:id"]
-        App["App.jsx<br/>orchestration"]
-        Hooks["useTrace · useLayoutPreferences<br/>useKeyboardShortcuts · useTheme"]
+        App["ProblemWorkspace<br/>Playground · Code · Analysis"]
+        Hooks["useProblemSession · useTrace<br/>draft · atomic run · sharing · playback"]
         Registry["canvas/registry.js<br/>dsType → renderer"]
-        Canvas["15 canvases"]
+        Canvas["16 renderer components/variants"]
         Code["CodeViewer<br/>highlights the active line"]
     end
 
     subgraph api["Spring Boot — :8923"]
         PC["ProblemsController<br/>/api/problems"]
         Cat["ProblemCatalog<br/>merges 18 providers"]
-        Reg["TracerRegistry<br/>383 files · 431 ids"]
+        Reg["SolutionApproachRegistry + TracerRegistry<br/>selected executable · canonical tracers"]
         Run["TraceRunner<br/>+ InputValidator"]
     end
 
@@ -43,13 +45,16 @@ flowchart TB
 ```
 
 **There is no persistence layer, and none is needed.** No user data, no writes, no sessions.
-The only per-user state is `localStorage` in the browser: theme, playback speed, which
-panels are open, whether the welcome has been seen.
+Persistent per-user preferences/progress/presets live in browser storage, with denied/
+corrupt storage handled by adapters. The URL identifies the problem, successful run's
+input/approach, step and view. Unsaved drafts and the current run belong to the mounted
+problem session; they are not server-side sessions or database records.
 
 ## The request that matters
 
-`POST /api/problems/{id}/execute` is the only expensive call — it runs a real algorithm on
-caller-supplied input. Everything guarding the system guards this path.
+Both `GET` and `POST /api/problems/{id}/execute` can run real algorithms. GET uses declared
+defaults and a bounded default-trace cache; POST runs caller input and is not cached.
+Both use the same rate limit, validation, selected tracer and trace budgets.
 
 ```mermaid
 sequenceDiagram
@@ -64,19 +69,21 @@ sequenceDiagram
     F->>F: token bucket, 60/min/client
     Note over F: 429 + Retry-After past that
     F->>C: allowed
-    C->>C: registry.find(id)
+    C->>C: resolve canonical problem + requested approach
     Note over C: 404 unknown · 501 catalogued but untraced<br/>never another problem's steps
     C->>V: validate against InputSpec
     Note over V: unknown fields rejected, not ignored<br/>every bound enforced, all errors in one 400
     V->>T: run(Inputs, StepEmitter)
     T->>E: emit.at("anchor").say(...).step()
     Note over E: 5000-step budget → truncated: true
-    E-->>U: TraceResponse — steps, anchors, code, resolvedInput
+    E-->>U: TraceResponse — approach, source, type, complexity, steps, anchors, resolvedInput
 ```
 
 Two caps are mandatory rather than optional, and both exist because a caller setting `n = 20`
 on a factorial-time problem could otherwise take the server down: a **per-field size ceiling**
-in the `InputSpec`, and a **global step budget** (5000).
+in the `InputSpec`, and global trace budgets (normally5000 steps and2,000,000 JSON bytes).
+New exponential approaches have separately measured input caps; canonical caps are not
+permission to advertise unrestricted recursion. Unknown approach/encoding requests are400.
 
 ## The tracer contract
 
@@ -113,7 +120,7 @@ flowchart LR
     Tracer["AlgorithmTracer<br/>dsType()"] --> Enum["DsType<br/>17 values"]
     Enum --> Wire["contracts/ds-types.json"]
     Wire --> Reg["CANVAS_BY_DSTYPE"]
-    Reg --> Canvases["15 canvases"]
+    Reg --> Canvases["16 renderer components/variants"]
 
     Enum -.->|"DsTypePayloadContractTest<br/>the promised field is really emitted"| Tracer
     Wire -.->|"registry.test.js<br/>every value has a renderer"| Reg
@@ -121,22 +128,22 @@ flowchart LR
 
 | dsType | n | Canvas | What the picture is *for* |
 |---|---:|---|---|
-| `Array` | 68 | ArrayCanvas | values and pointers |
+| `Array` | 72 | ArrayCanvas | values and pointers |
 | `DpTable` | 54 | DpTableCanvas | the table filling, with arrows from each dependency |
 | `Tree` | 54 | TreeCanvas | structure and traversal order |
 | `Graph` | 40 | GraphCanvas | topology and frontier |
 | `LinkedList` | 36 | LinkedListCanvas | nodes, next/child/random links |
-| `Matrix` | 31 | GridCanvas | the board |
+| `Matrix` | 30 | GridCanvas | the board |
 | `SearchSpace` | 27 | SearchSpaceCanvas | the space **halving** — index or answer space |
-| `String` | 26 | ArrayCanvas | characters and pointers |
+| `String` | 26 | StringCanvas | characters and pointers |
 | `Stack` | 25 | StackCanvas | what is on the stack |
 | `RecursionTree` | 19 | RecursionTreeCanvas | the tree explored, rebuilt from `callStack` |
-| `PriorityQueue` | 16 | HeapCanvas | the heap as **tree and array at once** |
+| `PriorityQueue` | 12 | HeapCanvas | the heap as **tree and array at once** |
 | `Bits` | 12 | ArrayCanvas | bit positions |
 | `Window` | 12 | WindowCanvas | the window **moving and stretching** |
-| `Queue` | 4 | QueueCanvas | what is queued |
+| `Queue` | 4 | QueueHeroCanvas | what is queued |
 | `Dsu` | 3 | DsuCanvas | parent/rank tables and components |
-| `Interval` | 2 | IntervalCanvas | spans on a timeline |
+| `Interval` | 3 | IntervalCanvas | spans on a timeline |
 | `Trie` | 2 | TrieCanvas | the prefix tree |
 
 Several canvases **derive** what a tracer did not emit, rather than demanding tracer changes:
@@ -186,20 +193,24 @@ The bottleneck is CPU, not storage, because `/execute` runs real algorithms.
 - The app is stateless, so it scales horizontally. **One caveat:** rate-limit buckets are
   in-memory, so N instances enforce N × the limit. That is the first thing needing Redis.
 
-Not yet done, in rough order of value: caching traces for default inputs (most traffic is
-"open a problem, press play", recomputing the same 431 traces), serving the bundle from a
-CDN, and structured logging plus timing on `TraceRunner` — there is no observability today.
+Default traces are cached by validated `(problemId, approachId, effectiveEncoding)`;
+encoding aliases cannot add arbitrary cache keys. Custom inputs are never cached.
+Measured decode/render/play/seek/history performance and final release observability
+remain acceptance work; caching alone is not proof of fast interactions.
 
 ## Where things live
 
 | Path | What |
 |---|---|
 | `backend/src/main/java/com/dsa/ui/tracer/` | the contract, the runner, the validator |
-| `backend/src/main/java/com/dsa/ui/tracer/impl/` | 383 files, 431 tracers |
+| `backend/src/main/java/com/dsa/ui/tracer/impl/` | canonical tracer implementations |
+| `backend/src/main/java/com/dsa/ui/approach/` | registered real alternatives, teaching and selected-executable identity |
 | `backend/src/main/java/com/dsa/ui/service/` | 18 catalogue providers — **not dead code**, they hold every `ProblemDetail` |
 | `backend/src/main/java/com/dsa/ui/catalog/` | `ProblemCatalog`, `ProblemConstraints` |
 | `backend/src/test/resources/golden/` | 431 pinned traces |
 | `frontend/src/canvas/registry.js` | the only dsType→renderer table |
+| `frontend/src/workspace/` | the live problem page, views, approach selection and comparison |
+| `frontend/src/hooks/useProblemSession.js` | session-owned draft, restoration and successful-run sharing |
 | `frontend/src/trace/` | delta decoding, recursion-tree and heap derivation |
 | `contracts/` | the two cross-tier fixtures |
 

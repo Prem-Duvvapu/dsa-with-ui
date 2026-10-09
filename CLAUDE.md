@@ -148,29 +148,32 @@ step budget (default 5000, `truncated: true` on the response). Without them a ca
 
 **`ProblemCatalog`** merges the 18 services (each implements `catalog/ProblemProvider`) into
 one id-keyed view. First provider to claim an id wins; collisions are surfaced in
-`stats.duplicateIds` rather than hidden. Seven ids are currently claimed twice.
+`stats.duplicateIds` rather than hidden. The pinned duplicate count is zero; inspect
+the running stats endpoint rather than treating this document as a live measurement.
 
 ### Frontend
 
-`App.jsx` loads the catalogue and executions from `/api/problems`; `useTrace` owns request
-cancellation, stale-response protection, delta decoding, and playback. Canvas selection has
-one source of truth: `frontend/src/canvas/registry.js`. It is keyed by the backend's 16-value
+`AppRouter` shares `CatalogProvider` between the library and `ProblemWorkspace`.
+`useProblemSession` owns the draft, restoration and successful-run sharing; `useTrace`
+owns atomic execution identity, cancellation, delta decoding and playback. `App.jsx` was
+removed when the workspace became the only problem route. Canvas selection has
+one source of truth: `frontend/src/canvas/registry.js`. It is keyed by the backend's 17-value
 `DsType` contract, and its cross-tier test fails if the enum/fixture/registry drift.
 
 `frontend/src/canvas/registry.js`'s `CANVAS_BY_DSTYPE` map routes the backend's 17
-`dsType` values to fifteen canvas components: `ArrayCanvas`, `WindowCanvas`,
+`dsType` values to sixteen renderer components/variants: `ArrayCanvas`, `StringCanvas`, `WindowCanvas`,
 `SearchSpaceCanvas`, `GridCanvas`, `DpTableCanvas`, `TreeCanvas`, `GraphCanvas`,
 `LinkedListCanvas`, `StackCanvas`, `QueueHeroCanvas`, `HeapCanvas`, `TrieCanvas`,
-`RecursionTreeCanvas`, `DsuCanvas` and `IntervalCanvas`. `String` and `Bits` still route to
-`ArrayCanvas`: `Bits` deliberately — `StepEmitter.bits()` renders a fixed 32-wide bit track
-over it rather than a new canvas (see README's Bit Manipulation notes) — while `String` has
-no dedicated canvas yet. This is explicit mapping, not an unknown-type fallback; an unlisted
+`RecursionTreeCanvas`, `DsuCanvas` and `IntervalCanvas`. `Bits` shares `ArrayCanvas`
+with `Array`: `StepEmitter.bits()` renders a fixed
+32-wide bit track rather than a new canvas (see README's Bit Manipulation notes).
+`String` uses its dedicated character-cell canvas. This is explicit mapping, not an unknown-type fallback; an unlisted
 `dsType` renders an explicit unsupported state. Trie transport and its canonical
 backend/canvas node shape are active and guarded by the Trie canvas tests; see resolved
 `RCA-012` in `RCA.md`.
 
-Styling is CSS custom properties in `index.css` plus inline styles; only a handful of CSS
-classes exist. `designTokens.test.js` is a static guard that fails the build on any `var()`
+Styling uses shared CSS custom properties in `index.css`, CSS modules and limited inline
+layout styles. `designTokens.test.js` is a static guard that fails the build on any `var()`
 or `className` referencing something `index.css` does not define — a rewrite once deleted 15
 tokens while 5 components still used them, and CSS silently drops unresolvable declarations.
 
@@ -212,8 +215,8 @@ differing only in word order (`rotten-oranges` / `rotting-oranges`).
 - `plan.md` — the v2 tracing architecture. Accurate; the source of the current design.
 - `AUDIT.md` — full per-problem audit of the catalogue across its topics, with the
   findings fixed so far and the two left open for an owner decision.
-- `REVIEW.md` — six review gates every change goes through (backend, frontend, product,
-  security, performance, docs), each built from a failure this codebase has actually had.
+- `REVIEW.md` — six review gates every change goes through (backend, frontend, UI/UX,
+  product, architecture, QA), each built from a failure this codebase has actually had.
   Run it alongside `dsa-review` before a PR lands.
 - `references.md` — UI/UX research and design tokens. `PROJECT_CONTEXT.md` — pedagogical
   principles.

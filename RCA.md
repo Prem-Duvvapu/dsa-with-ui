@@ -1586,6 +1586,31 @@ not CSS scaling; captures use the actual zoomed surface because CSS-sized clips 
   - "Truncated, and says so" is honest, but it is not the same as usable: an input the editor accepts should be able to finish. Bound inputs by what they cost, and give the reader a field error rather than a run that cannot end.
   - A constraint a tracer *declares* is not a constraint the validator *enforces*. A declared but unknown key should be found by a test, not by a 500.
 
+### RCA-056 follow-up — 2026-10-09 Frog Jump approach bounds
+
+The first array-input approach rollout exposed a scalar-only comparison summary: it
+read `min`/`max` but hid genuine `minLength`/`maxLength` and element-value bounds behind
+generic copy. Two RED tests now protect collection ranges and zero bounds; the summary
+uses only declared metadata. Backend refusals still preserve the whole rejected draft.
+Frog Jump recursion is independently capped at length10:143 actual calls fit the existing
+220-node renderer, while length11 would require232. Memoization retains length20 and
+caches zero rather than treating it as unknown. Real API measurements and independent
+path/source tests are recorded in the DP plan. Its dated continuation records the
+completed local candidate browser gates; broader rollout/human acceptance remains open.
+
+### Derived recursion viewport follow-up — 2026-10-09
+
+Screenshot inspection of Frog Jump's largest memoized input found a populated SVG whose
+top-left scroll viewport contained no visible calls. The root recenters over discovered
+children; presence/count and page-overflow checks cannot detect that empty-looking view.
+The renderer now anchors its horizontal viewport to the root as layout moves, preserving
+manual pan offsets, vertical scroll and focus; a new run centers its own root. Container
+resize is observed, with observer/listener cleanup. Four new geometry regressions proved
+RED (direct completed-run seek, layout growth with manual pan, replacement run, resize/
+cleanup). Browser gates now require an actually visible root for both advertised maxima,
+not merely143/38 DOM nodes. Own-tree tracers retain their layout. No calls are fabricated
+or omitted to fit the viewport; the large diagram still scrolls locally.
+
 ## RCA-057 — Real DP traces displayed placeholder Java instead of complete solutions
 
 - **Discovered:** 2026-10-07, after the owner reported `solve(Object input)` calling

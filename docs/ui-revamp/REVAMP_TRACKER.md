@@ -12,8 +12,8 @@ its gate and evidence are complete.
 | --- | --- | --- | --- |
 | P0 Baseline and reference designs | Done | #146 / `bc9829f` | Fresh tests, live API, 16 browser captures, manifests and decisions recorded below |
 | P1 Session/input/sharing correctness | Done (reopened, fixed) | #147 / `748b489`; hardening #149 / `de94c1c` | B1–B7 fixed regression-first (29 new tests red on `bc9829f`). An independent review of `3db06a5` found cross-problem, post-unmount, restoration and same-page link defects; fixed in #149 (12 new tests red on `3db06a5`). Re-verified in Chromium against the real backend on the follow-up branch |
-| P2 Foundations/library refinement | Done (reopened, fixed) | #148 / `3db06a5`; follow-ups in this PR | Library gates met at 320–1440px in both themes; fast typing fixed. Review #5 (own-write detection) fixed in #149; #9 (control-boundary contrast) and #10 (44px chips/recents) fixed in this PR |
-| P3 Shell/Playground reference | Done | #151 / `b0da81f` | New workspace to playground-concept.png behind `dsa-ui:workspace` flag; Array, Graph+Queue, 2D DP custom runs and view switching verified in Chromium against the real backend; no overflow at 320/390/1366 in both themes. Stage top y389 at 1366 (target ~280; documented exception, see log) |
+| P2 Foundations/library refinement | Done (reopened, fixed) | #148 / `3db06a5`; follow-ups #149/#150 | Library gates met at 320–1440px in both themes; fast typing fixed. Review #5 (own-write detection) fixed in #149; #9 (control-boundary contrast) and #10 (44px chips/recents) fixed in #150 |
+| P3 Shell/Playground reference | Done | #151 / `b0da81f`; sole route since #153 | The workspace was initially behind `dsa-ui:workspace`; P4b removed that flag and legacy App. Array, Graph+Queue, 2D DP custom runs and view switching verified in Chromium against the real backend; no overflow at 320/390/1366 in both themes. Stage top y389 at 1366 (target ~280; documented exception, see log) |
 | P4 Code/Analysis/integrated route | Done | P4a #152 / `ce99754`; P4b #153; review fixes #155–#157, #191 | Reconciled 2026-10-05: the gate journeys (P4a/P4b rows below) were recorded on the merged route and the two independent reviews' P4 findings are fixed. Legacy leaf components left for P9 (list in log) |
 | P5 Switcher/focus/guidance | Done (screen-reader pass pending) | P5a #194 / `175e3d7`; P5b #195 / `e6faaee`; P5c #196 / `158e55d` | Gate met in Chromium on the real backend: keyboard-only switch/open/cancel/current-problem, inert background and focus return (switcher, help, welcome, tour); Focus keeps run/step/draft/URL with 0 executions; nested Escape (dialog → Focus); no seek behind dialogs (`CodeAnalysis.test.jsx`); every tour step spotlights a mounted, visible, in-view target at 1366 and 390. Pending: a real screen reader on the combobox/tour (none available here) |
 | P6 History/comparison/completion | Done | P6a #198 / `26ed24a`; P6b #199 / `3373c48` | Gate met on the real backend: all-family bounded history with synced seek (P6a row); comparison on demand for every family with labelled, independent default/other-case runs, its scope and ordinal caveat stated, a submitted main run called out, stale/retired requests aborted; end-of-run actions only for a complete live run (none for truncated/offline/pending), curriculum boundary → library |
@@ -22,11 +22,13 @@ its gate and evidence are complete.
 | P9 Cleanup/release | Planned | — | Complete preservation ledger, checks and rollback |
 
 Parallel, separately scoped DP work (2026-10-09): D0/D1 #212 (`b111b72`), D2 #213
-(`b7ce137`) and D3 #214 (`fb96744`) are merged. D4 teaching/isolated comparison is
-verified on `feat/dp-approach-teaching`; owner publication approval was received on
-2026-10-09. Its CI-gated PR/merge is the publication step, not an all-DP rollout or
-production sign-off. Climbing Stairs is the only three-form pilot
-(1/56 candidate problems). D5's other55 candidates, D6/D7, and the original P8/P9
+(`b7ce137`), D3 #214 (`fb96744`) and D4 #215 (`2709d8b`) are merged with passing CI.
+The first D5 candidate, Frog Jump, is locally verified on `feat/dp-frog-jump`:
+backend/API budgets,799 frontend tests, build and28 final Chromium/Firefox/native-zoom
+browser rows pass. Its viewport regression has four RED guards. Publication remains
+pending PR CI/merge after owner authorization; development stops after this package. Climbing Stairs remains the only
+merged, UI-verified three-form pilot (1/56 candidates); Frog Jump is an additional local candidate,
+not a completed family rollout. The other54 candidate implementations, D6/D7, and P8/P9
 gates remain open. See [DP_SOLUTION_APPROACHES_PLAN.md](DP_SOLUTION_APPROACHES_PLAN.md)
 and the dated D4 continuation in the log for current results; #211 repaired complete DP
 source listings and must not be counted as completing P8.
@@ -60,47 +62,48 @@ source listings and must not be counted as completing P8.
 
 ### Feature preservation
 
-Destination names refer to the handoff's product structure (§4). "Existing" proof is the
-test that guards the capability today; it must survive or be rewritten to reach the
-feature at its new location.
+Destination names refer to the handoff's product structure (§4). Reconciled2026-10-09
+against the live workspace and current test paths. Named browser evidence is the dated
+package evidence, not a fresh project-wide certification. Historical P0 defects remain
+above; current limitations belong in this ledger and the package table.
 
 | Feature ID | Implementing package | Destination | Automated proof | Browser proof | Status / limitation |
 | --- | --- | --- | --- | --- | --- |
 | F01 Catalogue & metadata | P2 | Library rows beyond first batch | `AlgorithmLibrary.test.jsx` (63 rows, load-more focus) | P2 captures 320–1440px | Done (P2) |
-| F02 Ranked search/highlight | P2, P5 | Library + switcher | `scoreProblem.test.js`, `useProblemSearch.test.js` | P2: fast typing keeps "binary search tree" (8 results) | Library done; switcher P5 |
+| F02 Ranked search/highlight | P2, P5 | Library + switcher | `scoreProblem.test.js`, `useProblemSearch.test.js`, `Workspace.integration.test.jsx` | P2 search + P5 switcher journeys | Implemented; switcher screen-reader pass pending |
 | F03 Category/runnable filters | P2 | Library | `AlgorithmLibrary.test.jsx` chips, scoped clear, disclosure, invalid params | P2 phone journey: Filters (1), chip removal | Done (P2) |
 | F04 Recents/storage safety | P2 | Library search | `useProblemSearch.test.js`; denied-storage library test | — | Done (P2) |
-| F05 Search shortcut/keyboard | P5 | One Ctrl/Cmd+K owner | Existing: App command palette tests | — | Two owners today (library + App) |
-| F06 Direct problem links | P1 | `/problem/:id` | `App.session.test.jsx` unknown id; `AppRouter.test.jsx` | P1 probe: unknown id stays on its URL with a not-found state | Done (P1) |
+| F05 Search shortcut/keyboard | P5 | Route-owned Ctrl/Cmd+K | `Workspace.integration.test.jsx`, `AlgorithmLibrary.test.jsx` | P5 switcher journey | Implemented; one active route's action |
+| F06 Direct problem links | P1 | `/problem/:id` | `Session.integration.test.jsx` unknown id; `AppRouter.test.jsx` | P1 probe: unknown id stays on its URL with a not-found state | Done (P1) |
 | F07 Catalogue load/retry/dedup | P2 | `CatalogProvider` | Provider lifecycle tests (retained live list, non-array body, abort on unmount); sample-vs-live retry | — | Done (P2) |
 | F08 Default detail/execution | P1 | Problem session | Existing: `useTrace.test.js` | P0 captures | Baseline OK |
-| F09 Custom execution | P1 | Controlled editor | `App.session.test.jsx` (echo, draft survival), `useTrace.session.test.js` | P1 probe: summary says target 18 after the run | Done (P1); shell moves in P3 |
+| F09 Custom execution | P1 | Controlled editor | `Session.integration.test.jsx` (echo, draft survival), `useTrace.session.test.js` | P1 probe: summary says target 18 after the run | Implemented in the sole workspace route |
 | F10 Randomize/defaults | P1 | Draft-only actions | Existing: `randomizeInput.test.js`, Reset test | — | Baseline OK |
-| F11 Help/bounds/field errors | P1, P7 | Every input form | Existing: field-error integration test | — | Labels not programmatically linked |
-| F12 Play/pause/step/seek/speed | P3 | One controller for all views | Existing: `Controls.test.jsx`, `useTrace.test.js` | — | Baseline OK |
-| F13 Playback shortcuts | P5 | Global handler | Existing: J/L after button test | — | Tabs/sliders not yet exempted |
-| F14 Narration/position | P3 | Stage narration | Existing: `LiveTraceTicker` via App tests | — | Truncated to one line on phone |
-| F15 Canvas/legend | P3, P7 | Stage, all registry keys | Existing: `registry.test.js`, canvas tests | P0 Array/Graph/DP | Stage too short on desktop |
+| F11 Help/bounds/field errors | P1, P7 | Every input form | `InputPanel.test.jsx`, `Workspace.integration.test.jsx` | P7 seven-editor phone journey | Labels/help/errors linked; real virtual keyboard pending |
+| F12 Play/pause/step/seek/speed | P3 | PlaybackBar + one trace controller | `ProblemWorkspace.test.jsx`, `Workspace.integration.test.jsx`, `useTrace.test.js` | Workspace package journeys | Implemented across views |
+| F13 Playback shortcuts | P5 | Global handler + local widget ownership | `Workspace.integration.test.jsx`, `CodeAnalysis.test.jsx`, `ProblemWorkspace.test.jsx` | P5 keyboard + P8 Menu journey | Tabs/sliders/dialogs/source/Menu own their keys |
+| F14 Narration/position | P3, P8 | Stage narration | `ProblemWorkspace.test.jsx`, `Workspace.integration.test.jsx` | P8 accessibility journey | Manual narration wraps; autoplay announcements gated; real speech check pending |
+| F15 Canvas/legend | P3, P7 | Stage, all registry keys | `registry.test.js`, canvas tests | P7/P8 renderer manifests | Implemented; full second-engine/device acceptance and stage-position target remain open |
 | F16 Queue/grid companions | P3 | Stage companions | Existing: `companions.test.js` | P0 Graph capture | Baseline OK |
-| F17 Capture/click-to-seek | P6 | History | Existing: `CaptureStrip.test.jsx` | — | No textual step list |
-| F18 Java/active line | P4a | Code view + split | `CodeAnalysis.test.jsx` (split, follow, kept scroll); `CodeViewer.test.jsx` | P4a journey: BFS split at 1366, active line 10 highlighted | Done behind flag; public in P4b |
-| F19 Variables/frames/containers | P4a | Analysis | `CodeAnalysis.test.jsx` (null/empty explicit, frame order and current frame, Top/Front/Back, run-level presence) | P4a journey: BFS queue Front/Back; fib call stack with Current frame | Done behind flag |
-| F20 Complexity | P4a | Analysis | `CodeAnalysis.test.jsx` (backend values, "unavailable") | P4a journey | Done behind flag |
-| F21 Error/empty/malformed/unavailable | P1, P3 | Distinct status states | App trace error surface tests; `useTrace.session.test.js` rerun failures | — | Rerun failures keep the prior run, labelled (P1) |
-| F22 Truncation | P1 (watched), P6 (status UI) | Persistent status | `useTrace` truncated tests; `App.session.test.jsx` "does not mark a truncated run as watched" | — | A truncated or offline run no longer marks watched (P1). Persistent status UI remains P6 |
+| F17 Capture/click-to-seek | P6 | History | `CaptureStrip.test.jsx`, `StepHistory.test.jsx`, `Workspace.integration.test.jsx` | P6a all-family history journey | Textual history and capture seeking implemented; DOM bounded |
+| F18 Java/active line | P4a | Code view + split | `CodeAnalysis.test.jsx` (split, follow, kept scroll); `CodeViewer.test.jsx` | P4a journey: BFS split at 1366, active line 10 highlighted | Public sole route;27-source repair merged; Print LIS source helpers still require repair |
+| F19 Variables/frames/containers | P4a | Analysis | `CodeAnalysis.test.jsx` (null/empty, frame order, container labels) | P4a/P4 review journeys | Public sole route; non-Stack/Queue containers neutrally labelled |
+| F20 Complexity | P4a | Analysis | `CodeAnalysis.test.jsx` (backend values, "unavailable") | P4a journey | Public sole route; values from the shown executable |
+| F21 Error/empty/malformed/unavailable | P1, P3 | Distinct status states | `ErrorParity.integration.test.jsx`, `Session.integration.test.jsx`, `useTrace.session.test.js` | Session/review journeys | Rerun failures retain explicitly labelled prior run |
+| F22 Truncation | P1, P6 | Persistent status + completion guard | `Session.integration.test.jsx`, `Workspace.integration.test.jsx`, `useTrace.test.js` | P6b completion journey | Truncated/offline runs do not mark watched or offer genuine-finish actions |
 | F23 Offline sample | P3 | Labelled sample state | Existing: `useTrace` offline test | — | Baseline OK |
-| F24 Collapse/focus intent | P3–P5 | Views, split, Focus | Existing: `useLayoutPreferences.test.js` | — | Replaced by views |
-| F25 Theme/reduced motion | P2 | Header theme control | `useTheme.test.js`, `designTokens.test.js` concept palette guard | P2 captures both themes | Tokens done; workspace in P3 |
+| F24 Collapse/focus intent | P3–P5 | Views, split, Focus | `Workspace.integration.test.jsx`, `CodeAnalysis.test.jsx` | P5b Focus journey | Implemented; preserves session and nested Escape ownership |
+| F25 Theme/reduced motion | P2 | Shared theme control | `useTheme.test.js`, `designTokens.test.js` | P2/P8 themes + D4 reduced-motion evidence | Implemented; broad final acceptance remains P8 |
 | F26 Continue/daily/streak/starred | P2 | Library progress line + learning section | `Dashboard.test.jsx`; Continue-outside-disclosure test | P2 captures | Done (P2) |
 | F27 Watched/starred | P2, P3 | Library + header | Existing: `useProgress.test.jsx` | — | Baseline OK |
-| F28 Curriculum prev/next | P3 | Context header | Existing: `SectionNav.test.jsx` | P0 Graph capture | Baseline OK |
-| F29 Statement/examples | P3 | Disclosure before rail | Existing: `ProblemStatement.test.jsx` | P0 Graph capture | Open by default on desktop |
+| F28 Curriculum prev/next | P3 | Context header + end-of-run actions | `Navigation.integration.test.jsx`, `Workspace.integration.test.jsx` | Lifecycle/completion journeys | Implemented, boundary returns to library |
+| F29 Statement/examples | P3 | Disclosure before rail | `ProblemStatement.test.jsx`, `Workspace.integration.test.jsx` | P3 context + statement rollout evidence | Collapsed initially; authored examples/constraints retained |
 | F30 Alternate/saved inputs | P1 | Editor | `InputPanel.test.jsx` preset/other-case sync | — | Done (P1) |
-| F31 Other-case comparison | P6 | On-demand comparison | Existing: App comparison tests | — | Hidden for Graph/Tree/DP |
-| F32 Shared input/step/copy link | P1 + #149 | Route adapter | `App.session.test.jsx`, `App.lifecycle.test.jsx` (cross-problem, same-page, unreadable input, step with no run), `useShareableView.test.jsx`, `useLatestSearchParams.test.jsx` | Session probe (reload restores step 3/7, target 18); review probe (Previous after a restored link sends no POST to the new problem) | Done; `view` is carried but has no UI until P4 |
-| F33 Anchor coverage | P4 | Source inspector | Existing: "branches not taken" test | — | Baseline OK |
-| F34 Welcome/tour/help | P5 | Help + adapted targets | Existing: `TourGuide.test.jsx`, `WelcomeGuide.test.jsx` | — | Targets tied to old layout |
-| F35 Extended keys/speed | P5 | Workspace controls | Existing: speed persistence test | — | Baseline OK |
+| F31 Other-case comparison | P6 | On-demand comparison | `Workspace.integration.test.jsx`, `useComparisonTrace.test.js` | P6b + D4 integrity journeys | Available across families; explicitly default vs other-case, not custom main |
+| F32 Shared input/step/copy link | P1 + #149 | Single route adapter | `Session.integration.test.jsx`, `Lifecycle.integration.test.jsx`, `useShareableView.test.jsx`, `useLatestSearchParams.test.jsx` | Session/review probes | Implemented input-before-step restoration and all three views; approach sharing guarded by approach tests |
+| F33 Anchor coverage | P4 | Source inspector | `Workspace.integration.test.jsx`, `CodeAnalysis.test.jsx`, backend anchor contracts | Source-repair journeys | Backend-owned anchors; branches-not-taken inspector retained |
+| F34 Welcome/tour/help | P5 | Help + current-view targets | `TourGuide.test.jsx`, `WelcomeGuide.test.jsx`, `Workspace.integration.test.jsx` | P5c mounted/visible-target journey | Adapted to workspace/phone; real screen-reader tour check pending |
+| F35 Extended keys/speed | P5 | Workspace controls | `Workspace.integration.test.jsx` speed/shortcuts; `CodeAnalysis.test.jsx` ownership | P5 keyboard journeys | Implemented; persisted speed and local/global key boundaries |
 
 ### Renderer and input coverage
 

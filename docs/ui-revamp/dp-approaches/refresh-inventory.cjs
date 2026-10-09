@@ -18,6 +18,27 @@ async function get(route) {
   if (!response.ok) throw Error(`${route}: HTTP ${response.status}`);
   return response.json();
 }
+// Evidence is problem-keyed: never borrow another problem's completed pilot matrix.
+function candidateUiVerified(problemId) {
+  const documents = ['chromium', 'firefox', 'zoom-200'].map(tag => {
+    const file = path.join(__dirname, `${problemId}-${tag}-results.json`);
+    return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
+  });
+  const list = documents[0]?.servedBuild?.assets;
+  const assets = JSON.stringify(list);
+  return Boolean(Array.isArray(list) && list.some(a => a.endsWith('.js')) && list.some(a => a.endsWith('.css'))
+    && documents.every((doc, index) => doc?.problemId === problemId
+    && doc.engine === (index === 1 ? 'firefox' : 'chromium')
+    && doc.buildMode === 'production-preview' && doc.rows?.length === (index === 2 ? 8 : 10)
+    && JSON.stringify(doc.servedBuild?.assets) === assets
+    && new Set(doc.rows.map(r => `${r.width}x${r.height}:${r.theme}`)).size === doc.rows.length
+    && doc.rows.every(r => (index === 2 ? ['640x1136', '780x1688', '1366x768', '1440x900']
+      : ['320x568', '390x844', '768x1024', '1366x768', '1440x900']).includes(`${r.width}x${r.height}`)
+      && ['light', 'dark'].includes(r.theme) && r.nativeZoom === (index === 2 ? 2 : 1))
+    && doc.rows.every(r => r.noOverflowOrErrors && r.visibleMaximumTreeRoots
+      && r.nativeComparisonKeyboardAndFocus && r.sameCommittedInputAndIndependentSliders
+      && r.otherCaseUsesShownApproach && r.refusedArrayKeptWithOldLink && r.sharedInputThenStepRestored)));
+}
 (async () => {
   const inventoryPath = path.join(__dirname, 'inventory.json');
   const previous = fs.existsSync(inventoryPath) ? JSON.parse(fs.readFileSync(inventoryPath, 'utf8')) : null;
@@ -51,10 +72,11 @@ async function get(route) {
       canonicalInputSpec: detail.inputSpec, canonicalComplexity: detail.complexity,
       alternativeStatus: detail.approaches?.length > 1 ? (problem.id === 'climbing-stairs' && verifiedPilot
         ? verifiedTeachingComparison ? 'backend-and-UI-teaching-comparison-pilot-verified; family rollout pending'
-          : 'backend-and-UI-pilot-verified; family rollout pending' : 'backend-pilot; UI pending')
+          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id)
+            ? 'backend-and-UI-candidate-verified; family rollout pending' : 'backend-pilot; UI pending')
         : reviewed.get(problem.id).plannedForms.length ? 'planned' : 'requires-different-formulation',
       alternativeSafetyBounds: detail.approaches?.length > 1
-        ? 'Published pilot bounds below; measured Climbing Stairs traces are in d2-results.json. Not a rollout-wide safety claim.'
+        ? 'Published alternative bounds below; consult this problem\'s measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.'
         : 'Not measured yet; canonical caps do not authorize exponential recursion.',
       ...(detail.approaches?.length > 1 ? { publishedAlternativeInputSpecs:
         detail.approaches.filter(a => !a.isDefault).map(a => ({ id: a.id, inputSpec: a.inputSpec })) } : {}) });
