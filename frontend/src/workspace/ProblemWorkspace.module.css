@@ -227,3 +227,6 @@
   .sourcePane { grid-template-rows: auto minmax(300px, 60vh); }
   .curriculum .meta { grid-column: 1 / -1; }
 }
+.teaching { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-xs); }
+.teaching dt { font-weight: 600; }
+.teaching dd { margin: 0 0 var(--space-sm); overflow-wrap: anywhere; }

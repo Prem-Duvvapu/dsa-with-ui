@@ -34,6 +34,8 @@ import SourcePane from './SourcePane';
 import StateInspector from './StateInspector';
 import ApproachSelector from './ApproachSelector';
 import MemoTable from './MemoTable';
+import ApproachTeaching, { hasApproachTeaching } from './ApproachTeaching';
+import ApproachComparison from './ApproachComparison';
 import StepHistory from './StepHistory';
 import { curriculumNeighbours } from './curriculum';
 import { defaultInput } from '../input/randomizeInput';
@@ -141,6 +143,7 @@ export default function ProblemWorkspace() {
   const [isPaletteOpen, setIsPaletteOpen] = useState(false);
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isCompareOpen, setIsCompareOpen] = useState(false);
+  const [approachComparisonOpen, setApproachComparisonOpen] = useState(false);
   const [hasSeenWelcome, setHasSeenWelcome] = usePersistentState('seenWelcome', false, (v) => typeof v === 'boolean');
   // Presentation state that belongs to this problem's session: where the reader left the
   // source, and which Code subview they chose on a narrow screen. A new problem starts fresh.
@@ -150,6 +153,7 @@ export default function ProblemWorkspace() {
   const [historyOpen, setHistoryOpen] = useState(false);
   useEffect(() => {
     setIsCompareOpen(false);
+    setApproachComparisonOpen(false);
   }, [problemId]);
 
   // The tour runs on every width: it scrolls each target into view and drops the ones a
@@ -598,6 +602,7 @@ export default function ProblemWorkspace() {
                 {narration}
                 {completion}
                 <PlaybackBar session={session} onSpeedChange={changeSpeed} />
+                {hasApproachTeaching(session.shownApproach) && <div hidden={isFocus}><ApproachTeaching approach={session.shownApproach} step={currentStep} anchors={anchors} /></div>}
               </section>
 
               <div hidden={isFocus}>{inputUsed}</div>
@@ -633,7 +638,9 @@ export default function ProblemWorkspace() {
                     </details>
                   )}
                   {canCompare && (
-                    <button type="button" className={styles.control} aria-expanded={isCompareOpen} onClick={() => setIsCompareOpen((v) => !v)}>
+                    <button type="button" className={styles.control} aria-expanded={isCompareOpen}
+                      disabled={run.problemId !== problemId || !steps.length || run.offline}
+                      onClick={() => setIsCompareOpen((v) => !v)}>
                       {isCompareOpen ? 'Hide comparison' : 'Compare other case'}
                     </button>
                   )}
@@ -665,6 +672,7 @@ export default function ProblemWorkspace() {
               {narration}
               {completion}
               <PlaybackBar session={session} onSpeedChange={changeSpeed} />
+              <ApproachTeaching approach={session.shownApproach} step={currentStep} anchors={anchors} />
             </section>
           )}
 
@@ -679,6 +687,19 @@ export default function ProblemWorkspace() {
               {completion}
               <PlaybackBar session={session} onSpeedChange={changeSpeed} compact />
               <StateInspector step={currentStep} steps={steps} problem={problem} dsType={dsType} />
+              <ApproachTeaching approach={session.shownApproach} step={currentStep} anchors={anchors} />
+            </section>
+          )}
+          {session.approaches.length > 1 && run.resolvedInput && !run.offline && run.problemId === problemId && (
+            <section className={styles.card} hidden={isFocus}>
+              <button type="button" className={styles.control} aria-expanded={approachComparisonOpen}
+                aria-controls="approach-comparison" onClick={() => { pause(); setApproachComparisonOpen(v => !v); }}>
+                {approachComparisonOpen ? 'Hide approach comparison' : 'Compare approaches'}
+              </button>
+              <section id="approach-comparison" aria-label="Approach comparison" hidden={!approachComparisonOpen}>
+                {approachComparisonOpen && <ApproachComparison key={`${problemId}:${run.id}`} problemId={problemId} run={run}
+                  approaches={session.approaches} onPrepare={pause} />}
+              </section>
             </section>
           )}
         </div>
