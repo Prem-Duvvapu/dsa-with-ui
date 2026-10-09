@@ -1,7 +1,7 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **D0–D3 merged; D4 verified locally for the Climbing Stairs pilot; D5–D7 pending.**
-Current unpublished package: `feat/dp-approach-teaching`, based on `fb96744`.
+Status: **D0–D4 merged; first D5 candidate (Frog Jump) locally verified, publication pending; D6/D7 pending.**
+Current unpublished package: `feat/dp-frog-jump`, based on D4 merge `2709d8b` (#215).
 Prepared 2026-10-07 against merged main `9d0aa10` (PR #208).
 This is a separate feature from the unfinished P8/P9 revamp gates; it does not close them.
 The owner authorized implementation on 2026-10-07 after merging PR #210.
@@ -384,7 +384,7 @@ main/live inventory, create a new feature branch, and execute D0 → D1 → D2 �
 reviewable packages. Complete the pilot before expanding to D4/D5. Preserve the canonical
 API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 
-## 11. Implementation progress — 2026-10-07
+## 11. Implementation progress — reconciled 2026-10-09
 
 | Package | Current status | Evidence / boundary |
 | --- | --- | --- |
@@ -392,13 +392,15 @@ API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 | D1 | Verified | Provider registry, canonical adapters, optional API selection, committed execution metadata, normalized cache keys and refusal tests |
 | D2 | Verified | Genuine recursion/memoization/tabulation, independently compiled source, oracle and boundary tests; `dp-approaches/d2-results.json` |
 | D3 | Verified pilot | Explicit selector, committed metadata, approach-aware links/presets/input comparison, truthful memo/recursive views; `dp-approaches/d3-results.json` |
-| D4 | Verified locally, publication pending | Audited teaching metadata, explicit isolated two-approach comparison; `dp-approaches/d4-results.json` and `d4-accessibility-results.json` |
-| D5–D7 | Pending | Family rollout and final accessibility/performance/release gates |
+| D4 | Merged #215 / `2709d8b` | Audited teaching metadata, isolated two-approach comparison, passing PR/post-merge CI; dated D4 evidence below |
+| D5 | First candidate locally verified; publication pending | Frog Jump code/API/full suites and28 final browser rows pass; remaining54 candidates not implemented |
+| D6/D7 | Pending | Broad accessibility/performance, coverage reconciliation and release gates |
 
 Inventory distinctions: binary-search LIS remains an optimized default; ninja-and-friends
 uses rolling row slices; rectangle-all-ones uses histogram stacks rather than a DP table;
 count-square-submatrices is real in-place DP rendered as Matrix; palindromic-subsequence
-counting lives under Strings. Alternative safety limits are explicitly unmeasured.
+counting lives under Strings. Alternative safety limits remain unmeasured except for
+the Climbing Stairs pilot and local Frog Jump package documented below.
 
 Print LIS still displays undefined `collect()`/`answer()` helpers. Its real parent-chain
 algorithm is classified, but the displayed-source repair is a prerequisite for its D5
@@ -605,6 +607,10 @@ production performance/release gates remain open. P8/P9 are not closed by this p
 
 ### D4 continuation — 2026-10-09
 
+Historical verification snapshot: this package subsequently merged as #215 / `2709d8b`
+with passing PR and post-merge CI. Its local/pre-publication wording below describes
+the checks before that merge, not the current publication status.
+
 Verified on `feat/dp-approach-teaching`, based on merged D3 `fb96744`. The owner approved
 commit/push/PR merge on2026-10-09 after local verification; CI must pass before merge.
 No D5 implementation is stacked on this package.
@@ -675,6 +681,9 @@ are identical to D3, and no forced or major-version upgrade is folded into this 
 
 ### Next-package preflight — read-only, not D5 implementation
 
+Historical preflight: D4 subsequently merged as #215 / `2709d8b`. The Frog Jump-only
+package below implements this preflight; its remaining browser gates are still open.
+
 Start only after D4 is approved, passes CI and merges; pull that merge before cutting the
 next branch. The first D5 PR should cover **Frog Jump alone**, not all four 1D examples.
 The existing canonical tracer accepts `heights` length2–20, values0–999, and starts at
@@ -743,3 +752,113 @@ node docs/ui-revamp/dp-approaches/refresh-inventory.cjs
 Only completed result files count as evidence. Exclude interrupted attempts and inspect
 the captured phone/desktop/native-zoom screenshots. Exact-size and native-zoom overflow
 checks do not close the pre-existing stage-y-position exception or any human/device gate.
+
+## D5 first candidate — Frog Jump, local work on 2026-10-09
+
+This is one unpublished candidate package, not the entire 1D family. Preserve the existing
+canonical tabulation tracer, source, input defaults and public `canonical` approach ID.
+Its label is now truthfully Tabulation; old `?approach=canonical` links still resolve.
+The new recursion and memoization are real implementations of minimum energy, not
+Climbing Stairs path counting. Zero is a known cached cost, distinct from null/unknown.
+
+| Approach | Published lengths | Measured upper-length shape | Actual calls / events | Full / delta JSON bytes |
+| --- | --- | --- | --- | --- |
+| Recursion | 2–10 | Alternating 0/999, length10 | 143 / 573 | 313,271 / 187,545 |
+| Memoization | 2–20 | Alternating 0/999, length20 | 38 / 154 | 217,782 / 118,302 |
+| Tabulation (`canonical`) | Existing 2–20 | Alternating 0/999, length20 | Not instrumented / 22 | 45,743 / 41,933 |
+
+All accept height values0–999. The unchanged 5,000-step / 2,000,000-byte budgets apply.
+The recursion length cap also protects the existing 220-node recursion renderer: length10
+has143 calls, while length11 would have232. Accepted inputs must show every call, not
+silently truncate the tree. Call/event counts depend on length; the measured JSON sizes
+are for these shapes, not a proof of maximal bytes over every possible height array.
+No latency or performance-win claim is derived from event counts or JSON sizes.
+
+Evidence: `dp-approaches/frog-jump-measurements.json` contains19 completed real-API rows
+(38 paced execution requests), full/delta equivalence through the actual frontend decoder,
+answer oracles, stack depth and actual derived recursion nodes. Equal heights at length7
+produce memoized answer0,12 calls,5 real cache hits and7 computed states. This evidence is
+not a browser UI journey. `frontend/src/test/frogApproaches.json` is generated from the
+three genuine complete default API responses, including their sources and anchors.
+
+Backend tests independently enumerate forward jump paths for360 small inputs per form,
+plus named cases, all accepted lengths, strict refusals, cache-zero behavior, real budget
+retirement, Java17 compilation of displayed sources, API identity and emitted anchors.
+Before implementation, all nine backend tests failed/errored against canonical-only main.
+Two of the three array-limit presentation tests failed before the UI fix; the absent-limit
+positive is not claimed as RED. New array-session integration tests cover legacy links,
+an eleven-chip rejected recursion draft, shared memoized input/step/source restoration,
+and comparison isolation from edited chips and the main step/link. Their real-API fixture
+does not invent successful custom traces for inputs it has not recorded.
+
+The comparison's existing scalar-bound copy now also displays declared collection length
+and value bounds, including zero. After the browser continuation below, its inventory
+status is **backend-and-UI-candidate-verified; family rollout pending**. This is local
+verification, not publication or broad human/device acceptance.
+No dependency, endpoint, session owner, primary canvas or canonical golden changed.
+Canonical source/spec digests and all other candidate statuses remain unchanged.
+Current checks: backend8,023 tests (0 failures/errors, unchanged500 skips; backend unchanged
+since that run), frontend83 files /799 passing tests, production build JS383.15kB/gzip122.13
+and CSS106.95/gzip19.10. The additional four RED viewport regressions are described below.
+
+Reproduce measurements and refresh while the backend is running on8923:
+
+```sh
+node docs/ui-revamp/dp-approaches/frog-jump-measurements.cjs
+node docs/ui-revamp/dp-approaches/refresh-inventory.cjs
+```
+
+### D5 continuation — viewport regression and completed automated browser gates
+
+Inspection of the early phone screenshot showed an empty-looking maximum memoization
+canvas even though38 nodes existed. As a derived tree gains children, its root shifts
+horizontally outside the top-left scroll viewport. The renderer now preserves its root
+anchor through layout growth and container resize, while retaining manual panning,
+vertical scroll and focus. Replacement runs center their own root; own-tree tracers keep
+their original layout. Four geometry/cleanup tests proved RED before the fix.
+
+Final production-browser evidence: **28 completed scenario rows** in
+`frog-jump-chromium-results.json` (10), `frog-jump-firefox-results.json` (10), and
+`frog-jump-zoom-200-results.json` (8), all under `dp-approaches/`. All served
+`index-B8pL5v5E.js` / `index-DkVb_nYT.css`. These repeat Frog Jump tasks, not28 problems.
+Normal matrices cover320×568,390×844,768×1024,1366×768 and1440×900 in both themes and
+engines. Native Chromium zoom uses physical640×1136,780×1688,1366×768 and1440×900;
+CSS viewports are halved (including683×384 short landscape), DPR2 and CSS zoom1.
+
+Each row exercises old canonical links, zero-cost memo hits, preparation without execution,
+native comparison keyboard/focus, independent steps, edited-draft isolation, default/other
+case comparison, Code/Analysis without execution, eleven-element refusal with old run/link,
+maximum143-call recursion and38-call memoization, actual visible roots, expanded20-cell
+memo tables, and shared input-before-step/source restoration. Page-wide overflow and
+uncaught page errors are checked; not every console/network message or manual speech.
+Focus setup is programmatic; subsequent comparison activation/tab/slider actions use
+native keys. The matrices are not fully keyboard-only learner tasks or screen-reader tests.
+Phone/dark, desktop/light and native-zoom captures were inspected.
+
+Reproduce on the unchanged production preview5180 and backend8923, serially:
+
+```sh
+PLAYWRIGHT_MODULE=/path/to/external/playwright node docs/ui-revamp/dp-approaches/frog-jump-journey.cjs
+PLAYWRIGHT_MODULE=/path/to/external/playwright AUDIT_ENGINE=firefox node docs/ui-revamp/dp-approaches/frog-jump-journey.cjs
+PLAYWRIGHT_MODULE=/path/to/external/playwright AUDIT_NATIVE_ZOOM=2 AUDIT_SIZES=640x1136,780x1688,1366x768,1440x900 node docs/ui-revamp/dp-approaches/frog-jump-journey.cjs
+node docs/ui-revamp/dp-approaches/refresh-inventory.cjs
+```
+
+The scripts respect the normal60/minute execution limit. The inventory advances a
+candidate only for its own complete matching-build matrices; missing evidence, wrong
+problem, mixed builds, wrong zoom, duplicate rows and missing visual proof cannot certify another row.
+Canonical contracts and other candidate statuses remain unchanged.
+
+Exclusions: pre-fix smoke/old-bundle rows are retained as historical evidence, not counted
+in28 final rows. A service restart interrupted the first sweep. A premature restart probe
+could not finish a response body; body reads now settle before navigation and failures
+cannot become passing evidence. Firefox cannot reliably return from browser chrome after
+Tab past the document's last control in this headless setup; the reachability probe now
+uses Shift+Tab/Tab within the document, with no production keyboard change.
+
+Publication was subsequently authorized by the owner's merge request; pass PR CI before
+merging. The owner requested a stop
+after this current package; no cleanup/layout/next-algorithm package is started. There is
+one merged three-form pilot plus this locally verified candidate;54 other candidate rows,
+real devices/virtual keyboard, screen-reader/learner acceptance, broad performance, D6/D7
+and P8/P9 remain open. Do not stack the next candidate before this package merges.

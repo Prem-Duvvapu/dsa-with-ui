@@ -1240,3 +1240,108 @@ Publication update — 2026-10-09: the owner explicitly approved commit, push an
 after the local checks above. Package commits are grouped by backend metadata, frontend
 teaching/comparison safety, and reproducible evidence/docs. Publication goes through a
 PR and passing CI, not a direct main commit. D5 remains a separate next package.
+
+Publication result — 2026-10-09: D4 merged as #215 / `2709d8b` after passing PR checks.
+Post-merge CI also passed. The previous local/unpublished descriptions above are historical.
+
+## DP approaches D5 first candidate — Frog Jump, 2026-10-09
+
+Local only on `feat/dp-frog-jump`, cut from the D4 merge `2709d8b`. No commit, push or PR
+is made by this continuation. Frog Jump alone gains genuine recursion and memoization;
+the existing canonical tabulation and its public `canonical` ID are preserved. Its label
+is Tabulation, so existing explicit canonical links remain supported without an alias.
+
+Six review gates (not all complete):
+
+1. Backend: full Maven suite **8,023 tests, 0 failures/errors, unchanged 500 skips**.
+   Nine new tests cover independent forward-path oracles for360 small inputs per form,
+   named cases, every accepted length, strict input refusals, cached zero, actual call IDs,
+   budget retirement, complete displayed Java17 compilation, API wiring and source anchors.
+   All nine failed/errored before alternatives existed (one failure/eight errors).
+   Canonical source/tracer/spec/goldens are unchanged; no fixture regeneration is needed.
+2. Frontend: clean npm install, **83 files / 795 tests**, production build JS382.31kB /
+   gzip121.90; CSS106.95kB / gzip19.10. Seven added frontend tests cover array bounds
+   (including zero), legacy links, an eleven-element rejected draft, shared memoized input
+   before step restoration, full source and isolated comparison. Real complete API
+   responses generate the fixtures; custom successful traces are not invented by mocks.
+   Two bounds tests proved RED before the presentation fix; the absent-bounds positive
+   and integration seam checks are not claimed as independently proven RED regressions.
+3. UI/UX: comparison copy now shows declared array length and element-value bounds rather
+   than hiding them behind a generic constraints message. The existing one-canvas shell
+   and approach-session controls are reused. **Frog Jump real-browser desktop/phone,
+   both-theme, keyboard, native-zoom and screenshot gates remain pending.** Previous
+   Climbing Stairs browser evidence does not certify this new input/trace combination.
+4. Product:19 complete real-API measurement rows /38 paced execution requests prove
+   full/delta agreement through the real frontend decoder, independent answers, recorded
+   calls/events/depth and derived tree completeness. Recursion length10 has143 calls /
+   573 events /313,271 full JSON bytes; memoization length20 has38 calls /154 events /
+   217,782 bytes, both within unchanged budgets. Length11 recursion would exceed the
+   renderer's220 nodes (232 calls), so its separate maximum is10. Equal-height length7
+   memoization records answer0 with5 cache hits; null remains unknown. These are measured
+   shapes and counters, not latency or exhaustive worst-byte/performance certification.
+5. Architecture: no new dependency, endpoint, session owner, primary canvas or catalogue
+   problem. The immutable provider owns the alternative source/spec/teaching; default
+   execution still uses the unchanged registered tracer. Live inventory stays431/431,
+   no duplicates/orphans. All56 canonical digests/specs/complexities remain unchanged;
+   only Frog Jump's alternative status moves to backend-pilot/UI-pending. Generic safety
+   wording no longer cites Climbing Stairs measurements as if they certify every problem.
+6. QA: full suites/build pass; API fixtures are regenerated reproducibly, not hand-authored
+   answer snapshots. An initial equivalence probe normalized explicit nulls on only one
+   side and failed; the corrected probe normalizes absent/null empty fields on both sides
+   while retaining all actual state values/frames. Its19 completed rows are the evidence.
+   One frontend assertion incorrectly expected no POST for an explicit canonical link;
+   the session intentionally restores that executable with `{}`. The corrected test
+   asserts the exact canonical request and no custom shared input; production restoration
+   logic was not changed. No existing behavioral assertion was weakened.
+
+Evidence: `dp-approaches/frog-jump-measurements.cjs` / `.json`; detailed bounds and
+remaining pre-publication gates: `DP_SOLUTION_APPROACHES_PLAN.md` D5 first candidate.
+Both full suites ran after stopping our backend server to avoid Maven target contention.
+The final build remains `index-QrVyrIy2.js` / `index-DkVb_nYT.css`. npm's nine inherited
+advisories remain outside this package; dependency manifests/lockfile are unchanged.
+One merged UI-verified three-form pilot and one local candidate are not a family rollout.
+Frog Jump UI verification/publication,54 other candidates, D6/D7 and original P8/P9 remain
+open. Do not start the next candidate until this package's gates pass and it merges.
+
+## DP D5 continuation — docs, viewport and browser gates, 2026-10-09
+
+The preceding D5 entry is an initial snapshot, not the final verification result.
+Current package: `feat/dp-frog-jump`, based on `2709d8b`. The owner requested a stop
+after the current changes, then explicitly requested merging the required pending PRs.
+No PR was open; publication of this existing package is authorized, gated by PR CI.
+No next candidate, cleanup package or other development is started.
+
+Documentation and the feature ledger now describe the live workspace, renderer registry
+and evidence. Historical measurements remain dated; P7 acceptance, P8/P9, human/device
+checks and the known Print LIS source-helper gap are not falsely marked complete.
+
+Browser inspection found a derived recursion tree whose root moved outside the visible
+stage as the tree widened. Four viewport tests proved RED before the fix. Stage-owned
+anchoring compensates layout movement while preserving manual pan, vertical scroll and
+focus; new runs center their own root. Resize listeners/observers clean up. Tracers with
+their own tree keep their existing layout; no extra canvas or session owner was added.
+
+Final frontend: **83 files / 799 passing tests**. Production build: JS383.15kB/gzip122.13,
+CSS106.95kB/gzip19.10; served assets `index-B8pL5v5E.js` / `index-DkVb_nYT.css`.
+Backend code is unchanged since this package's passing full run: **8,023 tests,
+0 failures/errors, unchanged 500 skips**. It was not rerun for the frontend-only follow-up.
+
+Final real-backend production-browser matrices contain **28 passing scenario rows**:
+Chromium10, Firefox10 and native Chromium200%8, both themes, matching final assets.
+They cover actual maximum trees/root visibility, local scrolling, comparison isolation
+and keyboard/focus, rejected drafts/old links, and input-before-step restoration.
+Phone/dark and desktop/light screenshots were inspected. Sizes, scenarios, commands
+and limitations are recorded in `DP_SOLUTION_APPROACHES_PLAN.md`.
+
+Three Node evidence-tool tests pass. Eight pure validator checks accept complete matrices
+and reject missing/mismatched evidence; synthetic metadata is not algorithm evidence.
+Inventory refresh preserves all56 canonical contracts and other candidate statuses;
+only Frog Jump's alternative status advances to locally UI-verified. Live stats remain
+431/431 traced, zero duplicates/orphans. No dependency or golden changes.
+
+Early smoke/viewport captures are separate, not part of28 final rows. Interrupted server
+restarts, old-bundle probes and premature body-decode failures are excluded. Firefox's
+headless browser-chrome Tab boundary was replaced with within-document ShiftTab/Tab,
+not a production keyboard change. Existing behavioral assertions were not weakened.
+These are automated scenario checks, not screen-reader, physical-device, latency or
+learner-study certification.54 other DP candidates and D6/D7 remain open.

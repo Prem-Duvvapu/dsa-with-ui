@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-09T18:26:03.716Z",
+  "generated": "2026-10-09T21:09:16.096Z",
   "stats": {
     "catalogued": 431,
     "traced": 431,
@@ -401,7 +401,7 @@
         "dataStructureSpace": "DP table"
       },
       "alternativeStatus": "backend-and-UI-teaching-comparison-pilot-verified; family rollout pending",
-      "alternativeSafetyBounds": "Published pilot bounds below; measured Climbing Stairs traces are in d2-results.json. Not a rollout-wide safety claim.",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
       "publishedAlternativeInputSpecs": [
         {
           "id": "recursion",
@@ -963,8 +963,64 @@
         "auxiliarySpace": "Auxiliary Space: O(N)",
         "dataStructureSpace": "DP table"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 10,
+                  "maxValue": 999,
+                  "minLength": 2,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  10,
+                  50,
+                  40,
+                  30
+                ],
+                "help": "Repeated energy states are recomputed. Up to 10 heights keeps every call visible.",
+                "label": "Stair heights",
+                "name": "heights",
+                "type": "INT_ARRAY"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 20,
+                  "maxValue": 999,
+                  "minLength": 2,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  10,
+                  50,
+                  40,
+                  30
+                ],
+                "help": "The recursive minimum-energy states are computed once; a cached zero is still known.",
+                "label": "Stair heights",
+                "name": "heights",
+                "type": "INT_ARRAY"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "frog-jump-k-distance",

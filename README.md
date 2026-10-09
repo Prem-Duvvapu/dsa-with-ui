@@ -11,7 +11,16 @@ A full-stack visualizer for data structures and algorithms. Pick a problem, give
 own input, and watch the algorithm execute step by step with the matching line of Java
 highlighted as it runs.
 
-The library and the new Playground, Code walkthrough and Analysis workspace are implemented. The [UI revamp handoff](docs/ui-revamp/IMPLEMENTATION_HANDOFF.md) defines the remaining work and acceptance criteria; the [execution tracker](docs/ui-revamp/REVAMP_TRACKER.md) and [implementation log](docs/ui-revamp/IMPLEMENTATION_LOG.md) record progress and verification. P5–P9 remain: switching/focus/guidance, history/comparison/completion, full renderer/input coverage, accessibility/usability and release cleanup.
+The library, Playground, Code walkthrough and Analysis workspace are implemented, as are
+the switcher, Focus mode, guidance, execution history and comparisons. The remaining UI
+work is final renderer/device coverage (P7), accessibility/performance/learner acceptance
+(P8), and cleanup/release (P9). A real screen-reader pass of switching/guidance remains open.
+The [UI revamp handoff](docs/ui-revamp/IMPLEMENTATION_HANDOFF.md) defines acceptance;
+the [execution tracker](docs/ui-revamp/REVAMP_TRACKER.md) and
+[implementation log](docs/ui-revamp/IMPLEMENTATION_LOG.md) distinguish implementation,
+verification and publication. The separate [DP approaches plan](docs/ui-revamp/DP_SOLUTION_APPROACHES_PLAN.md)
+records the merged Climbing Stairs pilot and the ongoing per-problem rollout; it is not
+a claim that all DP problems offer three approaches.
 
 **Status: 431 problems catalogued, all 431 with real execution traces.** The API still
 reports catalogued, traced, and untraced counts independently — see
@@ -47,7 +56,7 @@ prevent learning or navigation. Live visitor totals require dashboard verificati
 | Tier | Technology | Notes |
 | :--- | :--- | :--- |
 | Backend | Spring Boot 3.2.3, Java 17 | `http://localhost:8923` |
-| Frontend | React 18 + Vite | `dsType` registry routing 17 problem types to 15 canvases |
+| Frontend | React 18 + Vite | `dsType` registry routing 17 problem types to 16 renderer components/variants |
 | Testing | JUnit 5 + Vitest | Contract, golden-trace, accessibility, and design-token guards |
 | Deployment | Docker Compose | One command for both tiers |
 
@@ -72,7 +81,7 @@ Two details matter:
 
 **There is no fallback.** `TracerRegistry` indexes tracers by id and returns nothing for
 an unregistered one, so the API answers 404 or 501 rather than substituting a different
-algorithm's animation. Canvas routing is a checked 16-value `dsType` registry; an unknown
+algorithm's animation. Canvas routing is a checked 17-value `dsType` registry; an unknown
 type renders “no visualization” rather than silently becoming an array.
 
 **Lines are named, not numbered.** A tracer writes `emit.at("loop.compare")`, and the

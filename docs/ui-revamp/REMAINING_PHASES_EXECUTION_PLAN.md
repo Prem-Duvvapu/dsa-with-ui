@@ -2,6 +2,32 @@
 
 Prepared: 2026-10-05. Inspected main: `dad2640`, merged PR #191.
 
+### Current execution order — owner directed, 2026-10-09
+
+The original sequence below is historical planning. P5/P6 implementations have merged;
+P7 acceptance, P8 and P9 remain open. The owner requested the following easy-to-hard
+order, with medium packages merged one at a time:
+
+1. Reconcile documentation/trackers against live code and verified evidence (done locally).
+2. Complete the local Frog Jump production-browser gates (done:28 final rows; see DP plan).
+3. Request publishing approval; commit/push/PR/CI/merge that package before new work.
+4. Remove proven unreachable code, retaining useful live-workspace regression guards.
+5. Finish responsive/layout polish, including the documented desktop stage exception.
+6. Expand simpler DP recurrences, then grid/path problems, in individually verified packages.
+7. Close second-engine/device/screen-reader gaps where available; record unavailable human checks.
+8. Expand medium DP families (strings, sum/knapsack/coins), with independent references.
+9. Benchmark and fix demonstrated long-trace performance friction.
+10. Expand harder multi-state, interval and reconstruction-heavy DP families.
+11. Perform genuine learner/owner task review, then retest observed improvements.
+12. Reconcile all ledgers and complete final release/deployment/rollback checks.
+
+The owner requested a stop after the current changes. Steps1/2 are verified locally.
+The subsequent owner request authorized step3 publication; PR CI and merge are pending.
+No step4 or later package has started.
+Frog Jump is currently local, based on #215 / `2709d8b`;54 other DP candidate rows are
+unimplemented. Applicability must be reviewed rather than forcing three options on every
+problem. Completing an early cleanup or pilot check does not close P8/P9 or DP D6/D7.
+
 ## 1. Objective and source of truth
 
 Complete every remaining UI revamp package and close the acceptance gaps in already
