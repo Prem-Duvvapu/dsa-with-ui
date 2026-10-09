@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useLayoutEffect, useRef } from 'react';
 import styles from './RecursionTreeCanvas.module.css';
 import { Layers, ArrowDown } from 'lucide-react';
 
@@ -36,11 +36,41 @@ function nodeLabel(frame) {
  * A stack shows how deep you are; it cannot show that you tried a branch, abandoned it, and
  * took the next one - which is the whole of backtracking.
  */
+function useRecursionViewport(steps, currentStepIndex, stageRef, hasOwnTree) {
+  const anchor = useRef(null);
+  const preserveViewport = useCallback(() => {
+    const stage = stageRef.current, root = stage?.querySelector('[data-recursion-root]');
+    if (!stage || !root) { anchor.current = null; return; }
+    const viewport = stage.getBoundingClientRect(), box = root.getBoundingClientRect();
+    if (viewport.width <= 0) return;
+    const center = box.left - viewport.left + stage.scrollLeft + box.width / 2;
+    const prior = anchor.current;
+    // The parent recenters over newly discovered children. Compensate that layout
+    // movement, not the learner's panning. Never change vertical scroll or focus.
+    stage.scrollLeft = Math.max(0, prior?.steps === steps
+      ? stage.scrollLeft + center - prior.center - (viewport.width - prior.width) / 2
+      : center - viewport.width / 2);
+    anchor.current = { steps, center, width: viewport.width };
+  }, [steps, stageRef]);
+  useLayoutEffect(preserveViewport, [preserveViewport, currentStepIndex]);
+  useLayoutEffect(() => {
+    const stage = stageRef.current;
+    if (!stage || hasOwnTree) return undefined;
+    if (typeof ResizeObserver !== 'undefined') {
+      const observer = new ResizeObserver(preserveViewport);
+      observer.observe(stage);
+      return () => observer.disconnect();
+    }
+    window.addEventListener('resize', preserveViewport);
+    return () => window.removeEventListener('resize', preserveViewport);
+  }, [preserveViewport, stageRef, hasOwnTree]);
+}
+
 function DerivedRecursionTree({ steps, currentStepIndex }) {
   const { nodes, truncated } = buildRecursionTree(steps, currentStepIndex);
+  const { positions, width, depth } = layoutRecursionTree(nodes);
   if (!nodes.length) return null;
 
-  const { positions, width, depth } = layoutRecursionTree(nodes);
   const svgW = Math.max(width * NODE_W + NODE_W, 240);
   const svgH = depth * ROW_H + NODE_H;
   const x = (id) => positions.get(id) * NODE_W + NODE_W / 2;
@@ -61,7 +91,7 @@ function DerivedRecursionTree({ steps, currentStepIndex }) {
           );
         })}
         {nodes.map((n) => (
-          <g key={n.id} data-state={n.state} transform={`translate(${x(n.id) - NODE_W / 2}, ${y(n.depth) - NODE_H / 2})`}>
+          <g key={n.id} data-recursion-root={n.id === 0 ? true : undefined} data-state={n.state} transform={`translate(${x(n.id) - NODE_W / 2}, ${y(n.depth) - NODE_H / 2})`}>
             <rect
               width={NODE_W} height={NODE_H} rx="6"
               className={`${derived.node} ${derived[`node_${n.state}`] || ''}`}
@@ -84,6 +114,7 @@ function DerivedRecursionTree({ steps, currentStepIndex }) {
 }
 
 export default function RecursionTreeCanvas({ problem, currentStep, step, steps, currentStepIndex }) {
+  const stageRef = useRef(null);
   const activeStep = currentStep || step;
   const treeNodes = (activeStep?.treeNodes && activeStep.treeNodes.length > 0)
     ? activeStep.treeNodes
@@ -91,6 +122,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
   const nodeStates = activeStep?.nodeStates || {};
   // Tracers that emit their own tree keep it; the rest have theirs rebuilt from callStack.
   const hasOwnTree = Boolean(activeStep?.treeNodes?.length);
+  useRecursionViewport(steps, currentStepIndex, stageRef, hasOwnTree);
   const arrayState = activeStep?.arrayState || problem?.defaultArray || [];
 
   const getNodeColor = (nodeId, explicitState) => {
@@ -120,7 +152,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
   return (
     <div className={styles.wrap}>
       {/* Main SVG Recursion Tree Canvas */}
-      <div className={styles.stage} data-testid="recursion-tree-stage" role="region" aria-label="Recursive calls" tabIndex={0}
+      <div ref={stageRef} className={styles.stage} data-testid="recursion-tree-stage" role="region" aria-label="Recursive calls" tabIndex={0}
         onKeyDown={event => { if (event.target === event.currentTarget && SCROLL_KEYS.has(event.key)) event.stopPropagation(); }}>
         {!hasOwnTree ? (
           <DerivedRecursionTree steps={steps} currentStepIndex={currentStepIndex} />

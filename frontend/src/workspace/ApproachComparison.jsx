@@ -8,7 +8,11 @@ const COUNTERS = [['calls', 'Function calls'], ['stateEvaluations', 'State evalu
 function limits(option) {
   return (option.inputSpec?.fields ?? []).map(field => {
     const c = field.constraints ?? {};
-    return `${field.label ?? field.name} ${c.min != null && c.max != null ? `${c.min}–${c.max}` : 'see input constraints'}`;
+    const bounds = [];
+    if (c.min != null && c.max != null) bounds.push(`${c.min}–${c.max}`);
+    if (c.minLength != null && c.maxLength != null) bounds.push(`length ${c.minLength}–${c.maxLength}`);
+    if (c.minValue != null && c.maxValue != null) bounds.push(`values ${c.minValue}–${c.maxValue}`);
+    return `${field.label ?? field.name} ${bounds.length ? bounds.join(', ') : 'see input constraints'}`;
   }).join('; ');
 }
 function Side({ option, result }) {

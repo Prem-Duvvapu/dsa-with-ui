@@ -1,0 +1,3281 @@
+{
+  "problem": {
+    "id": "frog-jump",
+    "title": "Frog Jump (Min Energy 1D DP)",
+    "category": "Dynamic Programming",
+    "striverSheetSection": "DP - Basic DP",
+    "difficulty": "Easy",
+    "dsType": "DpTable",
+    "traced": true,
+    "inputSpec": {
+      "fields": [
+        {
+          "name": "heights",
+          "label": "Stair heights",
+          "type": "INT_ARRAY",
+          "defaultValue": [
+            10,
+            50,
+            40,
+            30
+          ],
+          "help": "Energy for a jump is the height difference, so a tall stair next door can cost more than a short one two away.",
+          "constraints": {
+            "maxValue": 999,
+            "maxLength": 20,
+            "minLength": 2,
+            "minValue": 0
+          }
+        }
+      ],
+      "maxSteps": 5000,
+      "maxBytes": 2000000
+    },
+    "description": "Find min energy for frog to reach stair N-1 jumping 1 or 2 stairs.",
+    "constraints": [
+      "1 ≤ n ≤ 10⁴",
+      "0 ≤ heights[i] ≤ 10⁴"
+    ],
+    "statement": [
+      "A frog stands on stair 0 of a staircase with n stairs, numbered 0 to n − 1. The array heights gives the height of each stair.",
+      "From stair i the frog may jump to stair i + 1 or stair i + 2, as long as that stair exists. A jump from stair i to stair j costs |heights[i] − heights[j]| energy.",
+      "Return the minimum total energy the frog needs to reach stair n − 1."
+    ],
+    "examples": [
+      {
+        "input": {
+          "heights": [
+            10,
+            50,
+            40,
+            30
+          ]
+        },
+        "output": "40",
+        "explanation": "Jump 0 → 2 for |40 − 10| = 30, then 2 → 3 for |30 − 40| = 10, a total of 40. Any route through stair 1 already costs 40 on its first jump and more after it."
+      },
+      {
+        "input": {
+          "heights": [
+            30,
+            10,
+            60,
+            10,
+            20
+          ]
+        },
+        "output": "30",
+        "explanation": "Jump 0 → 1 for 20, 1 → 3 for 0 (both stairs have height 10), and 3 → 4 for 10, a total of 30."
+      }
+    ],
+    "sources": [
+      {
+        "label": "takeUforward",
+        "url": "https://takeuforward.org/practice/dsa/frog-jump"
+      },
+      {
+        "label": "GeeksforGeeks",
+        "url": "https://www.geeksforgeeks.org/problems/geek-jump/1"
+      }
+    ],
+    "complexity": {
+      "timeComplexity": "O(N)",
+      "timeExplanation": "Decides each stair once by comparing its two reachable predecessors.",
+      "timeWhy": "1D tabulation",
+      "spaceComplexity": "O(N)",
+      "spaceExplanation": "Keeps the whole energy table so both candidate transitions stay visible.",
+      "spaceWhy": "DP table",
+      "auxiliarySpace": "Auxiliary Space: O(N)",
+      "dataStructureSpace": "DP table"
+    },
+    "defaultArray": [
+      {
+        "index": 0,
+        "value": 10,
+        "state": "default"
+      },
+      {
+        "index": 1,
+        "value": 50,
+        "state": "default"
+      },
+      {
+        "index": 2,
+        "value": 40,
+        "state": "default"
+      },
+      {
+        "index": 3,
+        "value": 30,
+        "state": "default"
+      }
+    ],
+    "defaultGrid": null,
+    "defaultGraphNodes": null,
+    "defaultGraphEdges": null,
+    "defaultTreeNodes": null,
+    "defaultList": null,
+    "defaultTrie": null,
+    "javaCode": "public int frogJump(int n, int[] heights) {\n    int[] energy = new int[n];\n    energy[0] = 0;\n    for (int i = 1; i < n; i++) {\n        int jumpOne = energy[i - 1] + Math.abs(heights[i] - heights[i - 1]);\n        int jumpTwo = i > 1\n                ? energy[i - 2] + Math.abs(heights[i] - heights[i - 2])\n                : Integer.MAX_VALUE;\n        energy[i] = Math.min(jumpOne, jumpTwo);\n    }\n    return energy[n - 1];\n}",
+    "alternateInput": {
+      "heights": [
+        30,
+        10,
+        60,
+        10,
+        20
+      ]
+    },
+    "approachId": "canonical",
+    "teaching": {
+      "state": "energy(i): minimum total energy to reach stair i",
+      "baseCases": "energy(0) = 0; stair 1 has only predecessor 0, costing |h[1]-h[0]|",
+      "recurrence": "energy(i) = min(energy(i-1) + |h[i]-h[i-1]|, energy(i-2) + |h[i]-h[i-2]|) for i >= 2",
+      "evaluationOrder": "Start with energy[0]=0. Fill indices 1 through n-1 from already-computed predecessors.",
+      "cacheKey": null,
+      "eventNotes": {},
+      "anchorNotes": {
+        "evaluate": "Compare the reachable predecessor totals; a two-step jump is absent at stair 1.",
+        "base": "Only stair 0 is initialized as known zero; later energy cells remain unknown.",
+        "done": "All energy dependencies were evaluated in increasing index order; read the final cost."
+      }
+    },
+    "defaultApproachId": "canonical",
+    "approaches": [
+      {
+        "id": "recursion",
+        "label": "Recursion",
+        "summary": "Evaluate both legal predecessor costs recursively, including repeated states.",
+        "isDefault": false,
+        "dsType": "RecursionTree",
+        "inputSpec": {
+          "fields": [
+            {
+              "name": "heights",
+              "label": "Stair heights",
+              "type": "INT_ARRAY",
+              "defaultValue": [
+                10,
+                50,
+                40,
+                30
+              ],
+              "help": "Repeated energy states are recomputed. Up to 10 heights keeps every call visible.",
+              "constraints": {
+                "maxValue": 999,
+                "maxLength": 10,
+                "minLength": 2,
+                "minValue": 0
+              }
+            }
+          ],
+          "maxSteps": 5000,
+          "maxBytes": 2000000
+        },
+        "alternateInput": {
+          "heights": [
+            30,
+            10,
+            60,
+            10,
+            20
+          ]
+        },
+        "complexity": {
+          "timeComplexity": "O(2^N)",
+          "timeExplanation": "Two predecessor branches repeatedly evaluate the same indices.",
+          "timeWhy": "Branching recursion",
+          "spaceComplexity": "O(N)",
+          "spaceExplanation": "At most N recursive frames, without a result cache.",
+          "spaceWhy": "Recursive call stack",
+          "auxiliarySpace": "O(N)",
+          "dataStructureSpace": "No cached energy values"
+        },
+        "teaching": {
+          "state": "energy(i): minimum total energy to reach stair i",
+          "baseCases": "energy(0) = 0; stair 1 has only predecessor 0, costing |h[1]-h[0]|",
+          "recurrence": "energy(i) = min(energy(i-1) + |h[i]-h[i-1]|, energy(i-2) + |h[i]-h[i-2]|) for i >= 2",
+          "evaluationOrder": "Visit predecessor i-1 before i-2 (only when i>1); compare total costs, not just height gaps. Repeated indices remain distinct calls.",
+          "cacheKey": null,
+          "eventNotes": {
+            "base": "The start costs zero; no predecessor is called.",
+            "combine": "Choose the smaller reachable total cost; stair 1 has only one candidate."
+          },
+          "anchorNotes": {}
+        }
+      },
+      {
+        "id": "memoization",
+        "label": "Memoization",
+        "summary": "Use the same recursive minimum-energy recurrence, reusing known costs including zero.",
+        "isDefault": false,
+        "dsType": "RecursionTree",
+        "inputSpec": {
+          "fields": [
+            {
+              "name": "heights",
+              "label": "Stair heights",
+              "type": "INT_ARRAY",
+              "defaultValue": [
+                10,
+                50,
+                40,
+                30
+              ],
+              "help": "The recursive minimum-energy states are computed once; a cached zero is still known.",
+              "constraints": {
+                "maxValue": 999,
+                "maxLength": 20,
+                "minLength": 2,
+                "minValue": 0
+              }
+            }
+          ],
+          "maxSteps": 5000,
+          "maxBytes": 2000000
+        },
+        "alternateInput": {
+          "heights": [
+            30,
+            10,
+            60,
+            10,
+            20
+          ]
+        },
+        "complexity": {
+          "timeComplexity": "O(N)",
+          "timeExplanation": "Each of N energy states is computed once from at most two predecessors.",
+          "timeWhy": "Cached recursion",
+          "spaceComplexity": "O(N)",
+          "spaceExplanation": "N memo entries plus at most N active recursive frames.",
+          "spaceWhy": "Memo plus recursive stack",
+          "auxiliarySpace": "O(N)",
+          "dataStructureSpace": "Memo energy array"
+        },
+        "teaching": {
+          "state": "energy(i): minimum total energy to reach stair i",
+          "baseCases": "energy(0) = 0; stair 1 has only predecessor 0, costing |h[1]-h[0]|",
+          "recurrence": "energy(i) = min(energy(i-1) + |h[i]-h[i-1]|, energy(i-2) + |h[i]-h[i-2]|) for i >= 2",
+          "evaluationOrder": "Visit predecessor i-1 before i-2 (only when i>1); compare total costs, not just height gaps. Check memo before expanding; store a computed minimum for later calls.",
+          "cacheKey": "i for this fixed heights input; unknown is null, and zero is a valid cached cost",
+          "eventNotes": {
+            "base": "The start costs zero. Store this known zero in memo.",
+            "cache-hit": "Reuse the recorded minimum energy, including zero; do not expand children.",
+            "store": "Every reachable candidate cost has returned; cache the minimum for this index."
+          },
+          "anchorNotes": {}
+        }
+      },
+      {
+        "id": "canonical",
+        "label": "Tabulation",
+        "summary": "Fill the unchanged energy table from smaller stair indices.",
+        "isDefault": true,
+        "dsType": "DpTable",
+        "inputSpec": {
+          "fields": [
+            {
+              "name": "heights",
+              "label": "Stair heights",
+              "type": "INT_ARRAY",
+              "defaultValue": [
+                10,
+                50,
+                40,
+                30
+              ],
+              "help": "Energy for a jump is the height difference, so a tall stair next door can cost more than a short one two away.",
+              "constraints": {
+                "maxValue": 999,
+                "maxLength": 20,
+                "minLength": 2,
+                "minValue": 0
+              }
+            }
+          ],
+          "maxSteps": 5000,
+          "maxBytes": 2000000
+        },
+        "alternateInput": {
+          "heights": [
+            30,
+            10,
+            60,
+            10,
+            20
+          ]
+        },
+        "complexity": {
+          "timeComplexity": "O(N)",
+          "timeExplanation": "Decides each stair once by comparing its two reachable predecessors.",
+          "timeWhy": "1D tabulation",
+          "spaceComplexity": "O(N)",
+          "spaceExplanation": "Keeps the whole energy table so both candidate transitions stay visible.",
+          "spaceWhy": "DP table",
+          "auxiliarySpace": "Auxiliary Space: O(N)",
+          "dataStructureSpace": "DP table"
+        },
+        "teaching": {
+          "state": "energy(i): minimum total energy to reach stair i",
+          "baseCases": "energy(0) = 0; stair 1 has only predecessor 0, costing |h[1]-h[0]|",
+          "recurrence": "energy(i) = min(energy(i-1) + |h[i]-h[i-1]|, energy(i-2) + |h[i]-h[i-2]|) for i >= 2",
+          "evaluationOrder": "Start with energy[0]=0. Fill indices 1 through n-1 from already-computed predecessors.",
+          "cacheKey": null,
+          "eventNotes": {},
+          "anchorNotes": {
+            "evaluate": "Compare the reachable predecessor totals; a two-step jump is absent at stair 1.",
+            "base": "Only stair 0 is initialized as known zero; later energy cells remain unknown.",
+            "done": "All energy dependencies were evaluated in increasing index order; read the final cost."
+          }
+        }
+      }
+    ]
+  },
+  "runs": {
+    "recursion": {
+      "problemId": "frog-jump",
+      "encoding": "full",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "activeLine": 3,
+          "description": "Find the minimum energy to reach stair 3. Repeated states will not be cached.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "init",
+            "state": "3",
+            "calls": "0",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 2,
+          "activeLine": 7,
+          "description": "Enter call 1: energy(3). Stair height is 30.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "3",
+            "calls": "1",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "1"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 3,
+          "activeLine": 10,
+          "description": "Arrive from stair 2: first compute its energy, then add height gap 10.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-one",
+            "state": "3",
+            "calls": "1",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "1",
+            "from": "2",
+            "heightGap": "10"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 4,
+          "activeLine": 7,
+          "description": "Enter call 2: energy(2). Stair height is 40.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "2",
+            "calls": "2",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "2"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 5,
+          "activeLine": 10,
+          "description": "Arrive from stair 1: first compute its energy, then add height gap 10.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-one",
+            "state": "2",
+            "calls": "2",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "2",
+            "from": "1",
+            "heightGap": "10"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 6,
+          "activeLine": 7,
+          "description": "Enter call 3: energy(1). Stair height is 50.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "1",
+            "calls": "3",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "3"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 7,
+          "activeLine": 10,
+          "description": "Arrive from stair 0: first compute its energy, then add height gap 40.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-one",
+            "state": "1",
+            "calls": "3",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "3",
+            "from": "0",
+            "heightGap": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 8,
+          "activeLine": 7,
+          "description": "Enter call 4: energy(0). Stair height is 10.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3",
+            "energy(0) #4"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "0",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "4"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 9,
+          "activeLine": 8,
+          "description": "Starting on stair 0 costs zero energy; no jump has been taken.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3",
+            "energy(0) #4"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "base",
+            "state": "0",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "1",
+            "computedStates": "1",
+            "callId": "4",
+            "value": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 10,
+          "activeLine": 8,
+          "description": "Call 4 returned minimum energy 0. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "0",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "1",
+            "computedStates": "1",
+            "callId": "4",
+            "value": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 11,
+          "activeLine": 15,
+          "description": "Stair 1 has only one predecessor: total energy 40. This call does not cache its result.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "combine",
+            "state": "1",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "2",
+            "computedStates": "2",
+            "callId": "3",
+            "value": "40",
+            "jumpOne": "40",
+            "jumpTwo": "not reachable"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 12,
+          "activeLine": 15,
+          "description": "Call 3 returned minimum energy 40. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "1",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "2",
+            "computedStates": "2",
+            "callId": "3",
+            "value": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 13,
+          "activeLine": 12,
+          "description": "Or arrive from stair 0: compute its energy, then add height gap 30.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-two",
+            "state": "2",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "2",
+            "computedStates": "2",
+            "callId": "2",
+            "from": "0",
+            "heightGap": "30"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 14,
+          "activeLine": 7,
+          "description": "Enter call 5: energy(0). Stair height is 10.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(0) #5"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "0",
+            "calls": "5",
+            "cacheHits": "0",
+            "stateEvaluations": "2",
+            "computedStates": "2",
+            "callId": "5"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 15,
+          "activeLine": 8,
+          "description": "Starting on stair 0 costs zero energy; no jump has been taken.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(0) #5"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "base",
+            "state": "0",
+            "calls": "5",
+            "cacheHits": "0",
+            "stateEvaluations": "3",
+            "computedStates": "2",
+            "callId": "5",
+            "value": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 16,
+          "activeLine": 8,
+          "description": "Call 5 returned minimum energy 0. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "0",
+            "calls": "5",
+            "cacheHits": "0",
+            "stateEvaluations": "3",
+            "computedStates": "2",
+            "callId": "5",
+            "value": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 17,
+          "activeLine": 15,
+          "description": "One-step total 50, two-step total 30; choose minimum 30. This call does not cache its result.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "combine",
+            "state": "2",
+            "calls": "5",
+            "cacheHits": "0",
+            "stateEvaluations": "4",
+            "computedStates": "3",
+            "callId": "2",
+            "value": "30",
+            "jumpOne": "50",
+            "jumpTwo": "30"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 18,
+          "activeLine": 15,
+          "description": "Call 2 returned minimum energy 30. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "2",
+            "calls": "5",
+            "cacheHits": "0",
+            "stateEvaluations": "4",
+            "computedStates": "3",
+            "callId": "2",
+            "value": "30"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 19,
+          "activeLine": 12,
+          "description": "Or arrive from stair 1: compute its energy, then add height gap 20.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-two",
+            "state": "3",
+            "calls": "5",
+            "cacheHits": "0",
+            "stateEvaluations": "4",
+            "computedStates": "3",
+            "callId": "1",
+            "from": "1",
+            "heightGap": "20"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 20,
+          "activeLine": 7,
+          "description": "Enter call 6: energy(1). Stair height is 50.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(1) #6"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "1",
+            "calls": "6",
+            "cacheHits": "0",
+            "stateEvaluations": "4",
+            "computedStates": "3",
+            "callId": "6"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 21,
+          "activeLine": 10,
+          "description": "Arrive from stair 0: first compute its energy, then add height gap 40.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(1) #6"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-one",
+            "state": "1",
+            "calls": "6",
+            "cacheHits": "0",
+            "stateEvaluations": "4",
+            "computedStates": "3",
+            "callId": "6",
+            "from": "0",
+            "heightGap": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 22,
+          "activeLine": 7,
+          "description": "Enter call 7: energy(0). Stair height is 10.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(1) #6",
+            "energy(0) #7"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "0",
+            "calls": "7",
+            "cacheHits": "0",
+            "stateEvaluations": "4",
+            "computedStates": "3",
+            "callId": "7"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 23,
+          "activeLine": 8,
+          "description": "Starting on stair 0 costs zero energy; no jump has been taken.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(1) #6",
+            "energy(0) #7"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "base",
+            "state": "0",
+            "calls": "7",
+            "cacheHits": "0",
+            "stateEvaluations": "5",
+            "computedStates": "3",
+            "callId": "7",
+            "value": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 24,
+          "activeLine": 8,
+          "description": "Call 7 returned minimum energy 0. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(1) #6"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "0",
+            "calls": "7",
+            "cacheHits": "0",
+            "stateEvaluations": "5",
+            "computedStates": "3",
+            "callId": "7",
+            "value": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 25,
+          "activeLine": 15,
+          "description": "Stair 1 has only one predecessor: total energy 40. This call does not cache its result.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(1) #6"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "combine",
+            "state": "1",
+            "calls": "7",
+            "cacheHits": "0",
+            "stateEvaluations": "6",
+            "computedStates": "3",
+            "callId": "6",
+            "value": "40",
+            "jumpOne": "40",
+            "jumpTwo": "not reachable"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 26,
+          "activeLine": 15,
+          "description": "Call 6 returned minimum energy 40. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "1",
+            "calls": "7",
+            "cacheHits": "0",
+            "stateEvaluations": "6",
+            "computedStates": "3",
+            "callId": "6",
+            "value": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 27,
+          "activeLine": 15,
+          "description": "One-step total 40, two-step total 60; choose minimum 40. This call does not cache its result.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "combine",
+            "state": "3",
+            "calls": "7",
+            "cacheHits": "0",
+            "stateEvaluations": "7",
+            "computedStates": "4",
+            "callId": "1",
+            "value": "40",
+            "jumpOne": "40",
+            "jumpTwo": "60"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 28,
+          "activeLine": 15,
+          "description": "Call 1 returned minimum energy 40. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "3",
+            "calls": "7",
+            "cacheHits": "0",
+            "stateEvaluations": "7",
+            "computedStates": "4",
+            "callId": "1",
+            "value": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        },
+        {
+          "stepNumber": 29,
+          "activeLine": 3,
+          "description": "All calls returned. Minimum total energy to reach stair 3 is 40.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "done",
+            "state": "3",
+            "calls": "7",
+            "cacheHits": "0",
+            "stateEvaluations": "7",
+            "computedStates": "4",
+            "value": "40",
+            "answer": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null
+        }
+      ],
+      "stepCount": 29,
+      "truncated": false,
+      "maxSteps": 5000,
+      "maxBytes": 2000000,
+      "code": "public class Solution {\n    public int frogJump(int n, int[] heights) {\n        return energy(n - 1, heights);\n    }\n\n    private int energy(int i, int[] heights) {\n        if (i == 0) {\n            return 0;\n        }\n        int jumpOne = energy(i - 1, heights) + Math.abs(heights[i] - heights[i - 1]);\n        // Stair 1 has no two-step predecessor. The sentinel is never added to a cost.\n        int jumpTwo = i > 1\n                ? energy(i - 2, heights) + Math.abs(heights[i] - heights[i - 2])\n                : Integer.MAX_VALUE;\n        return Math.min(jumpOne, jumpTwo);\n    }\n}\n",
+      "anchors": {
+        "base": 8,
+        "enter": 7,
+        "combine": 15,
+        "start": 3,
+        "two": 12,
+        "one": 10
+      },
+      "resolvedInput": {
+        "heights": [
+          10,
+          50,
+          40,
+          30
+        ]
+      },
+      "approachId": "recursion",
+      "approachLabel": "Recursion",
+      "dsType": "RecursionTree",
+      "complexity": {
+        "timeComplexity": "O(2^N)",
+        "timeExplanation": "Two predecessor branches repeatedly evaluate the same indices.",
+        "timeWhy": "Branching recursion",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "At most N recursive frames, without a result cache.",
+        "spaceWhy": "Recursive call stack",
+        "auxiliarySpace": "O(N)",
+        "dataStructureSpace": "No cached energy values"
+      }
+    },
+    "memoization": {
+      "problemId": "frog-jump",
+      "encoding": "full",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "activeLine": 4,
+          "description": "Allocate memo energy: every entry is unknown, not zero.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "init",
+            "state": "3",
+            "calls": "0",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 2,
+          "activeLine": 5,
+          "description": "Call energy(3, heights, memo).",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "start",
+            "state": "3",
+            "calls": "0",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 3,
+          "activeLine": 9,
+          "description": "Enter call 1: energy(3). Stair height is 30.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "3",
+            "calls": "1",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "1"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 4,
+          "activeLine": 16,
+          "description": "Arrive from stair 2: first compute its energy, then add height gap 10.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-one",
+            "state": "3",
+            "calls": "1",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "1",
+            "from": "2",
+            "heightGap": "10"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 5,
+          "activeLine": 9,
+          "description": "Enter call 2: energy(2). Stair height is 40.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "2",
+            "calls": "2",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "2"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 6,
+          "activeLine": 16,
+          "description": "Arrive from stair 1: first compute its energy, then add height gap 10.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-one",
+            "state": "2",
+            "calls": "2",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "2",
+            "from": "1",
+            "heightGap": "10"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 7,
+          "activeLine": 9,
+          "description": "Enter call 3: energy(1). Stair height is 50.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "1",
+            "calls": "3",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "3"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 8,
+          "activeLine": 16,
+          "description": "Arrive from stair 0: first compute its energy, then add height gap 40.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-one",
+            "state": "1",
+            "calls": "3",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "3",
+            "from": "0",
+            "heightGap": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 9,
+          "activeLine": 9,
+          "description": "Enter call 4: energy(0). Stair height is 10.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3",
+            "energy(0) #4"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "0",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "0",
+            "computedStates": "0",
+            "callId": "4"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 10,
+          "activeLine": 13,
+          "description": "Starting on stair 0 costs zero energy; no jump has been taken.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3",
+            "energy(0) #4"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "base",
+            "state": "0",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "1",
+            "computedStates": "1",
+            "callId": "4",
+            "value": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "probe"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 11,
+          "activeLine": 14,
+          "description": "Call 4 returned minimum energy 0. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "0",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "1",
+            "computedStates": "1",
+            "callId": "4",
+            "value": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 12,
+          "activeLine": 20,
+          "description": "Stair 1 has only one predecessor: total energy 40. Store this cost in memo[1].",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(1) #3"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "store",
+            "state": "1",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "2",
+            "computedStates": "2",
+            "callId": "3",
+            "value": "40",
+            "jumpOne": "40",
+            "jumpTwo": "not reachable"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "probe"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 13,
+          "activeLine": 21,
+          "description": "Call 3 returned minimum energy 40. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "1",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "2",
+            "computedStates": "2",
+            "callId": "3",
+            "value": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 14,
+          "activeLine": 17,
+          "description": "Or arrive from stair 0: compute its energy, then add height gap 30.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-two",
+            "state": "2",
+            "calls": "4",
+            "cacheHits": "0",
+            "stateEvaluations": "2",
+            "computedStates": "2",
+            "callId": "2",
+            "from": "0",
+            "heightGap": "30"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 15,
+          "activeLine": 9,
+          "description": "Enter call 5: energy(0). Stair height is 10.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(0) #5"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "0",
+            "calls": "5",
+            "cacheHits": "0",
+            "stateEvaluations": "2",
+            "computedStates": "2",
+            "callId": "5"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 16,
+          "activeLine": 10,
+          "description": "memo[0] already records energy 0. Return it without expanding children.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2",
+            "energy(0) #5"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "cache-hit",
+            "state": "0",
+            "calls": "5",
+            "cacheHits": "1",
+            "stateEvaluations": "2",
+            "computedStates": "2",
+            "callId": "5",
+            "value": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "read"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 17,
+          "activeLine": 10,
+          "description": "Call 5 returned minimum energy 0. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "0",
+            "calls": "5",
+            "cacheHits": "1",
+            "stateEvaluations": "2",
+            "computedStates": "2",
+            "callId": "5",
+            "value": "0"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 18,
+          "activeLine": 20,
+          "description": "One-step total 50, two-step total 30; choose minimum 30. Store this cost in memo[2].",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(2) #2"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "store",
+            "state": "2",
+            "calls": "5",
+            "cacheHits": "1",
+            "stateEvaluations": "3",
+            "computedStates": "3",
+            "callId": "2",
+            "value": "30",
+            "jumpOne": "50",
+            "jumpTwo": "30"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "probe"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 19,
+          "activeLine": 21,
+          "description": "Call 2 returned minimum energy 30. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "2",
+            "calls": "5",
+            "cacheHits": "1",
+            "stateEvaluations": "3",
+            "computedStates": "3",
+            "callId": "2",
+            "value": "30"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 20,
+          "activeLine": 17,
+          "description": "Or arrive from stair 1: compute its energy, then add height gap 20.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "call-two",
+            "state": "3",
+            "calls": "5",
+            "cacheHits": "1",
+            "stateEvaluations": "3",
+            "computedStates": "3",
+            "callId": "1",
+            "from": "1",
+            "heightGap": "20"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 21,
+          "activeLine": 9,
+          "description": "Enter call 6: energy(1). Stair height is 50.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(1) #6"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "enter",
+            "state": "1",
+            "calls": "6",
+            "cacheHits": "1",
+            "stateEvaluations": "3",
+            "computedStates": "3",
+            "callId": "6"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 22,
+          "activeLine": 10,
+          "description": "memo[1] already records energy 40. Return it without expanding children.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1",
+            "energy(1) #6"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "cache-hit",
+            "state": "1",
+            "calls": "6",
+            "cacheHits": "2",
+            "stateEvaluations": "3",
+            "computedStates": "3",
+            "callId": "6",
+            "value": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "read"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 23,
+          "activeLine": 10,
+          "description": "Call 6 returned minimum energy 40. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "1",
+            "calls": "6",
+            "cacheHits": "2",
+            "stateEvaluations": "3",
+            "computedStates": "3",
+            "callId": "6",
+            "value": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 24,
+          "activeLine": 20,
+          "description": "One-step total 40, two-step total 60; choose minimum 40. Store this cost in memo[3].",
+          "queueOrStackState": null,
+          "callStack": [
+            "energy(3) #1"
+          ],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "store",
+            "state": "3",
+            "calls": "6",
+            "cacheHits": "2",
+            "stateEvaluations": "4",
+            "computedStates": "4",
+            "callId": "1",
+            "value": "40",
+            "jumpOne": "40",
+            "jumpTwo": "60"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "probe"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 25,
+          "activeLine": 21,
+          "description": "Call 1 returned minimum energy 40. Its frame has left the stack.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "return",
+            "state": "3",
+            "calls": "6",
+            "cacheHits": "2",
+            "stateEvaluations": "4",
+            "computedStates": "4",
+            "callId": "1",
+            "value": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 26,
+          "activeLine": 5,
+          "description": "All calls returned. Minimum total energy to reach stair 3 is 40.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "event": "done",
+            "state": "3",
+            "calls": "6",
+            "cacheHits": "2",
+            "stateEvaluations": "4",
+            "computedStates": "4",
+            "value": "40",
+            "answer": "40"
+          },
+          "dsType": "RecursionTree",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "memo energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        }
+      ],
+      "stepCount": 26,
+      "truncated": false,
+      "maxSteps": 5000,
+      "maxBytes": 2000000,
+      "code": "public class Solution {\n    public int frogJump(int n, int[] heights) {\n        // Null means unknown. Zero is a valid minimum energy and must be cached too.\n        Integer[] memo = new Integer[n];\n        return energy(n - 1, heights, memo);\n    }\n\n    private int energy(int i, int[] heights, Integer[] memo) {\n        if (memo[i] != null) {\n            return memo[i];\n        }\n        if (i == 0) {\n            memo[i] = 0;\n            return 0;\n        }\n        int jumpOne = energy(i - 1, heights, memo) + Math.abs(heights[i] - heights[i - 1]);\n        int jumpTwo = i > 1\n                ? energy(i - 2, heights, memo) + Math.abs(heights[i] - heights[i - 2])\n                : Integer.MAX_VALUE;\n        memo[i] = Math.min(jumpOne, jumpTwo);\n        return memo[i];\n    }\n}\n",
+      "anchors": {
+        "init": 4,
+        "hit": 10,
+        "enter": 9,
+        "base-return": 14,
+        "result": 21,
+        "one": 16,
+        "base": 13,
+        "store": 20,
+        "start": 5,
+        "two": 17
+      },
+      "resolvedInput": {
+        "heights": [
+          10,
+          50,
+          40,
+          30
+        ]
+      },
+      "approachId": "memoization",
+      "approachLabel": "Memoization",
+      "dsType": "RecursionTree",
+      "complexity": {
+        "timeComplexity": "O(N)",
+        "timeExplanation": "Each of N energy states is computed once from at most two predecessors.",
+        "timeWhy": "Cached recursion",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "N memo entries plus at most N active recursive frames.",
+        "spaceWhy": "Memo plus recursive stack",
+        "auxiliarySpace": "O(N)",
+        "dataStructureSpace": "Memo energy array"
+      }
+    },
+    "canonical": {
+      "problemId": "frog-jump",
+      "encoding": "full",
+      "steps": [
+        {
+          "stepNumber": 1,
+          "activeLine": 2,
+          "description": "The frog starts on stair 0 and must reach stair 3. energy[i] will hold the cheapest total cost of standing on stair i.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "n": "4"
+          },
+          "dsType": "DpTable",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "height",
+              "min energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "10",
+                  "state": "known"
+                },
+                {
+                  "value": "50",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                }
+              ],
+              [
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 2,
+          "activeLine": 3,
+          "description": "Stair 0 costs nothing — the frog is already there, having jumped nowhere.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "energy[0]": "0"
+          },
+          "dsType": "DpTable",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "height",
+              "min energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "10",
+                  "state": "known"
+                },
+                {
+                  "value": "50",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                }
+              ],
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 3,
+          "activeLine": 9,
+          "description": "Stair 1 has only one predecessor, so there is nothing to compare against: energy[0] + |50 - 10| = 40.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "i": "1",
+            "jumpOne": "40",
+            "jumpTwo": "—",
+            "energy[i]": "40"
+          },
+          "dsType": "DpTable",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "height",
+              "min energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "10",
+                  "state": "known"
+                },
+                {
+                  "value": "50",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                }
+              ],
+              [
+                {
+                  "value": "0",
+                  "state": "read"
+                },
+                {
+                  "value": "40",
+                  "state": "probe"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        },
+        {
+          "stepNumber": 4,
+          "activeLine": 9,
+          "description": "Stair 2: a 1-step from 1 costs 40 + |40 - 50| = 50; a 2-step from 0 costs 0 + |40 - 10| = 30. energy[2] = 30 — the 2-step wins. What decides it is the running total, not the height gap, so skipping a stair can beat hopping to the nearest.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "i": "2",
+            "jumpOne": "50",
+            "jumpTwo": "30",
+            "energy[i]": "30"
+          },
+          "dsType": "DpTable",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "height",
+              "min energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "10",
+                  "state": "known"
+                },
+                {
+                  "value": "50",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                }
+              ],
+              [
+                {
+                  "value": "0",
+                  "state": "read"
+                },
+                {
+                  "value": "40",
+                  "state": "read"
+                },
+                {
+                  "value": "30",
+                  "state": "probe"
+                },
+                {
+                  "value": "·",
+                  "state": "void"
+                }
+              ]
+            ],
+            "formula": "energy[i] = min(energy[i-1] + |h[i]-h[i-1]|, energy[i-2] + |h[i]-h[i-2]|)",
+            "substitution": "energy[2] = min(40 + |40-50|, 0 + |40-10|) = min(50, 30) = 30"
+          }
+        },
+        {
+          "stepNumber": 5,
+          "activeLine": 9,
+          "description": "Stair 3: a 1-step from 2 costs 30 + |30 - 40| = 40; a 2-step from 1 costs 40 + |30 - 50| = 60. energy[3] = 40 — the 1-step wins.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "i": "3",
+            "jumpOne": "40",
+            "jumpTwo": "60",
+            "energy[i]": "40"
+          },
+          "dsType": "DpTable",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "height",
+              "min energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "10",
+                  "state": "known"
+                },
+                {
+                  "value": "50",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                }
+              ],
+              [
+                {
+                  "value": "0",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "read"
+                },
+                {
+                  "value": "30",
+                  "state": "read"
+                },
+                {
+                  "value": "40",
+                  "state": "probe"
+                }
+              ]
+            ],
+            "formula": "energy[i] = min(energy[i-1] + |h[i]-h[i-1]|, energy[i-2] + |h[i]-h[i-2]|)",
+            "substitution": "energy[3] = min(30 + |30-40|, 40 + |30-50|) = min(40, 60) = 40"
+          }
+        },
+        {
+          "stepNumber": 6,
+          "activeLine": 11,
+          "description": "Cheapest way onto stair 3 is 40 energy. Note the frog never needed to know which route it took — only the cost of the best one.",
+          "queueOrStackState": null,
+          "callStack": [],
+          "nodeStates": {},
+          "activeEdges": [],
+          "variables": {
+            "answer": "40"
+          },
+          "dsType": "DpTable",
+          "gridState": null,
+          "arrayState": null,
+          "listState": null,
+          "trieState": null,
+          "treeNodes": null,
+          "dpTable": {
+            "rowLabels": [
+              "height",
+              "min energy"
+            ],
+            "colLabels": [
+              "0",
+              "1",
+              "2",
+              "3"
+            ],
+            "cells": [
+              [
+                {
+                  "value": "10",
+                  "state": "known"
+                },
+                {
+                  "value": "50",
+                  "state": "known"
+                },
+                {
+                  "value": "40",
+                  "state": "known"
+                },
+                {
+                  "value": "30",
+                  "state": "known"
+                }
+              ],
+              [
+                {
+                  "value": "0",
+                  "state": "resolved"
+                },
+                {
+                  "value": "40",
+                  "state": "resolved"
+                },
+                {
+                  "value": "30",
+                  "state": "resolved"
+                },
+                {
+                  "value": "40",
+                  "state": "resolved"
+                }
+              ]
+            ],
+            "formula": null,
+            "substitution": null
+          }
+        }
+      ],
+      "stepCount": 6,
+      "truncated": false,
+      "maxSteps": 5000,
+      "maxBytes": 2000000,
+      "code": "public int frogJump(int n, int[] heights) {\n    int[] energy = new int[n];\n    energy[0] = 0;\n    for (int i = 1; i < n; i++) {\n        int jumpOne = energy[i - 1] + Math.abs(heights[i] - heights[i - 1]);\n        int jumpTwo = i > 1\n                ? energy[i - 2] + Math.abs(heights[i] - heights[i - 2])\n                : Integer.MAX_VALUE;\n        energy[i] = Math.min(jumpOne, jumpTwo);\n    }\n    return energy[n - 1];\n}",
+      "anchors": {
+        "done": 11,
+        "evaluate": 9,
+        "base": 3,
+        "init": 2
+      },
+      "resolvedInput": {
+        "heights": [
+          10,
+          50,
+          40,
+          30
+        ]
+      },
+      "approachId": "canonical",
+      "approachLabel": "Tabulation",
+      "dsType": "DpTable",
+      "complexity": {
+        "timeComplexity": "O(N)",
+        "timeExplanation": "Decides each stair once by comparing its two reachable predecessors.",
+        "timeWhy": "1D tabulation",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Keeps the whole energy table so both candidate transitions stay visible.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "DP table"
+      }
+    }
+  }
+}

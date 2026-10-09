@@ -1,12 +1,88 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import RecursionTreeCanvas from './RecursionTreeCanvas';
 
 const frame = (...f) => ({ callStack: f });
+afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
+
+// DOM geometry, not synthetic trace answers: parents move horizontally as sibling
+// calls are discovered. A top-left viewport can contain no nodes at all.
+function geometry() {
+  let width = 200;
+  vi.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function () {
+    if (this.getAttribute('data-testid') === 'recursion-tree-stage')
+      return { left: 0, top: 0, width, height: 480, right: width, bottom: 480 };
+    if (this.matches('g[data-state]')) {
+      const x = Number(this.getAttribute('transform').match(/translate\(([^,]+)/)[1]);
+      const scroll = this.closest('[data-testid="recursion-tree-stage"]').scrollLeft;
+      return { left: x - scroll, top: 0, width: 88, height: 26, right: x - scroll + 88, bottom: 26 };
+    }
+    return { left: 0, top: 0, width: 0, height: 0, right: 0, bottom: 0 };
+  });
+  return next => { width = next; };
+}
+const branching = count => [frame('root'), ...Array.from({ length: count }, (_, i) =>
+  [frame('root', `child${i}`), frame('root')]).flat(), frame()];
 
 describe('RecursionTreeCanvas with a derived tree', () => {
+  it('reveals the root when seeking directly into a wide completed tree', () => {
+    geometry();
+    const steps = branching(20);
+    render(<RecursionTreeCanvas steps={steps} currentStepIndex={steps.length - 1} currentStep={steps.at(-1)} />);
+    const stage = screen.getByTestId('recursion-tree-stage');
+    const root = stage.querySelector('g[data-state]');
+    expect(stage.scrollLeft).toBeGreaterThan(0);
+    expect(root.getBoundingClientRect().left).toBeGreaterThanOrEqual(0);
+    expect(root.getBoundingClientRect().right).toBeLessThanOrEqual(200);
+  });
+
+  it('compensates layout growth without overriding manual panning, vertical scroll or focus', () => {
+    geometry();
+    const steps = branching(20);
+    const { rerender } = render(<RecursionTreeCanvas steps={steps} currentStepIndex={20} currentStep={steps[20]} />);
+    const stage = screen.getByTestId('recursion-tree-stage');
+    stage.scrollLeft = 150;
+    stage.scrollTop = 75;
+    stage.focus();
+    const before = stage.querySelector('g[data-state]').getBoundingClientRect().left;
+    rerender(<RecursionTreeCanvas steps={steps} currentStepIndex={steps.length - 1} currentStep={steps.at(-1)} />);
+    expect(stage.querySelector('g[data-state]').getBoundingClientRect().left).toBe(before);
+    expect(stage.scrollTop).toBe(75);
+    expect(stage).toHaveFocus();
+  });
+
+  it('starts a replacement run with its own root instead of inheriting the old horizontal offset', () => {
+    geometry();
+    const steps = branching(20), next = branching(5);
+    const { rerender } = render(<RecursionTreeCanvas steps={steps} currentStepIndex={steps.length - 1} />);
+    screen.getByTestId('recursion-tree-stage').scrollLeft = 900;
+    rerender(<RecursionTreeCanvas steps={next} currentStepIndex={next.length - 1} />);
+    const root = screen.getByTestId('recursion-tree-stage').querySelector('g[data-state]');
+    expect(root.getBoundingClientRect().left).toBeGreaterThanOrEqual(0);
+    expect(root.getBoundingClientRect().right).toBeLessThanOrEqual(200);
+  });
+
+  it('keeps the root centered on container resize and disconnects its observer', () => {
+    const resize = geometry();
+    let callback;
+    const disconnect = vi.fn();
+    vi.stubGlobal('ResizeObserver', class {
+      constructor(fn) { callback = fn; }
+      observe() {}
+      disconnect() { disconnect(); }
+    });
+    const steps = branching(20);
+    const { unmount } = render(<RecursionTreeCanvas steps={steps} currentStepIndex={steps.length - 1} />);
+    resize(120);
+    callback?.();
+    const root = screen.getByTestId('recursion-tree-stage').querySelector('g[data-state]');
+    expect(root.getBoundingClientRect().right).toBeLessThanOrEqual(120);
+    unmount();
+    expect(disconnect).toHaveBeenCalled();
+  });
+
   it('draws the tree a backtracking run explored, from its call stacks', () => {
     // None of the 25 Recursion & Backtracking tracers emits treeNodes; every one emits
     // callStack. The canvas rebuilds the tree rather than requiring 25 tracer changes.
