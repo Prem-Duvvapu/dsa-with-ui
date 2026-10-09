@@ -5,6 +5,8 @@ import CaptureStrip from './CaptureStrip';
 import InputSummary from './InputSummary';
 import styles from './CompareStrip.module.css';
 
+const OWNED_KEYS = new Set(['ArrowLeft', 'ArrowRight', 'Home', 'End', ' ', 'j', 'k', 'l', 'J', 'K', 'L', ',', '.', 'r', 'R', '[', ']']);
+
 /** One side of the comparison: its own input, its own position and that step's narration. */
 function CompareSide({ label, run, dsType, showCapture }) {
   const [current, setCurrent] = useState(0);
@@ -18,6 +20,7 @@ function CompareSide({ label, run, dsType, showCapture }) {
         {label} &mdash; {total} step{total === 1 ? '' : 's'}
       </h3>
       <InputSummary resolvedInput={run.resolvedInput} label="Input" />
+      {run.truncated && <p className={styles.status}>Incomplete: this trace was cut short. These events do not represent a finished run.</p>}
       {showCapture && (
         <CaptureStrip steps={run.steps} current={index} dsType={dsType} onSeek={seek} resolvedInput={run.resolvedInput} />
       )}
@@ -96,7 +99,9 @@ export default function CompareStrip({ problemId, dsType, alternateInput, approa
   if (!defaultRun || !alternateRun) return null;
 
   return (
-    <div className={styles.wrap} aria-label="Compare the default input against the other case" role="group">
+    <div className={styles.wrap} aria-label="Compare the default input against the other case" role="group" onKeyDown={event => {
+      if (!event.ctrlKey && !event.metaKey && !event.altKey && OWNED_KEYS.has(event.key)) event.stopPropagation();
+    }}>
       {scope}
       <CompareSide label="Default input" run={defaultRun} dsType={dsType} showCapture={showCapture} />
       <CompareSide label="Other case" run={alternateRun} dsType={dsType} showCapture={showCapture} />

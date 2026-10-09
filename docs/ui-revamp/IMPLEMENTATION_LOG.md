@@ -1081,3 +1081,162 @@ Evidence: `dp-approaches/d3-journey.cjs`, `d3-results.json`, `d3-390-dark.png`,
 `d3-1366-light.png`; plan: `DP_SOLUTION_APPROACHES_PLAN.md`; RCA-054 follow-up.
 The matrix's viewport height is 900px, not proof of the original 768px stage-position gate.
 Cross-engine, real-device, human learning and broader-family certification remain pending.
+
+## DP approaches D4 — teaching and isolated comparison — 2026-10-08
+
+Implemented on `feat/dp-approach-teaching` from merged `fb96744`; publication awaits owner
+approval. Audited optional teaching metadata belongs to each executable definition and is
+served by detail/approach summaries. Current-step explanations bind to actual event values
+or source anchors. No recurrence is invented for canonical adapters. The disclosure follows
+the main transport/inspector, not the top of the canvas; no blank row on unrelated problems.
+
+Compare approaches is a separate, explicitly requested same-input comparison. It snapshots
+the displayed resolved input, not draft/candidate state; each side has independent controls,
+returned metadata, counters and outcomes. Refused/truncated/malformed/substituted results
+cannot become completed answers. A successful side remains visible beside a refused one.
+View changes retain the comparison; pair changes clear old results without fetching; a new
+main run retires its comparison. No main-session/progress/URL writes or additional canvas.
+
+Six review gates:
+
+1. Backend: API teaching case proves metadata is served, event names actually emit, anchors
+   exist, and canonical adapters stay honest. Full 8,008 tests, zero failures/errors,
+   unchanged 500 skips. Algorithms, sources and goldens unchanged.
+2. Frontend: final 80 files / 753 tests, no skips. Release build JS381.28kB/gzip121.58,
+   CSS106.81kB/gzip19.07. Versus D3: JS+9.73kB/gzip+3.26, CSS+1.91kB/gzip+0.30.
+   Explicit requests, immutable input snapshots, identity/truncation checks, partial failure,
+   decode races, clear/unmount/problem retirement and UTF-8 byte measurement are tested.
+3. UI/UX: ten real-backend Chromium rows at five widths in both themes; independent
+   positions, modifier/local keyboard ownership, safe limits/refusal, same-input/draft/link
+   boundaries, 44px targets, stacked phone summaries and no overflow/errors. Screenshots
+   inspected. Three production-preview rows add short landscape, reduced motion, real
+   cache-hit notes, visible keyboard focus and denied local/session storage.
+   The ten-row pilot journey also passes in Firefox155 (before the final early-open guard),
+   with separate results/screenshots. Four final-build input-comparison rows verify real
+   canonical/memoized identity, held-pending initial-load safety, isolated keyboard/steps
+   and explicit warnings/errors for injected truncated/empty responses.
+   Four additional final-build Firefox rows at 320/1366px in both themes pass; the earlier
+   ten-row result is retained separately. Evidence: `d4-firefox-release-results.json`.
+4. Product: answer21 at n7 for both forms, recursion41 calls vs memo13 calls/5 hits/8
+   distinct computed states. These are recorded counters, not latency/runtime guesses.
+   Tabulation's uninstrumented counters are unavailable. Only one of 56 candidates ships
+   three forms; D5–D7 and original P8/P9 accessibility/human/performance gaps remain open.
+5. Architecture: optional immutable registry metadata; existing validated execute API;
+   isolated comparison generation/abort ownership; one URL writer and primary canvas.
+   No dependency. The inventory refresh changes date/pilot status only and its guard passes.
+6. QA: four UI cases and one API case failed against D3. Two decode-race cases fail with
+   the generation guard removed; blank-row and Ctrl+K regressions proved red. No existing
+   assertion weakened. A missing aria-controls target regression proved red; the closed
+   target now remains present without mounting comparison requests. Query-safe browser
+   pacing has a meaningful Node RED/green guard. The ten-row sweep also runs on production.
+
+Continuation hardening: Compare inputs now commits one problem/approach-owned pair, checks
+encoding, numbered/nonblank events, truncation and submitted input echoes, and labels partial
+traces as incomplete. Playback keys stay local; modifier switcher shortcuts stay global.
+Input comparisons cannot start without a committed, non-offline executable. Closing or
+replacing a main run aborts pending approach comparisons after decoding, without reopening
+old results. Initial nine integrity cases, cut-short UI and main-key ownership cases proved
+RED; four stricter comparison-envelope cases also failed before the fix. Removing the
+main-run comparison key makes the pending-body/new-run integration fail. The early-open
+guard also proved RED. Fixtures were brought to the real API contract, including explicit
+canonical query handling and waits for live commit; no behavioural assertion was dropped.
+
+Verification notes: an early browser sweep was interrupted by the local backend process's
+SIGTERM exit and is not counted as passing. The restarted ten-row matrix passes. The first
+production preview used unapproved origin port5181 and correctly got HTTP403; reran on the
+configured port5180 without relaxing CORS. An early frontend sweep overlapped unfinished
+feature edits; the stable final suite, recorded in the plan, is the release result. Native-focus checks
+use keyboard traversal rather than expecting a focus-visible ring after a pointer click.
+The continuation's early-open guard exposed incomplete comparison-test fixtures and a
+missing canonical query matcher; intermediate 751/753 runs are not passing release runs.
+Local backend processes also exited143 during browser retries; cause unverified. Those
+interrupted/early-start retries are excluded. Concurrent Maven startup/test compilation
+caused an intermediate testCompile failure; subsequent serial inventory guard passed.
+Startup process-tree smoke and the Node pacing guard pass. No dependency/golden change.
+
+Evidence: `dp-approaches/d4-*`; plan: `DP_SOLUTION_APPROACHES_PLAN.md`; RCA-054 follow-up.
+Viewport height900 is not certification of the original 768px stage-position target.
+Real-device, broader-family cross-engine, screen-reader, real-browser-zoom and human-learning gates remain.
+
+## DP approaches D4 continuation — 2026-10-09
+
+Still unpublished on `feat/dp-approach-teaching` from D3 `fb96744`; owner publishing
+approval and CI remain required. No D5 implementation is stacked on this package.
+The October8 results above are historical; the following are the current release checks.
+
+Six review gates:
+
+1. Backend: immutable teaching definitions reject blank required copy/notes; registry
+   startup rejects notes naming nonexistent source anchors. API tests verify served
+   teaching and real emitted events. Full suite: **8,014 tests, 0 failures/errors,
+   unchanged 500 skips**. Displayed algorithm listings, tracer computations and goldens
+   are unchanged. The live inventory refresh changes only date and Climbing Stairs status;
+   canonical source/spec digests and the other55 candidate statuses stay unchanged.
+2. Frontend: **81 files / 788 tests**, no skips; production build JS382.11kB/gzip121.84,
+   CSS106.95kB/gzip19.10. Comparison callbacks and alternate-input snapshots adopt only
+   committed identities, with synchronous layout cleanup and post-decode retirement.
+   Both comparison paths reject malformed debug maps; invalid optional teaching cannot
+   crash a valid trace or leave an empty disclosure row. Own-property event notes and
+   unambiguous source-line notes only. CSS tokens resolve in both themes.
+3. UI/UX: the final production bundle has **99 completed real-browser rows** across twelve
+   result files: Chromium10, Firefox10, native Chromium200%8, keyboard4+4, reduced-motion/
+   storage3, existing input comparison4, boundary12+12+12, and exact handoff sizes10+10.
+   The latter cover 320×568, 390×844, 768×1024, 1366×768 and 1440×900 in both themes,
+   separately in Chromium and Firefox; the common-height900 sweeps remain separate.
+   These are repeated pilot scenario rows, not99 unique problems. All twelve record the same
+   actually served assets (`index-D9b0gbod.js`, `index-DkVb_nYT.css`). Keyboard checks use
+   native Enter/Tab/Shift+Tab/arrows, including upward focus under the sticky rail and
+   switcher focus return. Initial focus setup is programmatic; these are not a manual
+   screen-reader or completely keyboard-only task certification. The 200% sweep uses real
+   tab zoom, disposable profiles and DPR/reflow checks, not CSS or scale emulation.
+4. Product: independent answer references cover n1/n10/n30. Real zero cache hits remain
+   visible; recursive refusal is not a shortened input. Actual n31 HTTP400 leaves the
+   memoized n30 run, main step/link and rejected draft/error intact even after comparison.
+   Step ordinals, JSON bytes and counters are not latency measurements. Only Climbing
+   Stairs (1/56 candidates) has three forms; D5–D7 and original P8/P9 remain open.
+5. Architecture: no runtime dependency, endpoint, URL owner or primary canvas added.
+   Teaching remains definition-owned; on-demand comparison requests are isolated from
+   the main session. Busy comparison submission preserves focus via aria-disabled/busy
+   and an explicit duplicate-request guard. Shared step validation keeps the two existing
+   comparison paths consistent. Temporary source-map analysis does not modify the served
+   release. No publishing or modification of the owner's original Windows worktree.
+6. QA: six retained-callback retirement cases, three suspended-transition cases, eight
+   malformed-debug cases, three invalid-teaching-definition cases, the missing-anchor
+   case, inherited/aliased-note regressions and malformed optional-metadata cases proved
+   RED before their fixes. Native-browser checks reproduced busy-button focus loss and
+   backward-tab rail occlusion before the fixes. Defensive-copy/valid-anchor positives
+   are not claimed as RED regressions. Existing behavioral assertions are preserved;
+   changed fixtures now carry actual executable identity/encoding/truncation/input echoes.
+   Launcher smoke and three Node evidence-tool checks pass.
+
+Bundle growth review (§verification): JS gzip+12.4% / CSS gzip+18.1% versus P0 triggers
+review; this D4 package adds JS+3.0% / CSS+1.8% versus D3. A separate temporary source-map
+build confirms the existing vendor set, with no new library. Four new feature/validation
+modules contain12,031 unminified source bytes, which are not emitted/gzip attribution.
+Teaching and explicit comparison account for intentional feature growth; optional-panel
+splitting is a future profiling candidate with focus/lifecycle constraints. No long-trace
+timing improvement or P8 performance certification is claimed. npm audit reports nine
+inherited advisories (4 moderate/3 high/2 critical); manifests/lockfile match D3. No forced
+major dependency upgrade is included in this UI package.
+
+Evidence limitations and exclusions: `noOverflowOrErrors` measures page-wide overflow and
+uncaught Playwright page errors, not every console/network message. Injected truncated/
+empty input-comparison responses are fault checks, not actual budget-exhaustion claims.
+An ordinary full-page capture clipped the native-zoom surface; the corrected capture
+verifies actual pixel dimensions and unchanged viewport metrics, and was inspected.
+One closed-browser retry, a worker-module failure during dependency reinstall, and a
+partial exact-size sweep interrupted by local backend exit143 are excluded. Server exit
+cause is unverified; completed earlier sweeps remain separate from interrupted retries.
+The restarted exact-size sweep subsequently passes20/20 on the unchanged final bundle,
+with inspected phone/dark and desktop/light screenshots.
+Original stage-position, real-device, screen-reader, broad-family, human-learning and
+production performance/release gates remain open. Pilot native zoom is now checked.
+
+Evidence: `dp-approaches/d4-*`; reproducible commands and next-package preflight live in
+`DP_SOLUTION_APPROACHES_PLAN.md`. The tracker distinguishes merged D0–D3, local D4 and
+pending D5–D7, and does not mark P8/P9 complete.
+
+Publication update — 2026-10-09: the owner explicitly approved commit, push and merge
+after the local checks above. Package commits are grouped by backend metadata, frontend
+teaching/comparison safety, and reproducible evidence/docs. Publication goes through a
+PR and passing CI, not a direct main commit. D5 remains a separate next package.

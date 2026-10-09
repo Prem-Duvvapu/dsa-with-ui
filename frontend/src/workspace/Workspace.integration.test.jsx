@@ -806,34 +806,65 @@ describe('Workspace switcher', () => {
 
 describe('Workspace comparison panel', () => {
   const TWO_SUM_ALT = { ...problem('two-sum', 'Two Sum', 'Arrays'), alternateInput: { nums: [2, 3, 1], target: 5 } };
+  TWO_SUM_ALT.defaultApproachId = 'canonical';
+  TWO_SUM_ALT.approaches = [{ id: 'canonical', label: 'Canonical', isDefault: true,
+    dsType: TWO_SUM_ALT.dsType, alternateInput: TWO_SUM_ALT.alternateInput }];
   function tinyTrace(n) {
-    return { encoding: 'full', resolvedInput: { n }, steps: Array.from({ length: n }, (_, i) => ({ stepNumber: i + 1, activeLine: 1, description: `compare step ${i + 1}`, arrayState: [{ index: 0, value: i, state: 'default' }] })) };
+    return { problemId: 'two-sum', approachId: 'canonical', truncated: false, encoding: 'full',
+      approachLabel: 'Canonical', code: TWO_SUM_ALT.javaCode, dsType: TWO_SUM_ALT.dsType,
+      anchors: { init: 1 }, complexity: TWO_SUM_ALT.complexity,
+      resolvedInput: n === 5 ? TWO_SUM_ALT.alternateInput : { nums: [2, 7], target: 9 },
+      steps: Array.from({ length: n }, (_, i) => ({ stepNumber: i + 1, activeLine: 1, description: `compare step ${i + 1}`, arrayState: [{ index: 0, value: i, state: 'default' }] })) };
   }
   beforeEach(() => {
     vi.stubGlobal('fetch', vi.fn((url, opts) => {
       calls.push(url);
+      const pathname = new URL(url, 'https://test.invalid').pathname;
       if (url === '/api/problems') return Promise.resolve(ok([TWO_SUM_ALT]));
       if (url === '/api/problems/two-sum') return Promise.resolve(ok(TWO_SUM_ALT));
-      if (url === '/api/problems/two-sum/execute' && opts?.method === 'POST') {
+      if (pathname === '/api/problems/two-sum/execute' && opts?.method === 'POST') {
         return Promise.resolve(ok(tinyTrace(Object.keys(JSON.parse(opts.body)).length === 0 ? 2 : 5)));
       }
-      if (url === '/api/problems/two-sum/execute') return Promise.resolve(ok(tinyTrace(2)));
+      if (pathname === '/api/problems/two-sum/execute') return Promise.resolve(ok(tinyTrace(2)));
       return Promise.resolve(notFound());
     }));
   });
 
   it('offers a compare toggle when the problem has an alternate input, and fetches nothing until opened', async () => {
     renderApp();
-    expect(await screen.findByRole('button', { name: /compare other case/i })).toBeInTheDocument();
+    const toggle = await screen.findByRole('button', { name: /compare other case/i });
+    await waitFor(() => expect(toggle).toBeEnabled());
     expect(calls.filter((u) => u === '/api/problems/two-sum/execute')).toHaveLength(1);
   });
 
   it('shows both runs stacked, each with its own step count, once opened; hides on a second click', async () => {
     renderApp();
-    fireEvent.click(await screen.findByRole('button', { name: /compare other case/i }));
+    const toggle = await screen.findByRole('button', { name: /compare other case/i });
+    await waitFor(() => expect(toggle).toBeEnabled());
+    fireEvent.click(toggle);
     expect(await screen.findByRole('heading', { name: /^Default input/ })).toHaveTextContent('2 steps');
     expect(screen.getByRole('heading', { name: /^Other case/ })).toHaveTextContent('5 steps');
     fireEvent.click(screen.getByRole('button', { name: /hide comparison/i }));
     expect(screen.queryByRole('heading', { name: /^Default input/ })).not.toBeInTheDocument();
+  });
+
+  it('keeps comparison keyboard navigation local while allowing Ctrl+K', async () => {
+    renderApp();
+    const toggle = await screen.findByRole('button', { name: /compare other case/i });
+    await waitFor(() => expect(toggle).toBeEnabled());
+    fireEvent.click(toggle);
+    await screen.findByRole('heading', { name: /^Other case/ });
+    const next = screen.getByRole('button', { name: 'Other case: next step' });
+    next.focus();
+    const before = screen.getByLabelText('Seek to step').value;
+    for (const [key, code] of [['ArrowRight', 'ArrowRight'], ['l', 'KeyL'], ['End', 'End']]) {
+      fireEvent.keyDown(next, { key, code });
+      expect(screen.getByLabelText('Seek to step')).toHaveValue(before);
+    }
+    fireEvent.click(next);
+    expect(screen.getByRole('region', { name: 'Other case' })).toHaveTextContent('Step 2 of 5');
+    expect(screen.getByLabelText('Seek to step')).toHaveValue(before);
+    fireEvent.keyDown(next, { key: 'k', code: 'KeyK', ctrlKey: true });
+    expect(screen.getByRole('dialog', { name: /command palette/i })).toBeInTheDocument();
   });
 });

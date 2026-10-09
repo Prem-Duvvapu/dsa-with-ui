@@ -4,12 +4,13 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import CompareStrip from './CompareStrip';
 
-function execResponse(stepCount) {
+function execResponse(stepCount, problemId = 'two-sum') {
   return {
     ok: true,
     json: () => Promise.resolve({
       encoding: 'full',
-      resolvedInput: { n: stepCount },
+      problemId, approachId: 'canonical', truncated: false,
+      resolvedInput: { n: stepCount, nums: [1] },
       steps: Array.from({ length: stepCount }, (_, i) => ({
         stepNumber: i + 1,
         description: `step ${i + 1}`,
@@ -51,7 +52,7 @@ describe('CompareStrip', () => {
   });
 
   it('labels each side with its own input and position, and reads a graph run as text', async () => {
-    fetch.mockResolvedValueOnce(execResponse(3)).mockResolvedValueOnce(execResponse(7));
+    fetch.mockResolvedValueOnce(execResponse(3, 'bfs')).mockResolvedValueOnce(execResponse(7, 'bfs'));
     render(<CompareStrip problemId="bfs" dsType="Graph" alternateInput={{ n: 7 }} showCapture={false} />);
     const other = await screen.findByRole('region', { name: 'Other case' });
     expect(other).toHaveTextContent('n7');
@@ -70,5 +71,16 @@ describe('CompareStrip', () => {
     render(<CompareStrip problemId="two-sum" dsType="Array" alternateInput={{ n: 7 }} mainIsCustom />);
     expect(screen.getByText(/default input with its other case/)).toHaveTextContent('The run above uses your own input and is not part of this comparison.');
     expect(screen.getByText(/default input with its other case/)).toHaveTextContent('not matching moments of the algorithm');
+  });
+
+  it('labels each cut-short run explicitly, without hiding its available events', async () => {
+    const data = { problemId: 'stairs', approachId: 'canonical', truncated: true,
+      resolvedInput: { n: 7 }, encoding: 'full', steps: [{ stepNumber: 1, description: 'Partial event' }] };
+    fetch.mockResolvedValue({ ok: true, json: async () => data });
+    render(<CompareStrip problemId="stairs" dsType="DpTable" alternateInput={{ n: 7 }} showCapture={false} />);
+    const other = await screen.findByRole('region', { name: 'Other case' });
+    expect(other).toHaveTextContent(/incomplete.*cut short/i);
+    expect(other).toHaveTextContent('Partial event');
+    expect(screen.getByRole('region', { name: 'Default input' })).toHaveTextContent(/incomplete.*cut short/i);
   });
 });

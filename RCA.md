@@ -1444,6 +1444,52 @@ original executable. Canonical demo structures are cleared for alternatives, not
 as live state. Regression coverage is in `useProblemSession.approaches.test.jsx` and
 `Approaches.integration.test.jsx`, with RED evidence and real-backend matrix in the DP plan.
 
+### RCA-054 follow-up — 2026-10-08 isolated approach comparison
+
+Comparison snapshots the displayed run's resolved input, not the draft or prepared approach.
+Its explicit requests have independent generations/abort cleanup, strict returned problem,
+approach and input checks, and per-side outcomes. It never writes the main run or URL; a
+partial failure retains the successful side without claiming two completed answers.
+Removing the post-decode generation guard makes both the retry-race and cleared-pending
+tests fail. Native comparison navigation stays local, but Ctrl/Meta chords remain available
+globally; the Ctrl+K regression failed before that modifier guard. A separate RED layout
+guard prevents empty teaching wrappers from adding space to unrelated problems.
+
+The D4 follow-up also found that the older input-comparison hook discarded truncation,
+accepted empty/malformed responses, and did not check canonical response identity or the
+submitted input echo. Its two results now commit as one problem/approach-keyed object,
+with strict encoding/event validation and explicit cut-short notices. Omitted server
+defaults are allowed; submitted fields must match. Comparison controls own unmodified
+playback keys without swallowing Ctrl/Meta+K. Nine initial integrity cases, the cut-short
+UI case and the main-playback keyboard case failed before these fixes. Four more RED
+cases cover unknown encodings and malformed approach-comparison events. A workspace
+retirement regression fails when the main-run comparison key is removed: old decoded
+bodies must never land under a newly committed input. Close/new-run, StrictMode replay,
+retired retries and post-decode cancellation are covered without weakening earlier tests.
+
+### RCA-054 follow-up — 2026-10-09 committed comparison ownership and teaching
+
+Retained callbacks must not start requests after unmount or retire a different current
+problem/approach. Both comparison hooks now adopt owner identity in a layout effect,
+not while rendering. Compare inputs also adopts its alternate-input snapshot only after
+commit: three Suspense/startTransition regressions proved that a speculative render could
+otherwise block the still-displayed problem's action or send its uncommitted input.
+Six retained-callback/invalid-pair cases and all three concurrency cases were proved RED.
+
+Both comparison paths reject non-string debug values rather than stringify malformed
+answers/counters into apparent agreement (eight additional RED cases). Teaching is optional:
+invalid metadata cannot crash an otherwise valid workspace or add a blank wrapper. Backend
+definitions reject blank teaching text/notes and undeclared source anchors. Frontend notes
+must be authored own properties; aliases of a source line cannot choose between conflicting
+notes by map order. Unit/API/workspace regressions cover those seams, not just the records.
+
+A real native-zoom keyboard journey caught focus loss from disabling Run comparison and
+partial focus occlusion under the sticky rail. The busy button now remains focusable with
+aria-disabled/aria-busy and guarded submission, and comparison controls have scroll clearance.
+The browser failures were reproduced before the fixes; the busy/duplicate-request unit
+regression was RED too. Zoom evidence uses a disposable Chromium extension's native tab zoom,
+not CSS scaling; captures use the actual zoomed surface because CSS-sized clips cropped it.
+
 ### RCA-054 follow-up — 2026-10-03 re-audit R1/R2
 
 - **Status:** Fixed and verified in the `fix/ui-revamp-reaudit` change set.

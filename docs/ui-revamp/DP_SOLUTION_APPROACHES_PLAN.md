@@ -1,6 +1,7 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **implementation in progress: D0–D3 verified for the Climbing Stairs pilot; D4–D7 pending.**
+Status: **D0–D3 merged; D4 verified locally for the Climbing Stairs pilot; D5–D7 pending.**
+Current unpublished package: `feat/dp-approach-teaching`, based on `fb96744`.
 Prepared 2026-10-07 against merged main `9d0aa10` (PR #208).
 This is a separate feature from the unfinished P8/P9 revamp gates; it does not close them.
 The owner authorized implementation on 2026-10-07 after merging PR #210.
@@ -391,7 +392,8 @@ API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 | D1 | Verified | Provider registry, canonical adapters, optional API selection, committed execution metadata, normalized cache keys and refusal tests |
 | D2 | Verified | Genuine recursion/memoization/tabulation, independently compiled source, oracle and boundary tests; `dp-approaches/d2-results.json` |
 | D3 | Verified pilot | Explicit selector, committed metadata, approach-aware links/presets/input comparison, truthful memo/recursive views; `dp-approaches/d3-results.json` |
-| D4–D7 | Pending | Teaching/comparison, family rollout and final release gates |
+| D4 | Verified locally, publication pending | Audited teaching metadata, explicit isolated two-approach comparison; `dp-approaches/d4-results.json` and `d4-accessibility-results.json` |
+| D5–D7 | Pending | Family rollout and final accessibility/performance/release gates |
 
 Inventory distinctions: binary-search LIS remains an optimized default; ninja-and-friends
 uses rolling row slices; rectangle-all-ones uses histogram stacks rather than a DP table;
@@ -517,3 +519,227 @@ zero failures/errors, unchanged 500 skips. The backend API test count is unchang
 an existing case now checks selected alternate-input metadata. The live matrix has ten
 rows and four maximum-tree geometry checks. Viewports are 900px high; this is not a
 certification of the original 768px-high stage-position target. No dependencies added.
+
+### D4 verification — 2026-10-08
+
+The pilot definitions now publish audited state, base cases, recurrence, evaluation order
+and memo key. Current-step notes are keyed to emitted event values or real source anchors,
+not guessed from narration. The closed-by-default teaching disclosure describes the shown
+approach and sits after the transport/inspector, keeping the canvas's starting position.
+Canonical adapters without audited teaching stay silent and add no empty spacing row.
+
+Compare approaches is separate from Compare inputs. Opening it, changing its pair, seeking
+its sliders or switching views does not execute. Run comparison explicitly snapshots the
+displayed run's resolved input for at most two independently validated requests. It never
+changes the main draft, run, playback position, progress or URL. Both declared limits are
+visible; an out-of-limit side is refused without shrinking input, and the other side can
+remain available. Retry is explicit. The panel persists through view changes, but a new
+committed main run gives it a fresh identity and retires any old pending comparison.
+
+Summaries show recorded answers, actual function/state/cache counters where emitted,
+trace-event counts, response JSON UTF-8 bytes before compression, and returned theoretical
+complexity. Uninstrumented counters and incomplete/uninstrumented answers are unavailable,
+not zero. Neither event counts, JSON weight nor latency are called algorithm runtime.
+Each side has its own labelled step slider; ordinal positions are never synchronized.
+Phone summaries stack. No additional primary canvas, timer, endpoint or dependency.
+Local playback keys stay local; modifier chords, including Ctrl/Meta+K, stay global.
+The disclosure's aria-controls target remains present while closed, without mounting
+comparison requests; its missing-target regression also failed before the fix.
+
+The separate Compare inputs path now applies the same honesty boundary. It checks returned
+problem/approach identity (including canonical), supported encoding, nonempty numbered
+events, truncation status and all explicitly submitted input fields. Server-filled defaults
+remain valid. Its pair commits atomically under problem/approach identity; closing or leaving
+retires requests even after body decoding. Cut-short results keep their available events
+with an explicit incomplete notice. Local keyboard controls cannot seek the main run,
+while Ctrl/Meta+K still opens the switcher.
+The input-comparison action waits for a committed, non-offline run rather than guessing
+the executable during the first load; its early-open regression failed before the guard.
+
+Final verification: 80 frontend files / 753 tests (47 new since D3), no frontend skips;
+production build JS381.28kB/gzip121.58, CSS106.81kB/gzip19.07. Backend 8,008 tests /
+zero failures/errors / unchanged 500 skips (rerun 19:47 UTC). Startup process-tree smoke
+and the inventory source/spec guard also pass.
+The refreshed 56-candidate ledger passes its source/spec guard; only date/pilot status
+change. No source listing, tracer algorithm, golden, package manifest or lockfile changes.
+
+Real backend Chromium matrix: ten rows at 320/390/768/1366/1440px, both themes, 900px
+viewport height, repeated against the production preview. At n7 recursion records answer21/calls41, memoization answer21/calls13/
+cacheHits5/computedStates8; tabulation does not invent missing counters. All rows check
+same-input/draft/link isolation, independent positions/keyboard, view/pair preparation,
+44px targets, phone stacking, partial refusal and no overflow/errors. Screenshots inspected.
+Three additional production-preview rows cover 680×360 light, 390×900 dark, and denied
+local/session storage at 390×900 light, with reduced motion, real cache-hit teaching,
+keyboard-visible focus and global switcher availability.
+The ten-row production-preview pilot journey also passes in Firefox 155.0 with inspected
+desktop/light and phone/dark screenshots (`d4-firefox-results.json`, `d4-firefox-*.png`).
+This is a pilot-level second-engine check, not broad-family/device/accessibility sign-off.
+After the final guard, four further Firefox release-build rows at 320/1366px in both themes
+also pass (`d4-firefox-release-results.json`). The earlier ten-row evidence is retained.
+
+RED proof: four initial workspace cases and the API teaching case failed on D3. Removing
+the post-decode generation guard makes both retired-body regressions fail. Empty teaching
+spacing and swallowed Ctrl+K each failed before their fix. The evidence pacer's old glob
+failed to match query-bearing execution URLs; its new pathname predicate passes a Node
+behavioral test without altering the backend's normal rate limit. Final full suites have
+no frontend skips; the targeted RED selections' deliberate skips are not coverage claims.
+
+Continuation RED proof: nine initial input-comparison integrity cases failed on the old
+hook, as did the cut-short display and main-player keyboard cases. Four further failures
+proved unknown encoding/invalid ordinal/blank-narration checks in the comparison paths.
+Removing the main-run comparison key makes the workspace pending-body/new-run case fail.
+Two workspace cases also exercise closing a pending comparison and replacing its main run,
+including late decoding after a newer comparison has already completed.
+
+Evidence: `d4-journey.cjs`, `d4-results.json`, `d4-accessibility-journey.cjs`,
+`d4-accessibility-results.json`, `d4-input-comparison-journey.cjs`,
+`d4-input-comparison-results.json`, and two screenshots in `dp-approaches/`.
+The four input-comparison rows use real canonical Two Sum and memoized Climbing Stairs
+runs at 320px dark and 1366px light. They verify identity/input echoes, independent controls,
+main step/link retention, keyboard ownership, switcher availability and no overflow/errors.
+Truncated and empty response checks in that journey are explicitly injected faults, not
+claims that accepted backend inputs actually exceed their budget.
+Only the pilot's automated checks are verified. D5's other 55 candidates, broader-family correctness/budgets
+and cross-engine/zoom journeys, real devices, screen readers, human learning and
+production performance/release gates remain open. P8/P9 are not closed by this package.
+
+### D4 continuation — 2026-10-09
+
+Verified on `feat/dp-approach-teaching`, based on merged D3 `fb96744`. The owner approved
+commit/push/PR merge on2026-10-09 after local verification; CI must pass before merge.
+No D5 implementation is stacked on this package.
+
+Additional lifecycle/honesty hardening:
+
+- Retained callbacks cannot run after unmount, cross problem/approach identity, or reopen
+  a closed input comparison. Invalid pairs release pending state. Ownership and the
+  alternate input are adopted only after commit; three real suspended-transition tests
+  fail against render-time ref adoption.
+- Both comparison paths reject malformed debug maps/values; recorded string values
+  (including zero) and genuine absent/null variables remain supported.
+- Teaching definitions reject blank required text/notes and nonexistent source anchors.
+  The UI ignores invalid optional teaching without breaking the trace or leaving a blank
+  row. Own-property notes only; ambiguous aliased source lines stay silent.
+- Native keyboard testing reproduced a busy-button focus loss and sticky-rail occlusion.
+  Busy submission uses aria-disabled/aria-busy plus an explicit guard, preserving focus
+  without allowing another request. Comparison controls reserve 64px scroll clearance.
+
+Latest full suites: **81 frontend files / 788 tests**, no frontend skips; **8,014 backend
+tests**, zero failures/errors, unchanged 500 skips. Production JS382.11kB/gzip121.84,
+CSS106.95kB/gzip19.10: versus D3, JS+10.56kB/gzip+3.52, CSS+2.05kB/gzip+0.33.
+The launcher smoke and three Node evidence-tool checks pass. No displayed algorithm
+source listing, tracer computation, golden, package manifest, lockfile or runtime
+dependency change.
+
+Bundle review trigger (§5/verification of the handoff): versus P0, final JS gzip is
+**+12.4%** and CSS gzip **+18.1%**; versus D3 this package adds **+3.0% JS / +1.8% CSS**.
+A separate temporary sourcemapped build leaves the served release untouched. Inspection
+finds the existing React/router/icon/analytics libraries, no new runtime library; the four
+new teaching/comparison/validation modules total12,031 unminified source bytes. Source-map
+bytes are not emitted or gzip attribution. The addition is explicit same-input comparison
+and audited teaching/lifecycle safety, not a performance improvement claim. Optional-panel
+code splitting is a future profiling candidate, not implemented here: loading boundaries
+must preserve pending/focus/run ownership. Long-trace timing and P8 performance sign-off
+remain open; the >10% P0 trigger has been reviewed, not silently waived or marked passed.
+
+Evidence tools now record the actually served JS/CSS asset names. Native 200% zoom uses
+`chrome.tabs.setZoom/getZoom` in disposable bundled-Chromium profiles; it verifies a
+1366×768 physical viewport becomes 683×384 CSS pixels, DPR2, with CSS zoom still1.
+The five-width normal sweep remains distinct from the 640/780/1366/1440px physical
+zoom sweep (320/390/683/720px CSS). Native captures verify full pixel dimensions without
+overriding viewport metrics; the ordinary CSS-sized full-page clip was cropped and was
+replaced. This is targeted pilot evidence, not a real-device/screen-reader certification.
+
+Boundary journeys cover n1, recursive ceiling n10, memo/table ceiling n30, and an actual
+n31 HTTP400. Answers use an independent iterative reference; calls/cache hits/computed
+states are checked separately. A comparison after the rejection keeps input30, its main
+step/link, and the rejected draft31/error intact. No input is silently shortened.
+
+Final browser evidence: **99 completed rows in twelve result files**, all served
+`index-D9b0gbod.js` / `index-DkVb_nYT.css`. This includes Chromium10 + Firefox10 at
+common height900, native zoom8, keyboard4+4, reduced-motion/storage3, input-comparison4,
+boundary12+12+12, and exact handoff sizes10+10. The exact-size Chromium/Firefox sweeps
+cover 320×568, 390×844, 768×1024, 1366×768 and 1440×900 in both themes; separate
+artifacts are `d4-standard-results.json` / `d4-firefox-standard-results.json` and
+their inspected screenshots. Counts describe repeated pilot scenarios, not99 unique
+problems. `noOverflowOrErrors` means page-wide overflow and uncaught page errors, not
+every console/network message. No all-family or human-accessibility certification.
+
+Verification exclusions: one repeat browser run ended with a closed browser (cause
+unverified); its incomplete result is not counted. A targeted frontend run overlapped
+dependency reinstall and lost a worker module; clean full reruns above supersede it.
+A partial exact-size run lost the local backend (exit143, cause unverified); after a
+serial restart both exact-size matrices pass20/20. The partial attempt is excluded.
+`npm audit` reports nine inherited advisories (4 moderate/3 high/2 critical); dependencies
+are identical to D3, and no forced or major-version upgrade is folded into this UI package.
+
+### Next-package preflight — read-only, not D5 implementation
+
+Start only after D4 is approved, passes CI and merges; pull that merge before cutting the
+next branch. The first D5 PR should cover **Frog Jump alone**, not all four 1D examples.
+The existing canonical tracer accepts `heights` length2–20, values0–999, and starts at
+index0 with energy0. Preserve that public contract and its existing tabulation/source.
+Do not import Climbing Stairs' path-counting base cases into a minimum-energy problem.
+
+1. Define `energy(i)` with base `energy(0)=0`; for `i=1`, only the one-step predecessor
+   exists. Both recursive and memoized implementations must evaluate the same legal
+   predecessors and add the corresponding absolute height difference. Repeated indices
+   in recursion are separate calls; a memoized zero cost is a valid cached value.
+2. Before advertising recursion, measure its worst-case call/event/byte counts by array
+   length, with the unchanged global step cap. A canonical length20 allowance is not
+   permission to run an exponential trace. Pick and publish a separate measured cap;
+   preserve a longer entered draft and show a refusal, never truncate the input to fit.
+3. Use independently enumerated valid jump paths as a small-input answer reference.
+   Include `[5,5]→0`, `[0,999]→999`, `[10,50,40,30]→40`,
+   `[30,10,60,10,20]→30`, equal-height/zero-cost inputs, tied candidates, and arrays
+   where either predecessor wins. Test the eventual maximum and one over its bound.
+4. Compile the full displayed Java17 methods independently, check every emitted anchor,
+   full/delta equivalence, actual parent/call IDs, cache-hit-without-children behavior,
+   and unknown-vs-computed memo cells. Do not label an energy result as a path count.
+5. Add registry-owned teaching and genuine counters, then exercise the existing selector,
+   Code/Analysis, restoration and both comparisons without adding another session owner
+   or canvas. Shared arrays, refused recursion and a valid zero answer must remain honest.
+6. Repeat desktop/phone, both-theme, keyboard and native-zoom journeys on the served
+   production bundle, refresh only this ledger row, run all six review gates, then ask
+   to publish this one PR. Only after its merge start the next candidate.
+
+Follow-up hazards already checked in the current canonical source: K-distance Frog Jump
+has a **joint length/K branching budget**, not just a length cap (current length2–16,
+K1–8); non-adjacent sum allows a singleton and zero values (length1–20); circular House
+Robber starts at length2 and requires both exclusion passes (length2–16). Its future memo
+identity must include the pass/boundary or use separate caches, not borrow the first
+pass's index-only results. These are implementation prerequisites, not measured new
+approach limits or completed rollout work. The remaining 55 rows are still pending.
+
+### Reproduce the D4 browser checks
+
+From the repository root, after the full frontend/backend suites and production build,
+run the backend on8923 and the Vite **production preview** on5180 in separate terminals.
+Keep the build unchanged throughout the sweeps. Set `PLAYWRIGHT_MODULE` to an external
+Playwright module with matching Chromium/Firefox installed; it is not a repo dependency.
+The journeys require a served production JS/CSS bundle and retain its asset identity.
+Run them serially; each respects the backend's unchanged60/minute execution limit.
+
+```sh
+# Normal five widths in both themes; historical common height900 stays a separate check.
+node docs/ui-revamp/dp-approaches/d4-journey.cjs
+AUDIT_ENGINE=firefox AUDIT_OUTPUT_TAG=release node docs/ui-revamp/dp-approaches/d4-journey.cjs
+# Exact handoff sizes: 320x568, 390x844, 768x1024, 1366x768, 1440x900.
+AUDIT_HEIGHTS=568,844,1024,768,900 AUDIT_OUTPUT_TAG=standard node docs/ui-revamp/dp-approaches/d4-journey.cjs
+AUDIT_HEIGHTS=568,844,1024,768,900 AUDIT_OUTPUT_TAG=standard AUDIT_ENGINE=firefox node docs/ui-revamp/dp-approaches/d4-journey.cjs
+# Native tab zoom, not emulated scaling. Widths are physical pixels.
+AUDIT_NATIVE_ZOOM=2 AUDIT_WIDTHS=640,780,1366,1440 AUDIT_HEIGHT=768 AUDIT_OUTPUT_TAG=zoom-200 node docs/ui-revamp/dp-approaches/d4-journey.cjs
+AUDIT_NATIVE_ZOOM=1 AUDIT_WIDTHS=320,1366 node docs/ui-revamp/dp-approaches/d4-keyboard-journey.cjs
+AUDIT_NATIVE_ZOOM=2 node docs/ui-revamp/dp-approaches/d4-keyboard-journey.cjs
+node docs/ui-revamp/dp-approaches/d4-accessibility-journey.cjs
+node docs/ui-revamp/dp-approaches/d4-input-comparison-journey.cjs
+node docs/ui-revamp/dp-approaches/d4-boundaries-journey.cjs
+AUDIT_ENGINE=firefox node docs/ui-revamp/dp-approaches/d4-boundaries-journey.cjs
+AUDIT_NATIVE_ZOOM=2 node docs/ui-revamp/dp-approaches/d4-boundaries-journey.cjs
+node --test docs/ui-revamp/evidence/pace-executions.test.cjs docs/ui-revamp/evidence/served-build-identity.test.cjs
+node docs/ui-revamp/dp-approaches/refresh-inventory.cjs
+```
+
+Only completed result files count as evidence. Exclude interrupted attempts and inspect
+the captured phone/desktop/native-zoom screenshots. Exact-size and native-zoom overflow
+checks do not close the pre-existing stage-y-position exception or any human/device gate.

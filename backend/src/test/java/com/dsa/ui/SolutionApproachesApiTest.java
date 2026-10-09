@@ -23,6 +23,26 @@ class SolutionApproachesApiTest {
     @Autowired ProblemsController controller;
     private final ObjectMapper json = new ObjectMapper();
 
+    @Test void pilotTeachingIsServedAndNamesRealEventsAndAnchors() throws Exception {
+        var detail = getJson("/api/problems/climbing-stairs");
+        for (var option : detail.path("approaches")) {
+            var teaching = option.path("teaching");
+            assertEquals("ways(k): the number of ways to reach stair k", teaching.path("state").asText());
+            assertEquals("ways(0) = ways(1) = 1", teaching.path("baseCases").asText());
+            assertEquals("ways(k) = ways(k-1) + ways(k-2)", teaching.path("recurrence").asText());
+            var execution = getJson("/api/problems/climbing-stairs/execute?encoding=full&approach=" + option.path("id").asText());
+            teaching.path("anchorNotes").fieldNames().forEachRemaining(anchor ->
+                    assertTrue(execution.path("anchors").has(anchor), "Teaching names a nonexistent anchor: " + anchor));
+            teaching.path("eventNotes").fieldNames().forEachRemaining(event ->
+                    assertTrue(java.util.stream.StreamSupport.stream(execution.path("steps").spliterator(), false)
+                            .anyMatch(step -> event.equals(step.path("variables").path("event").asText())),
+                            "Teaching names an event never emitted: " + event));
+            assertEquals(teaching, getJson("/api/problems/climbing-stairs?approach=" + option.path("id").asText()).path("teaching"));
+        }
+        assertTrue(getJson("/api/problems/two-sum").path("approaches").get(0).path("teaching").isNull(),
+                "Canonical adapters must not invent a recurrence");
+    }
+
     @Test void detailNamesTheActualCanonicalApproach() throws Exception {
         JsonNode detail = getJson("/api/problems/climbing-stairs");
         assertEquals("tabulation", detail.path("defaultApproachId").asText());

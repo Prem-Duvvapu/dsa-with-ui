@@ -18,8 +18,18 @@ its gate and evidence are complete.
 | P5 Switcher/focus/guidance | Done (screen-reader pass pending) | P5a #194 / `175e3d7`; P5b #195 / `e6faaee`; P5c #196 / `158e55d` | Gate met in Chromium on the real backend: keyboard-only switch/open/cancel/current-problem, inert background and focus return (switcher, help, welcome, tour); Focus keeps run/step/draft/URL with 0 executions; nested Escape (dialog → Focus); no seek behind dialogs (`CodeAnalysis.test.jsx`); every tour step spotlights a mounted, visible, in-view target at 1366 and 390. Pending: a real screen reader on the combobox/tour (none available here) |
 | P6 History/comparison/completion | Done | P6a #198 / `26ed24a`; P6b #199 / `3373c48` | Gate met on the real backend: all-family bounded history with synced seek (P6a row); comparison on demand for every family with labelled, independent default/other-case runs, its scope and ordinal caveat stated, a submitted main run called out, stale/retired requests aborted; end-of-run actions only for a complete live run (none for truncated/offline/pending), curriculum boundary → library |
 | P7 Renderer/input families | Review (device/second-engine gates pending) | Inputs #201; fix #200; backend wording #202; renderer fixes #203–#207 | 2026-10-07: real-backend re-sweep on `46d98fb` plus local P8 UI changes passes **200/200**, all 17 registry keys / 50 problems, default+alternate, 1366 dark / 390 light, first/middle/final steps. Manifest: `evidence/p8/renderer-manifest.json`; historical `evidence/p7/renderer-manifest.json` is retained. Normal 60/min execution limit respected. Seven input contracts pass on a phone (#201). Drawing/overflow/error evidence is not a proof of every tracer's answer. Pending: real virtual keyboard / second engine |
-| P8 Accessibility/performance/usability | In progress | `feat/p8-workspace-polish`, based on `46d98fb` | Keyboard/narration/long-value fixes and compact shared header implemented. Reproducible Chromium probes: `evidence/p8/accessibility-journey.cjs`, `chrome-journey.cjs`. See the 2026-10-07 log entry for exact results and open gates; publishing this bounded package does not close P8 or imply a screen-reader/user-research sign-off |
+| P8 Accessibility/performance/usability | In progress | Bounded polish merged #208 / `9d0aa10` (based on `46d98fb`) | Keyboard/narration/long-value fixes and compact shared header implemented. Reproducible Chromium probes: `evidence/p8/accessibility-journey.cjs`, `chrome-journey.cjs`. See the 2026-10-07 log entry for exact results and open gates; merging this bounded package does not close P8 or imply a screen-reader/user-research sign-off |
 | P9 Cleanup/release | Planned | — | Complete preservation ledger, checks and rollback |
+
+Parallel, separately scoped DP work (2026-10-09): D0/D1 #212 (`b111b72`), D2 #213
+(`b7ce137`) and D3 #214 (`fb96744`) are merged. D4 teaching/isolated comparison is
+verified on `feat/dp-approach-teaching`; owner publication approval was received on
+2026-10-09. Its CI-gated PR/merge is the publication step, not an all-DP rollout or
+production sign-off. Climbing Stairs is the only three-form pilot
+(1/56 candidate problems). D5's other55 candidates, D6/D7, and the original P8/P9
+gates remain open. See [DP_SOLUTION_APPROACHES_PLAN.md](DP_SOLUTION_APPROACHES_PLAN.md)
+and the dated D4 continuation in the log for current results; #211 repaired complete DP
+source listings and must not be counted as completing P8.
 
 ## Baseline (P0, 2026-09-29)
 

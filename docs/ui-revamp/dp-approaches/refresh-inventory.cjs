@@ -25,6 +25,11 @@ async function get(route) {
   const ui = fs.existsSync(evidencePath) ? JSON.parse(fs.readFileSync(evidencePath, 'utf8')) : null;
   const verifiedPilot = ui?.rows?.length === 10 && ui.rows.every(r => r.allThreeExecuted && r.noOverflowOrErrors)
     && ui?.largestInputGeometry?.length === 4 && ui.largestInputGeometry.every(r => r.svgWidth === r.declaredWidth && r.height <= 480);
+  const comparisonPath = path.join(__dirname, 'd4-results.json');
+  const comparison = fs.existsSync(comparisonPath) ? JSON.parse(fs.readFileSync(comparisonPath, 'utf8')) : null;
+  const verifiedTeachingComparison = verifiedPilot && comparison?.rows?.length === 10
+    && comparison.rows.every(r => r.openingPairAndViewsDoNotFetch && r.sameInputSnapshotAndMainPreserved
+      && r.realCountersAndAnswers && r.independentPositionsAndKeys && r.refusalKeepsMainAndSuccessfulSide && r.noOverflowOrErrors);
   const reviewed = new Map(fs.readFileSync(path.join(__dirname, 'classifications.tsv'), 'utf8')
     .split(/\r?\n/).filter(line => line && !line.startsWith('#')).map(line => {
       const [id, canonicalImplementation, state, transition, resultReconstruction, plannedForms, notes] = line.split('\t');
@@ -45,7 +50,8 @@ async function get(route) {
       ...reviewed.get(problem.id), codeDigest: createHash('sha256').update(detail.javaCode).digest('hex'),
       canonicalInputSpec: detail.inputSpec, canonicalComplexity: detail.complexity,
       alternativeStatus: detail.approaches?.length > 1 ? (problem.id === 'climbing-stairs' && verifiedPilot
-        ? 'backend-and-UI-pilot-verified; family rollout pending' : 'backend-pilot; UI pending')
+        ? verifiedTeachingComparison ? 'backend-and-UI-teaching-comparison-pilot-verified; family rollout pending'
+          : 'backend-and-UI-pilot-verified; family rollout pending' : 'backend-pilot; UI pending')
         : reviewed.get(problem.id).plannedForms.length ? 'planned' : 'requires-different-formulation',
       alternativeSafetyBounds: detail.approaches?.length > 1
         ? 'Published pilot bounds below; measured Climbing Stairs traces are in d2-results.json. Not a rollout-wide safety claim.'

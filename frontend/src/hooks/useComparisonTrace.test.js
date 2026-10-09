@@ -2,8 +2,9 @@ import { act, renderHook, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import useComparisonTrace from './useComparisonTrace';
 
-function execResponse(steps) {
-  return { ok: true, json: () => Promise.resolve({ steps, encoding: 'full', resolvedInput: { n: steps.length } }) };
+function execResponse(steps, problemId = 'two-sum', resolvedInput = { nums: [1, 2, 3] }) {
+  return { ok: true, json: () => Promise.resolve({ problemId, approachId: 'canonical', truncated: false,
+    steps, encoding: 'full', resolvedInput }) };
 }
 
 describe('useComparisonTrace', () => {
@@ -49,8 +50,8 @@ describe('useComparisonTrace', () => {
   it('drops a late answer for a problem it has since moved away from', async () => {
     const slow = [];
     fetch.mockImplementation((url) => {
-      if (url.includes('/old/')) return new Promise((resolve) => slow.push(() => resolve(execResponse([{ stepNumber: 1, description: 'old' }]))));
-      return Promise.resolve(execResponse([{ stepNumber: 1, description: 'new' }, { stepNumber: 2, description: 'new 2' }]));
+      if (url.includes('/old/')) return new Promise((resolve) => slow.push(() => resolve(execResponse([{ stepNumber: 1, description: 'old' }], 'old', { n: 1 }))));
+      return Promise.resolve(execResponse([{ stepNumber: 1, description: 'new' }, { stepNumber: 2, description: 'new 2' }], 'new', { n: 1 }));
     });
     const { result, rerender } = renderHook(({ id }) => useComparisonTrace(id, { n: 1 }, true), { initialProps: { id: 'old' } });
     rerender({ id: 'new' });

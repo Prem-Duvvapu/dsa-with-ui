@@ -4,7 +4,7 @@
 module.exports = function createExecutionPacer(intervalMs = 1100) {
   let next = 0;
   return async function install(page) {
-    await page.route('**/api/problems/*/execute', async route => {
+    await page.route(url => /^\/api\/problems\/[^/]+\/execute$/.test(url.pathname), async route => {
       const now = Date.now();
       const due = Math.max(now, next);
       next = due + intervalMs;
