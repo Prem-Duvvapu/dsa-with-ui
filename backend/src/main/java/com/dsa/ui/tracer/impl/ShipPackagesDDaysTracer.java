@@ -16,7 +16,7 @@ import java.util.Map;
  * smaller, a failing one tried larger.
  */
 @Component
-public class ShipPackagesDDaysTracer implements AlgorithmTracer {
+public class ShipPackagesDDaysTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -50,43 +50,6 @@ public class ShipPackagesDDaysTracer implements AlgorithmTracer {
         return Map.of("weights", List.of(3, 2, 2, 4, 1, 4), "days", 3);
     }
 
-    @Override
-    public String annotatedCode() {
-        return """
-               public int shipWithinDays(int[] weights, int days) {
-                   int low = max(weights), high = sum(weights), ans = high;
-                   // @a init
-                   while (low <= high) {
-                       // @a mid
-                       int mid = (low + high) / 2;
-                       if (daysNeeded(weights, mid) <= days) {
-                           // @a feasible
-                           ans = mid;
-                           high = mid - 1;
-                       } else {
-                           // @a infeasible
-                           low = mid + 1;
-                       }
-                   }
-                   // @a done
-                   return ans;
-               }
-
-               private int daysNeeded(int[] weights, int capacity) {
-                   int days = 1, load = 0;
-                   for (int w : weights) {
-                       if (load + w > capacity) {
-                           // @a newDay
-                           days++;
-                           load = w;
-                       } else {
-                           // @a addToDay
-                           load += w;
-                       }
-                   }
-                   return days;
-               }""";
-    }
 
     private List<ArrayElement> state(int[] weights, int current, int splitStart) {
         List<ArrayElement> s = new ArrayList<>(weights.length);

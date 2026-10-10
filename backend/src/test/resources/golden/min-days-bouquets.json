@@ -1,15 +1,15 @@
 {
   "anchors" : {
-    "breakRun" : 15,
-    "done" : 25,
-    "extendRun" : 12,
-    "feasible" : 19,
-    "impossible" : 4,
-    "infeasible" : 22,
-    "init" : 6,
-    "mid" : 8
+    "breakRun" : 16,
+    "done" : 26,
+    "extendRun" : 13,
+    "feasible" : 20,
+    "impossible" : 5,
+    "infeasible" : 23,
+    "init" : 7,
+    "mid" : 9
   },
-  "code" : "public int minDays(int[] bloomDay, int m, int k) {\n    long need = (long) m * k;\n    if (need > bloomDay.length) {\n        return -1;\n    }\n    int low = min(bloomDay), high = max(bloomDay), ans = -1;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        int bouquets = 0, run = 0;\n        for (int day : bloomDay) {\n            if (day <= mid) {\n                run++;\n                if (run == k) { bouquets++; run = 0; }\n            } else {\n                run = 0;\n            }\n        }\n        if (bouquets >= m) {\n            ans = mid;\n            high = mid - 1;\n        } else {\n            low = mid + 1;\n        }\n    }\n    return ans;\n}",
+  "code" : "public class Solution {\n    public int solve(int[] bloomDay, int m, int k) {\n        long need = (long) m * k;\n        if (need > bloomDay.length) {\n            return -1;\n        }\n        int low = min(bloomDay), high = max(bloomDay), ans = -1;\n        while (low <= high) {\n            int mid = low + (high - low) / 2;\n            int bouquets = 0, run = 0;\n            for (int day : bloomDay) {\n                if (day <= mid) {\n                    run++;\n                    if (run == k) { bouquets++; run = 0; }\n                } else {\n                    run = 0;\n                }\n            }\n            if (bouquets >= m) {\n                ans = mid;\n                high = mid - 1;\n            } else {\n                low = mid + 1;\n            }\n        }\n        return ans;\n    }\n\n    private int min(int[] bloomDay) {\n        int earliest = bloomDay[0];\n        for (int day : bloomDay) earliest = Math.min(earliest, day);\n        return earliest;\n    }\n\n    private int max(int[] bloomDay) {\n        int latest = bloomDay[0];\n        for (int day : bloomDay) latest = Math.max(latest, day);\n        return latest;\n    }\n}\n",
   "problemId" : "min-days-bouquets",
   "resolvedInput" : {
     "bloomDay" : [ 1, 10, 3, 10, 2 ],
@@ -19,7 +19,7 @@
   "stepCount" : 23,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 6,
+    "activeLine" : 7,
     "description" : "Binary search the day count. Nothing blooms before day 1, and everything has bloomed by day 10.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -57,7 +57,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 8,
+    "activeLine" : 9,
     "description" : "Test day 5: which flowers have bloomed by then?",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -96,7 +96,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 12,
+    "activeLine" : 13,
     "description" : "Flower 0 (day 1) has bloomed. Run = 0, bouquets so far = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -134,7 +134,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 15,
+    "activeLine" : 16,
     "description" : "Flower 1 (day 10) has not bloomed yet — the run of adjacent flowers breaks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -171,7 +171,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 12,
+    "activeLine" : 13,
     "description" : "Flower 2 (day 3) has bloomed. Run = 0, bouquets so far = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -209,7 +209,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 15,
+    "activeLine" : 16,
     "description" : "Flower 3 (day 10) has not bloomed yet — the run of adjacent flowers breaks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -246,7 +246,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 12,
+    "activeLine" : 13,
     "description" : "Flower 4 (day 2) has bloomed. Run = 0, bouquets so far = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -284,7 +284,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "3 bouquets made (needed 3) by day 5 — feasible. Try an earlier day.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -322,7 +322,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 8,
+    "activeLine" : 9,
     "description" : "Test day 2: which flowers have bloomed by then?",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -361,7 +361,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 12,
+    "activeLine" : 13,
     "description" : "Flower 0 (day 1) has bloomed. Run = 0, bouquets so far = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -399,7 +399,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 15,
+    "activeLine" : 16,
     "description" : "Flower 1 (day 10) has not bloomed yet — the run of adjacent flowers breaks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -436,7 +436,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 15,
+    "activeLine" : 16,
     "description" : "Flower 2 (day 3) has not bloomed yet — the run of adjacent flowers breaks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -473,7 +473,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 15,
+    "activeLine" : 16,
     "description" : "Flower 3 (day 10) has not bloomed yet — the run of adjacent flowers breaks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -510,7 +510,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 12,
+    "activeLine" : 13,
     "description" : "Flower 4 (day 2) has bloomed. Run = 0, bouquets so far = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -548,7 +548,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Only 2 bouquets made (needed 3) by day 2 — too early. Try later.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -585,7 +585,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 8,
+    "activeLine" : 9,
     "description" : "Test day 3: which flowers have bloomed by then?",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -624,7 +624,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 12,
+    "activeLine" : 13,
     "description" : "Flower 0 (day 1) has bloomed. Run = 0, bouquets so far = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -662,7 +662,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 15,
+    "activeLine" : 16,
     "description" : "Flower 1 (day 10) has not bloomed yet — the run of adjacent flowers breaks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -699,7 +699,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 12,
+    "activeLine" : 13,
     "description" : "Flower 2 (day 3) has bloomed. Run = 0, bouquets so far = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -737,7 +737,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 15,
+    "activeLine" : 16,
     "description" : "Flower 3 (day 10) has not bloomed yet — the run of adjacent flowers breaks.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -774,7 +774,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 21,
-    "activeLine" : 12,
+    "activeLine" : 13,
     "description" : "Flower 4 (day 2) has bloomed. Run = 0, bouquets so far = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -812,7 +812,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 22,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "3 bouquets made (needed 3) by day 3 — feasible. Try an earlier day.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -850,7 +850,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 23,
-    "activeLine" : 25,
+    "activeLine" : 26,
     "description" : "low passed high. The earliest day with enough bouquets is 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],

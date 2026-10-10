@@ -14,6 +14,8 @@ const ids = fs.readdirSync(path.join(root, `backend/src/main/resources/solutions
   .filter(name => name.endsWith('.java')).map(name => name.slice(0, -5)).sort();
 const representatives = family === 'core' ? ids : ['longest-common-subsequence', 'shortest-common-supersequence',
   'longest-string-chain', 'stock-transaction-fee', 'longest-bitonic-subsequence', 'palindrome-partitioning-2'];
+const captureId = process.env.SOURCE_CAPTURE_ID || (family === 'core' ? 'print-lis' : 'longest-string-chain');
+if (!representatives.includes(captureId)) throw Error('Capture ID must be a verified representative');
 const placeholder = /initialiseBaseCases|evaluateTransitionCandidates|extractAnswer|reconstructChosenSolution/;
 
 (async () => {
@@ -40,7 +42,7 @@ const placeholder = /initialiseBaseCases|evaluateTransitionCandidates|extractAns
   const rows = [];
   const save = complete => fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({
     generated: new Date().toISOString(), browser: 'Chromium', browserVersion: browser.version(),
-    realBackend: true, family, servedBuild,
+    realBackend: true, family, captureId, servedBuild,
     complete, completeSources: ids, rows
   }, null, 2));
   try {
@@ -110,7 +112,7 @@ const placeholder = /initialiseBaseCases|evaluateTransitionCandidates|extractAns
           sourceSha256: createHash('sha256').update(execution.code).digest('hex'), failures });
         save(false);
         console.log(`${failures.length ? 'FAIL' : 'PASS'} ${id} ${width} ${theme}`);
-        if (id === 'longest-string-chain' || (family === 'core' && id === 'print-lis')) {
+        if (id === captureId) {
           await page.screenshot({ path: path.join(out, `source-${width}-${theme}.png`) });
         }
       }

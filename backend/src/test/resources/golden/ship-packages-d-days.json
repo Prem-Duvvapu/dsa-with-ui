@@ -1,14 +1,14 @@
 {
   "anchors" : {
-    "addToDay" : 22,
-    "done" : 12,
-    "feasible" : 6,
-    "infeasible" : 9,
-    "init" : 3,
-    "mid" : 4,
-    "newDay" : 19
+    "addToDay" : 23,
+    "done" : 13,
+    "feasible" : 7,
+    "infeasible" : 10,
+    "init" : 4,
+    "mid" : 5,
+    "newDay" : 20
   },
-  "code" : "public int shipWithinDays(int[] weights, int days) {\n    int low = max(weights), high = sum(weights), ans = high;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (daysNeeded(weights, mid) <= days) {\n            ans = mid;\n            high = mid - 1;\n        } else {\n            low = mid + 1;\n        }\n    }\n    return ans;\n}\n\nprivate int daysNeeded(int[] weights, int capacity) {\n    int days = 1, load = 0;\n    for (int w : weights) {\n        if (load + w > capacity) {\n            days++;\n            load = w;\n        } else {\n            load += w;\n        }\n    }\n    return days;\n}",
+  "code" : "public class Solution {\n    public int solve(int[] weights, int days) {\n        int low = max(weights), high = sum(weights), ans = high;\n        while (low <= high) {\n            int mid = low + (high - low) / 2;\n            if (daysNeeded(weights, mid) <= days) {\n                ans = mid;\n                high = mid - 1;\n            } else {\n                low = mid + 1;\n            }\n        }\n        return ans;\n    }\n\n    private int daysNeeded(int[] weights, int capacity) {\n        int days = 1, load = 0;\n        for (int w : weights) {\n            if (load + w > capacity) {\n                days++;\n                load = w;\n            } else {\n                load += w;\n            }\n        }\n        return days;\n    }\n\n    private int max(int[] weights) {\n        int largest = weights[0];\n        for (int w : weights) largest = Math.max(largest, w);\n        return largest;\n    }\n\n    private int sum(int[] weights) {\n        int total = 0;\n        for (int w : weights) total += w;\n        return total;\n    }\n}\n",
   "problemId" : "ship-packages-d-days",
   "resolvedInput" : {
     "days" : 5,
@@ -17,7 +17,7 @@
   "stepCount" : 62,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 3,
+    "activeLine" : 4,
     "description" : "Binary search the daily capacity: cannot be below the heaviest single package (10) or above shipping everything in one day (55).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -75,7 +75,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 4,
+    "activeLine" : 5,
     "description" : "Test capacity 32 packages per day. Can it ship within 5 days?",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -134,7 +134,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 0 (1) still fits today's load (1 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -192,7 +192,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 1 (2) still fits today's load (3 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -250,7 +250,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 2 (3) still fits today's load (6 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -308,7 +308,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 3 (4) still fits today's load (10 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -366,7 +366,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 4 (5) still fits today's load (15 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -424,7 +424,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 5 (6) still fits today's load (21 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -482,7 +482,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 6 (7) still fits today's load (28 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -540,7 +540,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 7 (8) would overflow capacity 32 — start day 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -598,7 +598,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 8 (9) still fits today's load (17 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -656,7 +656,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 9 (10) still fits today's load (27 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -714,7 +714,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 6,
+    "activeLine" : 7,
     "description" : "2 days needed (allowed 5) — capacity 32 works. Try smaller.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -773,7 +773,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 4,
+    "activeLine" : 5,
     "description" : "Test capacity 20 packages per day. Can it ship within 5 days?",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -832,7 +832,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 0 (1) still fits today's load (1 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -890,7 +890,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 1 (2) still fits today's load (3 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -948,7 +948,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 2 (3) still fits today's load (6 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1006,7 +1006,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 3 (4) still fits today's load (10 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1064,7 +1064,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 4 (5) still fits today's load (15 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1122,7 +1122,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 5 (6) would overflow capacity 20 — start day 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1180,7 +1180,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 21,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 6 (7) still fits today's load (13 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1238,7 +1238,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 22,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 7 (8) would overflow capacity 20 — start day 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1296,7 +1296,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 23,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 8 (9) still fits today's load (17 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1354,7 +1354,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 24,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 9 (10) would overflow capacity 20 — start day 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1412,7 +1412,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 25,
-    "activeLine" : 6,
+    "activeLine" : 7,
     "description" : "4 days needed (allowed 5) — capacity 20 works. Try smaller.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1471,7 +1471,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 26,
-    "activeLine" : 4,
+    "activeLine" : 5,
     "description" : "Test capacity 14 packages per day. Can it ship within 5 days?",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1530,7 +1530,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 27,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 0 (1) still fits today's load (1 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1588,7 +1588,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 28,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 1 (2) still fits today's load (3 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1646,7 +1646,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 29,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 2 (3) still fits today's load (6 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1704,7 +1704,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 30,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 3 (4) still fits today's load (10 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1762,7 +1762,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 31,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 4 (5) would overflow capacity 14 — start day 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1820,7 +1820,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 32,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 5 (6) still fits today's load (11 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1878,7 +1878,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 33,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 6 (7) would overflow capacity 14 — start day 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1936,7 +1936,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 34,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 7 (8) would overflow capacity 14 — start day 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1994,7 +1994,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 35,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 8 (9) would overflow capacity 14 — start day 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2052,7 +2052,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 36,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 9 (10) would overflow capacity 14 — start day 6.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2110,7 +2110,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 37,
-    "activeLine" : 9,
+    "activeLine" : 10,
     "description" : "6 days needed (allowed 5) — capacity 14 is too small. Try larger.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2168,7 +2168,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 38,
-    "activeLine" : 4,
+    "activeLine" : 5,
     "description" : "Test capacity 17 packages per day. Can it ship within 5 days?",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2227,7 +2227,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 39,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 0 (1) still fits today's load (1 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2285,7 +2285,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 40,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 1 (2) still fits today's load (3 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2343,7 +2343,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 41,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 2 (3) still fits today's load (6 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2401,7 +2401,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 42,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 3 (4) still fits today's load (10 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2459,7 +2459,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 43,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 4 (5) still fits today's load (15 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2517,7 +2517,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 44,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 5 (6) would overflow capacity 17 — start day 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2575,7 +2575,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 45,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 6 (7) still fits today's load (13 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2633,7 +2633,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 46,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 7 (8) would overflow capacity 17 — start day 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2691,7 +2691,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 47,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 8 (9) still fits today's load (17 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2749,7 +2749,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 48,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 9 (10) would overflow capacity 17 — start day 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2807,7 +2807,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 49,
-    "activeLine" : 6,
+    "activeLine" : 7,
     "description" : "4 days needed (allowed 5) — capacity 17 works. Try smaller.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2866,7 +2866,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 50,
-    "activeLine" : 4,
+    "activeLine" : 5,
     "description" : "Test capacity 15 packages per day. Can it ship within 5 days?",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2925,7 +2925,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 51,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 0 (1) still fits today's load (1 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2983,7 +2983,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 52,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 1 (2) still fits today's load (3 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3041,7 +3041,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 53,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 2 (3) still fits today's load (6 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3099,7 +3099,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 54,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 3 (4) still fits today's load (10 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3157,7 +3157,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 55,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 4 (5) still fits today's load (15 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3215,7 +3215,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 56,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 5 (6) would overflow capacity 15 — start day 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3273,7 +3273,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 57,
-    "activeLine" : 22,
+    "activeLine" : 23,
     "description" : "Package 6 (7) still fits today's load (13 so far).",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3331,7 +3331,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 58,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 7 (8) would overflow capacity 15 — start day 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3389,7 +3389,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 59,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 8 (9) would overflow capacity 15 — start day 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3447,7 +3447,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 60,
-    "activeLine" : 19,
+    "activeLine" : 20,
     "description" : "Package 9 (10) would overflow capacity 15 — start day 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3505,7 +3505,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 61,
-    "activeLine" : 6,
+    "activeLine" : 7,
     "description" : "5 days needed (allowed 5) — capacity 15 works. Try smaller.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3564,7 +3564,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 62,
-    "activeLine" : 12,
+    "activeLine" : 13,
     "description" : "low passed high. The smallest workable capacity is 15.",
     "queueOrStackState" : null,
     "callStack" : [ ],

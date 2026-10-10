@@ -35,16 +35,29 @@ gates remain open. See [DP_SOLUTION_APPROACHES_PLAN.md](DP_SOLUTION_APPROACHES_P
 and the dated D4 continuation in the log for current results; #211 repaired complete DP
 source listings and must not be counted as completing P8.
 
-Source completeness follow-up (2026-10-10): the first separate helper batch is locally
-implemented on `fix/complete-source-helpers-batch1`, based on #219. Five complete Java
+Source completeness follow-up (2026-10-10): the first separate helper batch merged as
+#220 / `7a5120e`, based on #219. Five complete Java
 solutions pass 17 executable source contracts, full backend (8,040 tests/500 existing
 skips), unchanged frontend (788 tests/build), 20 real-backend Chromium Code-view rows
 and a custom-run/400 retention journey. Five goldens change source/highlight positions
 only. `evidence/source-code/core-batch1/` and the dated log record evidence and limits.
-The owner approved publication, gated on CI; PR/merge are pending. Forty-eight other known non-platform omissions,
+PR/post-merge CI and Vercel frontend deployment passed; a public backend-source probe
+timed out, so backend deployment/source verification remains open. Forty-eight other known non-platform omissions,
 77 platform contexts, C++ labelling, broader semantic/source review and all outstanding
 DP rollout/human/release gates remain open. The locked dependency audit also reports nine
 findings; it is an open release issue, not resolved by either source or layout work.
+
+Second helper batch (local, not published): four complete parametric-search listings on
+`fix/complete-source-helpers-batch2`, based on #220.29 core contracts,8,052 backend tests
+(500 existing skips),788 frontend tests/build,36 Chromium source rows and three custom
+probe modes pass. Four goldens change source/highlights only.44 historical non-platform
+omissions remain;77 platform contexts and all broader gates remain open. Parallel audits
+and visual inspection also reproduced three existing defects: Smallest Divisor's invalid
+threshold, Matrix Median's unsorted/even-contract mismatch and SearchSpaceCanvas's stale
+partial-bound/terminal display. They are deferred to a separate correctness package,
+not covered by source-view acceptance. `evidence/source-code/core-batch2/` and the dated
+log record details. The owner approved publication on continuation, gated on CI;
+publication is in progress. P7/P8/P9 are not closed.
 
 ## Baseline (P0, 2026-09-29)
 
@@ -99,7 +112,7 @@ above; current limitations belong in this ledger and the package table.
 | F15 Canvas/legend | P3, P7 | Stage, all registry keys | `registry.test.js`, canvas tests | P7/P8 renderer manifests | Implemented; full second-engine/device acceptance and stage-position target remain open |
 | F16 Queue/grid companions | P3 | Stage companions | Existing: `companions.test.js` | P0 Graph capture | Baseline OK |
 | F17 Capture/click-to-seek | P6 | History | `CaptureStrip.test.jsx`, `StepHistory.test.jsx`, `Workspace.integration.test.jsx` | P6a all-family history journey | Textual history and capture seeking implemented; DOM bounded |
-| F18 Java/active line | P4a | Code view + split | `CodeAnalysis.test.jsx` (split, follow, kept scroll); `CodeViewer.test.jsx` | P4a journey: BFS split at 1366, active line 10 highlighted | Public sole route;27-source repair merged; Print LIS source helpers still require repair |
+| F18 Java/active line | P4a | Code view + split | `CodeAnalysis.test.jsx` (split, follow, kept scroll); `CodeViewer.test.jsx`; backend displayed-source contracts | P4a journey: BFS split at 1366, active line 10 highlighted; core-batch1 real source journeys | Public sole route;27-source repair and five helpers including Print LIS merged (#211/#220); broader source certification remains open |
 | F19 Variables/frames/containers | P4a | Analysis | `CodeAnalysis.test.jsx` (null/empty, frame order, container labels) | P4a/P4 review journeys | Public sole route; non-Stack/Queue containers neutrally labelled |
 | F20 Complexity | P4a | Analysis | `CodeAnalysis.test.jsx` (backend values, "unavailable") | P4a journey | Public sole route; values from the shown executable |
 | F21 Error/empty/malformed/unavailable | P1, P3 | Distinct status states | `ErrorParity.integration.test.jsx`, `Session.integration.test.jsx`, `useTrace.session.test.js` | Session/review journeys | Rerun failures retain explicitly labelled prior run |

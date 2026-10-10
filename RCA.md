@@ -1683,6 +1683,35 @@ Remaining: 48 other known helper/state/type failures, 77 authoritative platform 
 C++ labelling and semantic review of compiler successes. This is a bounded repair, not
 all-source certification or implementation of additional DP forms.
 
+### RCA-057 follow-up — 2026-10-10 complete parametric-search helpers
+
+The next source-only batch repairs Book Allocation, Painter's Partition, Shipping Within
+D Days and Minimum Days for Bouquets. Each now owns a standalone typed `Solution` with
+the missing min/max/sum helpers. Tracer algorithms, validation caps and trace data remain
+unchanged. The displayed midpoint uses the equivalent overflow-safe expression.
+
+Four new tests failed against the old listings (21 cases total, four failures). The
+expanded registry-derived contract passes29 cases: all nine core owners compile and
+execute defaults, alternates and21 published examples, with exact HTTP source/anchor
+delivery. Independent tests enumerate every cut pattern for selected short seeded
+arrays and use interval DP for bouquets, not the tracer's greedy feasibility code.
+Constant-answer and overlapping-bouquet mutations compiled but failed2/2 probes; restored.
+The full backend passes8,052 tests with500 existing skips. Four parsed goldens change
+only source/anchors/highlight lines. Forty-four other known non-platform omissions remain.
+
+Candidate audits also found two separate accepted-input defects, deliberately excluded
+from source-only certification: `smallest-divisor`, nums=[1,2], threshold=1 returns2
+although no divisor is feasible; `matrix-median`, matrix=[[9,1,2]] returns9 instead of2.
+The former statement requires threshold>=length but validation does not. The latter
+does not enforce sorted rows, and its even default/lower-median behavior conflicts with
+the authored odd-cell statement. Both were reproduced through TraceRunner and require
+a separately tested input/content correction, not copying incorrect answers into source.
+
+Visual inspection found another pre-existing honesty gap: `SearchSpaceCanvas.lastBounds`
+skips steps that update only low or high. Book Allocation's final answer113 therefore
+still draws answers[112,112] and probing112 after a low=113 update. This frontend correction
+is pending separately; source-highlight/browser gates do not prove canvas-result semantics.
+
 ## RCA-058 — A bounded default-trace cache used unbounded caller encoding strings
 
 - **Discovered:** 2026-10-07 while implementing the DP approach API (D1).

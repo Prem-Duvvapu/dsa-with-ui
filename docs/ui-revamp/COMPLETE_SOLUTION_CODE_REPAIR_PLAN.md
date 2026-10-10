@@ -154,7 +154,7 @@ Retain the existing no-substitution/source-line/golden discipline. Publication s
 requires owner authorization; this inventory is planning evidence, not another stacked
 implementation package or a full-project completion claim.
 
-## Helper repair batch 1 — implemented locally, 2026-10-10
+## Helper repair batch 1 — merged #220, 2026-10-10
 
 The layout package merged as #219 / `e68e6f9` with PR/post-merge CI and deployment green.
 The next separate branch, `fix/complete-source-helpers-batch1`, repairs five known omissions:
@@ -174,9 +174,59 @@ two compiling wrong-answer mutations failed selectively and were restored. The f
 passes 8,040 tests with 500 existing skips; the unchanged frontend passes 79 files/788
 tests and its production build. Five goldens differ only in source/anchors/activeLine.
 
-Evidence and reproducible commands: `evidence/source-code/core-batch1/`. This local
-implementation is not yet published. The owner approved commit/push/PR/merge after CI
-passes; publication is now in progress. The baseline
+Evidence and reproducible commands: `evidence/source-code/core-batch1/`. The owner approved
+publication; PR #220 merged as `7a5120e`, with PR CI, post-merge CI and Vercel frontend
+deployment passing. A public backend source check timed out; frontend deployment status
+does not certify the deployed backend source. The baseline
 inventory is retained as historical evidence; 48 of its other non-platform Java failures,
 77 platform contexts, the C++ label and semantic review of compiler successes remain.
 No new DP approach was introduced; the remaining 54 candidate rows and D6/D7 stay open.
+
+## Helper repair batch 2 — locally verified, 2026-10-10
+
+Branch `fix/complete-source-helpers-batch2` starts from merged #220 / `7a5120e`.
+Four missing-helper listings are repaired: Book Allocation, Painter's Partition,
+Shipping Within D Days and Minimum Days for Bouquets. Strict existing resource ownership
+is reused; `run`, input specifications, state, results and narration are unchanged.
+The source midpoint uses the equivalent overflow-safe expression. No frontend production
+code, dependency or DP approach was changed.
+
+The core source contract now passes29 cases across nine owners, including21 published
+examples, exhaustive partitions of selected seeded short arrays, independent bouquet
+interval selection, singleton/impossible/idle-worker cases and visualizer-cap boundaries.
+Four added tests failed before repair; two compiling wrong-answer mutations failed and
+were restored. Full backend:8,052 tests,0 failures/errors,500 existing skips. Frontend:
+79 files/788 tests, fresh locked install and unchanged production build. Four parsed
+goldens change only source/anchors/activeLine. The incremental comparison discovers new
+untracked resources without treating the original five as newly repaired; intentional
+non-source golden mutation is still rejected.
+
+Real-backend Chromium:36/36 source-view rows (all nine core owners,320/1366px,both themes),
+with source hashes matching current goldens and unchanged identified production assets.
+Custom Book Allocation [1,2,3,4],m=2 returns6; rejected m=13 produces400 and preserves
+source, step and decoded shared input with error focus. Strengthened existing Balanced
+Parentheses and default DP/LCS custom probes also pass. Evidence: `evidence/source-code/core-batch2/`.
+
+The owner initially authorized implementation and parallel read-only audits. On continuation
+after the publication request, the owner approved commit/push/PR/merge of this batch after
+CI passes; publication is in progress. Forty-four of the historical
+53 non-platform failures remain after the two helper batches;77 platform contexts,
+C++ labelling, compiler-success semantics and wider acceptance/release work remain open.
+Books/painters are not certified for arbitrary unbounded arrays outside declared caps.
+
+### Separately diagnosed corrections — pending, not included in this source-only batch
+
+- Smallest Divisor accepts nums=[1,2],threshold=1 and returns2 despite impossibility.
+  Its statement requires threshold>=length; enforce the authoritative cross-field contract
+  with runner/HTTP400/boundary regressions before certifying its replacement source.
+- Matrix Median accepts unsorted [[9,1,2]] and returns9 rather than2. Enforce sorted rows
+  and reconcile the even default/lower-median behavior with the authored odd-cell contract.
+  Do not silently sort inputs or substitute another problem's median semantics.
+- SearchSpaceCanvas retains the last step containing both bounds, ignoring partial bound
+  updates. At Book Allocation's final answer113, it still renders answers[112,112] and
+  probing112. Repair actual-state reconstruction/terminal presentation in a separate
+  frontend regression-first slice. Source-only parsed goldens prove this predates batch2.
+
+The source browser gates check exact code/highlights and session continuity, not every
+canvas label's mathematical truth. These discovered defects stay open even though those
+bounded source gates pass. Do not mark P7/P8 or final release complete.
