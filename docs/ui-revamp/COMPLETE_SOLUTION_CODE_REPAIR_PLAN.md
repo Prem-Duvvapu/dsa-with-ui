@@ -153,3 +153,30 @@ semantic/input agreement review; do not limit correctness certification to failu
 Retain the existing no-substitution/source-line/golden discipline. Publication still
 requires owner authorization; this inventory is planning evidence, not another stacked
 implementation package or a full-project completion claim.
+
+## Helper repair batch 1 — implemented locally, 2026-10-10
+
+The layout package merged as #219 / `e68e6f9` with PR/post-merge CI and deployment green.
+The next separate branch, `fix/complete-source-helpers-batch1`, repairs five known omissions:
+Print LIS, Balanced Parentheses, Asteroid Collision, Next Permutation and Quick Sort.
+Each owns a standalone Java 17 `Solution` resource through `CompleteSourceTracer`;
+missing resources fail explicitly and no generic source is substituted.
+
+The original algorithms, input specifications, narration and state are unchanged.
+Reconstruction, stack-to-left/right conversion and reversal/swap helpers are complete;
+typed `solve` parameters match the authoritative fields. Sorting and permutation remain
+in-place, preserving Quick Sort's first-element pivot and LIS's strict tie updates.
+
+Seventeen source contracts pass: compilation with an isolated classpath/no app scaffolds,
+defaults/alternates, all 12 published examples, bounded edge/seeded cases, ownership,
+phase anchors and HTTP detail/full/delta agreement. Twelve failed on the original listings;
+two compiling wrong-answer mutations failed selectively and were restored. The full backend
+passes 8,040 tests with 500 existing skips; the unchanged frontend passes 79 files/788
+tests and its production build. Five goldens differ only in source/anchors/activeLine.
+
+Evidence and reproducible commands: `evidence/source-code/core-batch1/`. This local
+implementation is not yet published. The owner approved commit/push/PR/merge after CI
+passes; publication is now in progress. The baseline
+inventory is retained as historical evidence; 48 of its other non-platform Java failures,
+77 platform contexts, the C++ label and semantic review of compiler successes remain.
+No new DP approach was introduced; the remaining 54 candidate rows and D6/D7 stay open.

@@ -5,10 +5,13 @@ const { execFileSync } = require('child_process');
 const { isDeepStrictEqual } = require('util');
 const root = path.resolve(__dirname, '../../../..');
 const baseline = process.argv[2] || '9d0aa10';
+const family = process.argv[3] || 'dp';
+if (!['dp', 'core'].includes(family)) throw Error('Unknown source resource family');
+const output = process.argv[4] || path.join(__dirname, 'golden-comparison.json');
 const directory = 'backend/src/test/resources/golden';
 const files = execFileSync('git', ['diff', '--name-only', baseline, '--', directory], { cwd: root, encoding: 'utf8' })
   .trim().split('\n').filter(Boolean);
-const ids = fs.readdirSync(path.join(root, 'backend/src/main/resources/solutions/dp'))
+const ids = fs.readdirSync(path.join(root, `backend/src/main/resources/solutions/${family}`))
   .filter(name => name.endsWith('.java')).map(name => name.slice(0, -5)).sort();
 if (!isDeepStrictEqual(files.map(file => path.basename(file, '.json')).sort(), ids)) {
   throw Error('Changed goldens must exactly match repaired source resources');
@@ -27,8 +30,8 @@ const rows = files.map(file => {
   return { id: path.basename(file, '.json'), unchangedData,
     oldLines: before.code.split('\n').length, newLines: after.code.split('\n').length };
 });
-fs.writeFileSync(path.join(__dirname, 'golden-comparison.json'), JSON.stringify({
-  baseline, allowedChanges: ['code', 'anchors', 'steps[].activeLine'], rows
+fs.writeFileSync(output, JSON.stringify({
+  baseline, family, allowedChanges: ['code', 'anchors', 'steps[].activeLine'], rows
 }, null, 2));
 if (rows.some(row => !row.unchangedData)) throw Error('A golden changed non-source data');
 console.log(`PASS ${rows.length} goldens: only source, anchors and highlighted lines changed`);

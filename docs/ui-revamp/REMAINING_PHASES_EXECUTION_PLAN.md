@@ -27,9 +27,9 @@ Steps1–3 are complete: Frog Jump merged as #216 / `4ad9fc3`, followed by the s
 MIT license package #217 / `9de01cd`. The owner resumed work on 2026-10-10.
 Step4 merged as #218 / `089cdd9`: actual production reachability, dead UI retirement
 and useful live-workspace regression guards. PR CI, post-merge CI and Vercel deployment
-passed. The owner subsequently resumed the full completion goal. Step5 is now the
-bounded layout/accessibility package on `fix/workspace-layout-polish`, based on that merge.
-Its local checks pass: 788 frontend tests, 8,023 backend tests, build, 60 Chromium +60
+passed. The owner subsequently resumed the full completion goal. The bounded step5
+layout/accessibility package merged as #219 / `e68e6f9` after owner authorization;
+PR CI, post-merge CI and Vercel passed. Its checks pass: 788 frontend tests, 8,023 backend tests, build, 60 Chromium +60
 Firefox layout rows and 39 tour checks. The useful-frame position target, broader human
 and performance gates remain open; this is not a completed P8 or release. Exact evidence
 and exceptions are in the dated log and `evidence/p8/layout-polish/`.
@@ -37,9 +37,15 @@ Read-only source preflight now distinguishes 300 Java compiler successes with sc
 77 unresolved platform-node contexts, 53 other Java failures and one intentional C++
 lesson with incorrect Java UI labelling. See the existing source-repair plan and
 `evidence/source-code/compile-inventory.json`; no source repair was stacked onto step5.
-Keep medium packages sequential. The owner has now authorized publication of the verified
-layout package, gated on required PR checks, then continuation with separate source repairs.
+Keep medium packages sequential. The owner authorized publication of the verified
+layout package, now merged, then continuation with separate source repairs.
 Do not infer publication approval for later packages from this bounded authorization.
+Step6's first helper batch is now locally verified: five complete Java listings,17 new
+source contracts,8,040 backend tests,788 frontend tests/build,20 real-backend Chromium
+Code-view rows and custom/400 retention. See the source plan/log and
+`evidence/source-code/core-batch1/`. The owner approved its publication after CI;48 other known
+non-platform omissions,77 platform contexts,language honesty and broader semantic
+certification remain. Source repair does not count as a DP candidate implementation.
 54 other DP candidate rows are
 unimplemented. Applicability must be reviewed rather than forcing three options on every
 problem. Completing an early cleanup or pilot check does not close P8/P9 or DP D6/D7.
@@ -322,6 +328,10 @@ the owner accepts a documented alternative; “looks good” is not automatic ga
    No stale “not implemented,” “behind flag,” wrong queue claims or obsolete test paths.
 5. Run full frontend/backend suites, production build, startup cleanup and the final
    browser journeys on the exact release candidate. Review artifacts and dependency diff.
+   A fresh locked install/audit on 2026-10-10 reports nine dependency findings (four
+   moderate, three high, two critical). Review exposure and plan a separately verified
+   dependency-security package before release; a source repair or GitGuardian pass does
+   not close these findings. No force-fix or dependency upgrade was bundled with source repairs.
 6. Record release commit, PRs, rollback boundary, known limitations, commands and evidence
    locations. Use a normal tested revert for rollback, not reset/force-push on main.
 7. Publish only under current owner authorization; wait for frontend/backend/security/

@@ -1,13 +1,13 @@
 {
   "anchors" : {
-    "bothExplode" : 9,
-    "currentExplodes" : 12,
-    "done" : 19,
-    "init" : 2,
-    "push" : 16,
-    "topExplodes" : 7
+    "bothExplode" : 13,
+    "currentExplodes" : 16,
+    "done" : 23,
+    "init" : 6,
+    "push" : 20,
+    "topExplodes" : 11
   },
-  "code" : "public int[] asteroidCollision(int[] asteroids) {\n    Deque<Integer> stack = new ArrayDeque<>();\n    for (int a : asteroids) {\n        boolean alive = true;\n        while (alive && a < 0 && !stack.isEmpty() && stack.peek() > 0) {\n            if (stack.peek() < -a) {\n                stack.pop();\n            } else if (stack.peek() == -a) {\n                stack.pop();\n                alive = false;\n            } else {\n                alive = false;\n            }\n        }\n        if (alive) {\n            stack.push(a);\n        }\n    }\n    return toArray(stack);\n}",
+  "code" : "import java.util.ArrayDeque;\nimport java.util.Deque;\n\npublic class Solution {\n    public int[] solve(int[] asteroids) {\n        Deque<Integer> stack = new ArrayDeque<>();\n        for (int a : asteroids) {\n            boolean alive = true;\n            while (alive && a < 0 && !stack.isEmpty() && stack.peek() > 0) {\n                if (stack.peek() < -a) {\n                    stack.pop();\n                } else if (stack.peek() == -a) {\n                    stack.pop();\n                    alive = false;\n                } else {\n                    alive = false;\n                }\n            }\n            if (alive) {\n                stack.push(a);\n            }\n        }\n        return toArray(stack);\n    }\n\n    private int[] toArray(Deque<Integer> stack) {\n        int[] answer = new int[stack.size()];\n        int index = answer.length - 1;\n        // Stack iteration visits the rightmost survivor first; output is left-to-right.\n        for (int asteroid : stack) answer[index--] = asteroid;\n        return answer;\n    }\n}\n",
   "problemId" : "asteroid-collision",
   "resolvedInput" : {
     "asteroids" : [ 10, 2, -5 ]
@@ -15,7 +15,7 @@
   "stepCount" : 6,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 6,
     "description" : "An empty stack of surviving right-movers. Each new asteroid can only collide with whatever survives on top of the stack.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -42,7 +42,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 16,
+    "activeLine" : 20,
     "description" : "Asteroid 10 survives every collision in its way - add it to the stack.",
     "queueOrStackState" : [ "10" ],
     "callStack" : [ ],
@@ -71,7 +71,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 16,
+    "activeLine" : 20,
     "description" : "Asteroid 2 survives every collision in its way - add it to the stack.",
     "queueOrStackState" : [ "2", "10" ],
     "callStack" : [ ],
@@ -100,7 +100,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 7,
+    "activeLine" : 11,
     "description" : "Asteroid 2 (size 2, moving right) is smaller than the incoming -5 - it explodes. The incoming asteroid keeps going.",
     "queueOrStackState" : [ "10" ],
     "callStack" : [ ],
@@ -129,7 +129,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 12,
+    "activeLine" : 16,
     "description" : "Asteroid 10 (size 10, moving right) is larger than the incoming -5 - the incoming asteroid explodes instead.",
     "queueOrStackState" : [ "10" ],
     "callStack" : [ ],
@@ -156,7 +156,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 19,
+    "activeLine" : 23,
     "description" : "Every asteroid processed. Survivors, left to right: [10].",
     "queueOrStackState" : [ "10" ],
     "callStack" : [ ],

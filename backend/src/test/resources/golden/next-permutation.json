@@ -1,14 +1,14 @@
 {
   "anchors" : {
-    "checkBreak" : 8,
+    "checkBreak" : 9,
     "checkSwap" : 20,
-    "done" : 24,
-    "foundBreak" : 5,
+    "done" : 25,
+    "foundBreak" : 6,
     "foundSwap" : 17,
-    "noBreak" : 12,
+    "noBreak" : 13,
     "reverseSuffix" : 23
   },
-  "code" : "public void nextPermutation(int[] nums) {\n    int n = nums.length, ind = -1;\n    for (int i = n - 2; i >= 0; i--) {\n        if (nums[i] < nums[i + 1]) {\n            ind = i;\n            break;\n        } else {\n            continue;\n        }\n    }\n    if (ind == -1) {\n        reverse(nums, 0, n - 1);\n        return;\n    }\n    for (int i = n - 1; i > ind; i--) {\n        if (nums[i] > nums[ind]) {\n            swap(nums, i, ind);\n            break;\n        } else {\n            continue;\n        }\n    }\n    reverse(nums, ind + 1, n - 1);\n    return;\n}",
+  "code" : "public class Solution {\n    public int[] solve(int[] nums) {\n        int n = nums.length, ind = -1;\n        for (int i = n - 2; i >= 0; i--) {\n            if (nums[i] < nums[i + 1]) {\n                ind = i;\n                break;\n            } else {\n                continue;\n            }\n        }\n        if (ind == -1) {\n            reverse(nums, 0, n - 1);\n        } else {\n            for (int i = n - 1; i > ind; i--) {\n                if (nums[i] > nums[ind]) {\n                    swap(nums, i, ind);\n                    break;\n                } else {\n                    continue;\n                }\n            }\n            reverse(nums, ind + 1, n - 1);\n        }\n        return nums;\n    }\n\n    private void swap(int[] nums, int first, int second) {\n        int value = nums[first];\n        nums[first] = nums[second];\n        nums[second] = value;\n    }\n\n    private void reverse(int[] nums, int left, int right) {\n        while (left < right) swap(nums, left++, right--);\n    }\n}\n",
   "problemId" : "next-permutation",
   "resolvedInput" : {
     "nums" : [ 5, 4, 3, 2, 1 ]
@@ -16,7 +16,7 @@
   "stepCount" : 6,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 8,
+    "activeLine" : 9,
     "description" : "nums[3]=2 >= nums[4]=1 - still non-increasing here, keep scanning left.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -53,7 +53,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 8,
+    "activeLine" : 9,
     "description" : "nums[2]=3 >= nums[3]=2 - still non-increasing here, keep scanning left.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -90,7 +90,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 8,
+    "activeLine" : 9,
     "description" : "nums[1]=4 >= nums[2]=3 - still non-increasing here, keep scanning left.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -127,7 +127,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 8,
+    "activeLine" : 9,
     "description" : "nums[0]=5 >= nums[1]=4 - still non-increasing here, keep scanning left.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -164,7 +164,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 12,
+    "activeLine" : 13,
     "description" : "No ascent exists anywhere: the array is strictly non-increasing, so it is already the last permutation. Reverse the whole array to wrap around to the first.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -199,7 +199,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 24,
+    "activeLine" : 25,
     "description" : "Wrapped to the first permutation: [1, 2, 3, 4, 5].",
     "queueOrStackState" : null,
     "callStack" : [ ],

@@ -2,19 +2,31 @@
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const fs = require('fs');
 const path = require('path');
+const { createHash } = require('crypto');
 const root = path.resolve(__dirname, '../../../..');
 const out = process.argv[2] || __dirname;
 const base = process.env.FRONTEND_URL || 'http://127.0.0.1:5180';
 const api = process.env.BACKEND_URL || 'http://127.0.0.1:8923';
 const pace = require('../pace-executions.cjs')();
-const ids = fs.readdirSync(path.join(root, 'backend/src/main/resources/solutions/dp'))
+const family = process.env.SOURCE_RESOURCE_FAMILY || 'dp';
+if (!['dp', 'core'].includes(family)) throw Error('Unknown source resource family');
+const ids = fs.readdirSync(path.join(root, `backend/src/main/resources/solutions/${family}`))
   .filter(name => name.endsWith('.java')).map(name => name.slice(0, -5)).sort();
-const representatives = ['longest-common-subsequence', 'shortest-common-supersequence',
+const representatives = family === 'core' ? ids : ['longest-common-subsequence', 'shortest-common-supersequence',
   'longest-string-chain', 'stock-transaction-fee', 'longest-bitonic-subsequence', 'palindrome-partitioning-2'];
 const placeholder = /initialiseBaseCases|evaluateTransitionCandidates|extractAnswer|reconstructChosenSolution/;
 
 (async () => {
   fs.mkdirSync(out, { recursive: true });
+  const htmlResponse = await fetch(base);
+  if (!htmlResponse.ok) throw Error(`frontend HTTP ${htmlResponse.status}`);
+  const html = await htmlResponse.text();
+  const assets = [...html.matchAll(/(?:src|href)="([^"]*\/assets\/[^\"]+\.(?:js|css))"/g)]
+    .map(match => new URL(match[1], base).pathname).sort();
+  const servedBuild = { assets, mode: assets.length ? 'production-preview' : 'development' };
+  if (family === 'core' && (!assets.some(a => a.endsWith('.js')) || !assets.some(a => a.endsWith('.css')))) {
+    throw Error('Core source verification requires a production preview with identified JS/CSS assets');
+  }
   const details = {};
   for (const id of ids) {
     const response = await fetch(`${api}/api/problems/${id}`);
@@ -27,7 +39,8 @@ const placeholder = /initialiseBaseCases|evaluateTransitionCandidates|extractAns
   const browser = await chromium.launch();
   const rows = [];
   const save = complete => fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({
-    generated: new Date().toISOString(), browser: 'Chromium', realBackend: true,
+    generated: new Date().toISOString(), browser: 'Chromium', browserVersion: browser.version(),
+    realBackend: true, family, servedBuild,
     complete, completeSources: ids, rows
   }, null, 2));
   try {
@@ -58,6 +71,9 @@ const placeholder = /initialiseBaseCases|evaluateTransitionCandidates|extractAns
         const source = page.getByRole('region', { name: 'Java source', exact: true });
         await source.waitFor();
         const failures = [];
+        const mountedAssets = await page.locator('script[src], link[rel="stylesheet"]').evaluateAll(nodes =>
+          nodes.map(node => new URL(node.src || node.href).pathname).filter(p => p.includes('/assets/')).sort());
+        if (JSON.stringify(mountedAssets) !== JSON.stringify(assets)) failures.push('frontend assets changed during journey');
         if (!execution || !execution.steps?.length || execution.truncated) throw Error(`${id}: no complete live run`);
         if (execution.code !== details[id].javaCode) failures.push('detail and execution source disagree');
         const visibleLines = await source.locator('div[data-active-line], div[class*="line_"]').count();
@@ -90,10 +106,13 @@ const placeholder = /initialiseBaseCases|evaluateTransitionCandidates|extractAns
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
         if (overflow > 0) failures.push(`page overflow ${overflow}`);
         failures.push(...errors);
-        rows.push({ id, theme, width, steps: total, inspected: selected.map(i => i + 1), visibleLines, failures });
+        rows.push({ id, theme, width, steps: total, inspected: selected.map(i => i + 1), visibleLines,
+          sourceSha256: createHash('sha256').update(execution.code).digest('hex'), failures });
         save(false);
         console.log(`${failures.length ? 'FAIL' : 'PASS'} ${id} ${width} ${theme}`);
-        if (id === 'longest-string-chain') await page.screenshot({ path: path.join(out, `source-${width}-${theme}.png`) });
+        if (id === 'longest-string-chain' || (family === 'core' && id === 'print-lis')) {
+          await page.screenshot({ path: path.join(out, `source-${width}-${theme}.png`) });
+        }
       }
       await context.close();
     }

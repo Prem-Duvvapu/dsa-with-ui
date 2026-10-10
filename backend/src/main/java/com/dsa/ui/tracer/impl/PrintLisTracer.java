@@ -18,7 +18,7 @@ import java.util.Set;
  * actual subsequence can be walked out backwards from where the best run ends.
  */
 @Component
-public class PrintLisTracer implements AlgorithmTracer {
+public class PrintLisTracer extends CompleteSourceTracer {
 
     private static final String FORMULA =
             "dp[i] = dp[j] + 1, for the j < i with nums[j] < nums[i] that maximizes dp[j]";
@@ -48,38 +48,6 @@ public class PrintLisTracer implements AlgorithmTracer {
     @Override
     public Map<String, Object> alternateInput() {
         return Map.of("nums", List.of(3, 1, 4, 1, 5));
-    }
-
-    @Override
-    public String annotatedCode() {
-        return """
-               public int[] lisWithParents(int[] nums) {
-                   // @a init
-                   int n = nums.length;
-                   int[] dp = new int[n], parent = new int[n];
-                   Arrays.fill(dp, 1);
-                   Arrays.fill(parent, -1);
-                   int bestEnd = 0;
-                   for (int i = 1; i < n; i++) {
-                       for (int j = 0; j < i; j++) {
-                           // @a compare
-                           if (nums[j] < nums[i] && dp[j] + 1 > dp[i]) {
-                               // @a take
-                               dp[i] = dp[j] + 1;
-                               parent[i] = j;
-                           }
-                       }
-                       // @a best
-                       if (dp[i] > dp[bestEnd]) bestEnd = i;
-                   }
-                   // @a backlink
-                   while (bestEnd != -1) {
-                       collect(nums[bestEnd]);
-                       bestEnd = parent[bestEnd];
-                   }
-                   // @a done
-                   return answer();
-               }""";
     }
 
     @Override

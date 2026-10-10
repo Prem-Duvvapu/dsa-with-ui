@@ -18,7 +18,7 @@ import java.util.Map;
  * string runs out. The first stops the scan; the second is only visible at the end.
  */
 @Component
-public class BalancedParenthesesTracer implements AlgorithmTracer {
+public class BalancedParenthesesTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -52,30 +52,6 @@ public class BalancedParenthesesTracer implements AlgorithmTracer {
     @Override
     public Map<String, Object> alternateInput() {
         return Map.of("expression", "([)]");
-    }
-
-    @Override
-    public String annotatedCode() {
-        return """
-               public boolean isValid(String s) {
-                   // @a init
-                   Deque<Character> stack = new ArrayDeque<>();
-                   for (char c : s.toCharArray()) {
-                       if (c == '(' || c == '[' || c == '{') {
-                           // @a push
-                           stack.push(c);
-                           continue;
-                       }
-                       if (stack.isEmpty() || stack.peek() != opener(c)) {
-                           // @a mismatch
-                           return false;
-                       }
-                       // @a match
-                       stack.pop();
-                   }
-                   // @a done
-                   return stack.isEmpty();
-               }""";
     }
 
     private static char opener(char closer) {

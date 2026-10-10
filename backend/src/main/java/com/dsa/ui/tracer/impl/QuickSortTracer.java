@@ -18,7 +18,7 @@ import java.util.Map;
  * worst case) skews it all the way to one side, with every "less than pivot" swap skipped.
  */
 @Component
-public class QuickSortTracer implements AlgorithmTracer {
+public class QuickSortTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -50,39 +50,6 @@ public class QuickSortTracer implements AlgorithmTracer {
     @Override
     public Map<String, Object> alternateInput() {
         return Map.of("nums", List.of(1, 2, 3, 4, 5));
-    }
-
-    @Override
-    public String annotatedCode() {
-        return """
-               public void quickSort(int[] arr, int low, int high) {
-                   if (low < high) {
-                       // @a partition
-                       int pIndex = partition(arr, low, high);
-                       quickSort(arr, low, pIndex - 1);
-                       quickSort(arr, pIndex + 1, high);
-                   } else {
-                       // @a base
-                   }
-                   // @a done
-               }
-
-               private int partition(int[] arr, int low, int high) {
-                   // @a pivotChoice
-                   int pivot = arr[low];
-                   int i = low;
-                   for (int j = low + 1; j <= high; j++) {
-                       // @a compare
-                       if (arr[j] < pivot) {
-                           i++;
-                           // @a swapLess
-                           swap(arr, i, j);
-                       }
-                   }
-                   // @a placePivot
-                   swap(arr, low, i);
-                   return i;
-               }""";
     }
 
     /** Outside [low,high] is "visited" (already settled by an ancestor call); primary/secondary mark the active indices. */

@@ -1,12 +1,12 @@
 {
   "anchors" : {
-    "done" : 13,
-    "init" : 2,
-    "match" : 11,
-    "mismatch" : 9,
-    "push" : 5
+    "done" : 17,
+    "init" : 6,
+    "match" : 15,
+    "mismatch" : 13,
+    "push" : 9
   },
-  "code" : "public boolean isValid(String s) {\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : s.toCharArray()) {\n        if (c == '(' || c == '[' || c == '{') {\n            stack.push(c);\n            continue;\n        }\n        if (stack.isEmpty() || stack.peek() != opener(c)) {\n            return false;\n        }\n        stack.pop();\n    }\n    return stack.isEmpty();\n}",
+  "code" : "import java.util.ArrayDeque;\nimport java.util.Deque;\n\npublic class Solution {\n    public boolean solve(String expression) {\n        Deque<Character> stack = new ArrayDeque<>();\n        for (char c : expression.toCharArray()) {\n            if (c == '(' || c == '[' || c == '{') {\n                stack.push(c);\n                continue;\n            }\n            if (stack.isEmpty() || stack.peek() != opener(c)) {\n                return false;\n            }\n            stack.pop();\n        }\n        return stack.isEmpty();\n    }\n\n    // The problem's alphabet is ()[]{} only.\n    private char opener(char closer) {\n        return switch (closer) {\n            case ')' -> '(';\n            case ']' -> '[';\n            case '}' -> '{';\n            default -> throw new IllegalArgumentException(\"Not a closing bracket: \" + closer);\n        };\n    }\n}\n",
   "problemId" : "balanced-parentheses",
   "resolvedInput" : {
     "expression" : "{[()]}()"
@@ -14,7 +14,7 @@
   "stepCount" : 10,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 6,
     "description" : "Scan \"{[()]}()\" left to right with an empty stack. Every opener waits on the stack until its own closer arrives.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -72,7 +72,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 5,
+    "activeLine" : 9,
     "description" : "s[0] = '{' opens. Push it; it is now the only bracket that may be closed next.",
     "queueOrStackState" : [ "{" ],
     "callStack" : [ ],
@@ -131,7 +131,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 5,
+    "activeLine" : 9,
     "description" : "s[1] = '[' opens. Push it; it is now the only bracket that may be closed next.",
     "queueOrStackState" : [ "[", "{" ],
     "callStack" : [ ],
@@ -190,7 +190,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 5,
+    "activeLine" : 9,
     "description" : "s[2] = '(' opens. Push it; it is now the only bracket that may be closed next.",
     "queueOrStackState" : [ "(", "[", "{" ],
     "callStack" : [ ],
@@ -249,7 +249,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 11,
+    "activeLine" : 15,
     "description" : "s[3] = ')' matches the '(' on top. Pop it — that pair is closed.",
     "queueOrStackState" : [ "[", "{" ],
     "callStack" : [ ],
@@ -308,7 +308,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 11,
+    "activeLine" : 15,
     "description" : "s[4] = ']' matches the '[' on top. Pop it — that pair is closed.",
     "queueOrStackState" : [ "{" ],
     "callStack" : [ ],
@@ -367,7 +367,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 11,
+    "activeLine" : 15,
     "description" : "s[5] = '}' matches the '{' on top. Pop it — that pair is closed.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -426,7 +426,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 5,
+    "activeLine" : 9,
     "description" : "s[6] = '(' opens. Push it; it is now the only bracket that may be closed next.",
     "queueOrStackState" : [ "(" ],
     "callStack" : [ ],
@@ -485,7 +485,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 11,
+    "activeLine" : 15,
     "description" : "s[7] = ')' matches the '(' on top. Pop it — that pair is closed.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -544,7 +544,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 13,
+    "activeLine" : 17,
     "description" : "End of the string with nothing left open. \"{[()]}()\" is balanced.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],

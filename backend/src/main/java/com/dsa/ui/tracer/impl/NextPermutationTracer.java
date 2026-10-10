@@ -16,7 +16,7 @@ import java.util.Map;
  * highest permutation and wraps around to the lowest by reversing outright.
  */
 @Component
-public class NextPermutationTracer implements AlgorithmTracer {
+public class NextPermutationTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -59,43 +59,6 @@ public class NextPermutationTracer implements AlgorithmTracer {
     @Override
     public Map<String, Object> alternateInput() {
         return Map.of("nums", List.of(2, 3, 1));
-    }
-
-    @Override
-    public String annotatedCode() {
-        return """
-               public void nextPermutation(int[] nums) {
-                   int n = nums.length, ind = -1;
-                   for (int i = n - 2; i >= 0; i--) {
-                       if (nums[i] < nums[i + 1]) {
-                           // @a foundBreak
-                           ind = i;
-                           break;
-                       } else {
-                           // @a checkBreak
-                           continue;
-                       }
-                   }
-                   if (ind == -1) {
-                       // @a noBreak
-                       reverse(nums, 0, n - 1);
-                       return;
-                   }
-                   for (int i = n - 1; i > ind; i--) {
-                       if (nums[i] > nums[ind]) {
-                           // @a foundSwap
-                           swap(nums, i, ind);
-                           break;
-                       } else {
-                           // @a checkSwap
-                           continue;
-                       }
-                   }
-                   // @a reverseSuffix
-                   reverse(nums, ind + 1, n - 1);
-                   // @a done
-                   return;
-               }""";
     }
 
     private List<ArrayElement> window(int[] nums, int primary, int secondary) {
