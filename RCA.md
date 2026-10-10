@@ -1674,3 +1674,25 @@ or omitted to fit the viewport; the large diagram still scrolls locally.
   executable/cache separation is also checked with distinct registered test executables.
 - **Lesson:** a cache is bounded by trusted identities only when those identities are
   validated and canonicalized before lookup, not after a value has been computed.
+
+## RCA-059 — Saved-input controls escaped the workspace target and overflow gates
+
+- **Discovered:** 2026-10-10 during the early cleanup's read-only preset check and the
+  subsequent layout acceptance package. A one-letter preset's Load/Remove controls
+  measured 23×36 and 24×36px. Opening Save input widened a 320px page by 153px and a 390px
+  page by 83px. Keyboard focus used an outward ring clipped by the rounded preset group.
+- **Root cause:** preset buttons retained leaf-specific36px styles instead of the shared
+  44px floor. The nowrap save row contained an input with intrinsic width. The group
+  clipped overflow, while the shared focus rule drew outside its children. Earlier
+  editor parity checks used defaults without saved presets or the save form open.
+- **Fix:** both preset actions use shared target, typography, meaningful border and ink
+  tokens. The save row wraps and its input may shrink. A specific inset focus treatment
+  remains inside the rounded group; the remove icon is decorative and16px.
+- **Guard (RED first):** the two new InputPanel style guards fail on surgical regressions
+  to the old target/wrapping rules; removing the inset treatment fails its guard.
+  The keyboard-modality browser baseline reproduces the actual clipping, targets and
+  form overflow across five widths/both themes. Final Chromium/Firefox journeys also
+  measure populated presets, settled keyboard focus, long names and preserved drafts.
+- **Lesson:** default-editor parity does not certify populated editor states. Measure
+  the open save form and short/long saved names, and use keyboard modality plus settled
+  paint for focus evidence; mouse-only programmatic focus is not that evidence.

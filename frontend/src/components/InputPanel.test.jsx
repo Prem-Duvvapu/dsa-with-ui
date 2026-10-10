@@ -4,6 +4,10 @@ import '@testing-library/jest-dom';
 import { describe, expect, it, vi, beforeEach } from 'vitest';
 import InputPanel from './InputPanel';
 import { defaultInput } from '../input/randomizeInput';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
+const editorCSS = readFileSync(resolve(process.cwd(), 'src/components/InputPanel.module.css'), 'utf8');
 
 const spec = {
   fields: [
@@ -89,6 +93,22 @@ describe('InputPanel', () => {
   });
 
   describe('saved inputs', () => {
+    it('keeps both saved-input actions at the shared target floor, including one-letter names', () => {
+      for (const selector of ['presetLoad', 'presetRemove']) {
+        const rule = editorCSS.match(new RegExp(`\\.${selector} \\{([^}]+)\\}`))[1];
+        expect(rule).toMatch(/min-width:\s*var\(--target-min\)/);
+        expect(rule).toMatch(/min-height:\s*var\(--target-min\)/);
+      }
+    });
+
+    it('wraps the save form and keeps a visible focus ring inside rounded preset groups', () => {
+      expect(editorCSS.match(/\.saveForm \{([^}]+)\}/)[1]).toMatch(/flex-wrap:\s*wrap/);
+      expect(editorCSS).toMatch(/\.saveForm :global\(\.ip-input\)\s*\{[^}]*min-width:\s*0/);
+      const focus = editorCSS.match(/\.panel \.presetItem :is\(\.presetLoad, \.presetRemove\):focus-visible\s*\{([^}]+)\}/)[1];
+      expect(focus).toMatch(/outline:\s*var\(--focus-ring-width\) solid var\(--focus-ring\)/);
+      expect(focus).toMatch(/outline-offset:\s*calc\(-1 \*/);
+    });
+
     function save(name) {
       fireEvent.click(screen.getByRole('button', { name: /^save/i }));
       fireEvent.change(screen.getByLabelText(/preset name/i), { target: { value: name } });

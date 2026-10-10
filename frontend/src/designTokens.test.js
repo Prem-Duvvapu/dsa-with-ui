@@ -145,6 +145,24 @@ function contrast(a, b) {
 }
 
 describe('design tokens', () => {
+  it('keeps phone setup labels readable and the shared 44px control floor', () => {
+    const workspace = readFileSync(join(SRC, 'workspace/ProblemWorkspace.module.css'), 'utf8');
+    const phoneRule = workspace.match(/\.cardHead:has\(> :global\(#stage-title\)\) \.cardActions \.control \{([^}]+)\}/)?.[1];
+    expect(phoneRule).toBeDefined();
+    const font = Number(phoneRule?.match(/font-size:\s*(\d+)px/)?.[1]);
+    expect(font).toBeGreaterThanOrEqual(14);
+    expect(font).toBeLessThanOrEqual(16);
+    expect(workspace).toMatch(/\.control \{[^}]*min-height:\s*var\(--target-min\)/);
+    expect(workspace).toMatch(/\.cardActions \.control svg \{\s*display:\s*none/);
+  });
+
+  it('returns expanded setup information to full-width reading flow', () => {
+    const workspace = readFileSync(join(SRC, 'workspace/ProblemWorkspace.module.css'), 'utf8');
+    expect(workspace).toMatch(/\.context:has\(\.statement\[open\]\)\s*\{\s*display:\s*block/);
+    expect(workspace).toMatch(/\.context:has\(\.statement\[open\]\) \.contextRow \{\s*width:\s*auto/);
+    expect(workspace).toMatch(/\.approachHelp\[open\]\s*\{\s*flex-basis:\s*100%/);
+  });
+
   it('does not ship retired sidebar, search-panel or transport selectors', () => {
     expect(CSS).not.toMatch(/\.(?:sb-[\w-]+|sidebar-panel|sidebar-title|breadcrumb-title|step-scrubber-slider|pulse-dot)\b/);
     expect(CSS).not.toMatch(/@keyframes\s+pulseDot\b/);
@@ -399,7 +417,7 @@ describe('design tokens', () => {
       }
       // Meaningful boundaries (WCAG 1.4.11): the edge of a field, select or button, on every
       // surface one can sit on. The decorative --rule-* tokens are exempt and stay subtle.
-      for (const ground of ['--surface-page', '--surface-panel', '--surface-recessed']) {
+      for (const ground of ['--surface-page', '--surface-panel', '--surface-recessed', '--bench-fill']) {
         const ratio = contrast(t['--control-border'], t[ground]);
         if (ratio < 3) failures.push(`${name}: --control-border on ${ground} is ${ratio.toFixed(2)}:1`);
       }

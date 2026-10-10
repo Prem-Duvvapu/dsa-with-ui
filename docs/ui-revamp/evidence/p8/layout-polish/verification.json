@@ -1,0 +1,57 @@
+{
+  "base": "089cdd9694dc4cda46703b8a59910312e1833f5c",
+  "branch": "fix/workspace-layout-polish",
+  "publication": "Pre-publication evidence snapshot; owner authorized commit/push/PR/merge after required PR checks pass",
+  "productionScope": ["InputPanel.jsx", "InputPanel.module.css", "ProblemWorkspace.module.css"],
+  "backendDependenciesAndGoldensChanged": false,
+  "baseline": {
+    "frontendFiles": 79,
+    "frontendTests": 784,
+    "browserReport": "before/layout-results.json",
+    "completeRows": 60,
+    "failingRows": 60,
+    "build": "Detached base worktree; installed native-worktree dependencies reused; production unchanged",
+    "note": "The baseline precedes the final extra draft/explanation assertions; paired geometry assertions are present. Its own served assets are in the report."
+  },
+  "final": {
+    "frontendFiles": 79,
+    "frontendTests": 788,
+    "backendTests": 8023,
+    "backendFailures": 0,
+    "backendErrors": 0,
+    "backendExistingSkips": 500,
+    "assets": ["/assets/index-CfkLxyUw.css", "/assets/index-DbmbKZMa.js"],
+    "buildKB": {"js": 382.56, "jsGzip": 121.89, "css": 97.71, "cssGzip": 17.75},
+    "browserReports": ["chromium/layout-results.json", "firefox/layout-results.json"],
+    "rowsPerEngine": 60,
+    "failingRows": 0,
+    "matrix": "6 representatives x 5 widths x 2 themes; reduced-motion emulation",
+    "widths": [320, 390, 768, 1366, 1440],
+    "responseSource": "6 genuine default backend captures replayed unchanged; no custom submissions",
+    "continuity": "Unsubmitted edited draft, selected step and committed input URL preserved across all three views; no additional execution",
+    "presetRealBackendScreenshotRows": 4,
+    "tourChecks": 39,
+    "launcherProcessTreeSmoke": "passed"
+  },
+  "selectiveRegressionProof": {
+    "newCases": 4,
+    "editorFloorWrappingMutationFailedCases": 2,
+    "insetFocusMutationFailedCases": 1,
+    "workspaceGuardsOnOldStylesFailedCases": 2,
+    "note": "Inset mutation fails one of the same two editor cases; not a fifth new case. All mutations restored."
+  },
+  "claimsNotMade": [
+    "Useful diagram frame starts before ~280px for every default laptop workspace",
+    "Every phone stage meets the original starting-coordinate target",
+    "Every tracer answer/custom input or source listing is certified",
+    "Real-device/virtual-keyboard or screen-reader certification",
+    "Full final zoom/failure-state/accessibility matrix",
+    "Learner study, measured runtime performance, complete P8 or final release sign-off"
+  ],
+  "excludedAttempts": [
+    "CSS raw-import test harness returned a mocked object",
+    "Mouse-only programmatic focus did not establish keyboard modality",
+    "Immediate focus sampling caught an intermediate reduced-motion transition",
+    "One browser run spanned a production rebuild and mixed bundles"
+  ]
+}

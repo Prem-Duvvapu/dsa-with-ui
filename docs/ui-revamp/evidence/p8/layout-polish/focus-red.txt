@@ -1,0 +1,35 @@
+
+ RUN  v1.6.1 /home/prem/dsa-p8/frontend
+
+ ❯ src/components/InputPanel.test.jsx  (18 tests | 1 failed) 2626ms
+   ❯ src/components/InputPanel.test.jsx > InputPanel > saved inputs > wraps the save form and keeps a visible focus ring inside rounded preset groups
+     → expected '\r\n  outline: var(--focus-ring-width…' to match /outline-offset:\s*calc\(-1 \*/
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/InputPanel.test.jsx > InputPanel > saved inputs > wraps the save form and keeps a visible focus ring inside rounded preset groups
+AssertionError: expected '\r\n  outline: var(--focus-ring-width…' to match /outline-offset:\s*calc\(-1 \*/
+
+- Expected:
+/outline-offset:\s*calc\(-1 \*/
+
++ Received:
+"
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+"
+
+ ❯ src/components/InputPanel.test.jsx:109:21
+    107|       const focus = editorCSS.match(/\.panel \.presetItem :is\(\.prese…
+    108|       expect(focus).toMatch(/outline:\s*var\(--focus-ring-width\) soli…
+    109|       expect(focus).toMatch(/outline-offset:\s*calc\(-1 \*/);
+       |                     ^
+    110|     });
+    111|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 17 passed (18)
+   Start at  11:11:05
+   Duration  8.83s (transform 1.16s, setup 74ms, collect 2.86s, tests 2.63s, environment 2.05s, prepare 399ms)

@@ -1,7 +1,7 @@
 # DP solution approaches: implementation and UX plan
 
 Status: **D0–D4 merged; first D5 candidate (Frog Jump) merged #216 / `4ad9fc3`; 54 other candidates and D6/D7 pending.**
-Current repository work: unpublished early P9 cleanup on `chore/retire-legacy-ui`, base #217 / `9de01cd`.
+Current repository work: early P9 cleanup merged #218 / `089cdd9`; the resumed completion goal starts bounded layout/accessibility polish before further DP batches.
 Prepared 2026-10-07 against merged main `9d0aa10` (PR #208).
 This is a separate feature from the unfinished P8/P9 revamp gates; it does not close them.
 The owner authorized implementation on 2026-10-07 after merging PR #210.
