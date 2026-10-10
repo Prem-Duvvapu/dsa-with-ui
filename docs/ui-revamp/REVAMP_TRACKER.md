@@ -69,7 +69,27 @@ and exhausted intervals are truthful without inferring truncated completion. Bac
 and two shared/rejected journeys pass. `evidence/source-code/parametric-contracts/` and
 RCA-060/061. Eleven core source owners are certified within declared caps;42 historical
 non-platform omissions remain. The owner approved publication on continuation, gated on CI;
-publication is in progress, not a closure of broader project gates.
+publication completed as #222 / `cb56b83`, not a closure of broader project gates.
+
+Owner-requested DP batch (2026-10-10, `feat/dp-requested-approaches`, base #222):
+LIS, Stock with Transaction Fee, Minimum Insertions to Palindrome, Count Partitions with
+Given Difference and Ninja and His Friends now have genuine recursion, memoization and
+tabulation. The old palindrome LCS reduction and Ninja rolling table remain the defaults
+as fourth options. All existing canonical tracer objects/source/goldens remain intact.
+The optional 3D memo companion labels its current row; comparison shows actual grid caps.
+RCA-062 fixes selection replacing untouched defaults, including preservation of queued
+same-tick edits. New memo-store glyphs are truthful on writes only.
+
+Final local checks:8,131 backend cases/0 failures/errors/500 unchanged skips,811 frontend
+tests/build, packaging, launcher,432 golden-regeneration cases with no content change,
+29 real API full/delta cases and168 final Chromium/Firefox/native-zoom/default browser
+rows on one production build. `dp-approaches/requested-five/`, updated inventory and the
+dated log record proof and excluded attempts. Seven of56 candidates are now verified;
+49 remain pending. The owner explicitly authorized commit/push/merge after completion;
+merge is conditional on CI. Historical2/56 and54-remaining snapshots above are not the
+current tally. D6/D7, P7/P8/P9,42 historical source omissions,77 platform contexts,
+41 statements, human/device/performance/security/release and production-backend gates
+remain open. This batch is not project completion.
 
 ## Baseline (P0, 2026-09-29)
 

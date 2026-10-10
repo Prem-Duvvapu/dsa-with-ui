@@ -9,6 +9,9 @@ export default function MemoTable({ step, steps = [], dsType }) {
     <details className={styles.history}>
       <summary>Memo table</summary>
       <p className={styles.meta}>▫ Unknown · □ Known · ○ Cache read · ▼ Stored this step. Unknown is not zero.</p>
+      {typeof step?.variables?.memoSlice === 'string' && <p className={styles.meta}>
+        Showing memo slice: {step.variables.memoSlice}. Other slices remain cached.
+      </p>}
       <DpTableCanvas step={step} />
     </details>
   );

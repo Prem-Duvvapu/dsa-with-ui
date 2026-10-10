@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-09T21:09:16.096Z",
+  "generated": "2026-10-10T17:27:18.445Z",
   "stats": {
     "catalogued": 431,
     "traced": 431,
@@ -615,8 +615,86 @@
         "auxiliarySpace": "Auxiliary Space: O(N * Target)",
         "dataStructureSpace": "DP table"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 6,
+                  "maxValue": 15,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  1,
+                  1,
+                  2,
+                  3
+                ],
+                "help": "Positive values, as in the existing visualizer. Up to 6 indexed items keeps every subset decision visible.",
+                "label": "Values",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 60,
+                  "min": 0
+                },
+                "defaultValue": 1,
+                "help": "",
+                "label": "Difference D",
+                "name": "d",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 10,
+                  "maxValue": 15,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  1,
+                  1,
+                  2,
+                  3
+                ],
+                "help": "Positive values, as in the existing visualizer. Memo needs (n+1) × (target+1) ≤ 100 cells, where target=(sum+d)/2; reduce values or d if refused.",
+                "label": "Values",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 60,
+                  "min": 0
+                },
+                "defaultValue": 1,
+                "help": "",
+                "label": "Difference D",
+                "name": "d",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "count-square-submatrices",
@@ -1614,8 +1692,70 @@
         "auxiliarySpace": "Auxiliary Space: O(N^2)",
         "dataStructureSpace": "DP table"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 6,
+                  "maxValue": 999,
+                  "minLength": 1,
+                  "minValue": -999
+                },
+                "defaultValue": [
+                  10,
+                  9,
+                  2,
+                  5,
+                  3,
+                  7
+                ],
+                "help": "State (i,p): suffix starting at i; previous taken index is p-1. At most 6 values keeps all take/skip calls visible.",
+                "label": "Array",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 9,
+                  "maxValue": 999,
+                  "minLength": 1,
+                  "minValue": -999
+                },
+                "defaultValue": [
+                  10,
+                  9,
+                  2,
+                  5,
+                  3,
+                  7,
+                  101,
+                  18
+                ],
+                "help": "State (i,p): suffix starting at i; previous taken index is p-1. Cache that complete pair; unknown cells are not zero.",
+                "label": "Array",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "longest-palindromic-subsequence",
@@ -2069,7 +2209,7 @@
         "memoization",
         "tabulation"
       ],
-      "notes": "Explain the reduction without relabelling its result as an LCS string.",
+      "notes": "Preserve the existing LCS reduction as the default fourth option. The new three-form learning path uses direct insertions(left,right): equal ends use the inner interval, otherwise 1+min(remove left,remove right); tabulation increases interval length. All return the insertion count, not an LCS string.",
       "codeDigest": "3b36c0c1c6246e31e090d94cd149814ccf10e6f546d4217516b259340699d84f",
       "canonicalInputSpec": {
         "fields": [
@@ -2100,8 +2240,76 @@
         "auxiliarySpace": "Auxiliary Space: O(N)",
         "dataStructureSpace": "Memory"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 7,
+                  "minLength": 1,
+                  "pattern": "[a-z]+",
+                  "patternHint": "Lowercase letters a-z only."
+                },
+                "defaultValue": "mbadm",
+                "help": "State (left,right): minimum insertions for this substring. Match equal ends; otherwise insert a mirror of one end. Unknown intervals remain blank.",
+                "label": "Text",
+                "name": "text",
+                "type": "STRING"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 10,
+                  "minLength": 1,
+                  "pattern": "[a-z]+",
+                  "patternHint": "Lowercase letters a-z only."
+                },
+                "defaultValue": "mbadm",
+                "help": "State (left,right): minimum insertions for this substring. Match equal ends; otherwise insert a mirror of one end. Unknown intervals remain blank.",
+                "label": "Text",
+                "name": "text",
+                "type": "STRING"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "tabulation",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 12,
+                  "minLength": 1,
+                  "pattern": "[a-z]+",
+                  "patternHint": "Lowercase letters a-z only."
+                },
+                "defaultValue": "mbadm",
+                "help": "State (left,right): minimum insertions for this substring. Match equal ends; otherwise insert a mirror of one end. Unknown intervals remain blank.",
+                "label": "Text",
+                "name": "text",
+                "type": "STRING"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "minimum-coins-dp",
@@ -2241,7 +2449,7 @@
         "memoization",
         "tabulation"
       ],
-      "notes": "Canonical keeps two row slices; preserve it as an optimized option when adding full tabulation. Count shared cell once.",
+      "notes": "Canonical keeps two row slices; retained as the existing optimized default alongside a new full 3D tabulation. Recursion and memoization use all three coordinates; visible memo/table slices are explicitly row-labelled. Count shared cell once.",
       "codeDigest": "308bfeb2120dc61eff75aaff801c5e662726a050fdfa4f8e473fc671c64edb3a",
       "canonicalInputSpec": {
         "fields": [
@@ -2293,8 +2501,139 @@
         "auxiliarySpace": "Auxiliary Space: O(N)",
         "dataStructureSpace": "Memory"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxCols": 6,
+                  "maxRows": 4,
+                  "maxValue": 100,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  [
+                    3,
+                    1,
+                    1
+                  ],
+                  [
+                    2,
+                    5,
+                    1
+                  ],
+                  [
+                    1,
+                    5,
+                    5
+                  ],
+                  [
+                    2,
+                    1,
+                    1
+                  ]
+                ],
+                "help": "State (row,col1,col2): both robots move down with column change −1, 0 or +1. Shared cells count once. Up to 4 rows keeps every legal pair of moves visible.",
+                "label": "Chocolate Grid",
+                "name": "grid",
+                "type": "INT_GRID"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxCols": 4,
+                  "maxRows": 5,
+                  "maxValue": 100,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  [
+                    3,
+                    1,
+                    1
+                  ],
+                  [
+                    2,
+                    5,
+                    1
+                  ],
+                  [
+                    1,
+                    5,
+                    5
+                  ],
+                  [
+                    2,
+                    1,
+                    1
+                  ]
+                ],
+                "help": "State (row,col1,col2): both robots move down with column change −1, 0 or +1. Shared cells count once. Memo is 3D; the companion shows only the labelled current-row slice.",
+                "label": "Chocolate Grid",
+                "name": "grid",
+                "type": "INT_GRID"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "tabulation",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxCols": 6,
+                  "maxRows": 8,
+                  "maxValue": 100,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  [
+                    3,
+                    1,
+                    1
+                  ],
+                  [
+                    2,
+                    5,
+                    1
+                  ],
+                  [
+                    1,
+                    5,
+                    5
+                  ],
+                  [
+                    2,
+                    1,
+                    1
+                  ]
+                ],
+                "help": "Full dp[row][col1][col2], filled from the last row upward. The diagram shows a labelled row slice, not the entire 3D table.",
+                "label": "Chocolate Grid",
+                "name": "grid",
+                "type": "INT_GRID"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "ninjas-training",
@@ -2972,8 +3311,90 @@
         "auxiliarySpace": "Auxiliary Space: O(N)",
         "dataStructureSpace": "Memory"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 6,
+                  "maxValue": 100,
+                  "minLength": 1,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  1,
+                  3,
+                  2,
+                  8,
+                  4,
+                  9
+                ],
+                "help": "State (day,holding): skip or trade; charge the fee exactly once on each sale.",
+                "label": "Daily prices",
+                "name": "prices",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 30,
+                  "min": 0
+                },
+                "defaultValue": 2,
+                "help": "",
+                "label": "Transaction fee",
+                "name": "fee",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 15,
+                  "maxValue": 100,
+                  "minLength": 1,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  1,
+                  3,
+                  2,
+                  8,
+                  4,
+                  9
+                ],
+                "help": "State (day,holding): skip or trade; charge the fee exactly once on each sale.",
+                "label": "Daily prices",
+                "name": "prices",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 30,
+                  "min": 0
+                },
+                "defaultValue": 2,
+                "help": "",
+                "label": "Transaction fee",
+                "name": "fee",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "subset-sum-equal-target",

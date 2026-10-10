@@ -58,7 +58,7 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
   } : baseProblem), [baseProblem, problemId, run, shownApproach, defaultApproachId]);
   const inputSpec = baseProblem?.id === problemId ? selectedApproach?.inputSpec ?? baseProblem?.inputSpec : null;
   const draft = useInputDraft(problemId, inputSpec);
-  const { replace: replaceDraft, defaults: draftDefaults } = draft;
+  const { replace: replaceDraft, defaults: draftDefaults, preserve: preserveDraft } = draft;
 
   const [restoring, setRestoring] = useState(false);
   const [linkNotices, setLinkNotices] = useState([]);
@@ -91,8 +91,11 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
   const selectApproach = useCallback((id) => {
     if (!approaches.some(a => a.id === id)) return;
     trace.pause();
+    // Defaults can differ (e.g. LIS recursion is capped below its canonical example).
+    // Freeze the visible draft before adopting another spec, even if it was never edited.
+    preserveDraft();
     setCandidate({ problemId, id });
-  }, [approaches, problemId, trace.pause]);
+  }, [approaches, problemId, trace.pause, preserveDraft]);
 
   const ownRun = run.problemId === problemId;
   const route = useShareableView({

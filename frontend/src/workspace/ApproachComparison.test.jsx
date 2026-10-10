@@ -18,6 +18,11 @@ function mount(constraints = { minLength: 2, maxLength: 10, minValue: 0, maxValu
 }
 
 describe('truthful comparison safety limits for collection inputs', () => {
+  it('shows only declared grid ceilings, without inventing minimum dimensions', () => {
+    mount({ maxRows: 4, maxCols: 6, minValue: 0, maxValue: 100 });
+    expect(screen.getByText(/Recursion: Stair heights at most 4 rows, at most 6 columns, values 0–100/)).toBeVisible();
+    expect(screen.queryByText(/rows 1–4/)).not.toBeInTheDocument();
+  });
   it('shows the declared array length and element bounds before a comparison runs', () => {
     mount();
     expect(screen.getByText(/Recursion: Stair heights length 2–10, values 0–999/)).toBeVisible();
