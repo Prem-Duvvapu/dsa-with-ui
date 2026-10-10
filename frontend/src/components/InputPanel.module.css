@@ -67,10 +67,14 @@
 
 .saveForm {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   align-items: center;
   flex-shrink: 0;
+  min-width: 0;
 }
+
+.saveForm :global(.ip-input) { flex: 1 1 180px; min-width: 0; max-width: 100%; }
 
 .presetList {
   display: flex;
@@ -85,19 +89,23 @@
 .presetItem {
   display: flex;
   align-items: stretch;
-  border: 1px solid var(--bench-rule-strong);
-  border-radius: var(--radius-sm);
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control);
   background: var(--bench-fill);
   overflow: hidden;
 }
 
 .presetLoad {
-  min-height: 36px;
+  min-width: var(--target-min);
+  min-height: var(--target-min);
+  flex: 1 1 auto;
   border: none;
   background: transparent;
-  color: var(--bench-ink-secondary);
-  font-size: 0.72rem;
-  padding: 4px 8px;
+  color: var(--ink-strong);
+  font-size: var(--type-control);
+  padding: 0 12px;
   cursor: pointer;
   max-width: 160px;
   overflow: hidden;
@@ -111,19 +119,30 @@
 }
 
 .presetRemove {
+  min-width: var(--target-min);
+  min-height: var(--target-min);
+  flex-shrink: 0;
   border: none;
-  border-left: 1px solid var(--bench-rule-strong);
+  border-left: 1px solid var(--control-border);
   background: transparent;
-  color: var(--bench-ink-dim);
-  padding: 4px 6px;
+  color: var(--ink-secondary);
+  padding: 0 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .presetRemove:hover,
 .presetRemove:focus-visible {
-  color: var(--probe);
+  color: var(--ink-strong);
+}
+
+/* The group clips its rounded corners. Keep focus inside the actual 44px button,
+   with enough specificity to override the shared page's outward focus treatment. */
+.panel .presetItem :is(.presetLoad, .presetRemove):focus-visible {
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: calc(-1 * (var(--focus-ring-width) + 1px));
 }
 
 .errorSummary {

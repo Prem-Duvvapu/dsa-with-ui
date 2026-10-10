@@ -114,3 +114,42 @@ baseline `9d0aa10`. RCA-057 records the root cause and regression guard.
 Limits: the compiler/execution certification covers these 27 sources, not all 431;
 browser checks cover the stated representatives in Chromium, not all devices or inputs.
 The recursion/memoization/tabulation selector remains a separate planned feature.
+
+## Broader source inventory — read-only preflight, 2026-10-10
+
+The original 27-source repair remains complete. This additional inventory does not
+reopen that bounded package or claim the remaining sources are certified. The current
+default-source goldens were just matched against the entire live registry by the fresh
+432-case `GoldenTraceTest` in the 8,023-test backend suite on `089cdd9`.
+
+A diagnostic Java 17 compiler scan of those 431 exact default listings reports:
+
+| Result | Listings | What the result does / does not establish |
+| --- | ---: | --- |
+| Compiles with declared JDK context | 300 | Includes `java.util`/`java.math` imports and an outer class for method snippets; not complete standalone-source or answer certification |
+| Platform-node context unresolved | 77 | Diagnostics currently name only `Node`, `TreeNode` or `ListNode`; further omissions may be hidden until authoritative per-problem definitions are supplied |
+| Other Java compiler failures | 53 | Undefined helpers, state, constants or supporting types; not fixed by standard imports/outer wrapper |
+| Intentional C++ lesson | 1 | `graph-rep-cpp` compiles as C++17 with standard vector/utility includes; Java compiler rejection is not a Java algorithm defect |
+
+Evidence: `evidence/source-code/compile-inventory.json`, with source hashes, diagnostic
+messages and explicit scaffolding/limits. No algorithm helper, platform-node stub or
+application class was supplied. A helper-class-plus-method listing (`tree-rep-java`)
+was retried in an outer class and compiles; its initial context error is excluded.
+The C++ lesson is nevertheless incorrectly labelled "Source · Java" / "Java source"
+by `SourcePane`/`CodeViewer`; preserve the intentional C++ lesson and fix language honesty.
+
+Concrete examples requiring subsequent source repair: Print LIS calls undefined
+`collect`/`answer`; BFS returns undefined `order`; Balanced Parentheses calls undefined
+`opener`; N Queens calls undefined `snapshot`/`isSafe`. Complete tracing does not close
+these displayed-source gaps. None was implemented in this read-only preflight.
+
+After the current layout package merges, repair the compiler failures in medium topic
+batches, starting with simple missing helpers/constants, then graph/backtracking state
+and custom support types. Compile the exact displayed sources; add typed default,
+alternate, boundary and independent-result tests, plus HTTP source/anchor agreement.
+Review authoritative platform definitions separately, and include source-language
+metadata/labelling in its own coherent change. The 300 compiler successes also need
+semantic/input agreement review; do not limit correctness certification to failures.
+Retain the existing no-substitution/source-line/golden discipline. Publication still
+requires owner authorization; this inventory is planning evidence, not another stacked
+implementation package or a full-project completion claim.

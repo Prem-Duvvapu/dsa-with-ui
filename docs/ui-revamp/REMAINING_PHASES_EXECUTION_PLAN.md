@@ -14,7 +14,8 @@ order, with medium packages merged one at a time:
 4. Remove proven unreachable code, retaining useful live-workspace regression guards.
 5. Finish responsive/layout polish, including the documented desktop stage exception
    and the measured saved-input Load/Remove target gap (`evidence/p9/preset-targets.json`).
-6. Expand simpler DP recurrences, then grid/path problems, in individually verified packages.
+6. Audit/repair remaining displayed-source completeness, then expand simpler DP recurrences
+   and grid/path problems, in individually verified packages.
 7. Close second-engine/device/screen-reader gaps where available; record unavailable human checks.
 8. Expand medium DP families (strings, sum/knapsack/coins), with independent references.
 9. Benchmark and fix demonstrated long-trace performance friction.
@@ -24,10 +25,22 @@ order, with medium packages merged one at a time:
 
 Steps1–3 are complete: Frog Jump merged as #216 / `4ad9fc3`, followed by the separate
 MIT license package #217 / `9de01cd`. The owner resumed work on 2026-10-10.
-Step4 is the current unpublished package on `chore/retire-legacy-ui`: actual production
-reachability, dead UI retirement and useful live-workspace regression guards. Publication
-was authorized on 2026-10-10 conditional on clean checks; do not stack step5 or another DP implementation
-before this package lands.54 other DP candidate rows are
+Step4 merged as #218 / `089cdd9`: actual production reachability, dead UI retirement
+and useful live-workspace regression guards. PR CI, post-merge CI and Vercel deployment
+passed. The owner subsequently resumed the full completion goal. Step5 is now the
+bounded layout/accessibility package on `fix/workspace-layout-polish`, based on that merge.
+Its local checks pass: 788 frontend tests, 8,023 backend tests, build, 60 Chromium +60
+Firefox layout rows and 39 tour checks. The useful-frame position target, broader human
+and performance gates remain open; this is not a completed P8 or release. Exact evidence
+and exceptions are in the dated log and `evidence/p8/layout-polish/`.
+Read-only source preflight now distinguishes 300 Java compiler successes with scaffolding,
+77 unresolved platform-node contexts, 53 other Java failures and one intentional C++
+lesson with incorrect Java UI labelling. See the existing source-repair plan and
+`evidence/source-code/compile-inventory.json`; no source repair was stacked onto step5.
+Keep medium packages sequential. The owner has now authorized publication of the verified
+layout package, gated on required PR checks, then continuation with separate source repairs.
+Do not infer publication approval for later packages from this bounded authorization.
+54 other DP candidate rows are
 unimplemented. Applicability must be reviewed rather than forcing three options on every
 problem. Completing an early cleanup or pilot check does not close P8/P9 or DP D6/D7.
 

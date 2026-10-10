@@ -193,7 +193,7 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
                 aria-label={`Remove preset ${preset.name}`}
                 title="Remove this saved input"
               >
-                <X size={11} />
+                <X size={16} aria-hidden="true" />
               </button>
             </li>
           ))}

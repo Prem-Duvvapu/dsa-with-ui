@@ -1,4 +1,34 @@
-/* The problem workspace, to docs/ui-revamp/playground-concept.png: paper page, plain cards,
+
+ RUN  v1.6.1 /tmp/dsa-layout-baseline.Uuy69h/frontend
+
+ ❯ src/designTokens.test.js  (19 tests | 2 failed) 32ms
+   ❯ src/designTokens.test.js > design tokens > keeps phone setup labels readable and the shared 44px control floor
+     → expected undefined not to be undefined
+   ❯ src/designTokens.test.js > design tokens > returns expanded setup information to full-width reading flow
+     → expected '/* The problem workspace, to docs/ui-…' to match /\.context:has\(\.statement\[open\]\)\…/
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/designTokens.test.js > design tokens > keeps phone setup labels readable and the shared 44px control floor
+AssertionError: expected undefined not to be undefined
+ ❯ src/designTokens.test.js:151:23
+    149|     const workspace = readFileSync(join(SRC, 'workspace/ProblemWorkspa…
+    150|     const phoneRule = workspace.match(/\.cardHead:has\(> :global\(#sta…
+    151|     expect(phoneRule).toBeDefined();
+       |                       ^
+    152|     const font = Number(phoneRule?.match(/font-size:\s*(\d+)px/)?.[1]);
+    153|     expect(font).toBeGreaterThanOrEqual(14);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/designTokens.test.js > design tokens > returns expanded setup information to full-width reading flow
+AssertionError: expected '/* The problem workspace, to docs/ui-…' to match /\.context:has\(\.statement\[open\]\)\…/
+
+- Expected:
+/\.context:has\(\.statement\[open\]\)\s*\{\s*display:\s*block/
+
++ Received:
+"/* The problem workspace, to docs/ui-revamp/playground-concept.png: paper page, plain cards,
    one forest-green accent, and the page itself scrolling. Only the view rail is sticky. */
 
 .width { width: min(var(--width-workspace), calc(100% - 2 * var(--gutter))); margin-inline: auto; }
@@ -24,7 +54,7 @@
 .titleMeta { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 .difficulty { font-size: var(--type-meta); font-weight: 600; border: 1px solid var(--control-border); border-radius: 999px; padding: 3px 12px; color: var(--ink-strong); }
 .star { width: var(--target-min); height: var(--target-min); display: grid; place-items: center; border: 1px solid var(--control-border); border-radius: var(--radius-control); background: var(--surface-panel); color: var(--ink-secondary); cursor: pointer; }
-.star[aria-pressed="true"] { color: var(--ink-strong); }
+.star[aria-pressed=\"true\"] { color: var(--ink-strong); }
 .summary { margin-top: 4px; color: var(--ink-secondary); }
 .contextRow { display: flex; align-items: flex-start; gap: 12px; margin-top: var(--space-sm); }
 .statement { flex: 1 1 auto; min-width: 0; border: 1px solid var(--rule-subtle); border-radius: 10px; background: var(--surface-panel); }
@@ -51,7 +81,7 @@
 .railInner { width: min(var(--width-workspace), calc(100% - 2 * var(--gutter))); margin-inline: auto; display: flex; gap: 8px; overflow-x: auto; }
 .tab { min-height: 48px; padding: 0 16px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--nav-idle-ink); font: inherit; font-size: var(--type-control); font-weight: 600; white-space: nowrap; cursor: pointer; }
 .tab:hover { color: var(--ink-strong); }
-.tab[aria-selected="true"] { color: var(--ink-strong); border-bottom-color: var(--accent-line); }
+.tab[aria-selected=\"true\"] { color: var(--ink-strong); border-bottom-color: var(--accent-line); }
 
 /* Panels and cards */
 .panel { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); padding: var(--space-md) 0 var(--space-4xl); }
@@ -68,7 +98,7 @@
 .completion { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; padding: 10px 12px; border: 1px solid var(--rule-subtle); border-radius: 10px; }
 .completionText { font-weight: 650; margin-right: auto; }
 .completion a.control { text-decoration: none; }
-/* A "Next: <title>" button carries a full problem title: on a phone it must wrap, not push
+/* A \"Next: <title>\" button carries a full problem title: on a phone it must wrap, not push
    the page sideways (.control is nowrap for the short labels everywhere else). */
 .completion .control { white-space: normal; text-align: left; min-width: 0; max-width: 100%; height: auto; padding-block: 8px; }
 .focusFamily { color: var(--ink-secondary); font-weight: 600; }
@@ -122,7 +152,7 @@
 .stage :global(.shell-head) { display: none; }
 .stage :global(.shell-head:has(.shell-legend)) { display: flex; }
 .stage :global(.shell-stage) { min-height: 360px; }
-.stage[data-family="spatial"] :global(.shell-stage) { min-height: 440px; }
+.stage[data-family=\"spatial\"] :global(.shell-stage) { min-height: 440px; }
 
 .narration { background: var(--accent-soft); border-radius: 10px; padding: 14px 18px; display: grid; gap: 4px; }
 .narrationLabel { font: 600 12px var(--font-code); letter-spacing: .1em; text-transform: uppercase; color: var(--accent-soft-ink); }
@@ -165,7 +195,7 @@
 .subviews { display: inline-flex; justify-self: start; border: 1px solid var(--control-border); border-radius: var(--radius-control); overflow: hidden; }
 .subview { min-height: var(--target-min); padding: 0 18px; border: 0; background: var(--surface-panel); color: var(--ink-secondary); font: inherit; font-size: var(--type-control); font-weight: 600; cursor: pointer; }
 .subview + .subview { border-left: 1px solid var(--control-border); }
-.subview[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.subview[aria-pressed=\"true\"] { background: var(--accent); color: var(--accent-ink); }
 .sourcePane { display: grid; grid-template-rows: auto minmax(360px, 70vh); gap: 8px; min-width: 0; }
 .sourcePane > :last-child { min-height: 0; }
 .followBar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; min-height: var(--target-min); }
@@ -202,33 +232,6 @@
   .contextRow { flex-direction: column; align-items: stretch; }
   .curriculum { justify-content: flex-start; }
 }
-/* On a laptop, setup/context has two reading columns instead of five full-width rows.
-   Keep all overview text, 44px actions and the complete title; wrapping remains natural.
-   Expanded statements return to full-width normal flow, never a tiny side panel. */
-@media (min-width: 1100px) {
-  .context {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, auto);
-    grid-template-areas: 'breadcrumb actions' 'title actions' 'summary actions';
-    gap: 4px 24px;
-    padding: 8px 0;
-    align-items: start;
-  }
-  .breadcrumb { grid-area: breadcrumb; margin-bottom: 0; }
-  .titleRow { grid-area: title; }
-  .summary { grid-area: summary; margin-top: 0; }
-  .contextRow { grid-area: actions; flex-direction: column; align-items: stretch; width: min(560px, 42vw); margin-top: 0; gap: 8px; }
-  .curriculum { justify-content: flex-end; }
-  .rail .tab { min-height: var(--target-min); }
-  .panel { padding-top: 4px; gap: 12px; }
-  .card { padding-block: 8px; gap: 8px; }
-  .approachSetup { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px 16px; }
-  .approachRow { flex: 1 1 580px; }
-  .approachHelp[open] { flex-basis: 100%; }
-  .context:has(.statement[open]) { display: block; }
-  .context:has(.statement[open]) .contextRow { width: auto; margin-top: 8px; }
-  .context:has(.statement[open]) .summary { margin-top: 4px; }
-}
 @media (max-width: 640px) {
   .headerNav { display: none; }
   .headerMenu { display: block; }
@@ -239,14 +242,9 @@
   .stage :global(.companion-pane) { flex: 0 0 auto; }
   .context { padding-top: var(--space-md); }
   .card { padding: var(--space-lg); border-radius: 10px; }
-  /* Setup actions keep their full visible labels and 44px hit areas. On phones the
-     decorative icons add a whole extra row; use readable 14px labels instead. */
-  .cardHead:has(> :global(#stage-title)) .cardActions { gap: 6px; }
-  .cardHead:has(> :global(#stage-title)) .cardActions .control { font-size: 14px; padding-inline: 8px; gap: 0; }
-  .cardHead:has(> :global(#stage-title)) .cardActions .control svg { display: none; }
   .panel { padding-top: var(--space-lg); gap: var(--space-md); }
   .stage :global(.shell-stage) { min-height: 300px; }
-  .stage[data-family="spatial"] :global(.shell-stage) { min-height: 340px; }
+  .stage[data-family=\"spatial\"] :global(.shell-stage) { min-height: 340px; }
   /* Phone controls wrap to three rows, so they need more of the viewport. */
   .focusMain .stage :global(.shell-stage) { min-height: max(300px, calc(100dvh - 520px)); }
   .stage :global(.shell-legend) { flex-wrap: wrap; margin-left: 0; }
@@ -262,3 +260,19 @@
 .teaching { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-xs); }
 .teaching dt { font-weight: 600; }
 .teaching dd { margin: 0 0 var(--space-sm); overflow-wrap: anywhere; }
+"
+
+ ❯ src/designTokens.test.js:161:23
+    159|   it('returns expanded setup information to full-width reading flow', …
+    160|     const workspace = readFileSync(join(SRC, 'workspace/ProblemWorkspa…
+    161|     expect(workspace).toMatch(/\.context:has\(\.statement\[open\]\)\s*…
+       |                       ^
+    162|     expect(workspace).toMatch(/\.context:has\(\.statement\[open\]\) \.…
+    163|     expect(workspace).toMatch(/\.approachHelp\[open\]\s*\{\s*flex-basi…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 17 passed (19)
+   Start at  11:16:12
+   Duration  643ms (transform 38ms, setup 10ms, collect 28ms, tests 32ms, environment 328ms, prepare 82ms)

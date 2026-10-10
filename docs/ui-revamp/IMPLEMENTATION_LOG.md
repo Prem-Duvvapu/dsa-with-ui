@@ -1348,7 +1348,11 @@ learner-study certification.54 other DP candidates and D6/D7 remain open.
 
 ## 2026-10-10 — Early P9 slice: retire the unused shell, preserve live seams
 
-Status: local `chore/retire-legacy-ui`, based on #217 / `9de01cd`; unpublished.
+Publication follow-up: merged #218 / `089cdd9` on 2026-10-10. PR checks, post-merge
+CI and Vercel deployment passed. The local/unpublished preflight below is historical.
+The owner stopped work after merging, then subsequently resumed the full completion goal.
+
+Historical pre-merge status: local `chore/retire-legacy-ui`, based on #217 / `9de01cd`; unpublished at that point.
 The owner subsequently authorized commit/push/PR/merge on 2026-10-10, conditional on
 clean verification. Publication remains gated on the exact PR head's CI.
 Frog Jump previously merged as #216 / `4ad9fc3`, followed by MIT licensing #217.
@@ -1473,3 +1477,164 @@ commit/push/PR/merge conditional on clean checks. All local gates for this bound
 are clean, including the final Chromium200-row rerun. Required frontend/backend CI
 must pass on the exact PR head before merge. Rollback base is #217 / `9de01cd`;
 revert the focused cleanup squash through a reviewed PR if a regression is found.
+
+## 2026-10-10 — Step5 / bounded P8: workspace layout and saved-input accessibility
+
+Status: local `fix/workspace-layout-polish`, based on merged #218 / `089cdd9`.
+The owner subsequently authorized commit/push/PR/merge on 2026-10-10, conditional on
+the exact PR head's required checks. This section records the pre-publication evidence;
+do not stack the next implementation package before this package merges.
+
+### What changed
+
+- The laptop context uses two columns while preserving the full title, overview,
+  statement, difficulty/star, curriculum and DOM reading order. Expanded statements
+  return to full-width normal flow. A compact default approach toolbar keeps its
+  selector, showing/selected notice and explanation; an open explanation gets full width.
+- On phones, the three stage setup actions keep full visible labels, readable 14px
+  text and 44px targets. Only their decorative icons are hidden so the actions fit one
+  row at 320/390px. Diagram height floors, narration and playback are not reduced.
+- Save input wraps instead of overflowing. Both saved-input actions use the shared
+  44px floor and meaningful border/ink tokens, including one-letter names. A specific
+  inset keyboard ring remains inside the rounded preset group. The remove icon is
+  decorative and 16px. Long names retain complete accessible names and titles.
+- The tracker now distinguishes merged cleanup from its historical local preflight,
+  completed bounded Firefox renderer checks from wider acceptance gaps, and the P0
+  gap table from current coverage. No additional Markdown roadmap was created.
+
+Production changes are confined to InputPanel JSX/styles and workspace styles. No
+session/hook/backend/dependency/lockfile/golden changes, fabricated metadata or answers.
+RCA-059 records why default-editor parity missed populated presets and open save forms.
+
+### Reproduction and regression evidence
+
+Fresh main baseline: `npm ci`, 79 files /784 tests, production build. The paired browser
+baseline is a detached `089cdd9` worktree using those installed dependencies; its
+production files are unchanged. Its separately built assets are recorded in the report
+(CSS module hashes differ from the native-worktree baseline). Do not substitute one
+build's identity for the other.
+
+The complete baseline has 60 failing geometry rows: six representatives × five widths
+(320/390/768/1366/1440) × both themes. One-letter preset Load/Remove measured 23×36 and
+24×36px. Opening Save input widened 320/390px pages by 153/83px. With keyboard modality,
+the 3px outward ring was clipped by the preset group's overflow. Phone setup actions
+wrapped; expanded desktop statements were constrained to the context side column.
+
+Four new frontend cases cover shared preset floors, save-form wrapping/inset focus,
+readable phone setup and full-width expanded reading. Selective RED proofs: reverting
+the preset floor/wrapping makes two cases fail; reverting the inset ring makes one fail
+(the same wrapping/focus case); the two workspace guards fail against main's old styles.
+All mutations were restored. Existing assertions were retained; the token contrast
+guard now also checks control borders against the preset's `--bench-fill` surface.
+This is selective mutation proof, not a claim that every pre-existing test failed.
+
+Excluded attempts: an initial CSS `?raw` test import was mocked by the test harness;
+mouse-only programmatic focus did not establish keyboard modality; immediate sampling
+observed an intermediate reduced-motion outline transition; one browser attempt spanned
+a production rebuild. None is counted as an app defect or final acceptance evidence.
+The final probe establishes keyboard modality, waits two animation frames for settled
+paint and rejects changed served assets. The baseline predates the final probe's extra
+draft/explanation continuity assertions; those are additional final guards, not claimed
+baseline defects. All paired geometry/target assertions are present in the baseline.
+
+### Final browser evidence and measurements
+
+`evidence/p8/layout-journey.cjs` is reproducible with Chromium or Firefox and the two
+local services. It captures six fresh genuine backend defaults, then replays them
+unchanged. This is presentation evidence, not a claim of new custom execution or every
+tracer answer. The sixth problem is derived from the live catalogue's longest title.
+
+- Chromium 60/60 and Firefox 60/60 pass on matching final assets. No page-wide overflow
+  in Playground, Code or Analysis; useful frame floors retained; phone actions in one
+  row; open save forms, short/long saved names and 44px targets checked. Settled keyboard
+  rings are 3px with a -4px offset and not hidden by the sticky rail.
+- An unsubmitted draft edit, selected step and committed input URL survive view switches.
+  Opening explanations/editing/saving/removing does not execute. The heading focus and
+  expanded full-width statements/explanations are checked. No page errors.
+- Four additional real-backend preset screenshot cases (320/1366, both themes) pass,
+  with no POSTs/overflow/errors. Screenshots were inspected in both themes; the inset
+  ring remains visible inside the 44px remove button.
+- The unchanged P5 tour probe passes 39 checks at 1366 dark/390 light: nine/eight visible
+  targets, keyboard welcome/help/replay/Escape, focus return, no leftover inertness,
+  extra custom execution or page errors. Its two screenshots are retained.
+
+At 1366×768 with statement closed, Chromium measurements are:
+
+| Problem | Baseline card / frame y | New card / frame y | Useful frame height |
+| --- | ---: | ---: | ---: |
+| Two Sum | 288.39 /358.39 | 220.39 /282.39 | 360px |
+| BFS | 288.39 /358.39 | 245.98 /307.98 | 440px |
+| LCS | 288.39 /391.39 | 220.39 /315.39 | 440px |
+| Longest substring | 288.39 /358.39 | 254.58 /316.58 | 360px |
+| Frog Jump | 396.39 /499.39 | 276.39 /371.39 | 440px |
+
+Two Sum's phone frame moves y517.59→465.59 at 320px and y517.59→421.59 at 390px;
+its 300px useful height stays intact. Raw reports retain the longest-title case too.
+The card milestone is **not** the handoff's useful-frame target: remaining frame positions
+above ~280 and larger phone examples remain explicit acceptance exceptions. No stage
+target, full P8 gate, real-device/virtual-keyboard, screen-reader, learner or performance
+certification is claimed. Owner review/acceptance of those limits remains pending.
+
+### Six review gates and handoff
+
+1. Backend: no source/contract/golden edits. Live stats were freshly checked: 431 catalogued,
+   431 traced, zero untraced/duplicates/orphans. Full backend rerun: 8,023 tests,
+   zero failures/errors and 500 existing skips; build success. The live backend was stopped
+   before this run, avoiding shared-target compilation while serving browser checks.
+2. Frontend: 79 files /788 tests pass (784 +four guards). Final build passes with the
+   same browser-tested assets: `index-DbmbKZMa.js` / `index-CfkLxyUw.css`.
+   JS382.56kB/gzip121.89; CSS97.71kB/gzip17.75. Native baseline: JS382.54/gzip121.90,
+   CSS95.79/gzip17.43. This is not a runtime performance result; the broader P0 bundle
+   growth/performance review stays open.
+3. UI/UX: both engines/themes/five widths; complete labels/targets, unclipped inset
+   focus, normal-flow expanded reading, retained diagram floors; live tour targets checked.
+4. Product: truthful baseline/final identities and counts; remaining visual/human gates
+   disclosed. The 54 remaining DP candidates and broader source-completeness work are
+   unaffected and unimplemented by this slice.
+5. Architecture: no new owner, dependency, data fallback or canvas; scoped styles and
+   existing tokens only. Existing semantic DOM order and data-tour anchors stay intact.
+6. QA: selective RED proofs, two complete matching-build engine matrices, stronger
+   contrast guard and explicit excluded harness attempts. Launcher process-tree smoke
+   passes. Raw reports, screenshots, RED logs and tour output live in
+   `evidence/p8/layout-polish/`; no old P9 evidence was overwritten.
+
+Next safe step: obtain publication approval, then publish this medium package and merge
+only after required checks pass. Only after it lands, begin the next separately scoped
+source-completeness/DP package. Final release, performance and human acceptance remain open.
+
+## 2026-10-10 — Read-only continuation while publication approval is pending
+
+Historical status at inventory time: the layout package was local and uncommitted;
+GitHub had no open PR and publication approval was pending. No next production
+implementation was started.
+
+The broader source-completeness check uses all 431 exact default-source goldens, whose
+equality to the current registry was verified by the fresh 432-case GoldenTraceTest.
+JavaCompiler runs with release 17, an isolated case classpath, no annotation processors,
+only JDK util/math imports and an outer class for method snippets; it supplies no missing
+helper or node/application definition. Result: 300 compile, 77 report only unresolved
+platform node types, 53 have other unresolved helpers/state/constants/support types.
+One intentionally C++ listing compiles with g++ C++17/vector/utility includes, but the
+UI's SourcePane/CodeViewer always label it Java. Its Java rejection is not counted among
+the 53 Java omissions. One helper-class-plus-method context error resolves in the outer
+wrapper (`tree-rep-java`) and is excluded from the final failure count.
+
+`evidence/source-code/compile-inventory.json` retains per-listing hashes, diagnostics,
+classifications and limits; the existing source-repair/execution plans record the queue.
+No trace/source/golden/backend/frontend implementation was changed. Compilation alone
+does not prove answer agreement; platform-only diagnostics may hide more missing helpers;
+method wrappers/imports do not establish standalone source completeness. This is a
+default-listing diagnostic, not fresh HTTP source certification or an all-approach audit.
+The separately tested DP repair and pilots retain their bounded execution certificates.
+
+Next action still requires owner input: authorize publishing the verified layout package;
+after it merges, take the source/DP repairs one medium package at a time. No project
+completion, accessibility/performance/human sign-off or publishing authority is inferred.
+
+Publication authorization follow-up (2026-10-10): the owner explicitly approved committing,
+pushing, opening the PR and merging after required checks pass, then continuing the source
+repairs. Publish the verified layout/evidence package first. The source repair work remains
+separate; this approval does not assert that outstanding source/DP/human gates are complete.
+Saved test-output text artifacts were normalized for trailing whitespace and terminal
+blank lines only so the staged diff passes the repository's whitespace gate; test results
+and diagnostics were not changed.

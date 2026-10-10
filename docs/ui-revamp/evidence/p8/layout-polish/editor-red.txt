@@ -1,0 +1,74 @@
+
+ RUN  v1.6.1 /home/prem/dsa-p8/frontend
+
+ ❯ src/components/InputPanel.test.jsx  (18 tests | 2 failed) 1529ms
+   ❯ src/components/InputPanel.test.jsx > InputPanel > saved inputs > keeps both saved-input actions at the shared target floor, including one-letter names
+     → expected '\r\n  min-width: 36px;\r\n  min-heigh…' to match /min-width:\s*var\(--target-min\)/
+   ❯ src/components/InputPanel.test.jsx > InputPanel > saved inputs > wraps the save form and keeps a visible focus ring inside rounded preset groups
+     → expected '\r\n  display: flex;\r\n  flex-wrap: …' to match /flex-wrap:\s*wrap/
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/InputPanel.test.jsx > InputPanel > saved inputs > keeps both saved-input actions at the shared target floor, including one-letter names
+AssertionError: expected '\r\n  min-width: 36px;\r\n  min-heigh…' to match /min-width:\s*var\(--target-min\)/
+
+- Expected:
+/min-width:\s*var\(--target-min\)/
+
++ Received:
+"
+  min-width: 36px;
+  min-height: 36px;
+  flex: 1 1 auto;
+  border: none;
+  background: transparent;
+  color: var(--ink-strong);
+  font-size: var(--type-control);
+  padding: 0 12px;
+  cursor: pointer;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+"
+
+ ❯ src/components/InputPanel.test.jsx:99:22
+     97|       for (const selector of ['presetLoad', 'presetRemove']) {
+     98|         const rule = editorCSS.match(new RegExp(`\\.${selector} \\{([^…
+     99|         expect(rule).toMatch(/min-width:\s*var\(--target-min\)/);
+       |                      ^
+    100|         expect(rule).toMatch(/min-height:\s*var\(--target-min\)/);
+    101|       }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/components/InputPanel.test.jsx > InputPanel > saved inputs > wraps the save form and keeps a visible focus ring inside rounded preset groups
+AssertionError: expected '\r\n  display: flex;\r\n  flex-wrap: …' to match /flex-wrap:\s*wrap/
+
+- Expected:
+/flex-wrap:\s*wrap/
+
++ Received:
+"
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 0;
+"
+
+ ❯ src/components/InputPanel.test.jsx:105:60
+    103|
+    104|     it('wraps the save form and keeps a visible focus ring inside roun…
+    105|       expect(editorCSS.match(/\.saveForm \{([^}]+)\}/)[1]).toMatch(/fl…
+       |                                                            ^
+    106|       expect(editorCSS).toMatch(/\.saveForm :global\(\.ip-input\)\s*\{…
+    107|       const focus = editorCSS.match(/\.panel \.presetItem :is\(\.prese…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 16 passed (18)
+   Start at  11:07:21
+   Duration  3.58s (transform 346ms, setup 32ms, collect 990ms, tests 1.53s, environment 675ms, prepare 104ms)
