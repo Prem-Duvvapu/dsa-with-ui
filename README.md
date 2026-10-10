@@ -19,7 +19,12 @@ The [UI revamp handoff](docs/ui-revamp/IMPLEMENTATION_HANDOFF.md) defines accept
 the [execution tracker](docs/ui-revamp/REVAMP_TRACKER.md) and
 [implementation log](docs/ui-revamp/IMPLEMENTATION_LOG.md) distinguish implementation,
 verification and publication. The separate [DP approaches plan](docs/ui-revamp/DP_SOLUTION_APPROACHES_PLAN.md)
-records the merged Climbing Stairs pilot and the ongoing per-problem rollout; it is not
+records the Climbing Stairs/Frog Jump pilots and the per-problem rollout, including
+recursion, memoization and tabulation for LIS, Stock with Transaction Fee, Minimum
+Insertions to Palindrome, Count Partitions with Given Difference and Ninja and His Friends.
+Use **Solution approach** to prepare a solution, then explicitly run it; selecting alone
+preserves the draft and the last valid execution. Existing LCS-with-reverse and rolling
+Ninja solutions remain the defaults and are separately labelled. This is not
 a claim that all DP problems offer three approaches.
 
 **Status: 431 problems catalogued, all 431 with real execution traces.** The API still

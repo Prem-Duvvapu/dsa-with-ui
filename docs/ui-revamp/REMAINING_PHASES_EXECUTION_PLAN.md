@@ -74,6 +74,17 @@ The owner approved publishing this specific package on continuation after the ex
 commit/push/merge request. Land it only after CI passes before starting the next medium
 package; no publication authority is inferred for later packages.
 
+That correctness package merged as #222 / `cb56b83`. The owner then prioritized a
+separate, bounded DP batch and explicitly authorized publishing it after completion.
+LIS, Stock with Transaction Fee, Minimum Insertions to Palindrome, Count Partitions with
+Given Difference and Ninja and His Friends now have verified recursion/memoization/
+tabulation, preserving all existing defaults and the optimized fourth options. Full
+backend8,131 cases (500 unchanged skips), frontend811/build,29 real API cases and168
+final production-browser rows pass. See the current DP plan, inventory and dated log.
+Seven of56 candidates are verified;49 remain pending, superseding the historical54
+above. Land this owner-requested batch only after CI; do not start unrelated remaining
+phases. D6/D7, broader P7/P8/P9 acceptance and the other release gaps remain open.
+
 ## 1. Objective and source of truth
 
 Complete every remaining UI revamp package and close the acceptance gaps in already

@@ -1931,3 +1931,104 @@ Publication authorization follow-up: the owner answered "continue" to the explic
 commit/push/merge request for this verified batch. Publication is now approved, with merge
 conditional on passing CI. The initial awaiting-approval statements above are historical;
 no publication approval is inferred for subsequent packages.
+
+## 2026-10-10 — Owner-requested five-problem DP batch
+
+Branch `feat/dp-requested-approaches`, cut from merged #222 / `cb56b83`. The owner
+prioritized exactly LIS, Stock with Transaction Fee, Minimum Insertions to Palindrome,
+Count Partitions with Given Difference and Ninja and His Friends, then explicitly
+requested “commit, push and merge after done”. No unrelated next phase was started.
+
+### Implementation and regression proof
+
+- Twelve new executable alternatives provide genuine recursion, memoization and
+  tabulation paths, seventeen offered executions total. All five retain the exact
+  canonical tracer/default/source and old links. Palindrome's LCS-with-reverse and
+  Ninja's rolling slices remain named existing fourth options; direct interval/full3D
+  tables really implement the memo recurrence bottom-up, not renamed optimized code.
+- Request-local instrumentation receives each owning tracer's actual recurrence.
+  Call IDs are distinct, frames enter/leave honestly, the budget is checked before
+  descent, full state keys cache known zero, and hit events expand no children.
+  Unknown cells stay unknown. Ninja memo shows the current labelled row; full tabulation
+  retains all slices and explains next-row reads without fabricated same-slice arrows.
+- Safe alternative bounds and joint partition-table limits are served and enforced.
+  Existing positive-only partition and nonnegative-grid contracts remain unchanged.
+  Comparison now displays declared row/column ceilings without invented minima.
+- RCA-062: differing defaults exposed that untouched LIS input drifted from eight to
+  six values on selection. The new RED hook case failed before the fix. A first
+  rendered-value snapshot then failed the existing same-tick replace/select case;
+  functional preservation now retains queued edits. Selecting pauses, preserves the
+  draft and never executes/shares. Explicit defaults replacement remains available.
+- Memo-store glyphs were also checked: a new assertion failed5/5 before restricting
+  the glyph to actual base/store events. Return/enter/done no longer suggest another
+  write. Initial discovery was RED before registration; constant-zero displayed
+  recursive-source mutations fail5/5 independent oracle cases, and treating cached
+  zero as unknown fails5/5 memo-reuse cases. Slice/grid UI assertions give2 valid RED
+  cases. All mutations are restored; no existing assertion or timeout was weakened.
+
+### Final local verification
+
+- Fresh locked npm install; `npx vitest run --maxWorkers=2 --minWorkers=1`:80 files /
+  811 tests pass; `npx vite build` passes. An earlier default-worker rerun competed
+  with compilation and hit existing5-second test deadlines; it was interrupted and
+  excluded, not passed or “fixed” by relaxing timeouts. The final full suite includes
+  all the same tests. Existing act/router warnings remain.
+- `mvn -B test`:8,131 cases,0 failures/errors,500 unchanged skips;44 new requested-DP
+  cases. `mvn -B package -DskipTests` and `bash start-smoke-test.sh` pass.
+  `mvn -B test -Dtest=GoldenTraceTest -Dgolden.regenerate=true`:432 cases pass; the
+  resulting canonical content diff is empty (only line-ending/index refresh needed).
+  No golden, manifest, lockfile, dependency or canonical source content changes.
+- All17 exact displayed solutions compile independently and agree with independently
+  enumerated references on51 deterministic cases per problem:867 executions for each
+  of the tracer and source paths, not867 unique inputs. Only two preserved canonical
+  method snippets receive an outer Solution class, never missing-helper scaffolding.
+  Oracles enumerate LIS subsequences, completed stock trades, palindromic subsequences,
+  indexed subset assignments and pairs of complete robot paths. All12 authored
+  examples are checked, with explicit refusal of oversized recursive examples.
+- Real packaged backend, normal execution rate limits, fixed production-preview assets:
+  29 API cases compare decoded full/delta snapshots and served source/type/complexity/
+  input identity. Defaults and all12 alternative maximum cases finish without truncation;
+  largest measured full response1,474,328 bytes, maximum199 actual calls (renderer cap220).
+- Final browser rows168:50 Chromium journeys at320/390/768/1366/1440px ×both themes;
+  48 largest tree/memo/new-table rows at320/1366px;20 Firefox155 journeys;20 native
+  200% Chrome zoom journeys (effective320/683px);30 preserved-default rows across
+  five widths/both themes. View changes execute nothing; explicit runs pair source,
+  input, answer and share identity; comparison retains the main run; shared links
+  restore input before step;400 keeps the prior link and focuses the summary.
+  All ten LIS default rows preserve the eight-element draft and explicitly reject
+  recursion. No page-wide overflow, browser errors or duplicate primary tree canvases.
+- All final browser manifests name `index-CEI0RuNU.js` / `index-CfkLxyUw.css`.
+  JS383.34kB/gzip122.14; CSS97.71kB/gzip17.75. Live stats431/431,0 untraced/duplicates/
+  orphans. Updated per-problem inventory credits7/56 verified,49 pending, never another
+  problem's evidence. The locked audit still reports9 existing findings; none resolved.
+
+Evidence: `dp-approaches/requested-five/verification.json`, five browser manifests,
+`api-results.json` and nine captures; reproducing probes are adjacent `.cjs` files.
+Desktop LIS/palindrome tables, maximum Ninja full3D and the phone memo caption were
+visually inspected. Screenshot “recursion” in standard names is the initial shared
+entry; those stage captures are the subsequently selected table. Maximum captures
+name the displayed form. The native zoom wrapper lacked `version()`; its first completed
+interaction sweep failed metadata saving and is excluded. CDP obtains its actual version,
+contexts now close per page, and the full20-row sweep was repeated successfully.
+Earlier old-build/interrupted/harness runs are not final acceptance evidence.
+
+### Six review gates and boundaries
+
+Backend: actual served discovery/identity, all field limits and joint budget, invalid
+inputs/approach refusal, strict registry defaults, per-request state and both trace
+budgets verified. Frontend: one session/URL owner, preserved draft and failed run,
+late-request guards retained, truthful absence and no dependency/CSS-token changes.
+UI/UX: one primary canvas, closed optional memo companion, compact existing selector,
+actual slice labels and limits, both themes/phone/keyboard focus/zoom checked. Product:
+three real transformations, existing optimized formulations preserved, visualizer caps
+not platform rules and no claim all DP candidates are complete. Architecture: non-bean
+alternative tracers through providers, real request-local recurrence instrumentation,
+strict source resources, unchanged canonical registry/goldens, no fallback. QA: valid
+RED/mutation/oracle/source/full-suite/golden and real browser seam checks as recorded.
+
+The publishing PR/merge and its CI are recorded in GitHub after this verified snapshot;
+owner authorization is explicit and merge remains conditional on passing checks. This
+is not production backend deployment certification, a real-device/virtual-keyboard or
+human screen-reader/learner sign-off, or a broad performance result. D6/D7,49 remaining
+DP candidates,42 historical source omissions,77 platform contexts,41 statements,
+language/security/device/performance/deployment/release gaps and P7/P8/P9 remain open.

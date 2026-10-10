@@ -1800,3 +1800,12 @@ is pending separately; source-highlight/browser gates do not prove canvas-result
 - **Scope:** five owners receive full per-step snapshots, not all27 SearchSpace owners.
   Silent commentary still carries one coherent pair; no cross-step variable-map folding,
   description parsing or fabricated terminal interval was introduced.
+
+## RCA-062 — Preparing an approach replaced an untouched draft with different defaults
+
+- **Discovered:** 2026-10-10 during the owner-requested five-problem DP rollout, before publication.
+- **Symptom:** LIS's canonical eight-element example became the recursive approach's six-element default on selection, without an explicit edit or run. Edited/shared drafts were unaffected, hiding the defect in earlier pilots whose defaults matched.
+- **Cause:** `useInputDraft` correctly derives defaults until an edit exists, but `selectApproach` changed the schema without first snapshotting the visible values. The draft then followed the new schema's defaults.
+- **Fix:** selecting a recognized approach freezes the current draft before adopting its spec. A functional state update retains any already queued same-tick edit instead of overwriting it with stale rendered defaults. New limits still appear, and oversized input is refused; only an explicit Restore defaults action replaces the values with the newly selected defaults. The prior execution and URL remain unchanged until success.
+- **Guard:** the untouched-draft regression in `useProblemSession.approaches.test.jsx` fails before the fix. Real-backend LIS default journeys at all five widths/both themes keep all eight values, return400 for recursion, retain the old share link and focus the error summary. Final browser manifests are under `dp-approaches/requested-five/`; unpublished/partial probes are not acceptance evidence.
+- **Lesson:** preservation tests must cover untouched derived defaults as well as edited drafts. Approach-specific defaults may legitimately differ; selecting one is not authorization to replace the user's visible input.

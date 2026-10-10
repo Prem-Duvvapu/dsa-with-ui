@@ -11,6 +11,8 @@ function limits(option) {
     const bounds = [];
     if (c.min != null && c.max != null) bounds.push(`${c.min}–${c.max}`);
     if (c.minLength != null && c.maxLength != null) bounds.push(`length ${c.minLength}–${c.maxLength}`);
+    if (c.maxRows != null) bounds.push(`at most ${c.maxRows} rows`);
+    if (c.maxCols != null) bounds.push(`at most ${c.maxCols} columns`);
     if (c.minValue != null && c.maxValue != null) bounds.push(`values ${c.minValue}–${c.maxValue}`);
     return `${field.label ?? field.name} ${bounds.length ? bounds.join(', ') : 'see input constraints'}`;
   }).join('; ');

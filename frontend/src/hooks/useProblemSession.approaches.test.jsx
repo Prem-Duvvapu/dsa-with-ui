@@ -14,7 +14,9 @@ const approaches = ['recursion', 'memoization', 'tabulation'].map(id => ({ id,
 }));
 const entry = id => ({ id, title: id, dsType: 'DpTable', inputSpec: spec(30), javaCode: 'tabulation source',
   complexity: approaches[2].complexity, approachId: 'tabulation', defaultApproachId: 'tabulation',
-  approaches, alternateInput: { n: 12 }, defaultArray: [{ value: 99 }], defaultTreeNodes: [{ id: 123 }] });
+  approaches: recursionDefault === 5 ? approaches : approaches.map(option => option.id !== 'recursion' ? option : {
+    ...option, inputSpec: { ...option.inputSpec, fields: option.inputSpec.fields.map(field => ({ ...field, defaultValue: recursionDefault })) }
+  }), alternateInput: { n: 12 }, defaultArray: [{ value: 99 }], defaultTreeNodes: [{ id: 123 }] });
 const response = body => ({ ok: true, status: 200, json: async () => body });
 function trace(id, approach, n) {
   const definition = approaches.find(a => a.id === approach);
@@ -26,11 +28,12 @@ function trace(id, approach, n) {
       description: `${id} ${approach} n=${n} step ${i + 1}` })) };
 }
 
-let posts, held, holdBodies, failDefault, reject, mismatch, mutateResponse, detailHeld, releaseDetail, location, navigate;
+let posts, held, holdBodies, failDefault, reject, mismatch, mutateResponse, detailHeld, releaseDetail, location, navigate, recursionDefault;
 beforeEach(() => {
   posts = []; held = []; holdBodies = false; failDefault = false; reject = null; mismatch = null;
   detailHeld = false; releaseDetail = null;
   mutateResponse = null;
+  recursionDefault = 5;
   vi.stubGlobal('fetch', vi.fn((url, options = {}) => {
     const parsed = new URL(url, 'https://test.invalid');
     const id = parsed.pathname.split('/')[3];
@@ -80,6 +83,21 @@ const link = (approach, input, step = 3) => `/problem/climbing-stairs?${new URLS
   ...(input ? { input: encodeInput(input) } : {}), step: String(step), view: 'code' })}`;
 
 describe('approach identity belongs to the committed run, not the candidate', () => {
+  it('preserves an untouched draft when the new approach has different defaults', async () => {
+    recursionDefault = 2;
+    const { result } = await loaded();
+    expect(result.current.draft.isEdited).toBe(false);
+    expect(result.current.draft.values).toEqual({ n: 5 });
+    const before = location.search;
+    act(() => result.current.selectApproach('recursion'));
+    expect(result.current.inputSpec.fields[0].defaultValue).toBe(2);
+    expect(result.current.draft.values).toEqual({ n: 5 });
+    expect(result.current.run.resolvedInput).toEqual({ n: 5 });
+    expect(posts).toHaveLength(0);
+    expect(location.search).toBe(before);
+    await act(async () => result.current.submit(result.current.draft.values));
+    expect(posts[0].input).toEqual({ n: 5 });
+  });
   it('selects without executing, changing the draft, source, complexity or URL', async () => {
     const { result } = await loaded();
     act(() => { result.current.draft.replace({ n: 20 }); result.current.play(); });

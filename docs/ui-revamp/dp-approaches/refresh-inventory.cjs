@@ -39,6 +39,35 @@ function candidateUiVerified(problemId) {
       && r.nativeComparisonKeyboardAndFocus && r.sameCommittedInputAndIndependentSliders
       && r.otherCaseUsesShownApproach && r.refusedArrayKeptWithOldLink && r.sharedInputThenStepRestored)));
 }
+// The owner-requested batch has shared manifests, but verification remains per problem.
+// Never borrow another row's cases or assets, or treat an incomplete probe as a passed gate.
+function requestedCandidateUiVerified(problemId) {
+  const names = ['chromium-standard-zoom1', 'firefox-standard-zoom1', 'chromium-standard-zoom2', 'chromium-maximum-zoom1'];
+  const documents = names.map(name => {
+    const file = path.join(__dirname, 'requested-five', `${name}.json`);
+    return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : null;
+  });
+  const assets = documents[0]?.servedBuild?.assets;
+  if (!assets?.some(a => a.endsWith('.js')) || !assets?.some(a => a.endsWith('.css'))) return false;
+  return documents.every((doc, index) => {
+    if (!doc?.realBackend || doc.buildMode !== 'production-preview'
+      || doc.engine !== (index === 1 ? 'firefox' : 'chromium')
+      || JSON.stringify(doc.servedBuild?.assets) !== JSON.stringify(assets)) return false;
+    const rows = doc.rows?.filter(row => row.problemId === problemId) ?? [];
+    if (rows.some(row => !row.noOverflowOrErrors || row.nativeZoom !== (index === 2 ? 2 : 1)
+      || !['light', 'dark'].includes(row.theme))) return false;
+    if (new Set(rows.map(row => `${row.width}x${row.height}:${row.theme}:${row.initial}`)).size !== rows.length) return false;
+    if (index === 3) return rows.filter(row => row.initial === 'recursion').length === 4
+      && rows.filter(row => row.initial === 'memoization').length === 4
+      && rows.every(row => ['320x568', '1366x768'].includes(`${row.width}x${row.height}`)
+        && (row.initial === 'tabulation' ? row.fullTableRendered : row.allCallsRenderedAndRootVisible));
+    const sizes = index === 0 ? ['320x568', '390x844', '768x1024', '1366x768', '1440x900']
+      : index === 1 ? ['390x844', '1366x768'] : ['640x1136', '1366x768'];
+    return rows.length === sizes.length * 2 && rows.every(row => sizes.includes(`${row.width}x${row.height}`)
+      && row.allThreeExecuted && row.inputAndStepRestored && row.viewsDoNotExecute)
+      && (index !== 0 || rows.some(row => row.comparisonChecked) && rows.some(row => row.reloadAndRefusalChecked));
+  });
+}
 (async () => {
   const inventoryPath = path.join(__dirname, 'inventory.json');
   const previous = fs.existsSync(inventoryPath) ? JSON.parse(fs.readFileSync(inventoryPath, 'utf8')) : null;
@@ -72,7 +101,7 @@ function candidateUiVerified(problemId) {
       canonicalInputSpec: detail.inputSpec, canonicalComplexity: detail.complexity,
       alternativeStatus: detail.approaches?.length > 1 ? (problem.id === 'climbing-stairs' && verifiedPilot
         ? verifiedTeachingComparison ? 'backend-and-UI-teaching-comparison-pilot-verified; family rollout pending'
-          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id)
+          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id) || requestedCandidateUiVerified(problem.id)
             ? 'backend-and-UI-candidate-verified; family rollout pending' : 'backend-pilot; UI pending')
         : reviewed.get(problem.id).plannedForms.length ? 'planned' : 'requires-different-formulation',
       alternativeSafetyBounds: detail.approaches?.length > 1

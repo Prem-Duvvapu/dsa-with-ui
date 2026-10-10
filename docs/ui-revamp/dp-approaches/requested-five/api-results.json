@@ -1,0 +1,848 @@
+{
+  "generated": "2026-10-10T17:13:48.015Z",
+  "realBackend": true,
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "rows": [
+    {
+      "problemId": "longest-increasing-subsequence",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "nums": [
+          10,
+          9,
+          2,
+          5,
+          3,
+          7
+        ]
+      },
+      "answer": "3",
+      "calls": "38",
+      "cacheHits": "0",
+      "states": "28",
+      "steps": 140,
+      "fullBytes": 74557,
+      "deltaBytes": 44085,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "longest-increasing-subsequence",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      },
+      "answer": "6",
+      "calls": "127",
+      "cacheHits": "0",
+      "states": "28",
+      "steps": 446,
+      "fullBytes": 242058,
+      "deltaBytes": 142378,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "longest-increasing-subsequence",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "nums": [
+          10,
+          9,
+          2,
+          5,
+          3,
+          7,
+          101,
+          18
+        ]
+      },
+      "answer": "4",
+      "calls": "62",
+      "cacheHits": "17",
+      "states": "45",
+      "steps": 224,
+      "fullBytes": 717588,
+      "deltaBytes": 409898,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "longest-increasing-subsequence",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "answer": "9",
+      "calls": "91",
+      "cacheHits": "36",
+      "states": "55",
+      "steps": 320,
+      "fullBytes": 1214918,
+      "deltaBytes": 704936,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "longest-increasing-subsequence",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "nums": [
+          10,
+          9,
+          2,
+          5,
+          3,
+          7,
+          101,
+          18
+        ]
+      },
+      "answer": "4",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "steps": 38,
+      "fullBytes": 134034,
+      "deltaBytes": 127634,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "stock-transaction-fee",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "prices": [
+          1,
+          3,
+          2,
+          8,
+          4,
+          9
+        ],
+        "fee": 2
+      },
+      "answer": "8",
+      "calls": "127",
+      "cacheHits": "0",
+      "states": "13",
+      "steps": 446,
+      "fullBytes": 266810,
+      "deltaBytes": 158514,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "stock-transaction-fee",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "prices": [
+          0,
+          100,
+          0,
+          100,
+          0,
+          100
+        ],
+        "fee": 0
+      },
+      "answer": "300",
+      "calls": "127",
+      "cacheHits": "0",
+      "states": "13",
+      "steps": 446,
+      "fullBytes": 267198,
+      "deltaBytes": 158902,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "stock-transaction-fee",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "prices": [
+          1,
+          3,
+          2,
+          8,
+          4,
+          9
+        ],
+        "fee": 2
+      },
+      "answer": "8",
+      "calls": "23",
+      "cacheHits": "10",
+      "states": "13",
+      "steps": 82,
+      "fullBytes": 96962,
+      "deltaBytes": 57862,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "stock-transaction-fee",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "prices": [
+          0,
+          100,
+          0,
+          100,
+          0,
+          100,
+          0,
+          100,
+          0,
+          100,
+          0,
+          100,
+          0,
+          100,
+          0
+        ],
+        "fee": 0
+      },
+      "answer": "700",
+      "calls": "59",
+      "cacheHits": "28",
+      "states": "31",
+      "steps": 208,
+      "fullBytes": 407624,
+      "deltaBytes": 240271,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "stock-transaction-fee",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "prices": [
+          1,
+          3,
+          2,
+          8,
+          4,
+          9
+        ],
+        "fee": 2
+      },
+      "answer": "8",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "steps": 14,
+      "fullBytes": 14246,
+      "deltaBytes": 11860,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "min-insertions-palindrome",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "text": "mbadm"
+      },
+      "answer": "2",
+      "calls": "8",
+      "cacheHits": "0",
+      "states": "7",
+      "steps": 30,
+      "fullBytes": 16655,
+      "deltaBytes": 10581,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "min-insertions-palindrome",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "text": "abcdefg"
+      },
+      "answer": "6",
+      "calls": "127",
+      "cacheHits": "0",
+      "states": "28",
+      "steps": 446,
+      "fullBytes": 267476,
+      "deltaBytes": 160257,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "min-insertions-palindrome",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "text": "mbadm"
+      },
+      "answer": "2",
+      "calls": "8",
+      "cacheHits": "1",
+      "states": "7",
+      "steps": 30,
+      "fullBytes": 56152,
+      "deltaBytes": 33139,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "min-insertions-palindrome",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "text": "abcdefghij"
+      },
+      "answer": "9",
+      "calls": "91",
+      "cacheHits": "36",
+      "states": "55",
+      "steps": 320,
+      "fullBytes": 1474328,
+      "deltaBytes": 853789,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "min-insertions-palindrome",
+      "approachId": "tabulation",
+      "label": "default",
+      "input": {
+        "text": "mbadm"
+      },
+      "answer": "2",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "steps": 12,
+      "fullBytes": 17845,
+      "deltaBytes": 15815,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "min-insertions-palindrome",
+      "approachId": "tabulation",
+      "label": "maximum",
+      "input": {
+        "text": "abcdefghijkl"
+      },
+      "answer": "11",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "steps": 68,
+      "fullBytes": 351957,
+      "deltaBytes": 340042,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "min-insertions-palindrome",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "text": "mbadm"
+      },
+      "answer": "2",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "steps": 27,
+      "fullBytes": 44359,
+      "deltaBytes": 39659,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-partitions-given-diff",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "d": 1,
+        "nums": [
+          1,
+          1,
+          2,
+          3
+        ]
+      },
+      "answer": "3",
+      "calls": "23",
+      "cacheHits": "0",
+      "states": "16",
+      "steps": 83,
+      "fullBytes": 45129,
+      "deltaBytes": 27310,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-partitions-given-diff",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "d": 0,
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "answer": "20",
+      "calls": "98",
+      "cacheHits": "0",
+      "states": "22",
+      "steps": 352,
+      "fullBytes": 204908,
+      "deltaBytes": 121481,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-partitions-given-diff",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "d": 1,
+        "nums": [
+          1,
+          1,
+          2,
+          3
+        ]
+      },
+      "answer": "3",
+      "calls": "21",
+      "cacheHits": "5",
+      "states": "16",
+      "steps": 76,
+      "fullBytes": 112900,
+      "deltaBytes": 65826,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-partitions-given-diff",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "d": 0,
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "answer": "252",
+      "calls": "86",
+      "cacheHits": "35",
+      "states": "51",
+      "steps": 305,
+      "fullBytes": 877569,
+      "deltaBytes": 507988,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-partitions-given-diff",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "d": 1,
+        "nums": [
+          1,
+          1,
+          2,
+          3
+        ]
+      },
+      "answer": "3",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "steps": 26,
+      "fullBytes": 36430,
+      "deltaBytes": 31908,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninja-and-his-friends",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "grid": [
+          [
+            3,
+            1,
+            1
+          ],
+          [
+            2,
+            5,
+            1
+          ],
+          [
+            1,
+            5,
+            5
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ]
+      },
+      "answer": "24",
+      "calls": "174",
+      "cacheHits": "0",
+      "states": "23",
+      "steps": 554,
+      "fullBytes": 308984,
+      "deltaBytes": 189332,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninja-and-his-friends",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "grid": [
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ]
+        ]
+      },
+      "answer": "800",
+      "calls": "199",
+      "cacheHits": "0",
+      "states": "30",
+      "steps": 629,
+      "fullBytes": 352898,
+      "deltaBytes": 217308,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninja-and-his-friends",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "grid": [
+          [
+            3,
+            1,
+            1
+          ],
+          [
+            2,
+            5,
+            1
+          ],
+          [
+            1,
+            5,
+            5
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ]
+      },
+      "answer": "24",
+      "calls": "79",
+      "cacheHits": "56",
+      "states": "23",
+      "steps": 253,
+      "fullBytes": 258895,
+      "deltaBytes": 170807,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninja-and-his-friends",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "grid": [
+          [
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100
+          ]
+        ]
+      },
+      "answer": "1000",
+      "calls": "194",
+      "cacheHits": "148",
+      "states": "46",
+      "steps": 614,
+      "fullBytes": 798354,
+      "deltaBytes": 533287,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninja-and-his-friends",
+      "approachId": "tabulation",
+      "label": "default",
+      "input": {
+        "grid": [
+          [
+            3,
+            1,
+            1
+          ],
+          [
+            2,
+            5,
+            1
+          ],
+          [
+            1,
+            5,
+            5
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ]
+      },
+      "answer": "24",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "steps": 40,
+      "fullBytes": 38999,
+      "deltaBytes": 31985,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninja-and-his-friends",
+      "approachId": "tabulation",
+      "label": "maximum",
+      "input": {
+        "grid": [
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100,
+            100,
+            100,
+            100
+          ]
+        ]
+      },
+      "answer": "1600",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "steps": 296,
+      "fullBytes": 564223,
+      "deltaBytes": 512056,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninja-and-his-friends",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "grid": [
+          [
+            3,
+            1,
+            1
+          ],
+          [
+            2,
+            5,
+            1
+          ],
+          [
+            1,
+            5,
+            5
+          ],
+          [
+            2,
+            1,
+            1
+          ]
+        ]
+      },
+      "answer": "24",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "steps": 43,
+      "fullBytes": 42377,
+      "deltaBytes": 34829,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    }
+  ]
+}

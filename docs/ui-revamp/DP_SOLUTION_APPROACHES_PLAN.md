@@ -1,11 +1,83 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **D0–D4 merged; first D5 candidate (Frog Jump) merged #216 / `4ad9fc3`; 54 other candidates and D6/D7 pending.**
-Current repository work: early P9 cleanup merged #218 / `089cdd9`; the resumed completion goal starts bounded layout/accessibility polish before further DP batches.
+Status: **7/56 candidates verified: Climbing Stairs, Frog Jump and the owner-requested five-problem batch. The new batch is owner-approved for publication after CI; 49 candidates and D6/D7 remain pending.**
+Current repository work: the parametric-search correctness batch merged #222 / `cb56b83`. The owner explicitly prioritized LIS, Stock with Transaction Fee, Minimum Insertions to Palindrome, Count Partitions with Given Difference and Ninja and His Friends, and authorized commit/push/merge after verification. No unrelated next package is started.
 Prepared 2026-10-07 against merged main `9d0aa10` (PR #208).
 This is a separate feature from the unfinished P8/P9 revamp gates; it does not close them.
 The owner authorized implementation on 2026-10-07 after merging PR #210.
 The original plan-only stop instruction has been superseded.
+
+### Owner-requested D5 batch — 2026-10-10
+
+The following five problems add twelve real alternative executables. Their seventeen
+offered executions retain the exact existing canonical/default tracer objects and old
+links. No canonical source, result or golden changes are required.
+
+| Problem | Recursive state | Recursion ceiling | Memo ceiling | Bottom-up learning path |
+| --- | --- | --- | --- | --- |
+| Longest Increasing Subsequence | suffix index and previous-index+1 | 6 values | 9 values | Existing suffix/previous-index tabulation |
+| Buy & Sell Stock with Transaction Fee | day and holding | 6 prices | 15 prices | Existing backward day/holding tabulation; fee on sale |
+| Min Insertions to Make String Palindrome | left and right interval endpoints | 7 characters | 10 characters | New increasing-interval-length table, up to 12 characters |
+| Count Partitions with Given Difference | item count and remaining transformed target | 6 positive values | 10 positive values, joint table ≤100 cells | Existing indexed-subset tabulation, target=(sum+d)/2 |
+| Ninja and His Friends (3D DP) | row, first column and second column | 4×6 grid | 5×4 grid | New full 3D table, up to 8×6; explicitly labelled row slices |
+
+LIS values remain −999..999; stock prices 0..100 and fee 0..30; palindrome text uses
+lowercase a–z; partition values 1..15 and difference 0..60; chocolates are 0..100.
+These are visualizer limits, not platform constraints. Partition memoization also
+requires `(n+1)*(target+1)≤100` before expansion, with a field-level refusal and help text.
+Impossible parity/difference returns a real zero with no fabricated calls or cache.
+
+Palindrome retains **LCS with reverse (existing)** as its default fourth option.
+Ninja retains **Rolling tabulation (existing)** as its default fourth option: it is not
+mislabelled as retaining the full table. A 3D memo companion shows its actual current row
+and says other slices remain cached; the full tabulation source really stores all slices.
+Actual next-row dependencies are explained without fake arrows into the visible slice.
+
+Approach selection pauses and preserves the complete visible draft, including untouched
+defaults and same-tick queued edits. It does not run or share. In particular, LIS's old
+eight-element default stays eight elements when recursion is selected; Run receives an
+explicit400 instead of silently changing it to the six-element recursive example.
+Restore defaults is an explicit replacement. RCA-062 records the discovered defect.
+
+Final local verification: 44 new backend cases, full backend8,131 cases/0 failures/errors/
+500 unchanged skips; frontend80 files/811 tests, fresh locked install, production build,
+packaging and launcher smoke pass. Canonical golden regeneration432 cases passes with
+no content changes. All17 displayed sources compile in isolation (only the two existing
+method snippets receive an outer class wrapper, never missing helpers/imports). Each
+offered form and displayed source agrees with independently enumerated oracles across
+51 deterministic cases per problem (867 executions per path, not867 unique inputs).
+All12 authored examples are checked; oversized recursive examples are refused explicitly.
+
+Regression proof: initial discovery fails before registration; deliberate constant-zero
+recursive sources fail5/5 compiler/execution oracle cases; treating cached zero as unknown
+fails5/5 state-reuse cases. The store-only glyph guard fails5/5 before correction. The
+slice/grid UI guards fail2 cases on old code; untouched-default preservation fails1 hook
+case. An existing same-tick draft/edit regression also rejected the initial snapshot fix;
+the final functional preservation passes it without weakening any assertions.
+
+Real backend/production-preview evidence in `dp-approaches/requested-five/`:29 API cases
+prove full/delta decoded equality, source/type/complexity/input identity, completion and
+response budgets. Browser rows total168:50 Chromium standard journeys (five widths, both
+themes),48 maximum tree/memo/full-table rows (320/1366px, both themes),20 Firefox journeys,
+20 native200% zoom journeys (physical640/1366px) and30 preserved-default journeys. Ten LIS
+default rows preserve all eight values, refuse recursion with400, keep the old link and
+focus the error summary. Every browser manifest uses `index-CEI0RuNU.js` /
+`index-CfkLxyUw.css`; partial/failed attempts are excluded. The zoom probe's initial
+metadata-save failure was corrected and the entire20-row sweep repeated successfully.
+The standard screenshots' suffix names the initial shared approach; their captured
+stage is the subsequently selected table. The maximum screenshots name the displayed form.
+
+Measured API maxima:199 actual calls,1,474,328 bytes for the largest full response; no
+truncation and no hidden calls above the renderer's220-node limit in measured cases.
+JS383.34kB/gzip122.14; CSS97.71kB/gzip17.75. Live stats remain431/431,0 untraced/duplicates/
+orphans. No new dependencies, canonical source changes or golden changes. The locked
+audit's nine existing dependency findings remain open.
+
+Publication was explicitly authorized by the owner: “commit, push and merge after done”.
+CI must pass before merge; the publishing PR and merge commit are the GitHub record.
+This is a scoped verification snapshot, not proof of production backend deployment,
+human screen-reader/learner review, real devices, every input or performance acceptance.
+This batch does not close D6/D7, P7/P8/P9, source completeness or broader release gates.
 
 ## 1. Outcome and boundaries
 
@@ -384,7 +456,7 @@ main/live inventory, create a new feature branch, and execute D0 → D1 → D2 �
 reviewable packages. Complete the pilot before expanding to D4/D5. Preserve the canonical
 API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 
-## 11. Implementation progress — reconciled 2026-10-09
+## 11. Implementation progress — reconciled 2026-10-10
 
 | Package | Current status | Evidence / boundary |
 | --- | --- | --- |
@@ -393,17 +465,19 @@ API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 | D2 | Verified | Genuine recursion/memoization/tabulation, independently compiled source, oracle and boundary tests; `dp-approaches/d2-results.json` |
 | D3 | Verified pilot | Explicit selector, committed metadata, approach-aware links/presets/input comparison, truthful memo/recursive views; `dp-approaches/d3-results.json` |
 | D4 | Merged #215 / `2709d8b` | Audited teaching metadata, isolated two-approach comparison, passing PR/post-merge CI; dated D4 evidence below |
-| D5 | First candidate merged #216 / `4ad9fc3` | Frog Jump code/API/full suites and28 final browser rows pass; remaining54 candidates not implemented |
+| D5 | Seven candidates verified; new five-problem publication authorized | Frog Jump merged #216 / `4ad9fc3`; requested five-problem code/API/full-suite/168-row browser checks pass.49 candidates remain; no completed family rollout |
 | D6/D7 | Pending | Broad accessibility/performance, coverage reconciliation and release gates |
 
-Inventory distinctions: binary-search LIS remains an optimized default; ninja-and-friends
+Inventory correction: this LIS's canonical solution is two-dimensional take/skip tabulation,
+not binary-search tails. Ninja-and-friends
 uses rolling row slices; rectangle-all-ones uses histogram stacks rather than a DP table;
 count-square-submatrices is real in-place DP rendered as Matrix; palindromic-subsequence
-counting lives under Strings. Alternative safety limits remain unmeasured except for
-the merged Climbing Stairs and Frog Jump packages documented below.
+counting lives under Strings. Alternative safety limits are measured only for the
+seven verified candidates; neither canonical caps nor another problem's evidence
+authorize unimplemented alternatives.
 
-Print LIS's undefined `collect()`/`answer()` helpers are repaired in the locally verified
-2026-10-10 complete-source helper batch, now owner-authorized for publication after CI.
+Print LIS's undefined `collect()`/`answer()` helpers were repaired in the
+2026-10-10 complete-source helper batch, merged #220 / `7a5120e`.
 Its original parent-chain recurrence, strict tie updates and limits are unchanged;
 the exact displayed standalone Java compiles and agrees with traces and independent cases.
 This resolves the canonical source prerequisite only, not its D5 alternative forms.

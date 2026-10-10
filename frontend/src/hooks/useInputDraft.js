@@ -30,7 +30,13 @@ export default function useInputDraft(problemId, inputSpec) {
     setEdited({ problemId, values: next });
   }, [problemId]);
 
-  return { values, defaults, isEdited: own !== null, replace };
+  /** Keep a derived draft when changing specs, without overwriting a same-tick edit. */
+  const preserve = useCallback(() => {
+    setEdited((current) => current.problemId === problemId && current.values !== null
+      ? current : { problemId, values: defaults });
+  }, [problemId, defaults]);
+
+  return { values, defaults, isEdited: own !== null, replace, preserve };
 }
 
 /** Structural equality for input maps, ignoring key order. */
