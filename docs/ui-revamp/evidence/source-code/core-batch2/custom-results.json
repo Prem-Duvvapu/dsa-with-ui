@@ -1,0 +1,34 @@
+{
+  "generated": "2026-10-10T12:58:31.617Z",
+  "realBackend": true,
+  "passed": true,
+  "id": "book-allocation",
+  "input": {
+    "m": 2,
+    "pages": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "rejectedInput": {
+    "pages": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "m": 13
+  },
+  "checks": [
+    "custom source matches default source",
+    "resolved input matches submitted input",
+    "shared input decodes to committed input",
+    "400 focuses error summary",
+    "400 preserves shared input",
+    "400 preserves shared step",
+    "400 preserves source and step",
+    "independent custom answer is 6"
+  ]
+}

@@ -1,0 +1,40 @@
+Original-listing RED (selected summary)
+[ERROR] Tests run: 21, Failures: 4, Errors: 0, Skipped: 0
+
+Compiling wrong-answer RED (selected failures)
+[ERROR]   DisplayedCoreSolutionTest.bookAllocationMatchesExhaustiveContiguousPartitionsIncludingImpossibleStudents:175->assertAgrees:315 book-allocation {m=1, pages=[1000]} ==> expected: <1000> but was: <1>
+[ERROR]   DisplayedCoreSolutionTest.bouquetsMatchIndependentIntervalSelectionAndRespectAdjacencyAndNonReuse:206->assertAgrees:315 min-days-bouquets {bloomDay=[1, 1, 1, 10], m=2, k=2} ==> expected: <10> but was: <1>
+[ERROR] Tests run: 2, Failures: 2, Errors: 0, Skipped: 0
+
+Non-source golden mutation RED (selected diagnostic)
+Error: A golden changed non-source data
+
+Final backend (selected summaries)
+[INFO] Tests run: 29, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.716 s -- in com.dsa.ui.tracer.impl.DisplayedCoreSolutionTest
+[WARNING] Tests run: 8052, Failures: 0, Errors: 0, Skipped: 500
+[INFO] BUILD SUCCESS
+[INFO] Total time:  02:49 min
+[INFO] Finished at: 2026-10-10T12:45:14Z
+
+Final frontend (selected summary)
+ Test Files  79 passed (79)
+      Tests  788 passed (788)
+   Duration  177.95s (transform 4.33s, setup 2.89s, collect 78.40s, tests 190.44s, environment 153.57s, prepare 31.78s)
+
+Fresh npm ci (selected summary; existing vulnerabilities)
+added 267 packages, and audited 268 packages in 9s
+9 vulnerabilities (4 moderate, 3 high, 2 critical)
+
+Production build (complete short output)
+vite v5.4.21 building for production...
+transforming...
+✓ 1587 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   1.20 kB │ gzip:   0.62 kB
+dist/assets/index-CfkLxyUw.css   97.71 kB │ gzip:  17.75 kB
+dist/assets/index-DbmbKZMa.js   382.56 kB │ gzip: 121.89 kB
+✓ built in 12.53s
+
+Launcher smoke
+start.sh stopped both service process groups cleanly

@@ -13,8 +13,18 @@ const files = execFileSync('git', ['diff', '--name-only', baseline, '--', direct
   .trim().split('\n').filter(Boolean);
 const ids = fs.readdirSync(path.join(root, `backend/src/main/resources/solutions/${family}`))
   .filter(name => name.endsWith('.java')).map(name => name.slice(0, -5)).sort();
-if (!isDeepStrictEqual(files.map(file => path.basename(file, '.json')).sort(), ids)) {
-  throw Error('Changed goldens must exactly match repaired source resources');
+const sourceDirectory = `backend/src/main/resources/solutions/${family}`;
+const baselineSources = execFileSync('git', ['ls-tree', '-r', '--name-only', baseline, '--', sourceDirectory],
+  { cwd: root, encoding: 'utf8' }).trim().split('\n').filter(Boolean);
+const currentSources = ids.map(id => `${sourceDirectory}/${id}.java`);
+if (baselineSources.some(file => !currentSources.includes(file))) throw Error('Source repair cannot remove an existing owner');
+const normalized = source => source.replace(/\r\n/g, '\n');
+// New resources may still be untracked: git diff alone cannot discover them.
+const repairedIds = currentSources.filter(file => !baselineSources.includes(file) ||
+  normalized(execFileSync('git', ['show', `${baseline}:${file}`], { cwd: root, encoding: 'utf8' })) !==
+    normalized(fs.readFileSync(path.join(root, file), 'utf8'))).map(file => path.basename(file, '.java')).sort();
+if (!repairedIds.length || !isDeepStrictEqual(files.map(file => path.basename(file, '.json')).sort(), repairedIds)) {
+  throw Error('Changed goldens must exactly match source resources repaired since the baseline');
 }
 function withoutSource(trace) {
   const copy = structuredClone(trace);
@@ -31,7 +41,8 @@ const rows = files.map(file => {
     oldLines: before.code.split('\n').length, newLines: after.code.split('\n').length };
 });
 fs.writeFileSync(output, JSON.stringify({
-  baseline, family, allowedChanges: ['code', 'anchors', 'steps[].activeLine'], rows
+  baseline, family, completeFamily: ids, repairedIds,
+  allowedChanges: ['code', 'anchors', 'steps[].activeLine'], rows
 }, null, 2));
 if (rows.some(row => !row.unchangedData)) throw Error('A golden changed non-source data');
 console.log(`PASS ${rows.length} goldens: only source, anchors and highlighted lines changed`);

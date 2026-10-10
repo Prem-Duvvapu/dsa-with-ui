@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-10",
+  "base": "7a5120e5e3c70ec8f2e03abfed342a6b26134e5c",
+  "branch": "fix/complete-source-helpers-batch2",
+  "publication": "Pre-publication snapshot; owner approved commit/push/PR/merge after CI passes by answering continue to the publication request",
+  "scope": "Four complete Java resources using existing strict ownership; no run/input-spec/trace-data/frontend-production/dependency change",
+  "sourceContracts": {
+    "owners": 9,
+    "cases": 29,
+    "publishedExamples": 21,
+    "originalListingRun": { "cases": 21, "failures": 4, "errors": 0 },
+    "compilation": "Exact displayed Java17, isolated classpath/platform classloader, no import/class/app scaffolds",
+    "independentOracles": [
+      "Exhaustive cut patterns for selected seeded short arrays; exact nonempty groups for books, at most allowed groups for painters/shipping",
+      "Bouquet interval-selection DP over actual candidate bloom days, respecting adjacency and no reuse"
+    ],
+    "additionalCases": "Published examples, defaults/alternates, singleton/impossible/idle-worker and visualizer-cap boundaries",
+    "semanticMutations": "Constant Book Allocation return and overlapping bouquet reuse compiled but failed2/2 probes; restored",
+    "parameterBinding": "Parameter names and int/int[]/String types match authoritative fields",
+    "delivery": "Owned source and anchors match HTTP detail/full/delta responses"
+  },
+  "backend": { "tests": 8052, "failures": 0, "errors": 0, "skipped": 500 },
+  "frontend": {
+    "files": 79, "tests": 788, "failures": 0,
+    "freshNpmCi": true, "productionBuild": true,
+    "jsKb": 382.56, "jsGzipKb": 121.89, "cssKb": 97.71, "cssGzipKb": 17.75,
+    "unchangedAssets": ["index-DbmbKZMa.js", "index-CfkLxyUw.css"]
+  },
+  "goldens": {
+    "changed": 4,
+    "only": ["code", "anchors", "steps[].activeLine"],
+    "incrementalDiscovery": "Includes untracked new resources, excludes unchanged previous five",
+    "previousProbeRed": "Old comparison rejects valid four-golden incremental batch against nine current resources",
+    "negativeGuard": "Intentional resolvedInput.m mutation rejected as non-source data; restored",
+    "report": "golden-comparison.json"
+  },
+  "liveApiStats": {
+    "catalogued": 431, "traced": 431, "untraced": 0,
+    "duplicateIds": {}, "orphanedTracerIds": []
+  },
+  "browser": {
+    "engine": "Chromium", "version": "153.0.8010.12",
+    "mode": "production-preview", "realBackend": true,
+    "rows": 36, "failures": 0,
+    "widths": [320, 1366], "themes": ["light", "dark"],
+    "report": "results.json", "everySourceHashMatchesCurrentGolden": true,
+    "custom": "custom-results.json",
+    "compatibility": ["previous-core-compatibility/custom-results.json", "dp-compatibility/custom-results.json"],
+    "inspectedScreenshots": ["source-320-dark.png", "source-1366-light.png"],
+    "excludedDiagnostics": "Initial ad-hoc body-read failures after local backend termination; rerun live diagnostic reproduced existing stale search diagram. Not counted as matrix rows"
+  },
+  "launcherSmoke": "Passed",
+  "independentReview": "Two read-only agents audited candidates, resources, independent oracles, exact compilation, anchors and incremental/browser probes; no introduced blocking issue found",
+  "deferredDefects": [
+    {
+      "id": "smallest-divisor",
+      "input": {"nums": [1, 2], "threshold": 1},
+      "observed": "Accepted, answer2; no positive divisor is feasible",
+      "fix": "Enforce authored threshold>=length contract with runner/HTTP400/boundary guards"
+    },
+    {
+      "id": "matrix-median",
+      "input": {"matrix": [[9, 1, 2]]},
+      "observed": "Accepted, answer9 rather than2; even default/lower-median behavior also conflicts with odd-cell statement",
+      "fix": "Validate sorted rows and reconcile authoritative median/default contract without silently sorting"
+    },
+    {
+      "file": "frontend/src/components/SearchSpaceCanvas.jsx",
+      "sequence": "Default Book Allocation, seek final step44",
+      "observed": {"answer": "113", "precedingLow": "113", "range": "answers [112, 112] · 1 left of 114", "probe": "probing 112"},
+      "cause": "lastBounds ignores partial bound updates and retains a stale complete snapshot",
+      "fix": "Regression-first actual-state reconstruction and truthful terminal/probe presentation",
+      "preexisting": "Parsed source-only golden comparison proves run data unchanged from main"
+    }
+  ],
+  "remaining": {
+    "knownNonPlatformOmissions": 44, "platformContexts": 77,
+    "authoredStatements": 390, "missingStatements": 41,
+    "unimplementedDpCandidateRows": 54,
+    "lockedDependencyFindings": {"total": 9, "moderate": 4, "high": 3, "critical": 2, "fixedHere": false},
+    "other": "C++ language honesty, compiler-success semantics, frame exceptions, device/zoom/screen-reader/performance/learner/release gates; deployed backend source remains unverified"
+  },
+  "limits": "Nine core owners certified for declared caps, not all431 problems or arbitrary unbounded arrays; bounded Chromium source checks do not close all-canvas truth, P7/P8/P9 or DP D6/D7"
+}

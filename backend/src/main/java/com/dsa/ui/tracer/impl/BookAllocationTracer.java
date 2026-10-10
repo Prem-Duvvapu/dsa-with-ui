@@ -17,7 +17,7 @@ import java.util.Map;
  * also a different shape - a greedy contiguous partition instead of a greedy spacing walk.
  */
 @Component
-public class BookAllocationTracer implements AlgorithmTracer {
+public class BookAllocationTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -53,45 +53,6 @@ public class BookAllocationTracer implements AlgorithmTracer {
         return Map.of("pages", List.of(12, 34, 67, 90), "m", 5);
     }
 
-    @Override
-    public String annotatedCode() {
-        return """
-               public int findPages(int[] pages, int m) {
-                   // @a impossible
-                   if (m > pages.length) return -1;
-                   int low = max(pages), high = sum(pages), ans = high;
-                   // @a init
-                   while (low <= high) {
-                       // @a mid
-                       int mid = (low + high) / 2;
-                       if (countStudents(pages, mid) <= m) {
-                           // @a feasible
-                           ans = mid;
-                           high = mid - 1;
-                       } else {
-                           // @a infeasible
-                           low = mid + 1;
-                       }
-                   }
-                   // @a done
-                   return ans;
-               }
-
-               private int countStudents(int[] pages, int cap) {
-                   int students = 1, pageSum = 0;
-                   for (int p : pages) {
-                       if (pageSum + p > cap) {
-                           // @a newStudent
-                           students++;
-                           pageSum = p;
-                       } else {
-                           // @a addToCurrent
-                           pageSum += p;
-                       }
-                   }
-                   return students;
-               }""";
-    }
 
     private List<ArrayElement> pageState(int[] pages, int current, int splitStart) {
         List<ArrayElement> state = new ArrayList<>(pages.length);

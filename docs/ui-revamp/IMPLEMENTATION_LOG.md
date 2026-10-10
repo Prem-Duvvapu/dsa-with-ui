@@ -1727,3 +1727,105 @@ pushing, opening a PR and merging this five-source package after CI passes. Publ
 is now in progress; the earlier awaiting-approval status above records the initial handoff.
 The DP plan's obsolete Print LIS omission note and F30's already-merged layout disposition
 were reconciled. No production code, test result or outstanding acceptance gate changed.
+
+Publication outcome (2026-10-10): #220 merged as `7a5120e` after all PR checks passed.
+Post-merge CI run38052279928 and Vercel frontend deployment passed. The public API
+source probe timed out after45s; production backend source remains unverified. The
+pre-publication status above is historical, not an outstanding PR. The owner subsequently
+authorized continuation and parallel read-only audits; this is not publication approval
+for the next package.
+
+## 2026-10-10 — complete-source helpers, batch2 (local, awaiting publication approval)
+
+Started from merged #220 / `7a5120e` on `fix/complete-source-helpers-batch2`.
+The owner authorized continuation and parallel agents. Two agents performed independent
+read-only candidate/contract reviews and final diff/oracle/probe checks; implementation
+remained one coherent package. No work on main or the original dirty Windows worktree.
+
+### Change set
+
+Book Allocation, Painter's Partition, Shipping Within D Days and Minimum Days for
+Bouquets now own standalone annotated Java17 `Solution` resources using the existing
+strict `CompleteSourceTracer`. Missing max/min/sum helpers are included. Typed entry
+parameters match authoritative fields; source midpoint arithmetic is equivalent within
+caps and overflow-safe. Four old inline listings are removed. Tracer `run` methods,
+input specifications, alternate cases, narration and state/results remain untouched.
+No new dependency, frontend production change, generic source fallback or DP form.
+
+The existing core source contract now covers nine owners. New edge tests enumerate
+all cut patterns for selected seeded arrays (not every possible array) and independently
+select disjoint bloomed intervals by DP. Books require exactly the available students;
+painters and shipping allow idle capacity. Impossible/singleton/maximum-cap cases are
+checked. Parameter types as well as names are verified. Semantic anchors target actual
+increments, resets, branches and returns.
+
+The golden comparison now discovers resources changed/new since its supplied baseline,
+including untracked new files, instead of treating retained previous owners as new
+repairs. Its exact non-source equality guard remains. Browser probes accept an explicit
+screenshot representative and numeric chip-editor custom case; arrays and decoded shared
+input are compared structurally. Existing core and default DP probe modes remain tested.
+
+### Actual verification
+
+- RED on old listings:21 source cases,4 failures; all17 previous cases remain green.
+- Final core contract:29/29, all21 published examples, exact isolated Java17 compilation,
+  default/alternate and independent edge executions, typed bindings, owned resource and
+  HTTP detail/full/delta/source/anchor agreement. Compiling constant-answer and overlapping-
+  bouquet mutations fail2/2 selected cases; restored before the final full suite.
+- Full backend:8,052 tests,0 failures/errors,500 existing skips. Full frontend:79 files/
+  788 tests, fresh npm ci and production build pass. Existing React act/router warnings
+  remain. Concurrent suite timings were169s backend/178s frontend, not a performance
+  acceptance benchmark. Launcher process-tree smoke passes.
+- Build assets unchanged from #220: `index-DbmbKZMa.js` / `index-CfkLxyUw.css`;
+  JS382.56kB/gzip121.89,CSS97.71kB/gzip17.75. No dependency-manifest changes; locked install
+  still reports9 findings (4 moderate,3 high,2 critical), not fixed by this package.
+- Exactly four goldens change only code/anchors/activeLine. The old comparison rejects
+  this valid incremental batch; the new comparison passes without staging. Intentional
+  resolvedInput.m mutation is rejected as non-source data, then restored and rechecked.
+- Live API:431 catalogued/traced,0 untraced/duplicates/orphans. Authored statements remain
+  390/431:41 missing, not silently counted as complete.
+- Chromium153 production preview:36/36 real-backend Code-view rows, all nine core owners,
+  320/1366px,both themes, first/middle/final exact highlights, source keyboard ownership,
+  Analysis/Code step continuity, no page overflow/errors. Every served-source hash matches
+  its current golden; identified script/CSS assets remain fixed on every page.
+- Book Allocation custom [1,2,3,4],m=2 independently returns6. Rejected m=13 returns400,
+  focuses the error summary and preserves source/step/shared input and shared step.
+  Strengthened Balanced Parentheses and default DP/LCS custom compatibility probes pass.
+- Phone-dark/desktop-light Book Allocation screenshots were inspected; other theme
+  captures retained. Source overflow is internal to its existing scrollable pane.
+
+Evidence: `evidence/source-code/core-batch2/`. Text contains explicitly labelled selected
+log summaries/RED excerpts, not complete byte-identical logs. The original compile
+inventory and batch1 evidence remain historical. A local backend terminated before
+later ad-hoc diagnostics; body-read failures were excluded from passing evidence. A
+fresh healthy server/real browser diagnostic reproduced the stale diagram below.
+
+### Discovered existing defects and six review gates
+
+Smallest Divisor accepts nums=[1,2],threshold=1 and falsely returns2; Matrix Median accepts
+unsorted [[9,1,2]] and returns9 instead of2, with a separate even-default/odd-statement
+contract mismatch. Main-agent TraceRunner probes reproduced both. Neither was silently
+certified by copying its behavior into complete source. Visual inspection and a fresh
+live browser confirm SearchSpaceCanvas shows answers[112,112]/probing112 at Book
+Allocation's final answer113: it ignores the preceding low-only113 update. Parsed golden
+comparison proves trace content unchanged from main. These corrections remain separately
+pending; source browser checks do not certify every canvas label's mathematical truth.
+
+Backend:exact source/input/HTTP/budget suites green. Frontend:unchanged production/session
+path and full suite/build green. UI/UX:bounded source/keys/view/error-focus evidence,
+with the existing diagram defect explicitly open. Product:independent examples/oracles,
+real caps and no all431 correctness claim. Architecture:strict resource ownership,
+no fallback/ID dispatch list/dependency addition. QA:RED/mutant proof, parsed/read goldens,
+full suites and actual browser journeys. Independent reviewers found no introduced
+blocking issue within this source-only scope.
+
+No commit/push/PR/merge was performed; fresh publication approval is required. Next work
+should prioritize the three diagnosed correctness paths after this medium package lands.
+Remaining:44 historical non-platform omissions,77 platform contexts,C++ label and compiler-
+success semantics,41 statements,54 DP candidate rows,D6/D7,layout-frame/device/zoom/screen-
+reader/performance/learner/security/deployment/release gates. P7/P8/P9 are not complete.
+
+Publication authorization follow-up: the owner answered "continue" to the explicit
+commit/push/merge request. Publication of this verified batch is approved after CI passes;
+the initial awaiting-approval status above is historical. No broader publishing approval
+is inferred for the next correctness package.

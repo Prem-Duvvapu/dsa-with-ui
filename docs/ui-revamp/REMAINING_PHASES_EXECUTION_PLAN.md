@@ -40,15 +40,27 @@ lesson with incorrect Java UI labelling. See the existing source-repair plan and
 Keep medium packages sequential. The owner authorized publication of the verified
 layout package, now merged, then continuation with separate source repairs.
 Do not infer publication approval for later packages from this bounded authorization.
-Step6's first helper batch is now locally verified: five complete Java listings,17 new
+Step6's first helper batch merged as #220 / `7a5120e`: five complete Java listings,17 new
 source contracts,8,040 backend tests,788 frontend tests/build,20 real-backend Chromium
 Code-view rows and custom/400 retention. See the source plan/log and
-`evidence/source-code/core-batch1/`. The owner approved its publication after CI;48 other known
+`evidence/source-code/core-batch1/`. PR/post-merge CI and Vercel frontend deployment passed;
+the public backend-source probe timed out and is not certified.48 other known
 non-platform omissions,77 platform contexts,language honesty and broader semantic
 certification remain. Source repair does not count as a DP candidate implementation.
 54 other DP candidate rows are
 unimplemented. Applicability must be reviewed rather than forcing three options on every
 problem. Completing an early cleanup or pilot check does not close P8/P9 or DP D6/D7.
+
+Step6 continuation: batch2 is locally verified from #220, not published. Four complete
+parametric-search listings preserve trace data;29 core contracts,8,052 backend tests
+(500 existing skips),788 frontend tests/build and36 real-backend Chromium source rows
+pass. Book Allocation custom/400 sharing/step retention and existing core/DP probe
+compatibility pass. See the source plan/log and `evidence/source-code/core-batch2/`.
+Forty-four other known non-platform omissions remain. Next correctness work should
+address the separately reproduced Smallest Divisor threshold, Matrix Median sorted/odd
+input contract and SearchSpaceCanvas partial-bound/terminal display defects before
+certifying those affected paths. These are recorded pending, not stacked into batch2.
+Merge this medium package under fresh publication approval before starting the next.
 
 ## 1. Objective and source of truth
 

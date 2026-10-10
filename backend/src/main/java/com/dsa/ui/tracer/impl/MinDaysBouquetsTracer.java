@@ -16,7 +16,7 @@ import java.util.Map;
  * count outright, no number of days can ever help — that check runs once, before any search.
  */
 @Component
-public class MinDaysBouquetsTracer implements AlgorithmTracer {
+public class MinDaysBouquetsTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -54,44 +54,6 @@ public class MinDaysBouquetsTracer implements AlgorithmTracer {
         return Map.of("bloomDay", List.of(1, 10, 3, 10, 2), "m", 4, "k", 2);
     }
 
-    @Override
-    public String annotatedCode() {
-        return """
-               public int minDays(int[] bloomDay, int m, int k) {
-                   long need = (long) m * k;
-                   if (need > bloomDay.length) {
-                       // @a impossible
-                       return -1;
-                   }
-                   // @a init
-                   int low = min(bloomDay), high = max(bloomDay), ans = -1;
-                   while (low <= high) {
-                       // @a mid
-                       int mid = (low + high) / 2;
-                       int bouquets = 0, run = 0;
-                       for (int day : bloomDay) {
-                           if (day <= mid) {
-                               // @a extendRun
-                               run++;
-                               if (run == k) { bouquets++; run = 0; }
-                           } else {
-                               // @a breakRun
-                               run = 0;
-                           }
-                       }
-                       if (bouquets >= m) {
-                           // @a feasible
-                           ans = mid;
-                           high = mid - 1;
-                       } else {
-                           // @a infeasible
-                           low = mid + 1;
-                       }
-                   }
-                   // @a done
-                   return ans;
-               }""";
-    }
 
     private List<ArrayElement> state(int[] bloomDay, int upTo, int highlight) {
         List<ArrayElement> s = new ArrayList<>(bloomDay.length);

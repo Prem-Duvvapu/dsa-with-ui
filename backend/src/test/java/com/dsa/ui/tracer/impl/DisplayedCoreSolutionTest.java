@@ -169,6 +169,99 @@ class DisplayedCoreSolutionTest {
     }
 
     @Test
+    void bookAllocationMatchesExhaustiveContiguousPartitionsIncludingImpossibleStudents() throws Exception {
+        var tracer = owner(BookAllocationTracer.class);
+        try (var solution = compile(tracer)) {
+            assertAgrees(tracer, solution, Map.of("pages", List.of(1000), "m", 1), "answer", "1000");
+            assertAgrees(tracer, solution, Map.of("pages", List.of(1), "m", 12), "answer", "-1");
+            partitionCases(tracer, solution, "pages", "m", 12, 1000, true);
+        }
+    }
+
+    @Test
+    void paintersMatchExhaustivePartitionsAndCanLeaveExtraPaintersIdle() throws Exception {
+        var tracer = owner(PaintersPartitionTracer.class);
+        try (var solution = compile(tracer)) {
+            assertAgrees(tracer, solution, Map.of("boards", List.of(1000), "painters", 20), "answer", "1000");
+            partitionCases(tracer, solution, "boards", "painters", 20, 1000, false);
+        }
+    }
+
+    @Test
+    void shippingMatchesExhaustivePartitionsWithoutReorderingPackages() throws Exception {
+        var tracer = owner(ShipPackagesDDaysTracer.class);
+        try (var solution = compile(tracer)) {
+            assertAgrees(tracer, solution, Map.of("weights", List.of(500), "days", 25), "answer", "500");
+            partitionCases(tracer, solution, "weights", "days", 25, 500, false);
+        }
+    }
+
+    @Test
+    void bouquetsMatchIndependentIntervalSelectionAndRespectAdjacencyAndNonReuse() throws Exception {
+        var tracer = owner(MinDaysBouquetsTracer.class);
+        try (var solution = compile(tracer)) {
+            assertAgrees(tracer, solution, Map.of("bloomDay", List.of(1000), "m", 1, "k", 1), "answer", "1000");
+            assertAgrees(tracer, solution, Map.of("bloomDay", List.of(1), "m", 30, "k", 30), "answer", "-1");
+            assertAgrees(tracer, solution, Map.of("bloomDay", List.of(1, 10, 1, 10), "m", 2, "k", 2), "answer", "10");
+            assertAgrees(tracer, solution, Map.of("bloomDay", List.of(1, 1, 1, 10), "m", 2, "k", 2), "answer", "10");
+            assertAgrees(tracer, solution, Map.of("bloomDay", Collections.nCopies(30, 1000), "m", 10, "k", 3), "answer", "1000");
+            var random = new Random(1482);
+            for (int count = 1; count <= 8; count++) {
+                var days = random.ints(count, 1, 11).boxed().toList();
+                for (int k = 1; k <= count + 1; k++) {
+                    int m = 2;
+                    int expected = -1;
+                    for (int day : days.stream().distinct().sorted().toList()) {
+                        // Dynamic interval selection, independent of the tracer's greedy run counter.
+                        int[] best = new int[count + 1];
+                        for (int end = 1; end <= count; end++) {
+                            best[end] = best[end - 1];
+                            if (end >= k && Collections.max(days.subList(end - k, end)) <= day) {
+                                best[end] = Math.max(best[end], best[end - k] + 1);
+                            }
+                        }
+                        if (best[count] >= m) { expected = day; break; }
+                    }
+                    assertAgrees(tracer, solution, Map.of("bloomDay", days, "m", m, "k", k),
+                            "answer", String.valueOf(expected));
+                }
+            }
+        }
+    }
+
+    private void partitionCases(AlgorithmTracer tracer, Compiled solution, String arrayField,
+                                String groupsField, int maxLength, int maxValue, boolean requireEveryGroup)
+            throws Exception {
+        var random = new Random(1011);
+        for (int count = 1; count <= 7; count++) {
+            var values = random.ints(count, 1, 21).boxed().toList();
+            for (int groups = 1; groups <= count + 1; groups++) {
+                int expected = Integer.MAX_VALUE;
+                for (int cuts = 0; cuts < (1 << (count - 1)); cuts++) {
+                    int used = Integer.bitCount(cuts) + 1;
+                    if (requireEveryGroup ? used != groups : used > groups) continue;
+                    int sum = 0, largest = 0;
+                    for (int i = 0; i < count; i++) {
+                        sum += values.get(i);
+                        if (i == count - 1 || (cuts & (1 << i)) != 0) {
+                            largest = Math.max(largest, sum);
+                            sum = 0;
+                        }
+                    }
+                    expected = Math.min(expected, largest);
+                }
+                assertAgrees(tracer, solution, Map.of(arrayField, values, groupsField, groups), "answer",
+                        String.valueOf(expected == Integer.MAX_VALUE ? -1 : expected));
+            }
+        }
+        var ceiling = Collections.nCopies(maxLength, maxValue);
+        assertAgrees(tracer, solution, Map.of(arrayField, ceiling, groupsField, 1), "answer",
+                String.valueOf(maxLength * maxValue));
+        assertAgrees(tracer, solution, Map.of(arrayField, ceiling, groupsField, maxLength), "answer",
+                String.valueOf(maxValue));
+    }
+
+    @Test
     void phaseAnchorsPointAtActualOperationsRatherThanMissingHelpers() {
         checkLine(owner(PrintLisTracer.class), "backlink", "reversed.add(nums[cursor]);");
         checkLine(owner(PrintLisTracer.class), "done", "return answer;");
@@ -178,6 +271,24 @@ class DisplayedCoreSolutionTest {
         checkLine(owner(QuickSortTracer.class), "done", "return nums;");
         checkLine(owner(QuickSortTracer.class), "base", "return;");
         checkLine(owner(QuickSortTracer.class), "placePivot", "swap(nums, low, i);");
+        checkLine(owner(BookAllocationTracer.class), "impossible", "if (m > pages.length) return -1;");
+        checkLine(owner(BookAllocationTracer.class), "newStudent", "students++;");
+        checkLine(owner(BookAllocationTracer.class), "addToCurrent", "pageSum += p;");
+        checkLine(owner(PaintersPartitionTracer.class), "newPainter", "painters++;");
+        checkLine(owner(PaintersPartitionTracer.class), "addToCurrent", "time += b;");
+        checkLine(owner(ShipPackagesDDaysTracer.class), "newDay", "days++;");
+        checkLine(owner(ShipPackagesDDaysTracer.class), "addToDay", "load += w;");
+        checkLine(owner(MinDaysBouquetsTracer.class), "impossible", "return -1;");
+        checkLine(owner(MinDaysBouquetsTracer.class), "init", "int low = min(bloomDay), high = max(bloomDay), ans = -1;");
+        checkLine(owner(MinDaysBouquetsTracer.class), "extendRun", "run++;");
+        checkLine(owner(MinDaysBouquetsTracer.class), "breakRun", "run = 0;");
+        for (var tracer : family().filter(t -> t.dsType() == com.dsa.ui.model.DsType.SEARCH_SPACE).toList()) {
+            if (!(tracer instanceof MinDaysBouquetsTracer)) checkLine(tracer, "init", "while (low <= high) {");
+            checkLine(tracer, "mid", "int mid = low + (high - low) / 2;");
+            checkLine(tracer, "feasible", "ans = mid;");
+            checkLine(tracer, "infeasible", "low = mid + 1;");
+            checkLine(tracer, "done", "return ans;");
+        }
     }
 
     private void checkLine(CompleteSourceTracer tracer, String anchor, String expected) {
@@ -185,13 +296,13 @@ class DisplayedCoreSolutionTest {
         assertEquals(expected, code.getDisplayCode().lines().toList().get(code.resolve(anchor) - 1).trim());
     }
 
-    private <T extends CompleteSourceTracer> T owner(Class<T> type) {
-        var matches = family().filter(type::isInstance).map(type::cast).toList();
+    private <T extends AlgorithmTracer> T owner(Class<T> type) {
+        var matches = registry.all().stream().filter(type::isInstance).map(type::cast).toList();
         assertEquals(1, matches.size());
         return matches.get(0);
     }
 
-    private void assertAgrees(CompleteSourceTracer tracer, Compiled solution, Map<String, Object> input,
+    private void assertAgrees(AlgorithmTracer tracer, Compiled solution, Map<String, Object> input,
                               String answerVariable, String expected) throws Exception {
         var trace = runner.run(tracer, input);
         assertFalse(trace.isTruncated(), tracer.id() + " " + input);
@@ -209,7 +320,7 @@ class DisplayedCoreSolutionTest {
         }
     }
 
-    private Compiled compile(CompleteSourceTracer tracer) throws Exception {
+    private Compiled compile(AlgorithmTracer tracer) throws Exception {
         Path directory = Files.createTempDirectory(temporary, tracer.id());
         Path file = directory.resolve("Solution.java");
         Files.writeString(file, AnnotatedCode.parse(tracer.annotatedCode()).getDisplayCode());
@@ -230,6 +341,12 @@ class DisplayedCoreSolutionTest {
             assertNotEquals(void.class, entry.getReturnType());
             assertEquals(tracer.inputSpec().getFields().stream().map(InputField::getName).toList(),
                     Arrays.stream(entry.getParameters()).map(java.lang.reflect.Parameter::getName).toList());
+            assertEquals(tracer.inputSpec().getFields().stream().map(field -> switch (field.getType()) {
+                case INT -> int.class;
+                case INT_ARRAY -> int[].class;
+                case STRING -> String.class;
+                default -> throw new AssertionError("Add an authoritative parameter binding for " + field.getType());
+            }).toList(), Arrays.stream(entry.getParameterTypes()).toList());
             return new Compiled(loader, type.getConstructor().newInstance(), entry);
         } catch (Throwable failure) {
             loader.close();

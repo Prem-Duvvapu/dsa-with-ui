@@ -15,7 +15,7 @@ import java.util.Map;
  * needs, and binary search shrinks the cap whenever that count still fits within the crew.
  */
 @Component
-public class PaintersPartitionTracer implements AlgorithmTracer {
+public class PaintersPartitionTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -49,43 +49,6 @@ public class PaintersPartitionTracer implements AlgorithmTracer {
         return Map.of("boards", List.of(5, 5, 5, 5), "painters", 4);
     }
 
-    @Override
-    public String annotatedCode() {
-        return """
-               public int findLargestMinDistance(int[] boards, int painters) {
-                   int low = max(boards), high = sum(boards), ans = high;
-                   // @a init
-                   while (low <= high) {
-                       // @a mid
-                       int mid = (low + high) / 2;
-                       if (paintersNeeded(boards, mid) <= painters) {
-                           // @a feasible
-                           ans = mid;
-                           high = mid - 1;
-                       } else {
-                           // @a infeasible
-                           low = mid + 1;
-                       }
-                   }
-                   // @a done
-                   return ans;
-               }
-
-               private int paintersNeeded(int[] boards, int cap) {
-                   int painters = 1, time = 0;
-                   for (int b : boards) {
-                       if (time + b > cap) {
-                           // @a newPainter
-                           painters++;
-                           time = b;
-                       } else {
-                           // @a addToCurrent
-                           time += b;
-                       }
-                   }
-                   return painters;
-               }""";
-    }
 
     private List<ArrayElement> state(int[] boards, int current, int splitStart) {
         List<ArrayElement> s = new ArrayList<>(boards.length);
