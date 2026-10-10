@@ -5,6 +5,8 @@ import { afterEach, beforeEach } from 'vitest';
 // suites start passing or failing depending on their order. Isolating storage keeps each
 // test describing the app's real first-load state.
 beforeEach(() => {
+  // Build/reachability checks run in Node; every DOM suite still gets the same isolation.
+  if (typeof window === 'undefined') return;
   window.localStorage.clear();
   // Almost every test describes a RETURNING visitor - the app doing its job, not being
   // introduced. The first-run guide would otherwise cover the UI in all of them. Tests
@@ -13,5 +15,6 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  if (typeof window === 'undefined') return;
   window.localStorage.clear();
 });

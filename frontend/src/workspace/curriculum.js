@@ -1,6 +1,6 @@
 /**
  * The problems either side of this one in its authored curriculum section, in the order
- * the backend serves the catalogue (see SectionNav for why that order is the curriculum).
+ * the backend serves the catalogue: authored curriculum order, never title sorting.
  */
 export function curriculumNeighbours(problems, problemId) {
   const active = problems.find((p) => p.id === problemId);

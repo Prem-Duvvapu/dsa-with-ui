@@ -73,7 +73,7 @@ cd frontend && npx vitest run && npx vite build
       a word; keep it that way.
 - [ ] Reachable by keyboard, and the binding is discoverable. Shortcuts that exist only in a
       `title` attribute are shortcuts nobody uses — add them to `ShortcutHelp`.
-- [ ] Screen-reader parity for anything new: `LiveTraceTicker` announces the narration and
+- [ ] Screen-reader parity for anything new: workspace narration announces the step and
       `StepStateSummary` describes the data. A new canvas needs the latter to say something
       true about it.
 - [ ] Both themes checked, not just the one you develop in.

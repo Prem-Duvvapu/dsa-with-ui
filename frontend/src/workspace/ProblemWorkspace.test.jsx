@@ -77,6 +77,18 @@ async function openAlpha(path = '/problem/alpha') {
 }
 
 describe('Workspace as the problem page', () => {
+  it('opens the live switcher with slash, without stepping or executing, and Escape closes it', async () => {
+    await openAlpha();
+    const before = executes.length;
+    fireEvent.keyDown(window, { key: '/', code: 'Slash' });
+    expect(screen.getByRole('dialog', { name: /command palette/i })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'Jump to a problem or run a command' })).toHaveFocus();
+    fireEvent.keyDown(window, { key: 'Escape', code: 'Escape' });
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(narration()).toHaveTextContent('alpha n=3 step 1');
+    expect(executes).toHaveLength(before);
+  });
+
   it('is the problem page, with no switch to turn it on', async () => {
     renderAt('/problem/alpha');
     await screen.findByText('alpha n=3 step 1');
@@ -125,6 +137,34 @@ describe('Page footer', () => {
 });
 
 describe('Full problem statement', () => {
+  it('uses the authored description without inventing absent constraints', async () => {
+    const detail = { ...ARRAY, statement: [], constraints: [] };
+    vi.stubGlobal('fetch', vi.fn(url => Promise.resolve(ok(url === '/api/problems' ? [detail]
+      : url.endsWith('/execute') ? trace('alpha', 3) : detail))));
+    await openAlpha();
+    const summary = screen.getByText('Problem & examples');
+    const disclosure = summary.closest('details');
+    expect(disclosure).not.toHaveAttribute('open');
+    fireEvent.click(summary);
+    expect(disclosure).toHaveAttribute('open');
+    expect(within(disclosure).getByText(ARRAY.description)).toBeInTheDocument();
+    expect(within(disclosure).queryByText(/constraints/i)).not.toBeInTheDocument();
+    const calls = fetch.mock.calls.length;
+    fireEvent.click(summary);
+    expect(disclosure).not.toHaveAttribute('open');
+    expect(fetch).toHaveBeenCalledTimes(calls);
+  });
+
+  it('omits the statement affordance when no statement, description or constraints were served', async () => {
+    const detail = { ...ARRAY, statement: [], description: '', constraints: [] };
+    vi.stubGlobal('fetch', vi.fn(url => Promise.resolve(ok(url === '/api/problems' ? [detail]
+      : url.endsWith('/execute') ? trace('alpha', 3) : detail))));
+    await openAlpha();
+    expect(screen.queryByText('Problem & examples')).not.toBeInTheDocument();
+    expect(screen.queryByText(ARRAY.description)).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Alpha Search' })).toBeInTheDocument();
+  });
+
   it('shows the written statement, worked examples, constraints and the original problem links', async () => {
     const withStatement = {
       ...ARRAY,

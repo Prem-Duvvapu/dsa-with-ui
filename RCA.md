@@ -624,6 +624,29 @@ two goals — exercise the whole algorithm, and grow with input — are not both
 - **The general lesson:** assert over the wire, not over the object. A fixture invented at
   the keyboard can validate code that can never execute.
 
+### RCA-026 follow-up — 2026-10-10 retired UI tests were not production coverage
+
+The legacy shell's leaf components survived P4b with unit tests but no production
+import path. A Vite/Rollup production-loader audit at `9de01cd` found19 unreachable
+JS/JSX/CSS files; removing them leaves the same115 production-loaded modules. The
+audit explicitly does not certify individual exports or CSS selectors.
+
+The local P9 slice retires64 tests of that unused tree, preserves live input-editor
+assertions, and adds49 checks across the actual library/workspace and build graph.
+Shared category filtering, curriculum order, copying the committed address, statement
+fallback/disclosure, Analysis structure presence/queue markers and slash ownership
+are now checked at their live seams. Deliberately breaking these behaviors and adding
+an orphan source file produced27 failures across seven suites; the mutations were
+restored before the clean run. Tests of the old panel toggles, sidebar section headings,
+drawer preferences and neighbour watched badge are retired mechanics, not claimed
+as new workspace features. Legacy persisted keys are left untouched.
+
+An initial Node test needed a DOM-setup guard; initial sharing probes also used a
+Playground-only button in Analysis and counted unrelated timers. Those failures are
+test-harness corrections, not evidence of production defects. Valid RED evidence is
+recorded separately. The lesson remains: test imports do not establish production
+reachability, and deleting old tests is safe only after accounting for their assertions.
+
 ## RCA-027 — Retagging a `dsType` misses the entries registered outside the bulk helper
 
 - **Discovered:** 2026-09-12 and 2026-09-13, three times in a row

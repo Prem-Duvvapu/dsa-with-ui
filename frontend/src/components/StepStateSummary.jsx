@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * A text alternative for whatever the canvas is drawing right now.
  *
- * The app already announces the step NARRATION - LiveTraceTicker is a polite live region -
+ * The workspace already announces the step NARRATION in its polite live region,
  * and CanvasShell labels the visualization and pairs every legend colour with a glyph and
  * a word. What none of that carries is the DATA: a screen-reader user hears "swap 4 and
  * 1" without ever learning what the array holds or where the pointer is.
@@ -12,7 +12,7 @@ import React from 'react';
  * from, so the two cannot describe different things. Visually hidden, inside the canvas
  * region, updated per step.
  *
- * Deliberately not a live region of its own: LiveTraceTicker is already polite and a
+ * Deliberately not a live region of its own: workspace narration is already polite and a
  * second announcer firing on the same tick would talk over it. This is here to be
  * navigated to and read on demand, which is how someone inspects state.
  */

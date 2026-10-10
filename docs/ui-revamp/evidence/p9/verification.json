@@ -1,0 +1,354 @@
+{
+  "generated": "2026-10-10T06:01:57.989Z",
+  "baseCommit": "9de01cd",
+  "branch": "chore/retire-legacy-ui",
+  "publication": "Owner authorized commit/push/PR/merge on 2026-10-10, conditional on clean verification and CI",
+  "servedBuild": {
+    "assets": [
+      "/assets/index-DuiaNkhD.css",
+      "/assets/index-hqbHudI4.js"
+    ]
+  },
+  "reachability": {
+    "before": 134,
+    "after": 115,
+    "retired": 19,
+    "productionLoaded": 115
+  },
+  "editorParity": {
+    "rows": 40,
+    "comparable": 40,
+    "identical": 40
+  },
+  "chromeParity": {
+    "rows": 50,
+    "comparable": 30,
+    "identical": 30
+  },
+  "rendererBefore": {
+    "rows": 200,
+    "families": 17,
+    "problems": 50,
+    "positionChecks": 600
+  },
+  "rendererAfter": {
+    "browser": "firefox",
+    "rows": 200,
+    "families": 17,
+    "problems": 50,
+    "positionChecks": 600
+  },
+  "rendererAfterChromium": {
+    "browser": "chromium",
+    "rows": 200,
+    "families": 17,
+    "problems": 50,
+    "positionChecks": 600
+  },
+  "inputJourney": {
+    "checks": 14,
+    "responses": 10
+  },
+  "frontend": {
+    "baselineTests": 799,
+    "finalTests": 784,
+    "retiredTests": 64,
+    "addedTests": 49
+  },
+  "unchanged": [
+    "Backend and golden fixtures",
+    "Frontend dependencies and lockfile"
+  ],
+  "retiredTests": [
+    {
+      "file": "frontend/src/App.test.jsx",
+      "count": 6
+    },
+    {
+      "file": "frontend/src/components/Controls.test.jsx",
+      "count": 4
+    },
+    {
+      "file": "frontend/src/components/MemoryComplexityCard.test.jsx",
+      "count": 7
+    },
+    {
+      "file": "frontend/src/components/ProblemStatement.test.jsx",
+      "count": 7
+    },
+    {
+      "file": "frontend/src/components/SearchBox.test.jsx",
+      "count": 17
+    },
+    {
+      "file": "frontend/src/components/SectionNav.test.jsx",
+      "count": 10
+    },
+    {
+      "file": "frontend/src/components/Sidebar.categories.test.js",
+      "count": 2
+    },
+    {
+      "file": "frontend/src/hooks/useLayoutPreferences.test.js",
+      "count": 6
+    },
+    {
+      "file": "frontend/src/search/groupBySection.test.js",
+      "count": 5
+    }
+  ],
+  "retiredTestCount": 64,
+  "excludedAttempts": [
+    {
+      "reason": "Backend connection stopped mid-sweep",
+      "complete": false,
+      "observedRows": 78,
+      "failures": [
+        {
+          "id": "top-k-frequent-elements",
+          "variant": "alternate",
+          "problems": [
+            "no steps",
+            "first: unsupported/nothing drawn",
+            "middle: unsupported/nothing drawn",
+            "final: unsupported/nothing drawn"
+          ]
+        }
+      ]
+    },
+    {
+      "reason": "Chromium closed mid-sweep; isolated heap alternate did not reproduce",
+      "complete": false,
+      "observedRows": 100,
+      "failures": [
+        {
+          "id": "kth-largest-element",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "sort-k-sorted-array",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "sort-k-sorted-array",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "top-k-frequent-elements",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "top-k-frequent-elements",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "merge-k-sorted-lists",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "merge-k-sorted-lists",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "remove-nth-from-back",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "remove-nth-from-back",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "lfu-cache",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "lfu-cache",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "longest-substring-without-repeating",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "longest-substring-without-repeating",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "number-substrings-all-three-chars",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "number-substrings-all-three-chars",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "minimum-window-subsequence",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "minimum-window-subsequence",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "tree-preorder",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "tree-preorder",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "children-sum-property",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "children-sum-property",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "largest-bst-in-bt",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "largest-bst-in-bt",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "implement-trie",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "implement-trie",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "word-break-trie",
+          "variant": "default",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        },
+        {
+          "id": "word-break-trie",
+          "variant": "alternate",
+          "problems": [
+            "exception: page.goto: Target page, context or browser has been closed"
+          ]
+        }
+      ]
+    }
+  ],
+  "mutationProof": {
+    "failures": [
+      " src/productionReachability.test.js > production source reachability > leaves no JS/JSX/CSS module that is loaded only by tests or by another retired module",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Arrays' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'BST' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Binary Search' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Binary Trees' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Bit Manipulation' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Dynamic Programming' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Graphs' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Greedy Algorithms' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Heaps & PriorityQueue' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Learn the Basics' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Linked List' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Recursion & Backtracking' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Sliding Window' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Sorting Algorithms' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Stack & Queue' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Strings' browsable through its real filter",
+      " src/components/AlgorithmLibrary.categoryContract.test.jsx > live library category contract > keeps 'Tries & Prefixes' browsable through its real filter",
+      " src/components/InputPanel.test.jsx > InputPanel > defaults to the sole live workspace editor: fields before visibly named actions",
+      " src/workspace/ProblemWorkspace.test.jsx > Workspace as the problem page > opens the live switcher with slash, without stepping or executing, and Escape closes it",
+      " src/workspace/ProblemWorkspace.test.jsx > Workspace as the problem page > shows the concept's context: breadcrumb, title, summary, difficulty, statement and curriculum",
+      " src/workspace/ProblemWorkspace.test.jsx > Full problem statement > uses the authored description without inventing absent constraints",
+      " src/workspace/Sharing.integration.test.jsx > workspace sharing (retired Controls guards) > copies the actual restored address with input, approach and the newly selected step",
+      " src/workspace/StateInspector.test.jsx > live Analysis structure guards > marks a queue singleton as both front and back, without duplicating the item",
+      " src/workspace/curriculum.test.js > live curriculum neighbours (retired SectionNav guards) > uses authored catalogue order, not title order or adjacency across sections",
+      " src/workspace/curriculum.test.js > live curriculum neighbours (retired SectionNav guards) > does not invent a previous problem at the section start",
+      " src/workspace/curriculum.test.js > live curriculum neighbours (retired SectionNav guards) > does not invent a next problem at the section end"
+    ],
+    "restored": true
+  },
+  "limits": [
+    "Production-loaded modules, not unused exports or every CSS selector",
+    "Renderer drawing/overflow/error checks, not answer correctness or every input",
+    "Editor defaults are fresh real responses replayed unchanged, not new custom executions",
+    "No real device, virtual keyboard, screen reader or learner certification"
+  ]
+}

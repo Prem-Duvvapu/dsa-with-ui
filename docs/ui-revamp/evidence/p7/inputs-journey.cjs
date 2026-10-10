@@ -4,19 +4,39 @@
 // server error must appear tied to the field while the previous run stays on screen.
 // Usage: PLAYWRIGHT_MODULE=<path to playwright> node inputs-journey.cjs [outDir]
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const fs = require('node:fs');
+const assert = require('node:assert/strict');
+const installPacing = require('../pace-executions.cjs')();
+const identity = require('../served-build-identity.cjs');
 const out = process.argv[2] || __dirname;
 const BASE = 'http://localhost:5180';
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok: Boolean(ok), detail });
 
 (async () => {
+  fs.mkdirSync(out, { recursive: true });
+  const servedBuild = await identity(BASE);
   const browser = await chromium.launch();
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, colorScheme: 'light', hasTouch: true, isMobile: true });
   await ctx.addInitScript(() => { try { localStorage.setItem('dsa-ui:seenWelcome', 'true'); } catch (e) {} });
   const p = await ctx.newPage();
+  await installPacing(p);
   const errors = [];
   p.on('pageerror', (e) => errors.push(e.message));
-  const run = () => p.getByRole('button', { name: /^Run input$/ }).click();
+  const responses = [];
+  const run = async () => {
+    const response = p.waitForResponse(response => response.request().method() === 'POST'
+      && new URL(response.url()).pathname.endsWith('/execute'));
+    await p.getByRole('button', { name: /^Run input$/ }).click();
+    const result = await response;
+    assert([200, 400].includes(result.status()), `Unexpected input response ${result.status()}`);
+    const body = await result.json(); // Body decode must finish before navigating away.
+    responses.push({ pathname: new URL(result.url()).pathname, status: result.status(),
+      resolvedInput: body.resolvedInput, fieldErrors: body.fieldErrors,
+      steps: body.steps?.length, truncated: body.truncated });
+    await p.waitForFunction(() => [...document.querySelectorAll('button')]
+      .some(button => button.textContent.trim() === 'Run input' && !button.disabled));
+  };
   const counter = async () => ((await p.locator('body').innerText()).match(/Step 1 of (\d+)/) || [])[1];
   const overflow = () => p.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   const ranNew = async (before) => { await p.waitForTimeout(900); return (await p.locator('body').innerText()).includes('Changes not run') === false && p.url() !== before; };
@@ -102,6 +122,12 @@ const check = (name, ok, detail = '') => results.push({ name, ok: Boolean(ok), d
   check('no horizontal overflow after all edits', (await overflow()) <= 0);
   check('no page errors', errors.length === 0, errors.join('; '));
   await p.screenshot({ path: `${out}/p7-inputs-graph-390-light.png` });
+  assert.deepEqual(await identity(BASE), servedBuild, 'Served bundle changed during input checks');
+  fs.writeFileSync(`${out}/input-results.json`, JSON.stringify({
+    generated: new Date().toISOString(), complete: true, servedBuild,
+    source: 'Real backend; Chromium phone/touch emulation, not a real virtual keyboard',
+    results, responses
+  }, null, 2));
   await browser.close();
   for (const r of results) console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  (${r.detail})` : ''}`);
   process.exitCode = results.every((r) => r.ok) ? 0 : 1;

@@ -4,7 +4,10 @@
 // middle and final step: stage drawn (not "No visualization"/"Nothing to draw"), no page-wide
 // horizontal overflow, no page errors. Writes renderer-manifest.json beside this script.
 // Usage: PLAYWRIGHT_MODULE=<path to playwright> node renderer-sweep.cjs [outDir]
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const browsers = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const assert = require('node:assert/strict');
+const engine = process.env.AUDIT_ENGINE || 'chromium';
+assert(['chromium', 'firefox'].includes(engine), 'Use a supported installed audit engine');
 const fs = require('fs');
 const installPacing = require('../pace-executions.cjs')();
 const out = process.argv[2] || __dirname;
@@ -22,10 +25,10 @@ const b64url = (obj) => Buffer.from(JSON.stringify(obj)).toString('base64').repl
     const chosen = [...new Set([ids[0], ids[Math.floor(ids.length / 2)], ids[ids.length - 1]])];
     for (const id of chosen) picks.push({ dsType, id });
   }
-  const browser = await chromium.launch();
+  const browser = await browsers[engine].launch();
   const rows = [];
   const save = (complete = false) => fs.writeFileSync(`${out}/renderer-manifest.json`, JSON.stringify({
-    generated: new Date().toISOString(), complete, picks, rows
+    generated: new Date().toISOString(), browser: engine, complete, picks, rows
   }, null, 2));
   try {
   for (const [width, height, scheme] of [[1366, 768, 'dark'], [390, 844, 'light']]) {
