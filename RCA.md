@@ -1751,3 +1751,52 @@ is pending separately; source-highlight/browser gates do not prove canvas-result
 - **Lesson:** default-editor parity does not certify populated editor states. Measure
   the open save form and short/long saved names, and use keyboard modality plus settled
   paint for focus evidence; mouse-only programmatic focus is not that evidence.
+
+## RCA-060 — Numeric input bounds did not establish algorithm preconditions
+
+- **Discovered:** 2026-10-10 during the complete-source inventory; locally repaired on
+  `fix/parametric-search-contracts`, publication pending.
+- **Symptom:** Smallest Divisor accepted nums=[1,2],threshold=1 and returned2 even though
+  no divisor can make two positive ceiling terms sum to1. Matrix Median accepted
+  unsorted [[9,1,2]] and returned9 rather than2. Its existing even default also conflicted
+  with an odd-only authored statement, despite intentionally selecting the lower median.
+- **Cause:** generic size/value validation cannot prove cross-field feasibility or sorted
+  rows. The tracer assumed those algorithm preconditions without checking them. Compiling
+  an incomplete displayed listing would not catch either accepted-input defect.
+- **Fix:** reject impossible thresholds and unsorted rows before emitting steps, with
+  field-specific400 errors. Preserve valid even grids, explicitly labelled as a lower-median
+  visualizer extension—not an arithmetic average. Complete both exact standalone sources
+  with real helpers and equivalent guards; do not sort or substitute user input.
+- **Guards:** input/HTTP/help regressions and independent displayed-source oracles fail on
+  the original implementation (9 failures in10 selected cases). The compiling constant
+  divisor and upper-median mutations fail2/2. Both mutations were restored. The corrected
+  validators exposed invalid synthetic growth fixtures; adapt those fixtures to valid
+  thresholds/sorted rows, retaining all growth assertions and the existing skip count.
+- **Lesson:** certify algorithm preconditions at the accepted-input boundary, and compare
+  displayed code with independent answers. A successful default trace is not that proof.
+
+## RCA-061 — Delta-only search bounds left a completed run showing its prior probe
+
+- **Discovered:** 2026-10-10 by visual inspection of Book Allocation's final answer113.
+  Locally repaired on `fix/parametric-search-contracts`, publication pending.
+- **Symptom:** the canvas still showed answers[112,112]/probing112 after the low-only113
+  update and done step. Feasibility scans also kept the preceding probe's input highlights.
+- **Cause:** the canvas correctly carries a whole paired snapshot rather than merging
+  unrelated bounds (RCA-036), but tracers emitted only changed halves. It also preferred
+  the carried snapshot's cells over the current cells, accepted null/blank bounds as0,
+  and treated metadata named m (students/exponent) as a midpoint.
+- **Fix:** the five complete-source minimum-feasible searches emit paired actual low/high
+  on every search step; mid exists only during probes/scans and disappears after updates.
+  Done carries the actual exhausted interval. Impossible early exits invent no interval.
+  The canvas validates complete alias pairs, prefers current input cells, excludes m,
+  draws zero candidates without a live marker and displays only an explicit current answer.
+  Neither last-step position nor intermediate ans is evidence of completion.
+- **Guards:** snapshot RED16 cases/14 failures; impossible alternates already passed.
+  Canvas RED26 cases/11 failures. Final snapshot20 and canvas26 cases pass; additional
+  truncated-workspace coverage preserves the existing unfinished/watched rules. Deliberate
+  stale-highlight and ans-as-result mutations fail individually, then are restored.
+  Parsed goldens permit only declared paired-bound/source changes and reject a resolved-
+  input mutation. Existing numeric bounds, narration, answers and structures stay identical.
+- **Scope:** five owners receive full per-step snapshots, not all27 SearchSpace owners.
+  Silent commentary still carries one coherent pair; no cross-step variable-map folding,
+  description parsing or fabricated terminal interval was introduced.

@@ -114,6 +114,7 @@ public class BookAllocationTracer extends CompleteSourceTracer {
                             .say("Book %d (%d pages) would push this student past %d - "
                                     + "start student #%d here instead.", i, p, mid, students)
                             .var("i", i).var("students", students)
+                            .var("low", low).var("high", high).var("mid", mid)
                             .arrayState(pageState(pages, i, currentStart)).step();
                 } else {
                     pageSum += p;
@@ -121,6 +122,7 @@ public class BookAllocationTracer extends CompleteSourceTracer {
                             .say("Book %d (%d pages) still fits this student's pile (%d so far).",
                                     i, p, pageSum)
                             .var("i", i).var("pageSum", pageSum)
+                            .var("low", low).var("high", high).var("mid", mid)
                             .arrayState(pageState(pages, i, currentStart)).step();
                 }
             }
@@ -131,6 +133,7 @@ public class BookAllocationTracer extends CompleteSourceTracer {
                         .say("%d students suffice (allowed %d) - cap %d works. Try a "
                                 + "smaller cap.", students, m, mid)
                         .var("students", students).var("ans", ans).var("high", mid - 1)
+                        .var("low", low)
                         .arrayState(pageState(pages, -1, pages.length)).step();
                 high = mid - 1;
             } else {
@@ -138,6 +141,7 @@ public class BookAllocationTracer extends CompleteSourceTracer {
                         .say("%d students are needed (allowed %d) - cap %d is too tight. "
                                 + "Try larger.", students, m, mid)
                         .var("students", students).var("low", mid + 1)
+                        .var("high", high)
                         .arrayState(pageState(pages, -1, pages.length)).step();
                 low = mid + 1;
             }
@@ -146,6 +150,7 @@ public class BookAllocationTracer extends CompleteSourceTracer {
         emit.at("done")
                 .say("low passed high. The smallest workable cap is %d.", ans)
                 .var("answer", ans)
+                .var("low", low).var("high", high)
                 .arrayState(pageState(pages, -1, pages.length)).step();
     }
 }

@@ -1,13 +1,13 @@
 {
   "anchors" : {
-    "done" : 16,
-    "feasible" : 10,
-    "infeasible" : 13,
-    "init" : 2,
-    "mid" : 4,
-    "tally" : 7
+    "done" : 23,
+    "feasible" : 17,
+    "infeasible" : 20,
+    "init" : 9,
+    "mid" : 11,
+    "tally" : 14
   },
-  "code" : "public int smallestDivisor(int[] nums, int threshold) {\n    int low = 1, high = max(nums), ans = high;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        long sum = 0;\n        for (int x : nums) {\n            sum += (x + mid - 1) / mid;\n        }\n        if (sum <= threshold) {\n            ans = mid;\n            high = mid - 1;\n        } else {\n            low = mid + 1;\n        }\n    }\n    return ans;\n}",
+  "code" : "public class Solution {\n    public int solve(int[] nums, int threshold) {\n        if (nums == null || nums.length == 0) {\n            throw new IllegalArgumentException(\"At least one positive value is required.\");\n        }\n        if (threshold < nums.length) {\n            throw new IllegalArgumentException(\"Threshold must be at least the number of elements.\");\n        }\n        int low = 1, high = max(nums), ans = high;\n        while (low <= high) {\n            int mid = low + (high - low) / 2;\n            long sum = 0;\n            for (int x : nums) {\n                sum += ((long) x + mid - 1) / mid;\n            }\n            if (sum <= threshold) {\n                ans = mid;\n                high = mid - 1;\n            } else {\n                low = mid + 1;\n            }\n        }\n        return ans;\n    }\n\n    private int max(int[] nums) {\n        int largest = nums[0];\n        for (int x : nums) {\n            if (x <= 0) throw new IllegalArgumentException(\"Every value must be positive.\");\n            largest = Math.max(largest, x);\n        }\n        return largest;\n    }\n}\n",
   "problemId" : "smallest-divisor",
   "resolvedInput" : {
     "nums" : [ 1, 2, 5, 9 ],
@@ -16,7 +16,7 @@
   "stepCount" : 26,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 9,
     "description" : "Binary search the smallest divisor whose ceiling-sum fits within 6. Range starts at [1, 9].",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -50,7 +50,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 4,
+    "activeLine" : 11,
     "description" : "Test divisor 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -85,13 +85,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(1 / 5) = 1. Running sum = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "9",
+      "low" : "1",
+      "mid" : "5",
       "sum" : "1"
     },
     "dsType" : "SearchSpace",
@@ -118,13 +121,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(2 / 5) = 1. Running sum = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "9",
+      "low" : "1",
+      "mid" : "5",
       "sum" : "2"
     },
     "dsType" : "SearchSpace",
@@ -151,13 +157,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(5 / 5) = 1. Running sum = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "9",
+      "low" : "1",
+      "mid" : "5",
       "sum" : "3"
     },
     "dsType" : "SearchSpace",
@@ -184,13 +193,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(9 / 5) = 2. Running sum = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "9",
+      "low" : "1",
+      "mid" : "5",
       "sum" : "5"
     },
     "dsType" : "SearchSpace",
@@ -217,7 +229,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 10,
+    "activeLine" : 17,
     "description" : "Sum 5 <= 6 — divisor 5 works. Try smaller.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -225,7 +237,8 @@
     "activeEdges" : [ ],
     "variables" : {
       "ans" : "5",
-      "high" : "4"
+      "high" : "4",
+      "low" : "1"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -251,7 +264,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 4,
+    "activeLine" : 11,
     "description" : "Test divisor 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -286,13 +299,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(1 / 2) = 1. Running sum = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "1",
+      "mid" : "2",
       "sum" : "1"
     },
     "dsType" : "SearchSpace",
@@ -319,13 +335,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(2 / 2) = 1. Running sum = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "1",
+      "mid" : "2",
       "sum" : "2"
     },
     "dsType" : "SearchSpace",
@@ -352,13 +371,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(5 / 2) = 3. Running sum = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "1",
+      "mid" : "2",
       "sum" : "5"
     },
     "dsType" : "SearchSpace",
@@ -385,13 +407,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(9 / 2) = 5. Running sum = 10.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "1",
+      "mid" : "2",
       "sum" : "10"
     },
     "dsType" : "SearchSpace",
@@ -418,13 +443,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 13,
+    "activeLine" : 20,
     "description" : "Sum 10 > 6 — divisor 2 is too small. Try larger.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
       "low" : "3"
     },
     "dsType" : "SearchSpace",
@@ -451,7 +477,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 4,
+    "activeLine" : 11,
     "description" : "Test divisor 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -486,13 +512,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(1 / 3) = 1. Running sum = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "3",
+      "mid" : "3",
       "sum" : "1"
     },
     "dsType" : "SearchSpace",
@@ -519,13 +548,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(2 / 3) = 1. Running sum = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "3",
+      "mid" : "3",
       "sum" : "2"
     },
     "dsType" : "SearchSpace",
@@ -552,13 +584,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(5 / 3) = 2. Running sum = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "3",
+      "mid" : "3",
       "sum" : "4"
     },
     "dsType" : "SearchSpace",
@@ -585,13 +620,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(9 / 3) = 3. Running sum = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "3",
+      "mid" : "3",
       "sum" : "7"
     },
     "dsType" : "SearchSpace",
@@ -618,13 +656,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 13,
+    "activeLine" : 20,
     "description" : "Sum 7 > 6 — divisor 3 is too small. Try larger.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
       "low" : "4"
     },
     "dsType" : "SearchSpace",
@@ -651,7 +690,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 4,
+    "activeLine" : 11,
     "description" : "Test divisor 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -686,13 +725,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 21,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(1 / 4) = 1. Running sum = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "4",
+      "mid" : "4",
       "sum" : "1"
     },
     "dsType" : "SearchSpace",
@@ -719,13 +761,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 22,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(2 / 4) = 1. Running sum = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "4",
+      "mid" : "4",
       "sum" : "2"
     },
     "dsType" : "SearchSpace",
@@ -752,13 +797,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 23,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(5 / 4) = 2. Running sum = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "4",
+      "mid" : "4",
       "sum" : "4"
     },
     "dsType" : "SearchSpace",
@@ -785,13 +833,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 24,
-    "activeLine" : 7,
+    "activeLine" : 14,
     "description" : "ceil(9 / 4) = 3. Running sum = 7.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
+      "low" : "4",
+      "mid" : "4",
       "sum" : "7"
     },
     "dsType" : "SearchSpace",
@@ -818,13 +869,14 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 25,
-    "activeLine" : 13,
+    "activeLine" : 20,
     "description" : "Sum 7 > 6 — divisor 4 is too small. Try larger.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
+      "high" : "4",
       "low" : "5"
     },
     "dsType" : "SearchSpace",
@@ -851,14 +903,16 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 26,
-    "activeLine" : 16,
+    "activeLine" : 23,
     "description" : "low passed high. The smallest workable divisor is 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "5"
+      "answer" : "5",
+      "high" : "4",
+      "low" : "5"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,

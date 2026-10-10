@@ -16,7 +16,7 @@ import java.util.Map;
  * own max gives the smallest (every element divides down to 1).
  */
 @Component
-public class SmallestDivisorTracer implements AlgorithmTracer {
+public class SmallestDivisorTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -38,6 +38,7 @@ public class SmallestDivisorTracer implements AlgorithmTracer {
                         .build(),
                 InputField.of("threshold", FieldType.INT)
                         .label("Threshold")
+                        .help("Must be at least the number of elements: each positive value contributes at least 1.")
                         .range(1, 10_000_000)
                         .defaultValue(6)
                         .build());
@@ -47,34 +48,6 @@ public class SmallestDivisorTracer implements AlgorithmTracer {
     @Override
     public Map<String, Object> alternateInput() {
         return Map.of("nums", List.of(44, 22, 33, 11, 1), "threshold", 5);
-    }
-
-    @Override
-    public String annotatedCode() {
-        return """
-               public int smallestDivisor(int[] nums, int threshold) {
-                   // @a init
-                   int low = 1, high = max(nums), ans = high;
-                   while (low <= high) {
-                       // @a mid
-                       int mid = (low + high) / 2;
-                       long sum = 0;
-                       for (int x : nums) {
-                           // @a tally
-                           sum += (x + mid - 1) / mid;
-                       }
-                       if (sum <= threshold) {
-                           // @a feasible
-                           ans = mid;
-                           high = mid - 1;
-                       } else {
-                           // @a infeasible
-                           low = mid + 1;
-                       }
-                   }
-                   // @a done
-                   return ans;
-               }""";
     }
 
     private List<ArrayElement> baseState(int[] nums) {
@@ -89,6 +62,10 @@ public class SmallestDivisorTracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums");
         int threshold = in.getInt("threshold");
+        if (threshold < nums.length) {
+            throw new InputValidationException(Map.of("threshold",
+                    "Must be at least the number of elements (" + nums.length + ")."));
+        }
         int max = 0;
         for (int x : nums) max = Math.max(max, x);
         int low = 1, high = max, ans = high;
@@ -116,7 +93,7 @@ public class SmallestDivisorTracer implements AlgorithmTracer {
                 }
                 emit.at("tally")
                         .say("ceil(%d / %d) = %d. Running sum = %d.", nums[i], mid, term, sum)
-                        .var("sum", sum)
+                        .var("low", low).var("high", high).var("mid", mid).var("sum", sum)
                         .arrayState(state)
                         .step();
             }
@@ -125,13 +102,13 @@ public class SmallestDivisorTracer implements AlgorithmTracer {
                 ans = mid;
                 emit.at("feasible")
                         .say("Sum %d <= %d — divisor %d works. Try smaller.", sum, threshold, mid)
-                        .var("ans", ans).var("high", mid - 1)
+                        .var("ans", ans).var("low", low).var("high", mid - 1)
                         .arrayState(baseState(nums)).step();
                 high = mid - 1;
             } else {
                 emit.at("infeasible")
                         .say("Sum %d > %d — divisor %d is too small. Try larger.", sum, threshold, mid)
-                        .var("low", mid + 1)
+                        .var("low", mid + 1).var("high", high)
                         .arrayState(baseState(nums)).step();
                 low = mid + 1;
             }
@@ -139,6 +116,7 @@ public class SmallestDivisorTracer implements AlgorithmTracer {
 
         emit.at("done")
                 .say("low passed high. The smallest workable divisor is %d.", ans)
-                .var("answer", ans).arrayState(baseState(nums)).step();
+                .var("answer", ans).var("low", low).var("high", high)
+                .arrayState(baseState(nums)).step();
     }
 }

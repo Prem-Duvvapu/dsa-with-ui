@@ -6,26 +6,23 @@ const GAP = 5;
 const LIVE = new Set(['target', 'active', 'current', 'probe']);
 
 const num = (v) => {
+  if (typeof v !== 'number' && typeof v !== 'string') return null;
+  if (typeof v === 'string' && v.trim() === '') return null;
   const n = Number(v);
   return Number.isFinite(n) ? n : null;
 };
 
-/** low / high / mid, under whichever of the usual names a tracer happened to pick. */
+/** Bounds belong to one snapshot and one alias family, never independently merged. */
 function bounds(vars = {}) {
-  const pick = (...names) => {
-    for (const n of names) {
-      if (vars[n] !== undefined) {
-        const v = num(vars[n]);
-        if (v !== null) return v;
-      }
+  for (const [lowName, highName] of [['low', 'high'], ['lo', 'hi'], ['left', 'right'], ['l', 'r'], ['start', 'end']]) {
+    const low = num(vars?.[lowName]);
+    const high = num(vars?.[highName]);
+    if (low !== null && high !== null) {
+      // m means students or exponent in real tracers; it is not a midpoint alias.
+      return { low, high, mid: num(vars?.mid) };
     }
-    return null;
-  };
-  return {
-    low: pick('low', 'lo', 'left', 'l', 'start'),
-    high: pick('high', 'hi', 'right', 'r', 'end'),
-    mid: pick('mid', 'm')
-  };
+  }
+  return { low: null, high: null, mid: null };
 }
 
 /**
@@ -86,13 +83,16 @@ export default function SearchSpaceCanvas({ currentStep, step, steps, currentSte
   const activeStep = currentStep || step;
   const here = lastBounds(steps, currentStepIndex ?? 0, activeStep);
   const { low, high, mid } = here;
-  const cells = here.cells ?? activeStep?.arrayState ?? [];
+  const cells = activeStep?.arrayState ?? here.cells ?? [];
+  // Only an explicit answer on this step is a result. The last visible step may be
+  // budget-truncated, and ans is only the best candidate found so far.
+  const answer = num(activeStep?.variables?.answer);
 
   if (low === null || high === null) {
     return <div className={styles.empty} role="status">No search range for this step.</div>;
   }
 
-  const remaining = high - low + 1;
+  const remaining = Math.max(0, high - low + 1);
   const full = originalRange(steps, { low, high, cells });
   const indexed = isIndexSpace(full.cells ?? cells, full.low, full.high);
   const span = Math.max(1, full.high - full.low + 1);
@@ -108,6 +108,9 @@ export default function SearchSpaceCanvas({ currentStep, step, steps, currentSte
         {mid !== null && (
           <span className={styles.midBadge} data-testid="search-mid">probing {mid}</span>
         )}
+        {answer !== null && (
+          <span className={styles.rangeBadge} data-testid="search-result">Result: {answer}</span>
+        )}
       </div>
 
       {/* The whole original range, with what survives drawn over it. Halving reads as
@@ -115,11 +118,11 @@ export default function SearchSpaceCanvas({ currentStep, step, steps, currentSte
       <div className={styles.ruler} data-testid="search-ruler">
         <span className={styles.rulerEnd}>{full.low}</span>
         <div className={styles.rulerTrack}>
-          <div
+          {remaining > 0 && <div
             className={styles.rulerLive}
             data-testid="search-live"
             style={{ left: `${shareLeft}%`, width: `${shareWidth}%` }}
-          />
+          />}
           {mid !== null && span > 0 && (
             <div
               className={styles.rulerMid}
@@ -160,6 +163,7 @@ export default function SearchSpaceCanvas({ currentStep, step, steps, currentSte
               {cells.map((cell, i) => (
                 <div
                   key={i}
+                  data-state={cell.state}
                   className={`${styles.cell} ${LIVE.has(cell.state) ? styles.cellMid : styles.cellAlive}`}
                   style={{ width: CELL, height: CELL }}
                 >

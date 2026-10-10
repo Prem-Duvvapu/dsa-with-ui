@@ -1829,3 +1829,105 @@ Publication authorization follow-up: the owner answered "continue" to the explic
 commit/push/merge request. Publication of this verified batch is approved after CI passes;
 the initial awaiting-approval status above is historical. No broader publishing approval
 is inferred for the next correctness package.
+
+Publication outcome: #221 squash-merged as `3a83671` on2026-10-10 after the exact branch
+head passed PR CI, GitGuardian and Vercel preview checks. Post-merge CI run38057484886
+and Vercel frontend deployment passed. The initial local/approval statuses above are
+historical; batch2 is no longer an outstanding PR. Public backend-source verification
+remains open. The next correctness package started only after this merge.
+
+## 2026-10-10 — parametric input/search correctness (local, publication pending)
+
+Base #221 / `3a83671`; branch `fix/parametric-search-contracts`. The owner approved
+continuation and parallel agents, not publication of this new package. Two agents owned
+disjoint backend changes; the main agent implemented the canvas, integration/probe guards,
+goldens and evidence. Independent read-only review found no introduced blocking issue.
+The original dirty Windows worktree and main were not edited.
+
+### Implemented scope
+
+Smallest Divisor rejects threshold<nums.length before any steps; Matrix Median rejects
+unsorted rows rather than sorting user input. Both return field-specificHTTP400, preserving
+the prior run through the existing session path. Valid even grids retain the lower median,
+explicitly described as a visualizer extension of the original odd-cell task. Defaults,
+valid answers and narration are not swapped. Both incomplete listings are replaced by
+strict standalone Java17 Solution resources with real helpers and equivalent guards.
+
+Book Allocation, Painter's Partition, Shipping Within D Days, Bouquets and Smallest Divisor
+emit actual paired low/high on every search step. Feasibility scans carry the active mid;
+updates/done omit it. Done states the exhausted interval; impossible early exits invent
+no interval. SearchSpaceCanvas reads complete alias pairs, refuses null/blank/nonfinite
+bounds, no longer treats students/exponents named m as probes, prefers current input
+highlights and shows zero live candidates for exhaustion. Result comes only from the
+current explicit answer, not ans or the last step. No hooks, routes, dependencies or new
+DP form were introduced. Five owners—not all27 SearchSpace owners—receive full snapshots.
+
+### Verification and deliberately rejected regressions
+
+- Valid input/source RED:10 selected cases,9 assertion failures. Snapshot RED:16 cases,
+  14 failures; two existing impossible alternates correctly pass. Canvas RED:26 cases,
+  11 failures. Preliminary test-compilation failures during parallel test development
+  were excluded from assertion-RED evidence; old-hierarchy-compatible harnesses were fixed
+  before the recorded runs. Supplemental truncated-workspace protection is not claimed
+  to fail on the old workspace, which already guarded finish/watched.
+- Combined focused GREEN64 cases:36 exact-source,8 input contracts,20 snapshots.
+  Eleven core owners/all26 published examples compile in isolation with typed bindings
+  (including int[][]), run defaults/alternates and agree with HTTP source delivery.
+  New oracles cover426 exhaustive small divisor input/threshold combinations and66
+  flattened-order matrix cases, plus caps and invalid standalone contracts.
+- Compiling constant-divisor/upper-median mutations fail2/2. Stale input-highlight and
+  ans-as-final-result canvas mutations fail separately. A resolvedInput.m golden mutation
+  is rejected. All mutations are restored, with selected GREEN/full checks afterwards.
+- Existing registry growth RED:431 cases,2 validation errors,151 unchanged skips.
+  Its generated eight-element divisor input retained threshold6, and cyclic matrix rows
+  became unsorted. Class-based fixture adaptations grow a feasible capped threshold and
+  sorted bounded upper tails, increasing real probes. No ID-dispatch list, growth assertion
+  removal or added skip. GREEN431 cases/0 failures/errors/151 skips; final suite repeats it.
+- Final backend8,087 tests,0 failures/errors,500 existing skips; frontend79 files/807 tests,
+  fresh npm ci, production build and launcher process-tree smoke pass. JS382.91kB/gzip121.97,
+  CSS97.71kB/gzip17.75; assets index-Cl9l6aq6.js/index-CfkLxyUw.css. Existing act/router warnings
+  remain; suite timings are not a performance acceptance result. The locked install still
+  reports9 dependency findings (4 moderate,3 high,2 critical); no force-fix or manifest edit.
+- Exactly six goldens were regenerated and read. The new scoped comparator allows source/
+  anchors/activeLine for two resource owners and low/high/mid additions for five searches.
+  Every pre-existing bound, other variable, answer, input, narration, structure and step
+  count stays identical. The original source-only comparator is not weakened or misused.
+- Real API stats431 catalogued/traced,0 untraced/duplicates/orphans; authored statements
+  remain390/431. Chromium153 production preview:44/44 Code-view rows (11 owners,320/1366px,
+  both themes), exact highlights, source keys, view/step continuity,0 overflow/page errors;
+  every served-source hash equals its current golden and build assets are fixed per page.
+- Range journey30/30 (5 owners ×320/390/1366px ×both themes): first/middle/final paired
+  range/probe, zero remaining candidates, no stale terminal probe/live marker, explicit
+  correct result and completion,0 page overflow/errors. Book final now states [113,112],
+  0 left of114, Result113. Two phone shared-link journeys restore input before step3,
+  verify Divisor [1,2]/threshold2→2 and Matrix [[1,2]]→lower1, then reject threshold1/
+  unsorted [[3,2]] with field errors, error focus and prior source/step/shared input retained.
+
+Evidence: `evidence/source-code/parametric-contracts/`. Test text is explicitly labelled
+selected summaries/excerpts, not full byte-identical logs. Source and range probes use the
+real backend, production preview, reduced motion and the normal execution rate limit;
+the new range probe decodes actual delta responses before examining snapshots. An initial
+phone capture showed playback after seeking; the final capture scrolls to the range/result.
+
+### Six review gates and remaining work
+
+Backend: normal input validation/caps plus algorithm preconditions, HTTP errors, independent
+answers and complete source tested. Frontend: existing atomic session preserved; missing/
+invalid state stays absent, no false completion, CSS tokens/dependencies unchanged. UI/UX:
+both themes/phone/desktop checked, textual range/result state and error focus; no new keys
+or focus theft. Product: honest lower-median extension and bounded certification, not a
+claim all431 algorithms are complete. Architecture: strict resources, coherent snapshots,
+no fallback/ID-dispatch list/dead inline sources. QA: actual RED/mutation/full-suite/read-
+golden/browser evidence; existing tests and skip counts are preserved.
+
+No commit/push/PR/merge for this new package. Fresh publication approval is required.
+Remaining:42 historical non-platform source omissions,77 platform contexts,C++ labels,
+compiler-success semantic review,41 statements,54 DP candidates/D6/D7,broader renderer
+acceptance, useful-frame/device/zoom/screen-reader/performance/learner/security/deployment/
+release gates. Local browser checks do not certify production backend source. P7/P8/P9
+and the full project remain incomplete.
+
+Publication authorization follow-up: the owner answered "continue" to the explicit
+commit/push/merge request for this verified batch. Publication is now approved, with merge
+conditional on passing CI. The initial awaiting-approval statements above are historical;
+no publication approval is inferred for subsequent packages.

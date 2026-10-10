@@ -1,12 +1,12 @@
 {
   "anchors" : {
-    "done" : 15,
-    "enough" : 12,
-    "init" : 4,
-    "mid" : 6,
-    "tooFew" : 10
+    "done" : 30,
+    "enough" : 27,
+    "init" : 19,
+    "mid" : 21,
+    "tooFew" : 25
   },
-  "code" : "public int findMedian(int[][] matrix) {\n    int rows = matrix.length, cols = matrix[0].length;\n    int desired = (rows * cols + 1) / 2;\n    int low = minOfFirstColumn(matrix), high = maxOfLastColumn(matrix);\n    while (low < high) {\n        int mid = low + (high - low) / 2;\n        int count = 0;\n        for (int[] row : matrix) count += countLessEqual(row, mid);\n        if (count < desired) {\n            low = mid + 1;\n        } else {\n            high = mid;\n        }\n    }\n    return low;\n}\n\nprivate int countLessEqual(int[] row, int x) {\n    int low = 0, high = row.length;\n    while (low < high) {\n        int mid = (low + high) / 2;\n        if (row[mid] <= x) low = mid + 1; else high = mid;\n    }\n    return low;\n}",
+  "code" : "public class Solution {\n    public int solve(int[][] matrix) {\n        if (matrix == null || matrix.length == 0 || matrix[0] == null || matrix[0].length == 0) {\n            throw new IllegalArgumentException(\"A nonempty matrix is required.\");\n        }\n        int rows = matrix.length, cols = matrix[0].length;\n        for (int[] row : matrix) {\n            if (row == null || row.length != cols) {\n                throw new IllegalArgumentException(\"Every row must have the same number of columns.\");\n            }\n            for (int column = 1; column < row.length; column++) {\n                if (row[column] < row[column - 1]) {\n                    throw new IllegalArgumentException(\"Every row must be sorted left to right.\");\n                }\n            }\n        }\n        // Odd counts select the middle value; even counts select the lower median.\n        int desired = (rows * cols + 1) / 2;\n        int low = minOfFirstColumn(matrix), high = maxOfLastColumn(matrix);\n        while (low < high) {\n            int mid = low + (high - low) / 2;\n            int count = 0;\n            for (int[] row : matrix) count += countLessEqual(row, mid);\n            if (count < desired) {\n                low = mid + 1;\n            } else {\n                high = mid;\n            }\n        }\n        return low;\n    }\n\n    private int minOfFirstColumn(int[][] matrix) {\n        int smallest = matrix[0][0];\n        for (int[] row : matrix) smallest = Math.min(smallest, row[0]);\n        return smallest;\n    }\n\n    private int maxOfLastColumn(int[][] matrix) {\n        int largest = matrix[0][matrix[0].length - 1];\n        for (int[] row : matrix) largest = Math.max(largest, row[row.length - 1]);\n        return largest;\n    }\n\n    private int countLessEqual(int[] row, int x) {\n        int low = 0, high = row.length;\n        while (low < high) {\n            int mid = low + (high - low) / 2;\n            if (row[mid] <= x) low = mid + 1; else high = mid;\n        }\n        return low;\n    }\n}\n",
   "problemId" : "matrix-median",
   "resolvedInput" : {
     "matrix" : [ [ 12, 19, 25 ], [ 17, 18, 21 ] ]
@@ -14,7 +14,7 @@
   "stepCount" : 8,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 4,
+    "activeLine" : 19,
     "description" : "The median is the 3rd smallest of 6 elements (the lower of the two middle values when the count is even). Binary search values [12, 25].",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -33,7 +33,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 6,
+    "activeLine" : 21,
     "description" : "Test value 18: 3 elements across the matrix are <= 18.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -53,7 +53,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 12,
+    "activeLine" : 27,
     "description" : "3 >= 3 — 18 already reaches the median rank. Try smaller.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -70,7 +70,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 6,
+    "activeLine" : 21,
     "description" : "Test value 15: 1 element across the matrix is <= 15.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -90,7 +90,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 10,
+    "activeLine" : 25,
     "description" : "1 < 3 — 15 ranks too low. Try larger.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -107,7 +107,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 6,
+    "activeLine" : 21,
     "description" : "Test value 17: 2 elements across the matrix are <= 17.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -127,7 +127,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 10,
+    "activeLine" : 25,
     "description" : "2 < 3 — 17 ranks too low. Try larger.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -144,7 +144,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 15,
+    "activeLine" : 30,
     "description" : "low caught up to high. The matrix median is 18.",
     "queueOrStackState" : null,
     "callStack" : [ ],

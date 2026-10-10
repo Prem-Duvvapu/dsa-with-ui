@@ -262,6 +262,80 @@ class DisplayedCoreSolutionTest {
     }
 
     @Test
+    void smallestDivisorMatchesExhaustiveSmallInputsAndAnIndependentLinearOracle() throws Exception {
+        var tracer = owner(SmallestDivisorTracer.class);
+        try (var solution = compile(tracer)) {
+            for (int length = 1; length <= 3; length++) {
+                int combinations = (int) Math.pow(4, length);
+                for (int encoded = 0; encoded < combinations; encoded++) {
+                    List<Integer> nums = new ArrayList<>();
+                    int remaining = encoded;
+                    for (int i = 0; i < length; i++) {
+                        nums.add(remaining % 4 + 1);
+                        remaining /= 4;
+                    }
+                    for (int threshold = length; threshold <= nums.stream().mapToInt(Integer::intValue).sum(); threshold++) {
+                        int expected = 1;
+                        while (true) {
+                            int divisor = expected;
+                            long sum = nums.stream().mapToLong(x -> (x.longValue() + divisor - 1) / divisor).sum();
+                            if (sum <= threshold) break;
+                            expected++;
+                        }
+                        assertAgrees(tracer, solution, Map.of("nums", nums, "threshold", threshold), "answer",
+                                String.valueOf(expected));
+                    }
+                }
+            }
+            assertAgrees(tracer, solution, Map.of("nums", Collections.nCopies(30, 1_000_000), "threshold", 30),
+                    "answer", "1000000");
+            assertAgrees(tracer, solution, Map.of("nums", List.of(1_000_000), "threshold", 10_000_000),
+                    "answer", "1");
+        }
+    }
+
+    @Test
+    void matrixMedianMatchesIndependentFlattenedOrderingIncludingEvenAndDuplicateGrids() throws Exception {
+        var tracer = owner(MatrixMedianTracer.class);
+        try (var solution = compile(tracer)) {
+            assertAgrees(tracer, solution, Map.of("matrix", List.of(List.of(1, 9))), "answer", "1");
+            assertAgrees(tracer, solution, Map.of("matrix", List.of(List.of(0, 0), List.of(999, 999))), "answer", "0");
+            var random = new Random(2709);
+            for (int rows = 1; rows <= 8; rows++) {
+                for (int columns = 1; columns <= 8; columns++) {
+                    List<List<Integer>> matrix = new ArrayList<>();
+                    for (int row = 0; row < rows; row++) {
+                        matrix.add(random.ints(columns, 0, 1000).boxed().sorted().toList());
+                    }
+                    var ordered = matrix.stream().flatMap(List::stream).sorted().toList();
+                    int expected = ordered.get((ordered.size() - 1) / 2);
+                    assertAgrees(tracer, solution, Map.of("matrix", matrix), "answer", String.valueOf(expected));
+                }
+            }
+        }
+    }
+
+    @Test
+    void standaloneSourcesRejectTheSameImpossibleThresholdAndMalformedMatrixContracts() throws Exception {
+        try (var solution = compile(owner(SmallestDivisorTracer.class))) {
+            for (Object[] arguments : List.of(new Object[]{new int[]{1, 2}, 1},
+                    new Object[]{new int[0], 1}, new Object[]{new int[]{0}, 1})) {
+                var failure = assertThrows(java.lang.reflect.InvocationTargetException.class,
+                        () -> solution.entry().invoke(solution.instance(), arguments));
+                assertInstanceOf(IllegalArgumentException.class, failure.getCause());
+            }
+        }
+        try (var solution = compile(owner(MatrixMedianTracer.class))) {
+            for (int[][] matrix : List.<int[][]>of(new int[0][], new int[][]{{}},
+                    new int[][]{{1, 2}, {3}}, new int[][]{{9, 1, 2}})) {
+                var failure = assertThrows(java.lang.reflect.InvocationTargetException.class,
+                        () -> solution.entry().invoke(solution.instance(), (Object) matrix));
+                assertInstanceOf(IllegalArgumentException.class, failure.getCause());
+            }
+        }
+    }
+
+    @Test
     void phaseAnchorsPointAtActualOperationsRatherThanMissingHelpers() {
         checkLine(owner(PrintLisTracer.class), "backlink", "reversed.add(nums[cursor]);");
         checkLine(owner(PrintLisTracer.class), "done", "return answer;");
@@ -283,15 +357,25 @@ class DisplayedCoreSolutionTest {
         checkLine(owner(MinDaysBouquetsTracer.class), "extendRun", "run++;");
         checkLine(owner(MinDaysBouquetsTracer.class), "breakRun", "run = 0;");
         for (var tracer : family().filter(t -> t.dsType() == com.dsa.ui.model.DsType.SEARCH_SPACE).toList()) {
-            if (!(tracer instanceof MinDaysBouquetsTracer)) checkLine(tracer, "init", "while (low <= high) {");
+            if (SmallestDivisorTracer.class.isInstance(tracer)) {
+                checkLine(tracer, "init", "int low = 1, high = max(nums), ans = high;");
+                checkLine(tracer, "tally", "sum += ((long) x + mid - 1) / mid;");
+            } else if (!(tracer instanceof MinDaysBouquetsTracer)) {
+                checkLine(tracer, "init", "while (low <= high) {");
+            }
             checkLine(tracer, "mid", "int mid = low + (high - low) / 2;");
             checkLine(tracer, "feasible", "ans = mid;");
             checkLine(tracer, "infeasible", "low = mid + 1;");
             checkLine(tracer, "done", "return ans;");
         }
+        checkLine(owner(MatrixMedianTracer.class), "init", "int low = minOfFirstColumn(matrix), high = maxOfLastColumn(matrix);");
+        checkLine(owner(MatrixMedianTracer.class), "mid", "int mid = low + (high - low) / 2;");
+        checkLine(owner(MatrixMedianTracer.class), "tooFew", "low = mid + 1;");
+        checkLine(owner(MatrixMedianTracer.class), "enough", "high = mid;");
+        checkLine(owner(MatrixMedianTracer.class), "done", "return low;");
     }
 
-    private void checkLine(CompleteSourceTracer tracer, String anchor, String expected) {
+    private void checkLine(AlgorithmTracer tracer, String anchor, String expected) {
         var code = AnnotatedCode.parse(tracer.annotatedCode());
         assertEquals(expected, code.getDisplayCode().lines().toList().get(code.resolve(anchor) - 1).trim());
     }
@@ -344,6 +428,7 @@ class DisplayedCoreSolutionTest {
             assertEquals(tracer.inputSpec().getFields().stream().map(field -> switch (field.getType()) {
                 case INT -> int.class;
                 case INT_ARRAY -> int[].class;
+                case INT_GRID -> int[][].class;
                 case STRING -> String.class;
                 default -> throw new AssertionError("Add an authoritative parameter binding for " + field.getType());
             }).toList(), Arrays.stream(entry.getParameterTypes()).toList());

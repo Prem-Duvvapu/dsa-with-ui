@@ -182,7 +182,7 @@ inventory is retained as historical evidence; 48 of its other non-platform Java 
 77 platform contexts, the C++ label and semantic review of compiler successes remain.
 No new DP approach was introduced; the remaining 54 candidate rows and D6/D7 stay open.
 
-## Helper repair batch 2 — locally verified, 2026-10-10
+## Helper repair batch 2 — merged #221, 2026-10-10
 
 Branch `fix/complete-source-helpers-batch2` starts from merged #220 / `7a5120e`.
 Four missing-helper listings are repaired: Book Allocation, Painter's Partition,
@@ -209,7 +209,8 @@ Parentheses and default DP/LCS custom probes also pass. Evidence: `evidence/sour
 
 The owner initially authorized implementation and parallel read-only audits. On continuation
 after the publication request, the owner approved commit/push/PR/merge of this batch after
-CI passes; publication is in progress. Forty-four of the historical
+CI passes; #221 merged as `3a83671`. PR CI, post-merge CI run38057484886 and Vercel
+frontend deployment passed. This does not certify the public backend source. Forty-four of the historical
 53 non-platform failures remain after the two helper batches;77 platform contexts,
 C++ labelling, compiler-success semantics and wider acceptance/release work remain open.
 Books/painters are not certified for arbitrary unbounded arrays outside declared caps.
@@ -230,3 +231,33 @@ Books/painters are not certified for arbitrary unbounded arrays outside declared
 The source browser gates check exact code/highlights and session continuity, not every
 canvas label's mathematical truth. These discovered defects stay open even though those
 bounded source gates pass. Do not mark P7/P8 or final release complete.
+
+## Parametric input/search corrections — locally verified, 2026-10-10
+
+Separate branch `fix/parametric-search-contracts`, based on merged #221 / `3a83671`.
+The three corrections above are now implemented locally; their pending descriptions
+record the batch2 findings, not current local behavior. On continuation after the explicit
+publication request, the owner approved commit/push/PR/merge of this batch after CI passes.
+
+Smallest Divisor rejects thresholds below the number of positive elements. Matrix Median
+rejects unsorted rows; its even default and shared inputs remain supported as an explicitly
+labelled lower-median visualizer extension. Neither input is silently reordered. Both
+displayed Java17 sources are standalone, with actual helpers and typed parameters.
+
+Five core minimum-feasible searches now emit paired actual bounds on every search step,
+including feasibility scans and terminal exhaustion. Probe midpoints disappear after
+updates. The canvas keeps coherent pairs, current input highlights and explicit answers;
+it does not infer completion from a last visible step or intermediate ans. This is not
+a per-step snapshot audit of all27 SearchSpace owners.
+
+Verified:36 core source cases across11 owners/all26 published examples;426 exhaustive
+small divisor input/threshold combinations and66 independent matrix ordering cases.
+Input/snapshot suites add28 cases. Backend8,087 tests (500 unchanged skips), frontend807
+tests/build, six read/parsed goldens and launcher smoke pass. Real-backend Chromium has
+44 source-view rows and30 search-range rows in both themes, plus two shared-link/rejected-
+rerun journeys. Evidence: `evidence/source-code/parametric-contracts/`; the log records
+RED, mutation and growth-harness proof. RCA-060/061 explain the defects.
+
+Forty-two of the historical53 non-platform omissions remain.77 platform contexts,
+C++ labelling, compiler-success semantics,41 statements,54 DP candidates and broader
+device/accessibility/performance/security/deployment/release gates remain open.
