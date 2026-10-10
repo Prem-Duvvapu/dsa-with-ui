@@ -1345,3 +1345,131 @@ headless browser-chrome Tab boundary was replaced with within-document ShiftTab/
 not a production keyboard change. Existing behavioral assertions were not weakened.
 These are automated scenario checks, not screen-reader, physical-device, latency or
 learner-study certification.54 other DP candidates and D6/D7 remain open.
+
+## 2026-10-10 — Early P9 slice: retire the unused shell, preserve live seams
+
+Status: local `chore/retire-legacy-ui`, based on #217 / `9de01cd`; unpublished.
+The owner subsequently authorized commit/push/PR/merge on 2026-10-10, conditional on
+clean verification. Publication remains gated on the exact PR head's CI.
+Frog Jump previously merged as #216 / `4ad9fc3`, followed by MIT licensing #217.
+The DP plan, tracker and remaining execution plan now distinguish those merged packages
+from this local cleanup. This is owner-directed easy-to-hard step4, not all of P9.
+
+### Production scope and reachability proof
+
+`evidence/p9/production-reachability.mjs` uses the actual installed Vite/Rollup
+production loader, including CSS, renderer-registry and lazy imports. Test imports
+do not establish reachability. It builds with `write:false`, so checks cannot silently
+replace the production bundle served by browser probes. The audit is deliberately
+conservative: production-loaded modules count as reachable even if tree-shaken;
+unused exports and arbitrary CSS selectors are not certified.
+
+At the clean baseline:134 source/style files,115 production-loaded modules,19 orphans.
+After cleanup:115 source/style files, the same115 loaded modules, zero orphans.
+The before/after JSON manifests retain the exact inventory and production import graph.
+`CanvasShell`, `CaptureStrip`, `CompareStrip`, shared layout utilities and the live
+search hook remain. The standalone old `ProblemStatement` was genuinely unreachable:
+the current workspace renders the authored statement inline.
+
+Removed: Header, Breadcrumb, SectionNav, old ProblemStatement, Controls, LiveTraceTicker,
+Sidebar, SearchBox, MemoryComplexityCard, useLayoutPreferences, groupBySection,
+normalizeCategory and their seven exclusive CSS modules. Removed their global search,
+sidebar, pulse and transport styles, retaining `.ip-input`, spinner/reduced-motion,
+canvas, capture and every live token. Eleven unused shared layout utilities also retire.
+The input editor now has only its existing normal-flow workspace layout; labels,
+action order, presets, controlled draft and field/error behavior remain. `/` opens
+the switcher directly, without the old permanently-false mobile-sidebar branch.
+No production backend, dependency, lockfile, golden or persisted-key deletion.
+
+### Retired tests and live successors
+
+The suite count is accounted for:799 baseline −64 retired +49 additions =784.
+All existing tests of live behavior keep their assertions; the InputPanel harness now
+targets the visible workspace labels instead of the unreachable panel's alternate names.
+
+| Retired suite | Cases | Live successor / explicit retirement |
+| --- | ---: | --- |
+| App.test.jsx | 6 | Real Workspace/Session integrations: context, playback, narration, empty/unavailable states; mocked old-shell rendering retires |
+| Controls.test.jsx | 4 | Sharing.integration: actual restored address/input/approach/step, all-view copy entry points, success/timeout, clipboard denial/absence and exact timer cleanup |
+| MemoryComplexityCard.test.jsx | 7 | CodeAnalysis + StateInspector: frames, singleton Front/Back, missing costs and run-level emptiness. Old internal Memory/Complexity tabs and step-only section hiding retire |
+| ProblemStatement.test.jsx | 7 | ProblemWorkspace: full authored paragraphs/examples/constraints/safe source links; description fallback, absent metadata and native disclosure/no execution |
+| SearchBox.test.jsx | 17 | CommandPalette/library/search seams: ranking, selection/arrows/Escape, recent searches, runnable filters, loading/empty states; new valid combobox IDs and selector-character ID guards. Sidebar section-group headings/full-section progress and its scoped empty-state mechanics retire |
+| Sidebar.categories.test.js | 2 |18 live library cases derived from contracts/categories.json: every exact backend category, no duplicate/alias options, real filtered links |
+| SectionNav.test.jsx | 10 |5 curriculum helper cases + existing integrated header/navigation/completion: authored order, boundaries, no section/singleton/unknown. Old neighbour watched badge was already absent from the new workspace; not claimed as migrated |
+| useLayoutPreferences.test.js | 6 | Obsolete sidebar/mobile/statement/old code-panel toggle preferences retire. Current Code split/Focus/session/storage tests remain; old keys are not erased |
+| groupBySection.test.js | 5 | Current curriculum/order tests and flat library/switcher tests; old sidebar grouping is not a live feature |
+
+### RED proof and harness corrections
+
+The new build-graph assertion first named all19 actual orphans. The global-style guard
+failed on the old sidebar/search/transport CSS; the normal-flow default-editor guard
+failed on the old panel default. After live successor checks passed, surgical temporary
+mutations broke category filtering, actual-address copying, curriculum order, singleton
+queue markers, editor action order, statement fallback and slash opening, and added an
+orphan module.27 cases failed across seven suites. All mutations were restored before
+the final clean suite/build. These are selective mutation proofs, not a claim that all49
+new cases failed on main.
+
+Excluded as test-harness mistakes: initially running Node's build check through DOM-only
+storage setup; selecting a Playground-only copy button in Analysis; counting unrelated
+fake timers; an incorrect switcher accessible name. The Node setup guard preserves DOM
+storage isolation. Sharing now checks the exact2500ms timer and restores timer spies
+in safe order. None of those initial failures is counted as a production defect.
+
+### Checks, measurements and boundaries
+
+- Fresh `npm ci`; frontend final:79 files /784 tests passed. Backend baseline:8,023
+  tests,0 failures/errors,500 existing skips; backend/goldens unchanged.
+- Production build: JS382.54kB /gzip121.90; CSS95.79kB /gzip17.43. Baseline:
+  JS383.15/gzip122.13; CSS106.95/gzip19.10. The old modules were already tree-shaken;
+  the material bundle reduction comes from retiring shipped global CSS, not deleting tests.
+- Served final assets: `index-hqbHudI4.js` / `index-DuiaNkhD.css`.
+- Chromium editor parity:40/40 cases, four genuine fresh backend default responses
+  replayed unchanged × five widths × both themes. Computed editor/form/field/label/button
+  geometry/styles and field-before-action order match exactly; view switches preserve
+  input, step and URL and do not execute. These are replayed defaults, not custom-run proof.
+- Chromium chrome journey:50/50 checks, same five widths/both themes;30 workspace
+  geometry records match exactly, plus20 library/not-found overflow checks. Native Menu
+  and learning-network disclosure/focus/keyboard behavior,44px chrome targets and errors checked.
+- Real-backend phone input journey:14/14 checks across all seven field types;10 POST
+  responses settle before navigation (seven200, three400), with field errors and URL
+  preservation. The reusable probe now respects normal execution pacing, waits for the
+  actual decoded response and writes a matching-build JSON report instead of only stdout.
+- 14 Node evidence-helper tests pass (11 cleanup checks, two served-identity checks,
+  one pacing check). The consolidator rejects incomplete/duplicate matrices, missing
+  editor measurements, changed layout, changed production reachability and mixed bundles.
+- Renderer sweep: clean baseline Chromium200/200; final Firefox200/200 and a fresh
+  complete final Chromium200/200 over the same
+  17 families/50 catalogue-derived picks, default/alternate, first/middle/final at1366 dark/
+  390 light (600 position checks per sweep). These are drawing/overflow/error checks, not
+  proof of every answer/input or pixel parity across engines. Two incomplete final Chromium
+  attempts are excluded: one lost the backend; another lost the browser mid-sweep. The
+  isolated Chromium heap alternate at the interruption point passes; no cause for the
+  closure is claimed. The fresh full Chromium rerun closed the earlier incomplete-sweep
+  gap without production changes. Its90 editor/chrome and14 input checks also pass.
+  `evidence/p9/verification.json` records both complete final engines,
+  exact retired-test counts, selective mutations, matching assets and excluded attempts.
+
+The reusable evidence consolidator also needed to distinguish completed Vitest suite
+lines from earlier stderr headers when accounting for retired tests. Its new parser
+regression test fails if that distinction is removed; this is tooling, not an app defect.
+
+Read-only saved-input target check (`evidence/p9/preset-targets.json`): at320 and1366,
+Load is104×36px and Remove24×36px. This pre-existing gap follows the old workspace
+section's same36px preset rule; no preset sizing change is made here. Fix and verify it
+in step5/P8 target polish. The40-case editor parity matrix used defaults without saved
+presets; it is not a claim to have measured every populated editor state.
+
+The two inspected final screenshots (320 light,1366 dark) agree with unchanged chrome
+geometry. The desktop stage-top exception remains unchanged: Two Sum/BFS frame y358.39,
+LCS y391.39 at1366, not the target~280. No new layout/DP/performance package is stacked.
+The output is not screen-reader, real-device/virtual-keyboard, human-learner or performance
+certification. P7 acceptance, P8 and final P9 release/rollback/sign-off remain open.
+Next safe step: review/publish this medium cleanup package under that owner approval;
+only after it lands, continue step5 layout polish and the separately verified DP batches.
+
+Publication preflight (2026-10-10): main is still `9de01cd`; the owner authorized
+commit/push/PR/merge conditional on clean checks. All local gates for this bounded slice
+are clean, including the final Chromium200-row rerun. Required frontend/backend CI
+must pass on the exact PR head before merge. Rollback base is #217 / `9de01cd`;
+revert the focused cleanup squash through a reviewed PR if a regression is found.

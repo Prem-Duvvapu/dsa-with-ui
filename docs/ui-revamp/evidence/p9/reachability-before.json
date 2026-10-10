@@ -1,0 +1,1251 @@
+{
+  "baseCommit": "9de01cd",
+  "viteVersion": "5.4.21",
+  "scope": "Production-loaded JS/JSX/CSS under frontend/src; test roots and fixtures excluded. No unused-export or CSS-selector claim.",
+  "sourceFiles": [
+    "frontend/src/AppRouter.jsx",
+    "frontend/src/analytics.js",
+    "frontend/src/canvas/companions.js",
+    "frontend/src/canvas/registry.js",
+    "frontend/src/catalog/CatalogProvider.jsx",
+    "frontend/src/catalog/offlineSamples.js",
+    "frontend/src/code/highlightJava.js",
+    "frontend/src/components/AlgorithmLibrary.jsx",
+    "frontend/src/components/AlgorithmLibrary.module.css",
+    "frontend/src/components/ArrayCanvas.jsx",
+    "frontend/src/components/ArrayCanvas.module.css",
+    "frontend/src/components/Breadcrumb.jsx",
+    "frontend/src/components/Breadcrumb.module.css",
+    "frontend/src/components/CanvasShell.jsx",
+    "frontend/src/components/CaptureStrip.jsx",
+    "frontend/src/components/CodeViewer.jsx",
+    "frontend/src/components/CodeViewer.module.css",
+    "frontend/src/components/CommandPalette.jsx",
+    "frontend/src/components/CommandPalette.module.css",
+    "frontend/src/components/CompareStrip.jsx",
+    "frontend/src/components/CompareStrip.module.css",
+    "frontend/src/components/Controls.jsx",
+    "frontend/src/components/Controls.module.css",
+    "frontend/src/components/Dashboard.jsx",
+    "frontend/src/components/DerivedRecursionTree.module.css",
+    "frontend/src/components/DisclosureMenu.jsx",
+    "frontend/src/components/DpTableCanvas.jsx",
+    "frontend/src/components/DsuCanvas.jsx",
+    "frontend/src/components/DsuCanvas.module.css",
+    "frontend/src/components/ErrorBoundary.jsx",
+    "frontend/src/components/ErrorBoundary.module.css",
+    "frontend/src/components/GraphCanvas.jsx",
+    "frontend/src/components/GraphField.jsx",
+    "frontend/src/components/GridCanvas.jsx",
+    "frontend/src/components/GridCanvas.module.css",
+    "frontend/src/components/GridField.jsx",
+    "frontend/src/components/Header.jsx",
+    "frontend/src/components/Header.module.css",
+    "frontend/src/components/HeapCanvas.jsx",
+    "frontend/src/components/HeapCanvas.module.css",
+    "frontend/src/components/InputPanel.jsx",
+    "frontend/src/components/InputPanel.module.css",
+    "frontend/src/components/InputSummary.jsx",
+    "frontend/src/components/InputSummary.module.css",
+    "frontend/src/components/IntArrayField.jsx",
+    "frontend/src/components/IntervalCanvas.jsx",
+    "frontend/src/components/IntervalCanvas.module.css",
+    "frontend/src/components/LearningHeader.jsx",
+    "frontend/src/components/LearningLayout.module.css",
+    "frontend/src/components/LearningNetworkNav.jsx",
+    "frontend/src/components/LearningNetworkNav.module.css",
+    "frontend/src/components/LinkedListCanvas.jsx",
+    "frontend/src/components/LinkedListCanvas.module.css",
+    "frontend/src/components/LiveTraceTicker.jsx",
+    "frontend/src/components/LiveTraceTicker.module.css",
+    "frontend/src/components/MemoryComplexityCard.jsx",
+    "frontend/src/components/MemoryComplexityCard.module.css",
+    "frontend/src/components/ProblemStatement.jsx",
+    "frontend/src/components/ProblemStatement.module.css",
+    "frontend/src/components/QueueCanvas.jsx",
+    "frontend/src/components/RecursionTreeCanvas.jsx",
+    "frontend/src/components/RecursionTreeCanvas.module.css",
+    "frontend/src/components/SearchBox.jsx",
+    "frontend/src/components/SearchSpaceCanvas.jsx",
+    "frontend/src/components/SearchSpaceCanvas.module.css",
+    "frontend/src/components/SectionNav.jsx",
+    "frontend/src/components/SectionNav.module.css",
+    "frontend/src/components/ShortcutHelp.jsx",
+    "frontend/src/components/ShortcutHelp.module.css",
+    "frontend/src/components/Sidebar.jsx",
+    "frontend/src/components/SiteFooter.jsx",
+    "frontend/src/components/StackCanvas.jsx",
+    "frontend/src/components/StackCanvas.module.css",
+    "frontend/src/components/StepStateSummary.jsx",
+    "frontend/src/components/StringCanvas.jsx",
+    "frontend/src/components/StringCanvas.module.css",
+    "frontend/src/components/TourGuide.jsx",
+    "frontend/src/components/TourGuide.module.css",
+    "frontend/src/components/TreeCanvas.jsx",
+    "frontend/src/components/TreeCanvas.module.css",
+    "frontend/src/components/TrieCanvas.jsx",
+    "frontend/src/components/WelcomeGuide.jsx",
+    "frontend/src/components/WelcomeGuide.module.css",
+    "frontend/src/components/WindowCanvas.jsx",
+    "frontend/src/components/WindowCanvas.module.css",
+    "frontend/src/components/fields.module.css",
+    "frontend/src/components/layout.module.css",
+    "frontend/src/hooks/useApproachComparison.js",
+    "frontend/src/hooks/useComparisonTrace.js",
+    "frontend/src/hooks/useInputDraft.js",
+    "frontend/src/hooks/useInputPresets.js",
+    "frontend/src/hooks/useKeyboardShortcuts.js",
+    "frontend/src/hooks/useLastVisited.js",
+    "frontend/src/hooks/useLatestSearchParams.js",
+    "frontend/src/hooks/useLayoutPreferences.js",
+    "frontend/src/hooks/useModalDialog.js",
+    "frontend/src/hooks/usePersistentState.js",
+    "frontend/src/hooks/useProblemSession.js",
+    "frontend/src/hooks/useProgress.js",
+    "frontend/src/hooks/useShareableView.js",
+    "frontend/src/hooks/useStreak.js",
+    "frontend/src/hooks/useTheme.js",
+    "frontend/src/hooks/useTrace.js",
+    "frontend/src/index.css",
+    "frontend/src/input/randomizeInput.js",
+    "frontend/src/main.jsx",
+    "frontend/src/search/dailyProblem.js",
+    "frontend/src/search/groupBySection.js",
+    "frontend/src/search/normalizeCategory.js",
+    "frontend/src/search/scoreProblem.js",
+    "frontend/src/search/useProblemSearch.js",
+    "frontend/src/trace/decodeTrace.js",
+    "frontend/src/trace/heapModel.js",
+    "frontend/src/trace/lastPayload.js",
+    "frontend/src/trace/recursionTree.js",
+    "frontend/src/trace/validComparisonSteps.js",
+    "frontend/src/workspace/ApproachComparison.jsx",
+    "frontend/src/workspace/ApproachComparison.module.css",
+    "frontend/src/workspace/ApproachSelector.jsx",
+    "frontend/src/workspace/ApproachTeaching.jsx",
+    "frontend/src/workspace/CodeWalkthrough.jsx",
+    "frontend/src/workspace/MemoTable.jsx",
+    "frontend/src/workspace/PlaybackBar.jsx",
+    "frontend/src/workspace/ProblemWorkspace.jsx",
+    "frontend/src/workspace/ProblemWorkspace.module.css",
+    "frontend/src/workspace/SourcePane.jsx",
+    "frontend/src/workspace/StateInspector.jsx",
+    "frontend/src/workspace/StepHistory.jsx",
+    "frontend/src/workspace/StepHistory.module.css",
+    "frontend/src/workspace/ViewRail.jsx",
+    "frontend/src/workspace/curriculum.js",
+    "frontend/src/workspace/sessionCopy.js",
+    "frontend/src/workspace/stageFamily.js",
+    "frontend/src/workspace/useElementWidth.js"
+  ],
+  "productionModules": [
+    {
+      "file": "frontend/src/analytics.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/AppRouter.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react-router-dom/dist/index.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/catalog/CatalogProvider.jsx",
+        "frontend/src/components/Dashboard.jsx",
+        "frontend/src/workspace/ProblemWorkspace.jsx"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/canvas/companions.js",
+      "included": true,
+      "imports": [
+        "frontend/src/components/GridCanvas.jsx",
+        "frontend/src/components/QueueCanvas.jsx"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/canvas/registry.js",
+      "included": true,
+      "imports": [
+        "frontend/src/components/ArrayCanvas.jsx",
+        "frontend/src/components/DpTableCanvas.jsx",
+        "frontend/src/components/DsuCanvas.jsx",
+        "frontend/src/components/GraphCanvas.jsx",
+        "frontend/src/components/GridCanvas.jsx",
+        "frontend/src/components/HeapCanvas.jsx",
+        "frontend/src/components/IntervalCanvas.jsx",
+        "frontend/src/components/LinkedListCanvas.jsx",
+        "frontend/src/components/QueueCanvas.jsx",
+        "frontend/src/components/RecursionTreeCanvas.jsx",
+        "frontend/src/components/SearchSpaceCanvas.jsx",
+        "frontend/src/components/StackCanvas.jsx",
+        "frontend/src/components/StringCanvas.jsx",
+        "frontend/src/components/TreeCanvas.jsx",
+        "frontend/src/components/TrieCanvas.jsx",
+        "frontend/src/components/WindowCanvas.jsx"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/catalog/CatalogProvider.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/catalog/offlineSamples.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/catalog/offlineSamples.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/code/highlightJava.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/AlgorithmLibrary.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react-router-dom/dist/index.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/catalog/CatalogProvider.jsx",
+        "frontend/src/components/AlgorithmLibrary.module.css",
+        "frontend/src/components/LearningHeader.jsx",
+        "frontend/src/components/LearningLayout.module.css",
+        "frontend/src/components/SiteFooter.jsx",
+        "frontend/src/hooks/useLastVisited.js",
+        "frontend/src/hooks/useLatestSearchParams.js",
+        "frontend/src/hooks/useProgress.js",
+        "frontend/src/hooks/useStreak.js",
+        "frontend/src/search/dailyProblem.js",
+        "frontend/src/search/scoreProblem.js",
+        "frontend/src/search/useProblemSearch.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/AlgorithmLibrary.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/ArrayCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/ArrayCanvas.module.css",
+        "frontend/src/components/layout.module.css",
+        "frontend/src/trace/lastPayload.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/ArrayCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/CanvasShell.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/jsx-runtime.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/CaptureStrip.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/layout.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/CodeViewer.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/code/highlightJava.js",
+        "frontend/src/components/CodeViewer.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/CodeViewer.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/CommandPalette.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/CommandPalette.module.css",
+        "frontend/src/hooks/useModalDialog.js",
+        "frontend/src/search/scoreProblem.js",
+        "frontend/src/search/useProblemSearch.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/CommandPalette.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/CompareStrip.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/CaptureStrip.jsx",
+        "frontend/src/components/CompareStrip.module.css",
+        "frontend/src/components/InputSummary.jsx",
+        "frontend/src/hooks/useComparisonTrace.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/CompareStrip.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/Dashboard.jsx",
+      "included": false,
+      "imports": [
+        "frontend/src/components/AlgorithmLibrary.jsx"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/DerivedRecursionTree.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/DisclosureMenu.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/DpTableCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/DsuCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/DsuCanvas.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/DsuCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/ErrorBoundary.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/ErrorBoundary.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/ErrorBoundary.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/fields.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/GraphCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/layout.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/GraphField.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/fields.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/GridCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/GridCanvas.module.css",
+        "frontend/src/trace/lastPayload.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/GridCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/GridField.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/fields.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/HeapCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/HeapCanvas.module.css",
+        "frontend/src/trace/heapModel.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/HeapCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/InputPanel.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/GraphField.jsx",
+        "frontend/src/components/GridField.jsx",
+        "frontend/src/components/InputPanel.module.css",
+        "frontend/src/components/IntArrayField.jsx",
+        "frontend/src/components/layout.module.css",
+        "frontend/src/hooks/useInputPresets.js",
+        "frontend/src/input/randomizeInput.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/InputPanel.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/InputSummary.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/InputSummary.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/InputSummary.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/IntArrayField.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/fields.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/IntervalCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/CanvasShell.jsx",
+        "frontend/src/components/IntervalCanvas.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/IntervalCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/layout.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/LearningHeader.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react-router-dom/dist/index.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/LearningLayout.module.css",
+        "frontend/src/components/LearningNetworkNav.jsx",
+        "frontend/src/hooks/useTheme.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/LearningLayout.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/LearningNetworkNav.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/DisclosureMenu.jsx",
+        "frontend/src/components/LearningNetworkNav.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/LearningNetworkNav.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/LinkedListCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/LinkedListCanvas.module.css",
+        "frontend/src/trace/lastPayload.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/LinkedListCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/QueueCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/trace/lastPayload.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/RecursionTreeCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/DerivedRecursionTree.module.css",
+        "frontend/src/components/RecursionTreeCanvas.module.css",
+        "frontend/src/trace/recursionTree.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/RecursionTreeCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/SearchSpaceCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/SearchSpaceCanvas.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/SearchSpaceCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/ShortcutHelp.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/ShortcutHelp.module.css",
+        "frontend/src/hooks/useModalDialog.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/ShortcutHelp.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/SiteFooter.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/LearningLayout.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/StackCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/StackCanvas.module.css",
+        "frontend/src/trace/lastPayload.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/StackCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/StepStateSummary.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/StringCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/StringCanvas.module.css",
+        "frontend/src/trace/lastPayload.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/StringCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/TourGuide.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/TourGuide.module.css",
+        "frontend/src/hooks/useModalDialog.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/TourGuide.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/TreeCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/TreeCanvas.module.css",
+        "frontend/src/components/layout.module.css",
+        "frontend/src/trace/lastPayload.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/TreeCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/TrieCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/layout.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/WelcomeGuide.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/WelcomeGuide.module.css",
+        "frontend/src/hooks/useModalDialog.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/WelcomeGuide.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/WindowCanvas.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/WindowCanvas.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/components/WindowCanvas.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useApproachComparison.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/src/hooks/useInputDraft.js",
+        "frontend/src/trace/decodeTrace.js",
+        "frontend/src/trace/validComparisonSteps.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useComparisonTrace.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/src/hooks/useInputDraft.js",
+        "frontend/src/trace/decodeTrace.js",
+        "frontend/src/trace/validComparisonSteps.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useInputDraft.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/src/input/randomizeInput.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useInputPresets.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useKeyboardShortcuts.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useLastVisited.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/src/hooks/usePersistentState.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useLatestSearchParams.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react-router-dom/dist/index.js",
+        "frontend/node_modules/react/index.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useModalDialog.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/usePersistentState.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useProblemSession.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/src/hooks/useInputDraft.js",
+        "frontend/src/hooks/useShareableView.js",
+        "frontend/src/hooks/useTrace.js",
+        "frontend/src/input/randomizeInput.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useProgress.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useShareableView.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/src/hooks/useLatestSearchParams.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useStreak.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/src/hooks/usePersistentState.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useTheme.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/src/hooks/usePersistentState.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/hooks/useTrace.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/src/trace/decodeTrace.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/index.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/input/randomizeInput.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/main.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/@vercel/analytics/dist/react/index.mjs",
+        "frontend/node_modules/@vercel/speed-insights/dist/react/index.mjs",
+        "frontend/node_modules/react-dom/client.js",
+        "frontend/node_modules/react-router-dom/dist/index.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/AppRouter.jsx",
+        "frontend/src/analytics.js",
+        "frontend/src/components/ErrorBoundary.jsx",
+        "frontend/src/index.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/search/dailyProblem.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/search/scoreProblem.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/search/useProblemSearch.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/src/search/scoreProblem.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/trace/decodeTrace.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/trace/heapModel.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/trace/lastPayload.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/trace/recursionTree.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/trace/validComparisonSteps.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/ApproachComparison.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/InputSummary.jsx",
+        "frontend/src/hooks/useApproachComparison.js",
+        "frontend/src/workspace/ApproachComparison.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/ApproachComparison.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/ApproachSelector.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/workspace/ProblemWorkspace.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/ApproachTeaching.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/workspace/ProblemWorkspace.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/CodeWalkthrough.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/hooks/usePersistentState.js",
+        "frontend/src/workspace/ProblemWorkspace.module.css",
+        "frontend/src/workspace/useElementWidth.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/curriculum.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/MemoTable.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/DpTableCanvas.jsx",
+        "frontend/src/workspace/ProblemWorkspace.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/PlaybackBar.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/workspace/ProblemWorkspace.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/ProblemWorkspace.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react-router-dom/dist/index.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/canvas/companions.js",
+        "frontend/src/canvas/registry.js",
+        "frontend/src/catalog/CatalogProvider.jsx",
+        "frontend/src/components/CanvasShell.jsx",
+        "frontend/src/components/CaptureStrip.jsx",
+        "frontend/src/components/CommandPalette.jsx",
+        "frontend/src/components/CompareStrip.jsx",
+        "frontend/src/components/DisclosureMenu.jsx",
+        "frontend/src/components/ErrorBoundary.jsx",
+        "frontend/src/components/InputPanel.jsx",
+        "frontend/src/components/InputSummary.jsx",
+        "frontend/src/components/LearningHeader.jsx",
+        "frontend/src/components/LearningLayout.module.css",
+        "frontend/src/components/ShortcutHelp.jsx",
+        "frontend/src/components/SiteFooter.jsx",
+        "frontend/src/components/StepStateSummary.jsx",
+        "frontend/src/components/TourGuide.jsx",
+        "frontend/src/components/WelcomeGuide.jsx",
+        "frontend/src/hooks/useKeyboardShortcuts.js",
+        "frontend/src/hooks/useLastVisited.js",
+        "frontend/src/hooks/usePersistentState.js",
+        "frontend/src/hooks/useProblemSession.js",
+        "frontend/src/hooks/useProgress.js",
+        "frontend/src/hooks/useStreak.js",
+        "frontend/src/hooks/useTheme.js",
+        "frontend/src/input/randomizeInput.js",
+        "frontend/src/workspace/ApproachComparison.jsx",
+        "frontend/src/workspace/ApproachSelector.jsx",
+        "frontend/src/workspace/ApproachTeaching.jsx",
+        "frontend/src/workspace/CodeWalkthrough.jsx",
+        "frontend/src/workspace/MemoTable.jsx",
+        "frontend/src/workspace/PlaybackBar.jsx",
+        "frontend/src/workspace/ProblemWorkspace.module.css",
+        "frontend/src/workspace/SourcePane.jsx",
+        "frontend/src/workspace/StateInspector.jsx",
+        "frontend/src/workspace/StepHistory.jsx",
+        "frontend/src/workspace/ViewRail.jsx",
+        "frontend/src/workspace/curriculum.js",
+        "frontend/src/workspace/sessionCopy.js",
+        "frontend/src/workspace/stageFamily.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/ProblemWorkspace.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/sessionCopy.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/SourcePane.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/lucide-react/dist/esm/lucide-react.js",
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/components/CodeViewer.jsx",
+        "frontend/src/workspace/ProblemWorkspace.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/stageFamily.js",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/StateInspector.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/workspace/MemoTable.jsx",
+        "frontend/src/workspace/ProblemWorkspace.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/StepHistory.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/workspace/StepHistory.module.css"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/StepHistory.module.css",
+      "included": true,
+      "imports": [],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/useElementWidth.js",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js"
+      ],
+      "lazyImports": []
+    },
+    {
+      "file": "frontend/src/workspace/ViewRail.jsx",
+      "included": true,
+      "imports": [
+        "frontend/node_modules/react/index.js",
+        "frontend/node_modules/react/jsx-runtime.js",
+        "frontend/src/workspace/ProblemWorkspace.module.css"
+      ],
+      "lazyImports": []
+    }
+  ],
+  "unreachableFiles": [
+    "frontend/src/components/Breadcrumb.jsx",
+    "frontend/src/components/Breadcrumb.module.css",
+    "frontend/src/components/Controls.jsx",
+    "frontend/src/components/Controls.module.css",
+    "frontend/src/components/Header.jsx",
+    "frontend/src/components/Header.module.css",
+    "frontend/src/components/LiveTraceTicker.jsx",
+    "frontend/src/components/LiveTraceTicker.module.css",
+    "frontend/src/components/MemoryComplexityCard.jsx",
+    "frontend/src/components/MemoryComplexityCard.module.css",
+    "frontend/src/components/ProblemStatement.jsx",
+    "frontend/src/components/ProblemStatement.module.css",
+    "frontend/src/components/SearchBox.jsx",
+    "frontend/src/components/SectionNav.jsx",
+    "frontend/src/components/SectionNav.module.css",
+    "frontend/src/components/Sidebar.jsx",
+    "frontend/src/hooks/useLayoutPreferences.js",
+    "frontend/src/search/groupBySection.js",
+    "frontend/src/search/normalizeCategory.js"
+  ],
+  "assets": [
+    "assets/index-B8pL5v5E.js",
+    "assets/index-DkVb_nYT.css"
+  ]
+}

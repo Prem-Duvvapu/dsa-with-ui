@@ -13,7 +13,6 @@ import { useEffect } from 'react';
  */
 export default function useKeyboardShortcuts({
   togglePlay, stepNext, stepPrev, reset, seek, stepCount, nudgeSpeed,
-  isMobile, isSidebarOpen, setIsSidebarOpen,
   isHelpOpen, setIsHelpOpen,
   isPaletteOpen, setIsPaletteOpen,
   hasSeenWelcome, setHasSeenWelcome,
@@ -66,11 +65,6 @@ useEffect(() => {
         setIsHelpOpen(false);
         return;
       }
-      if (isMobile && isSidebarOpen) {
-        e.preventDefault();
-        setIsSidebarOpen(false);
-        return;
-      }
       // Any other dialog (the tour) owns its own Escape; Focus is the last thing to close.
       if (dialogOpen) return;
       if (isFocus) {
@@ -93,11 +87,10 @@ useEffect(() => {
 
     if (isTyping) return;
 
-    // `/` focuses search, matching every other search-first UI.
+    // `/` opens the switcher; its dialog owns focus management.
     if (e.key === '/') {
       e.preventDefault();
-      setIsSidebarOpen(true);
-      document.querySelector('[data-search-input]')?.focus();
+      setIsPaletteOpen(true);
       return;
     }
 
@@ -162,7 +155,7 @@ useEffect(() => {
   window.addEventListener('keydown', handleKeyDown);
   return () => window.removeEventListener('keydown', handleKeyDown);
 }, [togglePlay, stepNext, stepPrev, reset, seek, stepCount, nudgeSpeed,
-    isMobile, isSidebarOpen, isHelpOpen, setIsSidebarOpen, setIsHelpOpen,
+    isHelpOpen, setIsHelpOpen,
     isPaletteOpen, setIsPaletteOpen,
     hasSeenWelcome, setHasSeenWelcome, isFocus, exitFocus]);
 }

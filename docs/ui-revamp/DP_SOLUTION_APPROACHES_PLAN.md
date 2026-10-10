@@ -1,7 +1,7 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **D0–D4 merged; first D5 candidate (Frog Jump) locally verified, publication pending; D6/D7 pending.**
-Current unpublished package: `feat/dp-frog-jump`, based on D4 merge `2709d8b` (#215).
+Status: **D0–D4 merged; first D5 candidate (Frog Jump) merged #216 / `4ad9fc3`; 54 other candidates and D6/D7 pending.**
+Current repository work: unpublished early P9 cleanup on `chore/retire-legacy-ui`, base #217 / `9de01cd`.
 Prepared 2026-10-07 against merged main `9d0aa10` (PR #208).
 This is a separate feature from the unfinished P8/P9 revamp gates; it does not close them.
 The owner authorized implementation on 2026-10-07 after merging PR #210.
@@ -393,14 +393,14 @@ API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 | D2 | Verified | Genuine recursion/memoization/tabulation, independently compiled source, oracle and boundary tests; `dp-approaches/d2-results.json` |
 | D3 | Verified pilot | Explicit selector, committed metadata, approach-aware links/presets/input comparison, truthful memo/recursive views; `dp-approaches/d3-results.json` |
 | D4 | Merged #215 / `2709d8b` | Audited teaching metadata, isolated two-approach comparison, passing PR/post-merge CI; dated D4 evidence below |
-| D5 | First candidate locally verified; publication pending | Frog Jump code/API/full suites and28 final browser rows pass; remaining54 candidates not implemented |
+| D5 | First candidate merged #216 / `4ad9fc3` | Frog Jump code/API/full suites and28 final browser rows pass; remaining54 candidates not implemented |
 | D6/D7 | Pending | Broad accessibility/performance, coverage reconciliation and release gates |
 
 Inventory distinctions: binary-search LIS remains an optimized default; ninja-and-friends
 uses rolling row slices; rectangle-all-ones uses histogram stacks rather than a DP table;
 count-square-submatrices is real in-place DP rendered as Matrix; palindromic-subsequence
 counting lives under Strings. Alternative safety limits remain unmeasured except for
-the Climbing Stairs pilot and local Frog Jump package documented below.
+the merged Climbing Stairs and Frog Jump packages documented below.
 
 Print LIS still displays undefined `collect()`/`answer()` helpers. Its real parent-chain
 algorithm is classified, but the displayed-source repair is a prerequisite for its D5
@@ -754,6 +754,11 @@ the captured phone/desktop/native-zoom screenshots. Exact-size and native-zoom o
 checks do not close the pre-existing stage-y-position exception or any human/device gate.
 
 ## D5 first candidate — Frog Jump, local work on 2026-10-09
+
+Historical preflight: this package subsequently merged as #216 / `4ad9fc3` with passing
+PR and post-merge CI. Its local/publication-pending wording below records the earlier
+verification state. There are now two merged candidates;54 other candidates remain open.
+The owner's 2026-10-10 continuation starts a separate cleanup package, not the next DP batch.
 
 This is one unpublished candidate package, not the entire 1D family. Preserve the existing
 canonical tabulation tracer, source, input defaults and public `canonical` approach ID.

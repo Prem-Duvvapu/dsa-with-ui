@@ -179,9 +179,6 @@ export default function ProblemWorkspace() {
   useKeyboardShortcuts({
     togglePlay: session.togglePlay, stepNext: session.stepNext, stepPrev: session.stepPrev,
     reset: session.reset, seek: session.seek, stepCount: steps.length, nudgeSpeed,
-    isMobile: false, isSidebarOpen: false,
-    // "/" searches problems: with no sidebar, that is the switcher.
-    setIsSidebarOpen: () => setIsPaletteOpen(true),
     isHelpOpen, setIsHelpOpen, isPaletteOpen, setIsPaletteOpen, hasSeenWelcome, setHasSeenWelcome,
     isFocus, exitFocus
   });
@@ -612,7 +609,6 @@ export default function ProblemWorkspace() {
                   <h2 id="try-input-title" ref={inputHeadingRef} tabIndex={-1} className={styles.cardTitle}>Try your own input</h2>
                   <p className={styles.hint}>Change the input, then run it. The result above stays until your run succeeds.</p>
                   <InputPanel
-                    variant="section"
                     problemId={problemId}
                     inputSpec={session.inputSpec}
                     alternateInput={session.selectedAlternateInput}

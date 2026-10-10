@@ -34,6 +34,17 @@ const chips = () => screen.getAllByLabelText(/Position \d+ value/).map((input) =
 describe('InputPanel', () => {
   beforeEach(() => window.localStorage.clear());
 
+  it('defaults to the sole live workspace editor: fields before visibly named actions', () => {
+    render(<InputPanel problemId="two-sum" inputSpec={spec} values={defaultInput(spec)}
+      onChange={() => {}} onRun={() => {}} />);
+    const field = screen.getByLabelText('Position 1 value');
+    const run = screen.getByRole('button', { name: 'Run input' });
+    expect(field.compareDocumentPosition(run) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Restore defaults' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Save input' })).toBeInTheDocument();
+    expect(run).not.toHaveAttribute('aria-label');
+  });
+
   it('offers the tracer\'s other case, and runs it', () => {
     // Every tracer declares a second, materially different input. It existed only for the
     // contract tests, so the branches only it reaches - next-permutation's swap and suffix
@@ -64,8 +75,8 @@ describe('InputPanel', () => {
     const onRun = vi.fn();
     render(<Controlled onRun={onRun} />);
     fireEvent.change(screen.getByLabelText('Position 1 value'), { target: { value: '42' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Randomize input' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Reset input to default' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Randomize' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Restore defaults' }));
     expect(onRun).not.toHaveBeenCalled();
     expect(chips()).toEqual([5, 4, 3, 2, 1]);
   });
@@ -154,7 +165,7 @@ describe('InputPanel', () => {
       const input = screen.getByLabelText('Target sum');
       fireEvent.change(input, { target: { value: '' } });
       expect(input).toHaveValue(null);
-      fireEvent.click(screen.getByRole('button', { name: 'Run with this input' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Run input' }));
       // What is sent is what is there: nothing - the server answers with a field error.
       expect(onRun).toHaveBeenCalledWith({ target: '' });
     });

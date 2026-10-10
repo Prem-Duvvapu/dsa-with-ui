@@ -18,6 +18,28 @@ beforeEach(() => { localStorage.clear(); Element.prototype.scrollIntoView = vi.f
 afterEach(() => { delete Element.prototype.scrollIntoView; });
 
 describe('CommandPalette (the switcher)', () => {
+  it('keeps combobox controls and active-option IDs valid for commands, matches and empty results', () => {
+    const { input } = open();
+    for (const query of ['', 'two', 'no-such-result']) {
+      fireEvent.change(input, { target: { value: query } });
+      expect(document.getElementById(input.getAttribute('aria-controls'))).toHaveAttribute('role', 'listbox');
+      const options = screen.queryAllByRole('option');
+      if (options.length) {
+        const active = document.getElementById(input.getAttribute('aria-activedescendant'));
+        expect(active).toHaveAttribute('role', 'option');
+        expect(active).toHaveAttribute('aria-selected', 'true');
+      } else expect(input).not.toHaveAttribute('aria-activedescendant');
+    }
+  });
+
+  it('opens an exact problem ID containing CSS selector characters without treating it as a selector', () => {
+    const id = 'problem:with[brackets]';
+    const { input, onSelectProblem } = open({ problems: [{ id, title: 'Friendly example', category: 'Arrays', traced: true }] });
+    fireEvent.change(input, { target: { value: 'friendly' } });
+    expect(() => fireEvent.keyDown(input, { key: 'Enter' })).not.toThrow();
+    expect(onSelectProblem).toHaveBeenCalledWith(id);
+  });
+
   it('shows a bounded list and carries the query to the library with View all', () => {
     const { input, onViewAll } = open();
     fireEvent.change(input, { target: { value: 'sort' } });

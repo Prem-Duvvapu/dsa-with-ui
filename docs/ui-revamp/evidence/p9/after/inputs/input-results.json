@@ -1,0 +1,246 @@
+{
+  "generated": "2026-10-10T05:39:49.452Z",
+  "complete": true,
+  "servedBuild": {
+    "assets": [
+      "/assets/index-DuiaNkhD.css",
+      "/assets/index-hqbHudI4.js"
+    ]
+  },
+  "source": "Real backend; Chromium phone/touch emulation, not a real virtual keyboard",
+  "results": [
+    {
+      "name": "INT: a negative number can be typed from empty",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "INT: an emptied field stays empty (no invented 0)",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "INT: empty is rejected by the server, error tied to the field, URL unchanged",
+      "ok": true,
+      "detail": "Expected a whole number."
+    },
+    {
+      "name": "INT: a valid value runs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "STRING: whitespace/Unicode either runs or is refused with a field error, never silently",
+      "ok": true,
+      "detail": "Lowercase letters a-z only."
+    },
+    {
+      "name": "STRING: a plain value runs",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "INT_ARRAY: add / negative / duplicate / remove, then run",
+      "ok": true,
+      "detail": "5 values"
+    },
+    {
+      "name": "LINKED_LIST: edit a node and run",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "BINARY_TREE: clear a node to null (sparse) and run",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "INT_GRID: rectangular edit runs or is refused with a tied error",
+      "ok": true,
+      "detail": "ran"
+    },
+    {
+      "name": "GRAPH: an out-of-range endpoint is refused, error tied to the field",
+      "ok": true,
+      "detail": "Edge 1 refers to vertex 9, outside 0..5."
+    },
+    {
+      "name": "GRAPH: isolated vertices (6 vertices) with a valid edge run",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "no horizontal overflow after all edits",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "no page errors",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "responses": [
+    {
+      "pathname": "/api/problems/two-sum/execute",
+      "status": 400,
+      "fieldErrors": {
+        "target": "Expected a whole number."
+      }
+    },
+    {
+      "pathname": "/api/problems/two-sum/execute",
+      "status": 200,
+      "resolvedInput": {
+        "target": 13,
+        "nums": [
+          2,
+          7,
+          11,
+          15
+        ]
+      },
+      "steps": 7,
+      "truncated": false
+    },
+    {
+      "pathname": "/api/problems/shortest-palindrome/execute",
+      "status": 400,
+      "fieldErrors": {
+        "s": "Lowercase letters a-z only."
+      }
+    },
+    {
+      "pathname": "/api/problems/shortest-palindrome/execute",
+      "status": 200,
+      "resolvedInput": {
+        "s": "abcd"
+      },
+      "steps": 10,
+      "truncated": false
+    },
+    {
+      "pathname": "/api/problems/largest-element/execute",
+      "status": 200,
+      "resolvedInput": {
+        "nums": [
+          2,
+          2,
+          35,
+          4,
+          -7
+        ]
+      },
+      "steps": 7,
+      "truncated": false
+    },
+    {
+      "pathname": "/api/problems/reverse-linked-list/execute",
+      "status": 200,
+      "resolvedInput": {
+        "values": [
+          42,
+          2,
+          3,
+          4
+        ]
+      },
+      "steps": 14,
+      "truncated": false
+    },
+    {
+      "pathname": "/api/problems/tree-preorder/execute",
+      "status": 200,
+      "resolvedInput": {
+        "tree": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          null,
+          null
+        ]
+      },
+      "steps": 10,
+      "truncated": false
+    },
+    {
+      "pathname": "/api/problems/flood-fill/execute",
+      "status": 200,
+      "resolvedInput": {
+        "sc": 1,
+        "sr": 1,
+        "newColor": 2,
+        "image": [
+          [
+            2,
+            1,
+            1,
+            0
+          ],
+          [
+            1,
+            1,
+            0,
+            0
+          ],
+          [
+            1,
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "steps": 17,
+      "truncated": false
+    },
+    {
+      "pathname": "/api/problems/graph-intro/execute",
+      "status": 400,
+      "fieldErrors": {
+        "graph": "Edge 1 refers to vertex 9, outside 0..5."
+      }
+    },
+    {
+      "pathname": "/api/problems/graph-intro/execute",
+      "status": 200,
+      "resolvedInput": {
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              0,
+              2
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              3
+            ],
+            [
+              3,
+              4
+            ]
+          ]
+        }
+      },
+      "steps": 18,
+      "truncated": false
+    }
+  ]
+}

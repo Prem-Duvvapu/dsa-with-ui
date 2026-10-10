@@ -145,6 +145,11 @@ function contrast(a, b) {
 }
 
 describe('design tokens', () => {
+  it('does not ship retired sidebar, search-panel or transport selectors', () => {
+    expect(CSS).not.toMatch(/\.(?:sb-[\w-]+|sidebar-panel|sidebar-title|breadcrumb-title|step-scrubber-slider|pulse-dot)\b/);
+    expect(CSS).not.toMatch(/@keyframes\s+pulseDot\b/);
+  });
+
   it('defines every custom property the components reference', () => {
     const defined = definedTokens();
     const missing = [];

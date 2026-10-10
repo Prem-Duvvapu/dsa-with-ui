@@ -124,7 +124,7 @@ export default function useTrace(problemId, problem, options = {}) {
   const [run, setRun] = useState(EMPTY_RUN);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  // 1000ms is the "1.0x" preset in Controls — the only default that lands on a real
+  // 1000ms is the "1.0x" playback preset — the only default that lands on a real
   // button. 800ms matched none of the 2000/1000/500/250 presets, so nothing was ever
   // highlighted at startup. App passes the persisted preference in as initialSpeed so a
   // reload does not silently reset someone who prefers 4x.

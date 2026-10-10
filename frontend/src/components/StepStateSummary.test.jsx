@@ -57,7 +57,7 @@ describe('StepStateSummary', () => {
   });
 
   it('stays out of the visual layout', () => {
-    // sr-only, not a second live region: LiveTraceTicker is already polite, and two
+    // sr-only, not a second live region: workspace narration is already polite, and two
     // announcers firing on the same tick talk over each other.
     render(<StepStateSummary step={{ variables: { n: '1' } }} dsType="Array" />);
     const el = screen.getByTestId('step-state-summary');
