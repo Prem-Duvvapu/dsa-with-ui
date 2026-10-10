@@ -19,7 +19,7 @@ import java.util.Map;
  * nothing in its way) simply joins the stack.
  */
 @Component
-public class AsteroidCollisionTracer implements AlgorithmTracer {
+public class AsteroidCollisionTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -46,37 +46,6 @@ public class AsteroidCollisionTracer implements AlgorithmTracer {
     @Override
     public Map<String, Object> alternateInput() {
         return Map.of("asteroids", List.of(8, -8));
-    }
-
-    @Override
-    public String annotatedCode() {
-        return """
-               public int[] asteroidCollision(int[] asteroids) {
-                   // @a init
-                   Deque<Integer> stack = new ArrayDeque<>();
-                   for (int a : asteroids) {
-                       boolean alive = true;
-                       while (alive && a < 0 && !stack.isEmpty() && stack.peek() > 0) {
-                           if (stack.peek() < -a) {
-                               // @a topExplodes
-                               stack.pop();
-                           } else if (stack.peek() == -a) {
-                               // @a bothExplode
-                               stack.pop();
-                               alive = false;
-                           } else {
-                               // @a currentExplodes
-                               alive = false;
-                           }
-                       }
-                       if (alive) {
-                           // @a push
-                           stack.push(a);
-                       }
-                   }
-                   // @a done
-                   return toArray(stack);
-               }""";
     }
 
     private List<ArrayElement> state(int[] asteroids, Deque<Integer> stackIndices, int current) {

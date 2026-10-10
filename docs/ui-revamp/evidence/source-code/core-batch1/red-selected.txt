@@ -1,0 +1,19 @@
+Selected exact failure/summary lines from initial source regression; repeated listings and stacks omitted.
+
+[ERROR] Tests run: 17, Failures: 12, Errors: 0, Skipped: 0, Time elapsed: 10.14 s <<< FAILURE! -- in com.dsa.ui.tracer.impl.DisplayedCoreSolutionTest
+[ERROR]   DisplayedCoreSolutionTest.asteroidSurvivorsStayLeftToRightAcrossCollisionBranchesAndBoundaryValues:132->compile:219 asteroid-collision incomplete displayed source:
+[ERROR]   DisplayedCoreSolutionTest.compilesExactSourceAndMatchesDefaultsAlternateAndPublishedExamples:66->compile:219 asteroid-collision incomplete displayed source:
+[ERROR]   DisplayedCoreSolutionTest.compilesExactSourceAndMatchesDefaultsAlternateAndPublishedExamples:66->compile:219 balanced-parentheses incomplete displayed source:
+[ERROR]   DisplayedCoreSolutionTest.compilesExactSourceAndMatchesDefaultsAlternateAndPublishedExamples:66->compile:219 next-permutation incomplete displayed source:
+[ERROR]   DisplayedCoreSolutionTest.compilesExactSourceAndMatchesDefaultsAlternateAndPublishedExamples:66->compile:219 print-lis incomplete displayed source:
+[ERROR]   DisplayedCoreSolutionTest.compilesExactSourceAndMatchesDefaultsAlternateAndPublishedExamples:66->compile:219 quick-sort incomplete displayed source:
+[ERROR]   DisplayedCoreSolutionTest.eachCompleteResourceHasExactlyOneRegisteredOwner:56 expected: <[asteroid-collision, balanced-parentheses, quick-sort, print-lis, next-permutation]> but was: <[]>
+[ERROR]   DisplayedCoreSolutionTest.lisReconstructionKeepsTheTracersStrictUpdateAndFirstEndpointTieRules:107->compile:219 print-lis incomplete displayed source:
+[ERROR]   DisplayedCoreSolutionTest.nextPermutationMatchesAnIndependentEnumeratedOrderIncludingDuplicates:144->compile:219 next-permutation incomplete displayed source:
+[ERROR]   DisplayedCoreSolutionTest.parenthesesCoverAllCloserTypesAndBothFailureModes:119->compile:219 balanced-parentheses incomplete displayed source:
+[ERROR]   DisplayedCoreSolutionTest.phaseAnchorsPointAtActualOperationsRatherThanMissingHelpers:173->checkLine:185 expected: <reversed.add(nums[cursor]);> but was: <while (bestEnd != -1) {>
+[ERROR]   DisplayedCoreSolutionTest.quickSortMatchesIndependentJdkOrderingOnRepeatedNegativeAndExtremeValues:159->compile:219 quick-sort incomplete displayed source:
+[ERROR] Tests run: 17, Failures: 12, Errors: 0, Skipped: 0
+[INFO] BUILD FAILURE
+[INFO] Total time:  22.796 s
+[INFO] Finished at: 2026-10-10T12:02:37Z

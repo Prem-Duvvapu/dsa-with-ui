@@ -1638,3 +1638,92 @@ separate; this approval does not assert that outstanding source/DP/human gates a
 Saved test-output text artifacts were normalized for trailing whitespace and terminal
 blank lines only so the staged diff passes the repository's whitespace gate; test results
 and diagnostics were not changed.
+
+## 2026-10-10 — layout publication and complete-source helper batch 1
+
+The owner answered "yes" to publication of the verified layout package, then separate
+source repairs. The layout committed as `5b9e413`, PR #219, and squash-merged as
+`e68e6f9` at 12:00 UTC. Push/PR backend and frontend CI, GitGuardian, Vercel preview,
+post-merge CI and production Vercel status were all successful. No checks were bypassed.
+The next implementation branch was cut directly from that merged main; no edits on main
+or the owner's original Windows worktree. No approval for publishing this next package
+is inferred from the bounded layout authorization.
+
+### What changed
+
+`fix/complete-source-helpers-batch1` repairs five of the read-only inventory's omissions:
+Print LIS, Balanced Parentheses, Asteroid Collision, Next Permutation and Quick Sort.
+Complete annotated Java 17 resources are owned by the registered `CompleteSourceTracer`
+family, strictly loaded through the existing loader and cached only as immutable source.
+There is no generic sketch, fabricated helper, ID dispatch list or new dependency.
+Each source has imports where required, a standalone `Solution`, typed input/result,
+actual algorithm and helpers; no import/outer-class/application scaffolding is supplied
+by the executable contract. Sorting/permutation are in-place; survivor order and LIS
+parent ties match the trace; first-element Quick Sort partitioning is retained.
+
+Five existing tracer files change only their source ownership and remove incomplete
+inline listings. Actual `run` methods, input specifications, narration, results and state
+are untouched. Exactly five goldens change. Parsed comparison and representative reads
+prove only `code`, `anchors` and `steps[].activeLine` differ. Shared phase anchors now
+point at real reconstruction/return/base-case operations, not undefined calls or braces.
+
+### Verification and exclusions
+
+- Initial regression:17 cases ran with the original annotated listings;12 failed.
+  Compilation/execution, ownership and phase assertions caught the defect. Five HTTP
+  identity cases passed, since delivering the same incomplete source is not completeness.
+- Final source contract:17/17 passed, including exact Java 17 compilation in an isolated
+  classpath, default/alternate runs, all12 published expected examples, bounded negative,
+  duplicate, tie, single-element, collision and seeded sorting cases; typed input binding,
+  in-place identity, ownership and HTTP detail/full/delta source/anchor agreement.
+- Two compiling mutations (reversed survivors and an unsorted sorting result) failed2/2
+  selected cases. Both were restored before final suites and live services.
+- The first full backend run had one failure: the intentionally stale Print LIS audit
+  digest. Re-audit preserved recurrence, limits, reconstruction and planned alternatives;
+  only its source hash and obsolete omission note were reconciled in both ledger inputs.
+  No tests were weakened. Final rerun:8,040 tests,0 failures/errors,500 existing skips.
+- Fresh npm ci, full frontend79 files/788 tests, production build and launcher smoke passed.
+  Build unchanged:JS382.56kB/gzip121.89,CSS97.71kB/gzip17.75;
+  `index-DbmbKZMa.js` / `index-CfkLxyUw.css`. Existing React act/router warnings remain.
+- Live API:431 catalogued/traced,0 untraced/duplicates/orphans. All five detail-source
+  hashes match the updated goldens. Chromium153 production preview:20/20 source journeys
+  (all five resource-derived problems ×320/1366 ×both themes), exact first/middle/final
+  live highlights, source keyboard ownership, retained step across Analysis/Code switches,
+  no page-wide overflow or page errors. Both script/CSS assets stayed fixed per page.
+- Real custom Balanced Parentheses input `[]{}()` and rejected `abc` rerun passed:
+  correct input/source echo, successful sharing,400 error-summary focus, prior source,
+  step and shared input retained. The 400 is expected validation, not a failed green run.
+- Phone-dark and desktop-light Print LIS screenshots were inspected; complete reconstruction
+  is readable in the existing internally scrollable source pane. The other theme captures
+  are retained. Screenshots are bounded visual checks, not device/screen-reader certification.
+
+Reused source probes now accept an explicit core resource family/output directory, while
+their DP defaults remain unchanged. The baseline inventory and original DP evidence are
+not overwritten. `evidence/source-code/core-batch1/` retains selected RED diagnostics,
+final suite outputs, golden comparison, browser reports and screenshots. Saved text outputs
+have trailing-whitespace/terminal-blank-line normalization only; RED excerpts are labelled
+as excerpts, not byte-identical full logs. Initial ledger failure and mutations are not
+counted as final GREEN runs. Separate locked dependency audit reports9 findings (4 moderate,
+3 high,2 critical); no force-fix or upgrade was made, and release-security review stays open.
+
+### Six review roles and remaining scope
+
+Backend:exact delivered source compiles/runs;HTTP/input/budget suites unchanged and green.
+Frontend:source delivery uses the existing atomic run path;no UI/hook/token/dependency change.
+UI/UX:complete source and real highlights survive phone/desktop, themes, keys and view switches.
+Product:12 independent examples and bounded edge cases,not a claim that all431 sources are solved.
+Architecture:strict resource ownership discovered through the registry;no app helper dependency,
+no source fallback,no dead tracer helpers removed if still used by actual execution.
+QA:RED and semantic-mutation proof,full suites,read/parsed goldens and live browser checks.
+
+This package is implemented locally and **awaits fresh publication approval**. Remaining
+source work:48 other known non-platform omissions,77 authoritative platform contexts,C++
+labelling and semantic certification of compiler successes. The five repaired listings
+are not new recursion/memoization/tabulation options.54 DP candidate rows,D6/D7,frame-position
+exceptions,real device/zoom/screen-reader/performance/learner review and release gates remain.
+
+Publication authorization follow-up (2026-10-10): the owner answered "yes" to committing,
+pushing, opening a PR and merging this five-source package after CI passes. Publication
+is now in progress; the earlier awaiting-approval status above records the initial handoff.
+The DP plan's obsolete Print LIS omission note and F30's already-merged layout disposition
+were reconciled. No production code, test result or outstanding acceptance gate changed.

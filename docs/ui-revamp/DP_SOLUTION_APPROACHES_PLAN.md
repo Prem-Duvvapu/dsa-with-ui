@@ -402,9 +402,12 @@ count-square-submatrices is real in-place DP rendered as Matrix; palindromic-sub
 counting lives under Strings. Alternative safety limits remain unmeasured except for
 the merged Climbing Stairs and Frog Jump packages documented below.
 
-Print LIS still displays undefined `collect()`/`answer()` helpers. Its real parent-chain
-algorithm is classified, but the displayed-source repair is a prerequisite for its D5
-batch. The preceding repair certified only its known 27-source family, not all sources.
+Print LIS's undefined `collect()`/`answer()` helpers are repaired in the locally verified
+2026-10-10 complete-source helper batch, now owner-authorized for publication after CI.
+Its original parent-chain recurrence, strict tie updates and limits are unchanged;
+the exact displayed standalone Java compiles and agrees with traces and independent cases.
+This resolves the canonical source prerequisite only, not its D5 alternative forms.
+The preceding 27-source repair and this five-listing batch do not certify all sources.
 
 D1 keeps omitted-approach requests on the existing executable. Climbing Stairs exposes
 one audited `tabulation` definition; other problems identify their existing executable

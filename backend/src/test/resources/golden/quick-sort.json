@@ -1,14 +1,14 @@
 {
   "anchors" : {
-    "base" : 7,
-    "compare" : 14,
-    "done" : 8,
-    "partition" : 3,
-    "pivotChoice" : 11,
-    "placePivot" : 19,
-    "swapLess" : 16
+    "base" : 13,
+    "compare" : 21,
+    "done" : 4,
+    "partition" : 9,
+    "pivotChoice" : 18,
+    "placePivot" : 26,
+    "swapLess" : 23
   },
-  "code" : "public void quickSort(int[] arr, int low, int high) {\n    if (low < high) {\n        int pIndex = partition(arr, low, high);\n        quickSort(arr, low, pIndex - 1);\n        quickSort(arr, pIndex + 1, high);\n    } else {\n    }\n}\n\nprivate int partition(int[] arr, int low, int high) {\n    int pivot = arr[low];\n    int i = low;\n    for (int j = low + 1; j <= high; j++) {\n        if (arr[j] < pivot) {\n            i++;\n            swap(arr, i, j);\n        }\n    }\n    swap(arr, low, i);\n    return i;\n}",
+  "code" : "public class Solution {\n    public int[] solve(int[] nums) {\n        quickSort(nums, 0, nums.length - 1);\n        return nums;\n    }\n\n    private void quickSort(int[] nums, int low, int high) {\n        if (low < high) {\n            int pIndex = partition(nums, low, high);\n            quickSort(nums, low, pIndex - 1);\n            quickSort(nums, pIndex + 1, high);\n        } else {\n            return;\n        }\n    }\n\n    private int partition(int[] nums, int low, int high) {\n        int pivot = nums[low];\n        int i = low;\n        for (int j = low + 1; j <= high; j++) {\n            if (nums[j] < pivot) {\n                i++;\n                swap(nums, i, j);\n            }\n        }\n        swap(nums, low, i);\n        return i;\n    }\n\n    private void swap(int[] nums, int first, int second) {\n        int value = nums[first];\n        nums[first] = nums[second];\n        nums[second] = value;\n    }\n}\n",
   "problemId" : "quick-sort",
   "resolvedInput" : {
     "nums" : [ 5, 2, 8, 1, 9 ]
@@ -16,7 +16,7 @@
   "stepCount" : 22,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Range [0,4] has more than one element - partition it around a pivot, then recurse on both sides.",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)" ],
@@ -54,7 +54,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 11,
+    "activeLine" : 18,
     "description" : "Partitioning [0,4]: pivot = arr[0] = 5. i starts at 0.",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)" ],
@@ -94,7 +94,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Compare arr[j=1]=2 against pivot(5).",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)" ],
@@ -133,7 +133,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 16,
+    "activeLine" : 23,
     "description" : "2 < pivot(5) - advance i to 1 and swap arr[1] with arr[1].",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)" ],
@@ -171,7 +171,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Compare arr[j=2]=8 against pivot(5).",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)" ],
@@ -210,7 +210,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Compare arr[j=3]=1 against pivot(5).",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)" ],
@@ -249,7 +249,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 16,
+    "activeLine" : 23,
     "description" : "1 < pivot(5) - advance i to 2 and swap arr[2] with arr[3].",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)" ],
@@ -287,7 +287,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Compare arr[j=4]=9 against pivot(5).",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)" ],
@@ -326,7 +326,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 19,
+    "activeLine" : 26,
     "description" : "Scan done - place the pivot at its final index 2 by swapping arr[0] and arr[2].",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)" ],
@@ -364,7 +364,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Range [0,1] has more than one element - partition it around a pivot, then recurse on both sides.",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
@@ -402,7 +402,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 11,
+    "activeLine" : 18,
     "description" : "Partitioning [0,1]: pivot = arr[0] = 1. i starts at 0.",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
@@ -442,7 +442,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Compare arr[j=1]=2 against pivot(1).",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
@@ -481,7 +481,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 19,
+    "activeLine" : 26,
     "description" : "Scan done - place the pivot at its final index 0 by swapping arr[0] and arr[0].",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
@@ -519,7 +519,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 7,
+    "activeLine" : 13,
     "description" : "Range [0,-1] holds no elements - nothing to partition.",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
@@ -557,7 +557,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 7,
+    "activeLine" : 13,
     "description" : "Range [1,1] holds a single element - nothing to partition.",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(0..1)" ],
@@ -595,7 +595,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 3,
+    "activeLine" : 9,
     "description" : "Range [3,4] has more than one element - partition it around a pivot, then recurse on both sides.",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
@@ -633,7 +633,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 11,
+    "activeLine" : 18,
     "description" : "Partitioning [3,4]: pivot = arr[3] = 8. i starts at 3.",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
@@ -673,7 +673,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Compare arr[j=4]=9 against pivot(8).",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
@@ -712,7 +712,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 19,
+    "activeLine" : 26,
     "description" : "Scan done - place the pivot at its final index 3 by swapping arr[3] and arr[3].",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
@@ -750,7 +750,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 7,
+    "activeLine" : 13,
     "description" : "Range [3,2] holds no elements - nothing to partition.",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
@@ -788,7 +788,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 21,
-    "activeLine" : 7,
+    "activeLine" : 13,
     "description" : "Range [4,4] holds a single element - nothing to partition.",
     "queueOrStackState" : null,
     "callStack" : [ "quickSort(0..4)", "quickSort(3..4)" ],
@@ -826,7 +826,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 22,
-    "activeLine" : 8,
+    "activeLine" : 4,
     "description" : "Recursion complete. Sorted array: [1, 2, 5, 8, 9].",
     "queueOrStackState" : null,
     "callStack" : [ ],

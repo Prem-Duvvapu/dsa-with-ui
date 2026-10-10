@@ -1,13 +1,13 @@
 {
   "anchors" : {
-    "backlink" : 16,
-    "best" : 14,
-    "compare" : 9,
-    "done" : 20,
-    "init" : 2,
-    "take" : 10
+    "backlink" : 25,
+    "best" : 20,
+    "compare" : 14,
+    "done" : 32,
+    "init" : 7,
+    "take" : 15
   },
-  "code" : "public int[] lisWithParents(int[] nums) {\n    int n = nums.length;\n    int[] dp = new int[n], parent = new int[n];\n    Arrays.fill(dp, 1);\n    Arrays.fill(parent, -1);\n    int bestEnd = 0;\n    for (int i = 1; i < n; i++) {\n        for (int j = 0; j < i; j++) {\n            if (nums[j] < nums[i] && dp[j] + 1 > dp[i]) {\n                dp[i] = dp[j] + 1;\n                parent[i] = j;\n            }\n        }\n        if (dp[i] > dp[bestEnd]) bestEnd = i;\n    }\n    while (bestEnd != -1) {\n        collect(nums[bestEnd]);\n        bestEnd = parent[bestEnd];\n    }\n    return answer();\n}",
+  "code" : "import java.util.ArrayList;\nimport java.util.Arrays;\nimport java.util.List;\n\npublic class Solution {\n    public int[] solve(int[] nums) {\n        int n = nums.length;\n        int[] dp = new int[n], parent = new int[n];\n        Arrays.fill(dp, 1);\n        Arrays.fill(parent, -1);\n        int bestEnd = 0;\n        for (int i = 1; i < n; i++) {\n            for (int j = 0; j < i; j++) {\n                if (nums[j] < nums[i] && dp[j] + 1 > dp[i]) {\n                    dp[i] = dp[j] + 1;\n                    parent[i] = j;\n                }\n            }\n            // Strict improvement keeps the first predecessor and endpoint on a tie.\n            if (dp[i] > dp[bestEnd]) bestEnd = i;\n        }\n        List<Integer> reversed = new ArrayList<>();\n        int cursor = bestEnd;\n        while (cursor != -1) {\n            reversed.add(nums[cursor]);\n            cursor = parent[cursor];\n        }\n        int[] answer = new int[reversed.size()];\n        for (int i = 0; i < answer.length; i++) {\n            answer[i] = reversed.get(answer.length - 1 - i);\n        }\n        return answer;\n    }\n}\n",
   "problemId" : "print-lis",
   "resolvedInput" : {
     "nums" : [ 10, 9, 2, 5, 3, 7, 101, 18 ]
@@ -15,7 +15,7 @@
   "stepCount" : 47,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 7,
     "description" : "dp starts all 1s (each element alone) and every parent is -1 (no predecessor yet). The displayed values are dp[].",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -143,7 +143,7 @@
     }
   }, {
     "stepNumber" : 2,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=1, j=0: nums[0]=10 is not below nums[1]=9, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -272,7 +272,7 @@
     }
   }, {
     "stepNumber" : 3,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=2, j=0: nums[0]=10 is not below nums[2]=2, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -401,7 +401,7 @@
     }
   }, {
     "stepNumber" : 4,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=2, j=1: nums[1]=9 is not below nums[2]=2, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -530,7 +530,7 @@
     }
   }, {
     "stepNumber" : 5,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=3, j=0: nums[0]=10 is not below nums[3]=5, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -659,7 +659,7 @@
     }
   }, {
     "stepNumber" : 6,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=3, j=1: nums[1]=9 is not below nums[3]=5, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -788,7 +788,7 @@
     }
   }, {
     "stepNumber" : 7,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=3, j=2: nums[2]=2 < nums[3]=5 and dp[2]+1=2 beats dp[3]=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -917,7 +917,7 @@
     }
   }, {
     "stepNumber" : 8,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Record it: dp[3]=2 with parent[3]=2 - when printing we will step back to 2 next.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1048,7 +1048,7 @@
     }
   }, {
     "stepNumber" : 9,
-    "activeLine" : 14,
+    "activeLine" : 20,
     "description" : "A length-2 subsequence ends at i=3 - that becomes the print start.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1177,7 +1177,7 @@
     }
   }, {
     "stepNumber" : 10,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=4, j=0: nums[0]=10 is not below nums[4]=3, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1306,7 +1306,7 @@
     }
   }, {
     "stepNumber" : 11,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=4, j=1: nums[1]=9 is not below nums[4]=3, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1435,7 +1435,7 @@
     }
   }, {
     "stepNumber" : 12,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=4, j=2: nums[2]=2 < nums[4]=3 and dp[2]+1=2 beats dp[4]=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1564,7 +1564,7 @@
     }
   }, {
     "stepNumber" : 13,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Record it: dp[4]=2 with parent[4]=2 - when printing we will step back to 2 next.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1695,7 +1695,7 @@
     }
   }, {
     "stepNumber" : 14,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=4, j=3: nums[3]=5 is not below nums[4]=3, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1824,7 +1824,7 @@
     }
   }, {
     "stepNumber" : 15,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=5, j=0: nums[0]=10 is not below nums[5]=7, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -1953,7 +1953,7 @@
     }
   }, {
     "stepNumber" : 16,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=5, j=1: nums[1]=9 is not below nums[5]=7, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2082,7 +2082,7 @@
     }
   }, {
     "stepNumber" : 17,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=5, j=2: nums[2]=2 < nums[5]=7 and dp[2]+1=2 beats dp[5]=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2211,7 +2211,7 @@
     }
   }, {
     "stepNumber" : 18,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Record it: dp[5]=2 with parent[5]=2 - when printing we will step back to 2 next.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2342,7 +2342,7 @@
     }
   }, {
     "stepNumber" : 19,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=5, j=3: nums[3]=5 < nums[5]=7 and dp[3]+1=3 beats dp[5]=2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2471,7 +2471,7 @@
     }
   }, {
     "stepNumber" : 20,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Record it: dp[5]=3 with parent[5]=3 - when printing we will step back to 3 next.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2602,7 +2602,7 @@
     }
   }, {
     "stepNumber" : 21,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=5, j=4: extending through j would give length 3, not better than the 3 already recorded.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2731,7 +2731,7 @@
     }
   }, {
     "stepNumber" : 22,
-    "activeLine" : 14,
+    "activeLine" : 20,
     "description" : "A length-3 subsequence ends at i=5 - that becomes the print start.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2860,7 +2860,7 @@
     }
   }, {
     "stepNumber" : 23,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=6, j=0: nums[0]=10 < nums[6]=101 and dp[0]+1=2 beats dp[6]=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -2989,7 +2989,7 @@
     }
   }, {
     "stepNumber" : 24,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Record it: dp[6]=2 with parent[6]=0 - when printing we will step back to 0 next.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3120,7 +3120,7 @@
     }
   }, {
     "stepNumber" : 25,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=6, j=1: extending through j would give length 2, not better than the 2 already recorded.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3249,7 +3249,7 @@
     }
   }, {
     "stepNumber" : 26,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=6, j=2: extending through j would give length 2, not better than the 2 already recorded.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3378,7 +3378,7 @@
     }
   }, {
     "stepNumber" : 27,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=6, j=3: nums[3]=5 < nums[6]=101 and dp[3]+1=3 beats dp[6]=2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3507,7 +3507,7 @@
     }
   }, {
     "stepNumber" : 28,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Record it: dp[6]=3 with parent[6]=3 - when printing we will step back to 3 next.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3638,7 +3638,7 @@
     }
   }, {
     "stepNumber" : 29,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=6, j=4: extending through j would give length 3, not better than the 3 already recorded.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3767,7 +3767,7 @@
     }
   }, {
     "stepNumber" : 30,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=6, j=5: nums[5]=7 < nums[6]=101 and dp[5]+1=4 beats dp[6]=3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -3896,7 +3896,7 @@
     }
   }, {
     "stepNumber" : 31,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Record it: dp[6]=4 with parent[6]=5 - when printing we will step back to 5 next.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4027,7 +4027,7 @@
     }
   }, {
     "stepNumber" : 32,
-    "activeLine" : 14,
+    "activeLine" : 20,
     "description" : "A length-4 subsequence ends at i=6 - that becomes the print start.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4156,7 +4156,7 @@
     }
   }, {
     "stepNumber" : 33,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=7, j=0: nums[0]=10 < nums[7]=18 and dp[0]+1=2 beats dp[7]=1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4285,7 +4285,7 @@
     }
   }, {
     "stepNumber" : 34,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Record it: dp[7]=2 with parent[7]=0 - when printing we will step back to 0 next.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4416,7 +4416,7 @@
     }
   }, {
     "stepNumber" : 35,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=7, j=1: extending through j would give length 2, not better than the 2 already recorded.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4545,7 +4545,7 @@
     }
   }, {
     "stepNumber" : 36,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=7, j=2: extending through j would give length 2, not better than the 2 already recorded.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4674,7 +4674,7 @@
     }
   }, {
     "stepNumber" : 37,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=7, j=3: nums[3]=5 < nums[7]=18 and dp[3]+1=3 beats dp[7]=2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4803,7 +4803,7 @@
     }
   }, {
     "stepNumber" : 38,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Record it: dp[7]=3 with parent[7]=3 - when printing we will step back to 3 next.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -4934,7 +4934,7 @@
     }
   }, {
     "stepNumber" : 39,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=7, j=4: extending through j would give length 3, not better than the 3 already recorded.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5063,7 +5063,7 @@
     }
   }, {
     "stepNumber" : 40,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=7, j=5: nums[5]=7 < nums[7]=18 and dp[5]+1=4 beats dp[7]=3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5192,7 +5192,7 @@
     }
   }, {
     "stepNumber" : 41,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Record it: dp[7]=4 with parent[7]=5 - when printing we will step back to 5 next.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5323,7 +5323,7 @@
     }
   }, {
     "stepNumber" : 42,
-    "activeLine" : 9,
+    "activeLine" : 14,
     "description" : "i=7, j=6: nums[6]=101 is not below nums[7]=18, so nothing ending at j can extend to i.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5452,7 +5452,7 @@
     }
   }, {
     "stepNumber" : 43,
-    "activeLine" : 16,
+    "activeLine" : 25,
     "description" : "Take nums[6]=101, then follow parent to index 5. Collected so far: [101].",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5580,7 +5580,7 @@
     }
   }, {
     "stepNumber" : 44,
-    "activeLine" : 16,
+    "activeLine" : 25,
     "description" : "Take nums[5]=7, then follow parent to index 3. Collected so far: [101, 7].",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5708,7 +5708,7 @@
     }
   }, {
     "stepNumber" : 45,
-    "activeLine" : 16,
+    "activeLine" : 25,
     "description" : "Take nums[3]=5, then follow parent to index 2. Collected so far: [101, 7, 5].",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5836,7 +5836,7 @@
     }
   }, {
     "stepNumber" : 46,
-    "activeLine" : 16,
+    "activeLine" : 25,
     "description" : "Take nums[2]=2, then follow parent to index stop. Collected so far: [101, 7, 5, 2].",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -5964,7 +5964,7 @@
     }
   }, {
     "stepNumber" : 47,
-    "activeLine" : 20,
+    "activeLine" : 32,
     "description" : "Reversed the collected values into the LIS: [2, 5, 7, 101] (length 4).",
     "queueOrStackState" : null,
     "callStack" : [ ],

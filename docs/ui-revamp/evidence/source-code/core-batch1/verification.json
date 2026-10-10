@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-10",
+  "base": "e68e6f93f3461877156409db65397ef2f94ba49b",
+  "branch": "fix/complete-source-helpers-batch1",
+  "publication": "Pre-publication snapshot; owner approved commit/push/PR/merge conditional on exact-head CI passing",
+  "layoutPublication": {
+    "pr": 219,
+    "head": "5b9e4130147607ba737df11fb31817e3ff3658c1",
+    "squash": "e68e6f93f3461877156409db65397ef2f94ba49b",
+    "prAndPostMergeChecks": "CI, security and Vercel successful"
+  },
+  "productionScope": "Five complete Java solutions and strict resource-owning tracer base; no run/input/trace-data/frontend/dependency changes",
+  "sourceContracts": {
+    "cases": 17,
+    "initialRedFailures": 12,
+    "initialHttpIdentityPasses": 5,
+    "finalFailures": 0,
+    "publishedExamples": 12,
+    "compilation": "Exact displayed Java 17, isolated classpath, no app helpers or import/class wrappers",
+    "semanticMutations": "2/2 selective cases rejected unsorted Quick Sort and reversed survivors; restored"
+  },
+  "backend": {
+    "tests": 8040,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 500,
+    "initialFullSuite": "One stale Print LIS source-digest failure; classification re-audited without test weakening; final full rerun green",
+    "output": "backend-final.txt"
+  },
+  "frontend": {
+    "files": 79,
+    "tests": 788,
+    "failures": 0,
+    "output": "frontend-final.txt",
+    "freshLockedInstall": true,
+    "productionBuild": true,
+    "jsKb": 382.56,
+    "jsGzipKb": 121.89,
+    "cssKb": 97.71,
+    "cssGzipKb": 17.75,
+    "unchangedAssetsFromLayout": ["index-DbmbKZMa.js", "index-CfkLxyUw.css"]
+  },
+  "liveApiStats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "goldens": {
+    "changed": 5,
+    "only": ["code", "anchors", "steps[].activeLine"],
+    "report": "golden-comparison.json"
+  },
+  "browser": {
+    "engine": "Chromium",
+    "version": "153.0.8010.12",
+    "mode": "production-preview",
+    "realBackend": true,
+    "matrixRows": 20,
+    "failures": 0,
+    "widths": [320, 1366],
+    "themes": ["light", "dark"],
+    "report": "results.json",
+    "customAndRejectedRerun": "custom-results.json"
+  },
+  "launcherSmoke": "Passed; launcher-smoke.txt",
+  "dependencyAudit": {
+    "report": "npm-audit.json",
+    "total": 9,
+    "moderate": 4,
+    "high": 3,
+    "critical": 2,
+    "fixedHere": false,
+    "releaseDisposition": "Exposure review and separately verified dependency-security package pending"
+  },
+  "limits": [
+    "Five listings certified, not all 431 or all DP approaches",
+    "Baseline source inventory remains historical; 48 other non-platform omissions and 77 platform contexts remain",
+    "C++ source labelling and semantic review of compiler successes remain",
+    "Chromium at two widths/both themes is not all-browser, real-device, zoom or screen-reader certification",
+    "No new DP forms; 54 candidate rows and D6/D7 remain",
+    "Layout frame exceptions, performance, human acceptance and release gates remain open"
+  ]
+}

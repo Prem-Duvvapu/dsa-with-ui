@@ -1657,6 +1657,32 @@ or omitted to fit the viewport; the large diagram still scrolls locally.
 - **Lesson:** a correct trace with in-bounds highlights can still teach fabricated
   code. Displayed source needs its own executable contract, not just visual snapshots.
 
+### RCA-057 follow-up — 2026-10-10 missing helpers outside the sketch family
+
+The separate default-source inventory found 53 Java listings with omissions other than
+platform node definitions. Correct traces and reachable anchors had not detected these:
+Print LIS called undefined `collect`/`answer`, while other listings omitted `opener`,
+`toArray`, `reverse` or `swap`. The sketch-signature guard was deliberately bounded and
+could not establish completeness of unrelated sources.
+
+The first five-listing repair supplies complete Java 17 resources for Print LIS, Balanced
+Parentheses, Asteroid Collision, Next Permutation and Quick Sort, owned by their registered
+`CompleteSourceTracer` family. Strict resource loading has no sketch fallback; only an
+immutable source string is cached. Algorithms, limits, narration and trace state are
+unchanged, including LIS ties, first-element Quick Sort pivots and survivor ordering.
+
+`DisplayedCoreSolutionTest` compiles the exact API source without JDK import wrappers or
+app helpers, executes typed inputs against traces and independent examples/edge cases,
+checks resource ownership, phase statements and HTTP detail/full/delta delivery. Keeping
+the old listings caused 12/17 cases to fail; the five HTTP identity cases passed because
+identity alone does not prove completeness. Compiling unsorted-sort/reversed-survivor
+mutants failed 2/2 additional selective probes, and were restored. The full 8,040-test
+suite passes after reconciling the intentionally stale Print LIS inventory fingerprint.
+
+Remaining: 48 other known helper/state/type failures, 77 authoritative platform contexts,
+C++ labelling and semantic review of compiler successes. This is a bounded repair, not
+all-source certification or implementation of additional DP forms.
+
 ## RCA-058 — A bounded default-trace cache used unbounded caller encoding strings
 
 - **Discovered:** 2026-10-07 while implementing the DP approach API (D1).
