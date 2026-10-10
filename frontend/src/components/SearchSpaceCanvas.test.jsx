@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { describe, expect, it } from 'vitest';
 import SearchSpaceCanvas from './SearchSpaceCanvas';
+import styles from './SearchSpaceCanvas.module.css';
 
 /** An index-space step: high indexes the array and the discarded half is already marked. */
 const indexStep = (low, high, mid, size = 7) => ({
@@ -81,5 +82,73 @@ describe('SearchSpaceCanvas', () => {
   it('says so when no step has stated a range yet', () => {
     render(<SearchSpaceCanvas currentStep={{ variables: {} }} />);
     expect(screen.getByRole('status').textContent).toContain('No search range');
+  });
+
+  it('renders an exhausted interval as zero candidates without a live marker', () => {
+    const steps = [answerStep(90, 203, 146), {
+      ...answerStep(113, 112, null), variables: { low: '113', high: '112', answer: '113' }
+    }];
+    render(<SearchSpaceCanvas steps={steps} currentStepIndex={1} currentStep={steps[1]} />);
+    expect(screen.getByTestId('search-range')).toHaveTextContent('0 left of 114');
+    expect(screen.queryByTestId('search-live')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('search-mid')).not.toBeInTheDocument();
+    expect(screen.getByTestId('search-result')).toHaveTextContent('Result: 113');
+  });
+
+  it('does not render a negative candidate count if an interval crosses by more than one', () => {
+    render(<SearchSpaceCanvas currentStep={answerStep(9, 3, null)} />);
+    expect(screen.getByTestId('search-range')).toHaveTextContent('0 left');
+    expect(screen.queryByTestId('search-live')).not.toBeInTheDocument();
+  });
+
+  it('reads current input highlights even when commentary carries the prior paired range', () => {
+    const first = answerStep(1, 11, 6);
+    const scan = { variables: { hours: '4' }, arrayState: first.arrayState.map((cell, i) => ({
+      ...cell, state: i === 2 ? 'current' : 'default'
+    })) };
+    render(<SearchSpaceCanvas steps={[first, scan]} currentStepIndex={1} currentStep={scan} />);
+    const cells = screen.getByTestId('search-input-row').querySelectorAll('[data-state]');
+    expect([...cells].map((cell) => cell.getAttribute('data-state'))).toEqual(['default', 'default', 'current', 'default']);
+    expect(cells[2]).toHaveClass(styles.cellMid);
+    expect(cells[0]).not.toHaveClass(styles.cellMid);
+  });
+
+  it('does not treat student counts or exponents named m as a midpoint', () => {
+    render(<SearchSpaceCanvas currentStep={{ variables: { low: '1', high: '20', m: '3' } }} />);
+    expect(screen.queryByTestId('search-mid')).not.toBeInTheDocument();
+  });
+
+  it.each([null, '', '  ', false, [], 'Infinity', 'not-a-number'])('does not fabricate a range from invalid low=%j', (low) => {
+    render(<SearchSpaceCanvas currentStep={{ variables: { low, high: '6' } }} />);
+    expect(screen.getByRole('status')).toHaveTextContent('No search range');
+  });
+
+  it('never combines partial bounds across steps or different alias families', () => {
+    const steps = [{ variables: { low: '1' } }, { variables: { high: '9' } }, { variables: { lo: '2', high: '8' } }];
+    render(<SearchSpaceCanvas steps={steps} currentStepIndex={2} currentStep={steps[2]} />);
+    expect(screen.getByRole('status')).toHaveTextContent('No search range');
+  });
+
+  it.each([['lo', 'hi'], ['left', 'right'], ['l', 'r'], ['start', 'end']])('still accepts the complete %s/%s alias pair', (low, high) => {
+    render(<SearchSpaceCanvas currentStep={{ variables: { [low]: '2', [high]: '8', mid: '5' } }} />);
+    expect(screen.getByTestId('search-range')).toHaveTextContent('[2, 8]');
+    expect(screen.getByTestId('search-mid')).toHaveTextContent('probing 5');
+  });
+
+  it('does not infer a result from the last visible probe or an intermediate ans', () => {
+    const finalVisible = { ...answerStep(4, 6, 5), variables: { low: '4', high: '6', mid: '5', ans: '9' } };
+    render(<SearchSpaceCanvas steps={[finalVisible]} currentStepIndex={0} currentStep={finalVisible} />);
+    expect(screen.getByTestId('search-mid')).toHaveTextContent('probing 5');
+    expect(screen.queryByTestId('search-result')).not.toBeInTheDocument();
+    expect(screen.queryByText(/complete|finished|converged/i)).not.toBeInTheDocument();
+  });
+
+  it('does not carry a prior answer into a later phase', () => {
+    const first = { ...answerStep(1, 8, null), variables: { low: '1', high: '8', answer: '4' } };
+    const next = answerStep(2, 7, 4);
+    const { rerender } = render(<SearchSpaceCanvas steps={[first, next]} currentStepIndex={0} currentStep={first} />);
+    expect(screen.getByTestId('search-result')).toHaveTextContent('Result: 4');
+    rerender(<SearchSpaceCanvas steps={[first, next]} currentStepIndex={1} currentStep={next} />);
+    expect(screen.queryByTestId('search-result')).not.toBeInTheDocument();
   });
 });

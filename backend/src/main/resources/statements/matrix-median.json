@@ -3,7 +3,8 @@
   "statement": [
     "You are given an n × m integer matrix in which every row is sorted in ascending order. The total number of cells, n × m, is odd.",
     "Return the median of all the values in the matrix: the value that would sit in the middle if every cell were written into one sorted list.",
-    "Avoid building that list. Binary search on the value instead, between the smallest first element and the largest last element. For a candidate x, count the cells ≤ x by doing an upper-bound search in each row; the median is the smallest x for which that count is greater than (n × m) / 2."
+    "Avoid building that list. Binary search on the value instead, between the smallest first element and the largest last element. For a candidate x, count the cells ≤ x by doing an upper-bound search in each row; for the original odd-cell problem, the median is the smallest x for which that count is greater than (n × m) / 2.",
+    "Visualizer extension: even cell counts are also accepted, with the lower median (the smaller of the two middle values), not their average. Every row must still be sorted; the visualizer rejects unsorted rows rather than sorting your input."
   ],
   "examples": [
     {

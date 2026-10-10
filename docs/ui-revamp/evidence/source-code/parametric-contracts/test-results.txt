@@ -1,0 +1,248 @@
+Selected log summaries/excerpts, NOT complete byte-identical logs.
+Trailing whitespace and extra terminal blank lines normalized for repository hygiene.
+Expected RED/mutation failures are labelled; final GREEN follows exact restoration.
+
+Assertion RED — input/source (selected tail)
+[ERROR]   ParametricInputContractTest.unsortedRowsReturnAFieldSpecificHttp400:73 Status expected:<400> but was:<200>
+[INFO]
+[ERROR] Tests run: 10, Failures: 9, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  18.830 s
+[INFO] Finished at: 2026-10-10T14:01:57Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.1.2:test (default-test) on project dsa-backend: There are test failures.
+[ERROR]
+[ERROR] Please refer to /home/prem/dsa-p8/backend/target/surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+
+Assertion RED — paired snapshots (selected tail)
+[ERROR]   ParametricSearchSnapshotTest.defaultsKeepActualPairedBoundsThroughBothBranches:41->check:125->number:171 Step 3 has no paired low snapshot ==> expected: not <null>
+[INFO]
+[ERROR] Tests run: 16, Failures: 14, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  19.361 s
+[INFO] Finished at: 2026-10-10T14:02:46Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.1.2:test (default-test) on project dsa-backend: There are test failures.
+[ERROR]
+[ERROR] Please refer to /home/prem/dsa-p8/backend/target/surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+
+Canvas RED (selected tail)
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/11]⎯
+
+ Test Files  1 failed (1)
+      Tests  11 failed | 15 passed (26)
+   Start at  13:59:35
+   Duration  1.26s (transform 108ms, setup 16ms, collect 253ms, tests 265ms, environment 396ms, prepare 118ms)
+
+Compiling source mutations (selected tail)
+[INFO]
+[ERROR] Failures:
+[ERROR]   DisplayedCoreSolutionTest.matrixMedianMatchesIndependentFlattenedOrderingIncludingEvenAndDuplicateGrids:301->assertAgrees:399 matrix-median {matrix=[[1, 9]]} ==> expected: <1> but was: <9>
+[ERROR]   DisplayedCoreSolutionTest.smallestDivisorMatchesExhaustiveSmallInputsAndAnIndependentLinearOracle:285->assertAgrees:399 smallest-divisor {threshold=1, nums=[2]} ==> expected: <2> but was: <1>
+[INFO]
+[ERROR] Tests run: 2, Failures: 2, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  27.180 s
+[INFO] Finished at: 2026-10-10T14:06:25Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.1.2:test (default-test) on project dsa-backend: There are test failures.
+[ERROR]
+[ERROR] Please refer to /home/prem/dsa-p8/backend/target/surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+
+Stale-highlight mutation (selected tail)
+    113|     expect(cells[0]).not.toHaveClass(styles.cellMid);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 25 skipped (26)
+   Start at  14:06:46
+   Duration  879ms (transform 90ms, setup 14ms, collect 238ms, tests 37ms, environment 341ms, prepare 67ms)
+
+Intermediate-ans mutation (selected tail)
+    144|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 25 skipped (26)
+   Start at  14:06:47
+   Duration  870ms (transform 92ms, setup 11ms, collect 235ms, tests 36ms, environment 339ms, prepare 67ms)
+
+Restored canvas (selected tail)
+ RUN  v1.6.1 /home/prem/dsa-p8/frontend
+
+ ✓ src/components/SearchSpaceCanvas.test.jsx  (26 tests) 154ms
+
+ Test Files  1 passed (1)
+      Tests  26 passed (26)
+   Start at  14:06:49
+   Duration  1.03s (transform 107ms, setup 14ms, collect 240ms, tests 154ms, environment 343ms, prepare 85ms)
+
+Invalid growth fixture RED (selected tail)
+
+[INFO]
+[INFO] Results:
+[INFO]
+[ERROR] Errors:
+[ERROR]   TracerContractTest.stepCountGrowsWithInput:369 » InputValidation Invalid input: {matrix=Every row must be sorted left to right.}
+[ERROR]   TracerContractTest.stepCountGrowsWithInput:369 » InputValidation Invalid input: {threshold=Must be at least the number of elements (8).}
+[INFO]
+[ERROR] Tests run: 431, Failures: 0, Errors: 2, Skipped: 151
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  24.628 s
+[INFO] Finished at: 2026-10-10T14:09:11Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.1.2:test (default-test) on project dsa-backend:
+[ERROR]
+[ERROR] Please refer to /home/prem/dsa-p8/backend/target/surefire-reports for the individual test results.
+[ERROR] Please refer to dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR]
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR]
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+
+Valid growth fixture GREEN (selected tail)
+[WARNING] Tests run: 431, Failures: 0, Errors: 0, Skipped: 151, Time elapsed: 12.71 s -- in com.dsa.ui.tracer.TracerContractTest
+[INFO]
+[INFO] Results:
+[INFO]
+[WARNING] Tests run: 431, Failures: 0, Errors: 0, Skipped: 151
+[INFO]
+[INFO]
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ dsa-backend ---
+[INFO] Loading execution data file /tmp/dsa-backend-jacoco.exec
+[INFO] Analyzed bundle 'dsa-backend' with 565 classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  26.370 s
+[INFO] Finished at: 2026-10-10T14:10:15Z
+[INFO] ------------------------------------------------------------------------
+
+Final full backend (selected tail)
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.214 s -- in com.dsa.ui.approach.ClimbingStairsApproachesTest
+[INFO] Running com.dsa.ui.DpApproachInventoryTest
+2026-10-10T14:12:47.061Z  INFO 55163 --- [dsa-backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.dsa.ui.DpApproachInventoryTest]: DpApproachInventoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-10T14:12:47.062Z  INFO 55163 --- [dsa-backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.dsa.ui.DsaApplication for test class com.dsa.ui.DpApproachInventoryTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 s -- in com.dsa.ui.DpApproachInventoryTest
+[INFO] Running com.dsa.ui.ProblemProviderContractTest
+2026-10-10T14:12:47.088Z  INFO 55163 --- [dsa-backend] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.dsa.ui.ProblemProviderContractTest]: ProblemProviderContractTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-10T14:12:47.090Z  INFO 55163 --- [dsa-backend] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.dsa.ui.DsaApplication for test class com.dsa.ui.ProblemProviderContractTest
+[INFO] Tests run: 72, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.240 s -- in com.dsa.ui.ProblemProviderContractTest
+[INFO]
+[INFO] Results:
+[INFO]
+[WARNING] Tests run: 8087, Failures: 0, Errors: 0, Skipped: 500
+[INFO]
+[INFO]
+[INFO] --- jacoco-maven-plugin:0.8.12:report (report) @ dsa-backend ---
+[INFO] Loading execution data file /tmp/dsa-backend-jacoco.exec
+[INFO] Analyzed bundle 'dsa-backend' with 565 classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  57.402 s
+[INFO] Finished at: 2026-10-10T14:12:49Z
+[INFO] ------------------------------------------------------------------------
+
+Full frontend (selected tail)
+ ✓ src/analytics.test.js  (3 tests) 7ms
+ ✓ src/canvas/registry.test.js  (1 test) 5ms
+ ✓ src/productionReachability.test.js  (9 tests) 4196ms
+
+ Test Files  79 passed (79)
+      Tests  807 passed (807)
+   Start at  14:04:14
+   Duration  101.66s (transform 2.43s, setup 1.52s, collect 44.68s, tests 130.86s, environment 76.52s, prepare 16.64s)
+
+Fresh locked install (selected tail)
+
+added 267 packages, and audited 268 packages in 5s
+
+82 packages are looking for funding
+  run `npm fund` for details
+
+9 vulnerabilities (4 moderate, 3 high, 2 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+Production build (selected tail)
+vite v5.4.21 building for production...
+transforming...
+✓ 1587 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   1.20 kB │ gzip:   0.62 kB
+dist/assets/index-CfkLxyUw.css   97.71 kB │ gzip:  17.75 kB
+dist/assets/index-Cl9l6aq6.js   382.91 kB │ gzip: 121.97 kB
+✓ built in 5.53s
+
+Launcher smoke
+start.sh stopped both service process groups cleanly
+
+Non-scope golden mutation (selected tail)
+warning: in the working copy of 'backend/src/test/resources/golden/min-days-bouquets.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/src/test/resources/golden/painters-partition.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/src/test/resources/golden/ship-packages-d-days.json', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'backend/src/test/resources/golden/smallest-divisor.json', LF will be replaced by CRLF the next time Git touches it
+/home/prem/dsa-p8/docs/ui-revamp/evidence/source-code/compare-parametric-goldens.cjs:63
+  throw Error('Golden changed outside declared scope, omitted a pair, or changed an existing bound');
+  ^
+
+Error: Golden changed outside declared scope, omitted a pair, or changed an existing bound
+    at Object.<anonymous> (/home/prem/dsa-p8/docs/ui-revamp/evidence/source-code/compare-parametric-goldens.cjs:63:9)
+    at Module._compile (node:internal/modules/cjs/loader:1529:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1613:10)
+    at Module.load (node:internal/modules/cjs/loader:1275:32)
+    at Module._load (node:internal/modules/cjs/loader:1096:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:164:12)
+    at node:internal/main/run_main_module:28:49
+
+Node.js v20.19.4

@@ -644,6 +644,23 @@ describe('Workspace end of the run (P6b)', () => {
     expect(screen.getByText(/hit the step budget/)).toBeInTheDocument();
   });
 
+  it('keeps the last visible search probe unfinished when the run is truncated', async () => {
+    withCatalog((p) => p.id === 'two-sum' ? { ...p, dsType: 'SearchSpace' } : p, (url) => (url === '/api/problems/two-sum/execute'
+      ? ok({ encoding: 'full', truncated: true, steps: [
+        { ...stepsFor('two-sum')[0], dsType: 'SearchSpace', variables: { low: '1', high: '20' } },
+        { ...stepsFor('two-sum')[1], dsType: 'SearchSpace', variables: { low: '7', high: '9', mid: '8', ans: '10' } }
+      ] }) : null));
+    renderApp();
+    await screen.findByText('two-sum step one');
+    fireEvent.click(screen.getByRole('button', { name: 'Next' }));
+    expect(screen.getByTestId('search-range')).toHaveTextContent('3 left of 20');
+    expect(screen.getByTestId('search-mid')).toHaveTextContent('probing 8');
+    expect(screen.queryByTestId('search-result')).not.toBeInTheDocument();
+    expect(screen.queryByRole('group', { name: 'End of the run' })).toBeNull();
+    expect(screen.getByText(/hit the step budget/)).toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem('dsa-ui:progress') ?? '{}')['two-sum']?.watched).not.toBe(true);
+  });
+
   it('runs the declared other case from the end of the run', async () => {
     const spec = { fields: [{ name: 'n', label: 'Count', type: 'INT', defaultValue: 1 }] };
     const bodies = [];

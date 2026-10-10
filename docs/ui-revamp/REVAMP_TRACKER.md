@@ -47,7 +47,7 @@ timed out, so backend deployment/source verification remains open. Forty-eight o
 DP rollout/human/release gates remain open. The locked dependency audit also reports nine
 findings; it is an open release issue, not resolved by either source or layout work.
 
-Second helper batch (local, not published): four complete parametric-search listings on
+Second helper batch (merged #221 / `3a83671`): four complete parametric-search listings on
 `fix/complete-source-helpers-batch2`, based on #220.29 core contracts,8,052 backend tests
 (500 existing skips),788 frontend tests/build,36 Chromium source rows and three custom
 probe modes pass. Four goldens change source/highlights only.44 historical non-platform
@@ -57,7 +57,19 @@ threshold, Matrix Median's unsorted/even-contract mismatch and SearchSpaceCanvas
 partial-bound/terminal display. They are deferred to a separate correctness package,
 not covered by source-view acceptance. `evidence/source-code/core-batch2/` and the dated
 log record details. The owner approved publication on continuation, gated on CI;
-publication is in progress. P7/P8/P9 are not closed.
+PR/post-merge CI and Vercel frontend deployment passed. Public backend-source verification
+remains open. P7/P8/P9 are not closed.
+
+Separate local correctness package (`fix/parametric-search-contracts`, base #221): the
+three batch2 findings are repaired with input-boundary/source/snapshot regressions.
+Divisor thresholds and unsorted matrix rows are rejected; even grids remain explicitly
+lower-median extensions. Five searches emit paired bounds; current highlights/results
+and exhausted intervals are truthful without inferring truncated completion. Backend
+8,087 tests/500 unchanged skips, frontend807/build,44 Chromium source rows,30 range rows
+and two shared/rejected journeys pass. `evidence/source-code/parametric-contracts/` and
+RCA-060/061. Eleven core source owners are certified within declared caps;42 historical
+non-platform omissions remain. The owner approved publication on continuation, gated on CI;
+publication is in progress, not a closure of broader project gates.
 
 ## Baseline (P0, 2026-09-29)
 

@@ -4,6 +4,8 @@ import com.dsa.ui.catalog.ProblemCatalog;
 import com.dsa.ui.model.DsType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dsa.ui.model.ExecutionStep;
+import com.dsa.ui.tracer.impl.MatrixMedianTracer;
+import com.dsa.ui.tracer.impl.SmallestDivisorTracer;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -381,7 +383,11 @@ class TracerContractTest {
             larger.put(field.getName(), field.getDefaultValue());
         }
         for (InputField field : growables) {
-            Object grown = scaleUp(field, smallFiller);
+            // Matrix Median's rows are sorted, not cyclic. Grow the synthetic fixture
+            // with a bounded upper tail instead of producing an invalid tiled row.
+            Object grown = tracer instanceof MatrixMedianTracer && field.getType() == FieldType.INT_GRID
+                    ? growGrid(field, (List<?>) field.getDefaultValue(), true)
+                    : scaleUp(field, smallFiller);
             larger.put(field.getName(), grown);
             // An O(k) algorithm does the same work on a longer array: grow k with it.
             Object scalesWith = field.getConstraints() == null ? null : field.getConstraints().get("workScalesWith");
@@ -393,6 +399,18 @@ class TracerContractTest {
                 int target = Math.min(base * 2, list.size());
                 larger.put(companion.getName(), max != null ? Math.min(target, max) : target);
             }
+        }
+        if (tracer instanceof SmallestDivisorTracer) {
+            // Each positive element contributes at least one ceiling term. Keep this
+            // larger synthetic input feasible; do not skip the growth assertion.
+            int length = ((List<?>) larger.get("nums")).size();
+            int threshold = ((Number) larger.get("threshold")).intValue();
+            InputField field = tracer.inputSpec().field("threshold");
+            Integer maximum = field.intConstraint("max");
+            int grownThreshold = (int) Math.min(Math.max(length, threshold * 2L),
+                    maximum != null ? maximum : Integer.MAX_VALUE);
+            assertTrue(grownThreshold >= length, "The grown threshold must remain feasible within its cap");
+            larger.put("threshold", grownThreshold);
         }
         return larger;
     }
@@ -408,7 +426,7 @@ class TracerContractTest {
         Object base = field.getDefaultValue();
         return switch (field.getType()) {
             case INT_ARRAY, LINKED_LIST -> growList(field, asIntList(base), smallFiller);
-            case INT_GRID -> growGrid(field, (List<?>) base);
+            case INT_GRID -> growGrid(field, (List<?>) base, false);
             case BINARY_TREE -> growTree(field, ((List<?>) base).size());
             default -> throw new IllegalStateException("not growable: " + field.getType());
         };
@@ -474,10 +492,10 @@ class TracerContractTest {
      * Grows both dimensions, not just row count. A grid-shaped problem's real "size" can
      * depend on width as much as height — {@code triangle-min-path-sum}'s effective depth is
      * capped by its column count, so a row-only grower would never make it do more work.
-     * New cells duplicate already-validated values from the base grid, so growth can never
-     * violate the field's own value bounds.
+     * New cells duplicate validated base values, except sorted-row tails which use the
+     * declared value ceiling. Neither strategy exceeds the field's value bounds.
      */
-    private List<?> growGrid(InputField field, List<?> base) {
+    private List<?> growGrid(InputField field, List<?> base, boolean sortedRows) {
         Integer maxRows = field.intConstraint("maxRows");
         Integer maxCols = field.intConstraint("maxCols");
         int baseWidth = base.isEmpty() ? 0 : ((List<?>) base.get(0)).size();
@@ -510,7 +528,11 @@ class TracerContractTest {
             List<?> sourceRow = (List<?>) base.get(r % base.size());
             List<Object> row = new ArrayList<>(targetCols);
             for (int c = 0; c < targetCols; c++) {
-                row.add(sourceRow.get(c % sourceRow.size()));
+                // The sorted-row adaptation increases the value domain as well as the
+                // grid dimensions: duplicating a distribution keeps the same median
+                // and probe count, even though counting visits more cells.
+                row.add(sortedRows && c >= sourceRow.size()
+                        ? field.intConstraint("maxValue") : sourceRow.get(c % sourceRow.size()));
             }
             grown.add(row);
         }

@@ -111,6 +111,7 @@ public class MinDaysBouquetsTracer extends CompleteSourceTracer {
                             .say("Flower %d (day %d) has bloomed. Run = %d, bouquets so far = %d.",
                                     i, bloomDay[i], run, bouquets)
                             .var("run", run).var("bouquets", bouquets)
+                            .var("low", low).var("high", high).var("mid", mid)
                             .arrayState(state(bloomDay, mid, i)).step();
                 } else {
                     run = 0;
@@ -118,6 +119,7 @@ public class MinDaysBouquetsTracer extends CompleteSourceTracer {
                             .say("Flower %d (day %d) has not bloomed yet — the run of adjacent flowers breaks.",
                                     i, bloomDay[i])
                             .var("run", run)
+                            .var("low", low).var("high", high).var("mid", mid)
                             .arrayState(state(bloomDay, mid, i)).step();
                 }
             }
@@ -127,12 +129,14 @@ public class MinDaysBouquetsTracer extends CompleteSourceTracer {
                 emit.at("feasible")
                         .say("%d bouquets made (needed %d) by day %d — feasible. Try an earlier day.", bouquets, m, mid)
                         .var("ans", ans).var("high", mid - 1)
+                        .var("low", low)
                         .arrayState(state(bloomDay, mid, -1)).step();
                 high = mid - 1;
             } else {
                 emit.at("infeasible")
                         .say("Only %d bouquets made (needed %d) by day %d — too early. Try later.", bouquets, m, mid)
                         .var("low", mid + 1)
+                        .var("high", high)
                         .arrayState(state(bloomDay, mid, -1)).step();
                 low = mid + 1;
             }
@@ -140,6 +144,7 @@ public class MinDaysBouquetsTracer extends CompleteSourceTracer {
 
         emit.at("done")
                 .say("low passed high. The earliest day with enough bouquets is %d.", ans)
-                .var("answer", ans).arrayState(state(bloomDay, ans, -1)).step();
+                .var("answer", ans).var("low", low).var("high", high)
+                .arrayState(state(bloomDay, ans, -1)).step();
     }
 }

@@ -94,12 +94,14 @@ public class ShipPackagesDDaysTracer extends CompleteSourceTracer {
                     emit.at("newDay")
                             .say("Package %d (%d) would overflow capacity %d — start day %d.", i, w, mid, days)
                             .var("i", i).var("days", days)
+                            .var("low", low).var("high", high).var("mid", mid)
                             .arrayState(state(weights, i, splitStart)).step();
                 } else {
                     load += w;
                     emit.at("addToDay")
                             .say("Package %d (%d) still fits today's load (%d so far).", i, w, load)
                             .var("i", i).var("load", load)
+                            .var("low", low).var("high", high).var("mid", mid)
                             .arrayState(state(weights, i, splitStart)).step();
                 }
             }
@@ -109,12 +111,14 @@ public class ShipPackagesDDaysTracer extends CompleteSourceTracer {
                 emit.at("feasible")
                         .say("%d days needed (allowed %d) — capacity %d works. Try smaller.", days, daysAllowed, mid)
                         .var("days", days).var("ans", ans).var("high", mid - 1)
+                        .var("low", low)
                         .arrayState(state(weights, -1, weights.length)).step();
                 high = mid - 1;
             } else {
                 emit.at("infeasible")
                         .say("%d days needed (allowed %d) — capacity %d is too small. Try larger.", days, daysAllowed, mid)
                         .var("days", days).var("low", mid + 1)
+                        .var("high", high)
                         .arrayState(state(weights, -1, weights.length)).step();
                 low = mid + 1;
             }
@@ -122,6 +126,7 @@ public class ShipPackagesDDaysTracer extends CompleteSourceTracer {
 
         emit.at("done")
                 .say("low passed high. The smallest workable capacity is %d.", ans)
-                .var("answer", ans).arrayState(state(weights, -1, weights.length)).step();
+                .var("answer", ans).var("low", low).var("high", high)
+                .arrayState(state(weights, -1, weights.length)).step();
     }
 }

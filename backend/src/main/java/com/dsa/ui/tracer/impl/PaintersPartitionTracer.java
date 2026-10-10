@@ -94,12 +94,14 @@ public class PaintersPartitionTracer extends CompleteSourceTracer {
                     emit.at("newPainter")
                             .say("Board %d (%d) would exceed cap %d — painter #%d starts here.", i, b, mid, used)
                             .var("i", i).var("painters", used)
+                            .var("low", low).var("high", high).var("mid", mid)
                             .arrayState(state(boards, i, splitStart)).step();
                 } else {
                     time += b;
                     emit.at("addToCurrent")
                             .say("Board %d (%d) still fits this painter's queue (%d so far).", i, b, time)
                             .var("i", i).var("time", time)
+                            .var("low", low).var("high", high).var("mid", mid)
                             .arrayState(state(boards, i, splitStart)).step();
                 }
             }
@@ -109,12 +111,14 @@ public class PaintersPartitionTracer extends CompleteSourceTracer {
                 emit.at("feasible")
                         .say("%d painters suffice (have %d) at cap %d. Try a smaller cap.", used, painters, mid)
                         .var("painters", used).var("ans", ans).var("high", mid - 1)
+                        .var("low", low)
                         .arrayState(state(boards, -1, boards.length)).step();
                 high = mid - 1;
             } else {
                 emit.at("infeasible")
                         .say("%d painters are needed (have %d) at cap %d — too tight. Try larger.", used, painters, mid)
                         .var("painters", used).var("low", mid + 1)
+                        .var("high", high)
                         .arrayState(state(boards, -1, boards.length)).step();
                 low = mid + 1;
             }
@@ -122,6 +126,7 @@ public class PaintersPartitionTracer extends CompleteSourceTracer {
 
         emit.at("done")
                 .say("low passed high. The smallest workable cap is %d.", ans)
-                .var("answer", ans).arrayState(state(boards, -1, boards.length)).step();
+                .var("answer", ans).var("low", low).var("high", high)
+                .arrayState(state(boards, -1, boards.length)).step();
     }
 }

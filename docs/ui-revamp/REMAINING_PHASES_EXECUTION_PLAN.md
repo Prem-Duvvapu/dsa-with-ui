@@ -51,7 +51,7 @@ certification remain. Source repair does not count as a DP candidate implementat
 unimplemented. Applicability must be reviewed rather than forcing three options on every
 problem. Completing an early cleanup or pilot check does not close P8/P9 or DP D6/D7.
 
-Step6 continuation: batch2 is locally verified from #220, not published. Four complete
+Step6 continuation: batch2 merged as #221 / `3a83671` after owner approval. Four complete
 parametric-search listings preserve trace data;29 core contracts,8,052 backend tests
 (500 existing skips),788 frontend tests/build and36 real-backend Chromium source rows
 pass. Book Allocation custom/400 sharing/step retention and existing core/DP probe
@@ -60,7 +60,19 @@ Forty-four other known non-platform omissions remain. Next correctness work shou
 address the separately reproduced Smallest Divisor threshold, Matrix Median sorted/odd
 input contract and SearchSpaceCanvas partial-bound/terminal display defects before
 certifying those affected paths. These are recorded pending, not stacked into batch2.
-Merge this medium package under fresh publication approval before starting the next.
+PR/post-merge CI run38057484886 and Vercel frontend deployment passed. Public backend
+source remains unverified. The next separate correctness package is in progress on
+`fix/parametric-search-contracts`; publication of that package needs fresh approval.
+
+That separate correctness package is now locally verified: two input contracts and
+complete sources, five paired search-snapshot owners and hardened canvas result/range
+handling.8,087 backend tests (500 unchanged skips),807 frontend tests/build,44 source
+rows,30 range rows and two shared/rejected journeys pass. The growth assertion remains
+intact with valid synthetic inputs; evidence/log/RCA-060/061 record actual scope.42 other
+historical non-platform omissions remain; DP/human/performance/release gates stay open.
+The owner approved publishing this specific package on continuation after the explicit
+commit/push/merge request. Land it only after CI passes before starting the next medium
+package; no publication authority is inferred for later packages.
 
 ## 1. Objective and source of truth
 
