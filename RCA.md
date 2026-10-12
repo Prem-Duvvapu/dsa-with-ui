@@ -1809,3 +1809,52 @@ is pending separately; source-highlight/browser gates do not prove canvas-result
 - **Fix:** selecting a recognized approach freezes the current draft before adopting its spec. A functional state update retains any already queued same-tick edit instead of overwriting it with stale rendered defaults. New limits still appear, and oversized input is refused; only an explicit Restore defaults action replaces the values with the newly selected defaults. The prior execution and URL remain unchanged until success.
 - **Guard:** the untouched-draft regression in `useProblemSession.approaches.test.jsx` fails before the fix. Real-backend LIS default journeys at all five widths/both themes keep all eight values, return400 for recursion, retain the old share link and focus the error summary. Final browser manifests are under `dp-approaches/requested-five/`; unpublished/partial probes are not acceptance evidence.
 - **Lesson:** preservation tests must cover untouched derived defaults as well as edited drafts. Approach-specific defaults may legitimately differ; selecting one is not authorization to replace the user's visible input.
+
+### RCA-062 usability follow-up — 2026-10-12 preserved input needs an actionable limit explanation
+
+The owner encountered LIS's intended400 when its untouched eight-value tabulation
+example was run as recursion (maximum6). The preserved-run semantics were correct,
+but the selector gave no immediate explanation, and Code/Analysis said only that some
+fields were rejected. The local follow-up displays declared size/value mismatches,
+offers Adjust input and an explicit Replace input with this approach's example action,
+and renders the server's exact field messages outside Playground. Replacement edits
+only; it pauses, returns focus to the editor, and never executes or shares by itself.
+Bounds, algorithms, defaults, prior-run retention and success-only sharing are unchanged.
+
+Seven final UI regressions fail against the merged baseline `b3a3497`;the22 pre-existing
+approach integration cases still pass there. Helper tests cover genuine field types,
+zero/null/absent bounds and no mutation; a parallel review caught an initial fabricated
+GRID type and it was corrected to INT_GRID before final verification. Initial tests with
+missing jest-dom setup are excluded from proof. The final local evidence and release
+limits are recorded in the implementation log; this is not a second backend validator
+or a promise that a draft without size/value warnings passes grammar/joint constraints.
+
+## RCA-063 — Rejected-input identity and rendering assumed the current draft was validated
+
+- **Discovered:** 2026-10-12 during the preserved-input recovery follow-up; local fix on
+  `fix/approach-input-guidance`, publication awaiting approval.
+- **Symptoms:** a late400 or explicit example replacement could leave old field errors
+  attached to different input/an executable. Editing back to an old rejected value or
+  remounting the editor could steal focus. Focus mode hid field-specific recovery.
+  Partial shared input seeded before its spec omitted authoritative defaults. Rejected
+  mixed-row grids could crash both their details summary and editor; empty grids silently
+  became [[0]], misrepresenting the caller's rejected input.
+- **Causes:** errors lacked a submitted-input/executable identity; focus was tied to a
+  changing field-error object and editor lifetime rather than a newly observed submission.
+  Draft derivation treated any stored partial input as complete. Summary/grid rendering
+  assumed server-validated array rows even though shared input may be malformed.
+- **Fix:** snapshot each rejection atomically; expose field errors only to its matching
+  draft/executable and keep a separate labelled past-attempt notice otherwise. Track error
+  focus at workspace lifetime, show recovery in Focus, and reveal the editor before focusing.
+  Fill only omitted draft fields from authoritative defaults and freeze visible defaults
+  on preparation without dropping queued edits. Render captured rejection as exact JSON;
+  unsupported grid shapes remain raw input until explicit default restoration.
+- **RED guards:**5 validation-identity failures on the pre-extension code;4 partial-default
+  failures;2 malformed-JSON failures;1 focused mutation of submission identity;2 editor
+  remount/Focus failures;5 invalid-grid cases fail on the merged GridField while its4
+  existing cases pass. Stages overlap, so counts are not added. All mutations restored.
+  Final853 frontend tests and36 real-backend Chromium/Firefox rows pass, including genuine
+  delayed400 responses and null/numeric shared grid rows. Backend/dependencies unchanged.
+- **Lesson:** validation belongs to the submitted input, not whatever is currently edited.
+  A closed disclosure still renders its children. Never apply validated-data formatters to
+  rejected shared input, fabricate replacement values, or treat editor remount as a new error.

@@ -42,6 +42,8 @@ const EMPTY_RUN = Object.freeze({
   hasApproachMetadata: false
 });
 
+const NO_FIELD_ERRORS = Object.freeze({});
+
 /** A deep copy of an input map, so later edits to the draft cannot rewrite what ran. */
 function snapshot(values) {
   try {
@@ -136,8 +138,8 @@ export default function useTrace(problemId, problem, options = {}) {
   const [error, setError] = useState(null);
   /** { kind, input } for the most recent failed submission, kept beside the old run. */
   const [rerunFailure, setRerunFailure] = useState(null);
-  /** Per-field messages from the last rejected POST /execute. Cleared on any success. */
-  const [fieldErrors, setFieldErrors] = useState({});
+  /** A rejection belongs to one captured input and executable, never a later draft. */
+  const [validationFailure, setValidationFailure] = useState(null);
   /** The full per-problem detail (javaCode, complexity, defaultGraphNodes, ...) —
    *  the catalogue list endpoint only carries summary fields, so canvases and the
    *  code/complexity panels need this merged in by the caller. Stored with the id it
@@ -183,7 +185,7 @@ export default function useTrace(problemId, problem, options = {}) {
     commit(EMPTY_RUN);
     setError(null);
     setRerunFailure(null);
-    setFieldErrors({});
+    setValidationFailure(null);
     setPending(false);
     setLoading(true);
     setSettledFor(null);
@@ -284,7 +286,7 @@ export default function useTrace(problemId, problem, options = {}) {
     setLoading(false);
     setIsPlaying(false);
     setPending(true);
-    setFieldErrors({});
+    setValidationFailure(null);
     setRerunFailure(null);
 
     const fail = (kind) => {
@@ -307,7 +309,7 @@ export default function useTrace(problemId, problem, options = {}) {
         if (!isCurrent()) return { ok: false, kind: 'superseded' };
         if (body?.error === 'unavailable_approach') return fail('unavailable-approach');
         const errors = body?.fieldErrors && typeof body.fieldErrors === 'object' ? body.fieldErrors : {};
-        setFieldErrors(errors);
+        setValidationFailure({ problemId, input: submitted, approachId, fieldErrors: errors });
         return { ok: false, kind: 'invalid', fieldErrors: errors, message: body?.message ?? null };
       }
       if (res.status === 501) return fail('untraced');
@@ -355,6 +357,7 @@ export default function useTrace(problemId, problem, options = {}) {
     requestIdRef.current += 1;
     abortRef.current?.abort();
     setPending(false);
+    setValidationFailure(null);
   }, []);
 
   // Leaving the page ends its authority: the request in flight is aborted and its
@@ -446,7 +449,8 @@ export default function useTrace(problemId, problem, options = {}) {
     truncated: activeRun.truncated,
     resolvedInput: activeRun.resolvedInput,
     anchors: activeRun.anchors,
-    fieldErrors: own ? fieldErrors : {},
+    validationFailure: own && validationFailure?.problemId === problemId ? validationFailure : null,
+    fieldErrors: own && validationFailure?.problemId === problemId ? validationFailure.fieldErrors : NO_FIELD_ERRORS,
     detail: detailState.problemId === problemId ? detailState.value : null,
     settled: settledFor === problemId && Boolean(problemId),
     play,

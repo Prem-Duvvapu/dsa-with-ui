@@ -199,6 +199,10 @@ export default function ProblemWorkspace() {
   // ── Focus targets ────────────────────────────────────────────────────────
   const stageHeadingRef = useRef(null);
   const inputHeadingRef = useRef(null);
+  // This presentation identity survives editor remounts across views. A rejection
+  // already observed in Code/Analysis must not steal focus when its editor returns.
+  const errorFocusTracker = useRef(null);
+  useEffect(() => { errorFocusTracker.current = session.validationFailure; }, [session.validationFailure]);
   /** Set by "Fix it in the editor": focus the editor once the Playground has rendered it. */
   const editorFocusPending = useRef(false);
 
@@ -207,6 +211,15 @@ export default function ProblemWorkspace() {
     if (!heading) return;
     heading.scrollIntoView?.({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
     heading.focus({ preventScroll: true });
+  };
+
+  const editInput = () => {
+    pause();
+    if (view === 'playground' && !isFocus) openEditor();
+    else {
+      editorFocusPending.current = true;
+      selectView('playground');
+    }
   };
 
   // A successful run returns attention to the result, paused at step 1; a rejected one
@@ -218,11 +231,11 @@ export default function ProblemWorkspace() {
   }, [submit]);
 
   useEffect(() => {
-    if (view !== 'playground' || !editorFocusPending.current) return;
+    if (view !== 'playground' || isFocus || !editorFocusPending.current) return;
     editorFocusPending.current = false;
     openEditor();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view]);
+  }, [view, isFocus]);
 
   const [copyState, setCopyState] = useState('idle');
   const copyTimer = useRef(null);
@@ -380,13 +393,37 @@ export default function ProblemWorkspace() {
       {traceError === 'untraced' && (
         <div role="status" className={styles.notice}><span>This problem is catalogued but not yet traced.</span></div>
       )}
-      {hasFieldErrors && view !== 'playground' && (
+      {hasFieldErrors && (view !== 'playground' || isFocus || !hasInputSpec) && (
         <div role="alert" aria-label="Your input could not run" className={styles.notice}>
-          <span>Your input could not run: the server rejected some fields. {steps.length > 0
-            ? 'The run shown is still the previous one.' : 'There is no run to show.'}</span>
-          <button type="button" className={styles.control} onClick={() => { editorFocusPending.current = true; selectView('playground'); }}>
+          <div className={styles.noticeContent}>
+            <p>Your input could not run. {steps.length > 0
+              ? 'The run shown is still the previous one.' : 'There is no run to show.'}</p>
+            <ul>{Object.entries(fieldErrors).map(([name, message]) => <li key={name}>
+              {session.inputSpec?.fields?.find(field => field.name === name)?.label ?? name}: {message}
+            </li>)}</ul>
+          </div>
+          <button type="button" className={styles.control} disabled={!hasInputSpec} onClick={editInput}>
             Fix it in the editor
           </button>
+        </div>
+      )}
+      {session.validationFailure && !hasFieldErrors && (
+        <div className={styles.notice}>
+          <span role="status" aria-label="Earlier submission rejected">
+            Earlier {session.rejectedApproach?.label ? `${session.rejectedApproach.label} ` : ''}submission rejected. {steps.length > 0
+              ? 'The run shown is still the previous one.' : 'There is no run to show.'}
+            {' '}{fieldErrors === session.validationFailure.fieldErrors
+              ? 'The server did not provide field-specific details.'
+              : 'The errors refer to that submission, not the current draft and approach.'}
+          </span>
+          <details className={`${styles.approachHelp} ${styles.validationDetails}`}>
+            <summary>Rejected submission details</summary>
+            <p>Rejected input</p>
+            <pre className={styles.rejectedInput} aria-label="Rejected input">{JSON.stringify(session.validationFailure.input, null, 2)}</pre>
+            <ul>{Object.entries(session.validationFailure.fieldErrors).map(([name, message]) => <li key={name}>
+              {(session.rejectedApproach?.inputSpec ?? problem?.inputSpec)?.fields?.find(field => field.name === name)?.label ?? name}: {message}
+            </li>)}</ul>
+          </details>
         </div>
       )}
       {linkNotices.length > 0 && (
@@ -557,7 +594,7 @@ export default function ProblemWorkspace() {
       {/* <main> keeps its landmark role; the tab panel is the element the tabs point at. */}
       <main id="workspace-view" className={`${styles.width}${isFocus ? ` ${styles.focusMain}` : ''}`} tabIndex={-1} data-focus={isFocus || undefined}>
         <div id={panelId} className={styles.panel} role="tabpanel" aria-labelledby={tabId(view)} tabIndex={-1}>
-          {session.approaches.length > 1 && <div hidden={isFocus}><ApproachSelector session={session} onRun={runFromEditor} /></div>}
+          {session.approaches.length > 1 && <div hidden={isFocus}><ApproachSelector session={session} onRun={runFromEditor} onEditInput={editInput} /></div>}
           {view === 'playground' && (
             <>
               <section className={styles.card} aria-labelledby="stage-title">
@@ -572,7 +609,7 @@ export default function ProblemWorkspace() {
                   {isFocus && run.approachLabel && <span className={styles.meta}>Showing: {run.approachLabel}</span>}
                   <div className={styles.cardActions}>
                     {hasInputSpec && !isFocus && (
-                      <button type="button" className={styles.control} onClick={openEditor}>
+                      <button type="button" className={styles.control} onClick={editInput}>
                         <Pencil size={16} aria-hidden="true" /> Edit input
                       </button>
                     )}
@@ -613,6 +650,8 @@ export default function ProblemWorkspace() {
                     inputSpec={session.inputSpec}
                     alternateInput={session.selectedAlternateInput}
                     fieldErrors={fieldErrors}
+                    fieldErrorIdentity={session.validationFailure}
+                    errorFocusTracker={errorFocusTracker}
                     running={traceLoading || pending}
                     values={draft.values}
                     onChange={draft.replace}

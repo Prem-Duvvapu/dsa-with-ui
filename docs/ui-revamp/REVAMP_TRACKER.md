@@ -91,6 +91,26 @@ current tally. D6/D7, P7/P8/P9,42 historical source omissions,77 platform contex
 41 statements, human/device/performance/security/release and production-backend gates
 remain open. This batch is not project completion.
 
+Current continuation (2026-10-12): the owner-requested five-problem batch merged as
+#223 / `b3a3497` with successful post-merge CI. The earlier conditional-publication
+paragraphs describe pre-publication snapshots. Seven candidates are merged;49 remain.
+The next local package, `fix/approach-input-guidance`, addresses the reported LIS
+rejection UX without raising recursive bounds or shortening drafts on selection.
+Declared size/value hints, explicit example replacement and actual server field reasons
+in Code/Analysis are implemented. Validation now belongs to its submitted input and
+executable, not an edited draft; focus survives view remounts and Focus recovery. Partial
+shared inputs adopt omitted authoritative defaults without replacing edits, and malformed
+grid input remains exact JSON without crashing or fabricated cells. Final local evidence:
+83 frontend files/853 tests, production build and36 real-backend Chromium/Firefox rows.
+See the dated log and `dp-approaches/input-guidance/` for exact verification.
+The owner subsequently authorized commit/push/merge on2026-10-12; CI gates the merge
+and GitHub records its final state. No new DP candidate,
+historical source omission or P7/P8/P9 gate is closed by this fix. A separate live
+deployment check now verifies17 offered default executions for the requested five,
+including exact source/spec/identity/full-delta/known answers, and all11 repaired core
+canonical source listings against current local source. The earlier public timeout/429
+snapshots are historical; whole-catalogue deployment/release and rollback remain open.
+
 ## Baseline (P0, 2026-09-29)
 
 | Item | Value |

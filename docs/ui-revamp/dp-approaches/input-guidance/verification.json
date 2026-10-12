@@ -1,0 +1,80 @@
+{
+  "verifiedOn": "2026-10-12",
+  "baseline": "b3a3497edef7e691ba95341ce36bc8cb75ca5b79",
+  "branch": "fix/approach-input-guidance",
+  "publication": "Local verification snapshot; owner subsequently authorized commit, push and merge on 2026-10-12. Publishing and merge remain gated on CI; GitHub records their final state.",
+  "scope": "Approach-specific guidance and explicit draft-only recovery; submitted-input/executable validation identity, late partial defaults, focus continuity, and truthful malformed-input rendering. Not a second validator or a new DP candidate.",
+  "frontend": {
+    "lockedInstall": "npm ci passed; 9 existing vulnerable package entries unchanged",
+    "command": "npx vitest run",
+    "files": 83,
+    "passed": 853,
+    "failed": 0,
+    "newCases": 42,
+    "redOnBaseline": 7,
+    "existingApproachCasesPassingOnBaseline": 22,
+    "additionalRedProof": {
+      "validationIdentity": "5 failures on pre-extension code; 62 existing cases pass",
+      "partialDraftDefaults": "4 failures on prior useInputDraft; 1 existing case passes",
+      "malformedCapturedJson": "2 failures on unsafe InputSummary rendering",
+      "focusIdentityMutation": "1 failure when errors are used as identity instead of the captured submission",
+      "remountAndFocusMode": "2 failures before persistent focus tracking and visible Focus recovery",
+      "malformedGridEditor": "5 failures on baseline GridField; 4 existing cases pass",
+      "scope": "Separate staged proofs overlap; these counts must not be summed as distinct cases. All mutations restored."
+    },
+    "excludedProof": "Initial runs missing jest-dom setup; final baseline regressions fail on actual missing UI/actions/field reasons.",
+    "build": "npx vite build passed",
+    "javascriptKB": 388.79,
+    "javascriptGzipKB": 123.80,
+    "cssKB": 98.74,
+    "cssGzipKB": 17.92,
+    "assets": ["index-CsVZSNeu.js", "index-DwejRBy7.css"]
+  },
+  "backend": {
+    "productionCodeChanged": false,
+    "reportedTestCases": 8131,
+    "failures": 0,
+    "errors": 0,
+    "existingSkips": 500,
+    "package": "mvn -B package -DskipTests passed after full tests",
+    "goldenChanges": 0,
+    "launcher": "bash start-smoke-test.sh passed"
+  },
+  "browser": {
+    "manifest": "browser-results.json",
+    "rows": 36,
+    "lisRows": 20,
+    "ninjaLimitRows": 8,
+    "climbingFocusRows": 4,
+    "malformedNinjaRows": 4,
+    "lateRejectionLisRows": 4,
+    "optionalProbeField": "lateRejectionPreservesEditedDraftAndFocus is true in the four scheduled LIS delayed-response rows; false in other LIS rows means that optional scenario was not scheduled, not an assertion failure.",
+    "engines": ["Chromium153.0.8010.12", "Firefox155.0"],
+    "themes": ["light", "dark"],
+    "lisWidths": [320, 390, 768, 1366, 1440],
+    "ninjaWidths": [320, 1366],
+    "checks": ["declared limits", "genuine INT_GRID", "exact HTTP400 field reason", "old run/link retention", "draft-only example", "native Tab/Enter and visible focus ring", "editor heading below sticky rail", "real LIS recursive answer3", "44px actions", "no page-wide overflow", "genuine delayed400 does not bind errors to edited input or steal focus", "error reappearance and editor remount preserve focus", "Focus-mode rejection recovery reveals editor before focus", "malformed shared grid keeps exact JSON and renders no fabricated cells", "explicit default repair only edits"],
+    "screenshotsVisuallyInspected": ["lis-input-guidance-320-light.png", "lis-code-rejection-320-light.png"]
+  },
+  "publicBackend": {
+    "manifest": "public-requested-five.json",
+    "site": "https://dsa-with-ui.vercel.app",
+    "offeredDefaultExecutions": 17,
+    "repairedCanonicalCoreSourceListings": 11,
+    "checks": ["exact source/spec/identity", "full/delta equivalence", "previously independently verified answers", "resolved input", "not truncated", "431/431 catalogue stats", "canonical source hashes"],
+    "scopeLimit": "These default cases and repaired listings only; not all inputs/all catalogue, public-browser verification of unpublished UI, performance or rollback sign-off. Initial detail timeout preceded the successful retry and completed probe."
+  },
+  "parallelReview": {
+    "blockingAfterCorrections": 0,
+    "correctedFinding": "Use authoritative INT_GRID; associate errors with captured submitted input/executable; retain focus identity across remounts; render unvalidated rejected input as exact JSON; preserve malformed grid rather than fabricate cells. Final independent review found no additional must-fix.",
+    "otherAuditWork": "Recommended four string source owners and separate safe dependency packages; no implementations stacked on this branch."
+  },
+  "remaining": {
+    "dpCandidates": 49,
+    "historicalNonPlatformSourceOmissions": 42,
+    "platformContextSources": 77,
+    "statements": 41,
+    "vulnerablePackageEntries": 9,
+    "gates": ["D6/D7", "P7 acceptance", "P8 human/device/accessibility/usability/performance", "P9 release/rollback", "C++ language honesty", "broader source semantics"]
+  }
+}

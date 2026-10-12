@@ -51,6 +51,23 @@ beforeEach(() => stub(() => Promise.resolve(ok(null))));
 afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
 describe('useTrace run identity', () => {
+  it('captures field-error input and executable together and clears them on navigation retirement', async () => {
+    stub(() => Promise.resolve({ ok: false, status: 400,
+      json: async () => ({ fieldErrors: { target: 'Too large.' } }) }));
+    const { result } = await loaded();
+    const values = { nums: [2, 7], target: 999 };
+    await act(async () => result.current.runInput(values, 'recursion'));
+    values.nums.push(99);
+    values.target = 9;
+    expect(result.current.validationFailure).toEqual({ problemId: 'two-sum',
+      input: { nums: [2, 7], target: 999 }, approachId: 'recursion', fieldErrors: { target: 'Too large.' } });
+    const run = result.current.run;
+    act(() => result.current.retireSubmission());
+    expect(result.current.validationFailure).toBeNull();
+    expect(result.current.fieldErrors).toEqual({});
+    expect(result.current.run).toBe(run);
+  });
+
   it('commits the input a custom run echoes together with its steps', async () => {
     stub((url, opts) => Promise.resolve(ok(traceFor('custom', JSON.parse(opts.body)))));
     const { result } = await loaded();

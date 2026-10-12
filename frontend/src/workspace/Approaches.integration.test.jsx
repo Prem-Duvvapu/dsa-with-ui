@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 import AppRouter from '../AppRouter';
-import { decodeInput } from '../hooks/useShareableView';
+import { decodeInput, encodeInput } from '../hooks/useShareableView';
 
 const definitions = ['recursion', 'memoization', 'tabulation'].map(id => ({ id,
   label: id[0].toUpperCase() + id.slice(1), summary: `Purpose of ${id}.`, isDefault: id === 'tabulation',
@@ -80,6 +80,158 @@ async function selectAndRun(id) {
 }
 
 describe('one approach selector above one committed workspace', () => {
+  it('keeps the selected tab focused when an old rejected editor remounts', async () => {
+    await loaded();
+    fireEvent.change(screen.getByLabelText('Stairs'), { target: { value: '11' } });
+    fireEvent.change(screen.getByRole('combobox', { name: 'Solution approach' }), { target: { value: 'recursion' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Run recursion' }));
+    await waitFor(() => expect(screen.getByRole('alert', { name: 'This input could not run' })).toHaveFocus());
+    const code = screen.getByRole('tab', { name: 'Code walkthrough' });
+    act(() => code.focus());
+    fireEvent.click(code);
+    const playground = screen.getByRole('tab', { name: 'Playground' });
+    act(() => playground.focus());
+    fireEvent.click(playground);
+    expect(playground).toHaveFocus();
+    expect(screen.getByRole('alert', { name: 'This input could not run' })).toBeVisible();
+    expect(posts).toHaveLength(1);
+  });
+
+  it('shows a pending submission’s rejection in Focus and reveals the editor before recovery focus', async () => {
+    await loaded();
+    const original = fetch.getMockImplementation();
+    let release;
+    fetch.mockImplementation((url, options = {}) => options.method === 'POST'
+      ? Promise.resolve({ ok: false, status: 400, json: () => new Promise(resolve => {
+        release = () => resolve({ fieldErrors: { n: 'Must be at most 10.' } });
+      }) }) : original(url, options));
+    fireEvent.change(screen.getByLabelText('Stairs'), { target: { value: '11' } });
+    fireEvent.change(screen.getByRole('combobox', { name: 'Solution approach' }), { target: { value: 'recursion' } });
+    const before = location.search;
+    fireEvent.click(screen.getByRole('button', { name: 'Run recursion' }));
+    await waitFor(() => expect(release).toBeTypeOf('function'));
+    fireEvent.click(screen.getByRole('button', { name: 'Focus', exact: true }));
+    await act(async () => release());
+    const rejection = await screen.findByRole('alert', { name: 'Your input could not run' });
+    expect(rejection).toHaveTextContent('Stairs: Must be at most 10.');
+    expect(rejection).toHaveTextContent('The run shown is still the previous one.');
+    fireEvent.click(screen.getByRole('button', { name: 'Fix it in the editor' }));
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Try your own input' })).toHaveFocus());
+    expect(screen.getByLabelText('Stairs')).toHaveValue(11);
+    expect(screen.getByText('tabulation ran n=5 step 1')).toBeInTheDocument();
+    expect(location.search).toBe(before);
+  });
+
+  it.each([{ n: [[1, 2], null] }, { n: [[1], 3] }])('preserves malformed rejected JSON without crashing closed details: %j', async input => {
+    const original = fetch.getMockImplementation();
+    fetch.mockImplementation((url, options = {}) => options.method === 'POST'
+      ? Promise.resolve({ ok: false, status: 400,
+        json: async () => ({ fieldErrors: { n: 'Expected a whole number.' } }) }) : original(url, options));
+    mount(`/problem/climbing-stairs?view=code&approach=recursion&input=${encodeInput(input)}`);
+    await screen.findByRole('status', { name: 'Earlier submission rejected' });
+    const captured = screen.getByLabelText('Rejected input');
+    expect(captured).toHaveTextContent(JSON.stringify(input, null, 2).replace(/\s+/g, ' '));
+    expect(captured).not.toBeVisible();
+    fireEvent.click(screen.getByText('Rejected submission details'));
+    expect(captured).toBeVisible();
+    expect(captured.textContent).toBe(JSON.stringify(input, null, 2));
+    expect(screen.getByText('Stairs: Expected a whole number.')).toBeVisible();
+    expect(screen.getByText('tabulation ran n=5 step 1')).toBeInTheDocument();
+  });
+
+  it('does not attach the rejected draft error to an explicitly prepared valid example', async () => {
+    await loaded();
+    fireEvent.change(screen.getByLabelText('Stairs'), { target: { value: '11' } });
+    fireEvent.change(screen.getByRole('combobox', { name: 'Solution approach' }), { target: { value: 'recursion' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Run recursion' }));
+    await screen.findByRole('alert', { name: 'This input could not run' });
+    const before = location.search;
+    fireEvent.click(screen.getByRole('button', { name: 'Replace input with recursion example' }));
+    expect(screen.getByLabelText('Stairs')).toHaveValue(5);
+    expect(screen.getByLabelText('Stairs')).not.toHaveAttribute('aria-invalid', 'true');
+    expect(screen.queryByRole('alert', { name: 'This input could not run' })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole('tab', { name: 'Analysis' }));
+    expect(screen.queryByRole('alert', { name: 'Your input could not run' })).not.toBeInTheDocument();
+    const earlier = screen.getByRole('status', { name: 'Earlier submission rejected' });
+    expect(earlier).toHaveTextContent('Recursion');
+    expect(earlier).toHaveTextContent('The run shown is still the previous one.');
+    fireEvent.click(screen.getByText('Rejected submission details'));
+    expect(screen.getByText('Stairs: Must be at most 10.')).toBeVisible();
+    const rejectedInput = screen.getByLabelText('Rejected input');
+    expect(rejectedInput).toBeVisible();
+    expect(rejectedInput.textContent).toBe(JSON.stringify({ n: 11 }, null, 2));
+    expect(screen.getByText('tabulation ran n=5 step 1')).toBeInTheDocument();
+    expect(posts).toEqual([{ approach: 'recursion', input: { n: 11 } }]);
+    for (const key of ['step', 'input', 'approach'])
+      expect(new URLSearchParams(location.search).get(key)).toBe(new URLSearchParams(before).get(key));
+  });
+
+  it('does not steal focus when editing back to an earlier rejected input, but focuses a new400', async () => {
+    await loaded();
+    const input = screen.getByLabelText('Stairs');
+    fireEvent.change(input, { target: { value: '11' } });
+    fireEvent.change(screen.getByRole('combobox', { name: 'Solution approach' }), { target: { value: 'recursion' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Run recursion' }));
+    await waitFor(() => expect(screen.getByRole('alert', { name: 'This input could not run' })).toHaveFocus());
+    input.focus();
+    fireEvent.change(input, { target: { value: '7' } });
+    expect(input).toHaveFocus();
+    expect(screen.getByRole('status', { name: 'Earlier submission rejected' })).toBeInTheDocument();
+    fireEvent.change(input, { target: { value: '11' } });
+    expect(input).toHaveFocus();
+    expect(screen.getByRole('alert', { name: 'This input could not run' })).toHaveTextContent('Must be at most 10.');
+    expect(screen.queryByRole('status', { name: 'Earlier submission rejected' })).not.toBeInTheDocument();
+    expect(posts).toHaveLength(1);
+    fireEvent.click(screen.getByRole('button', { name: 'Run input' }));
+    await waitFor(() => expect(screen.getByRole('alert', { name: 'This input could not run' })).toHaveFocus());
+    expect(posts).toHaveLength(2);
+  });
+
+  it.each(['Code walkthrough', 'Analysis'])('prepares an explicit smaller example from %s without running or sharing', async view => {
+    await loaded();
+    fireEvent.change(screen.getByLabelText('Stairs'), { target: { value: '11' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Next', exact: true }));
+    fireEvent.click(screen.getByRole('tab', { name: view }));
+    fireEvent.change(screen.getByRole('combobox', { name: 'Solution approach' }), { target: { value: 'recursion' } });
+    expect(screen.getByRole('status', { name: 'Input limits' })).toHaveTextContent('Stairs is 11; maximum 10.');
+    const before = location.search;
+    fireEvent.click(screen.getByRole('button', { name: 'Replace input with recursion example' }));
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Try your own input' })).toHaveFocus());
+    expect(screen.getByLabelText('Stairs')).toHaveValue(5);
+    expect(screen.getByText('tabulation ran n=5 step 2')).toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Solution approach' })).toHaveTextContent('showing: Tabulation');
+    expect(screen.queryByRole('status', { name: 'Input limits' })).not.toBeInTheDocument();
+    const previousParams = new URLSearchParams(before);
+    const currentParams = new URLSearchParams(location.search);
+    for (const key of ['input', 'step', 'approach']) expect(currentParams.get(key)).toBe(previousParams.get(key));
+    expect(posts).toEqual([]);
+    fireEvent.click(screen.getByRole('button', { name: 'Run input' }));
+    await screen.findByText('recursion ran n=5 step 1');
+    expect(posts).toEqual([{ approach: 'recursion', input: { n: 5 } }]);
+    await waitFor(() => expect(new URLSearchParams(location.search).get('approach')).toBe('recursion'));
+  });
+
+  it('shows the actual server field error in Code and Analysis and focuses the editor on recovery', async () => {
+    await loaded();
+    fireEvent.change(screen.getByLabelText('Stairs'), { target: { value: '11' } });
+    fireEvent.click(screen.getByRole('tab', { name: 'Code walkthrough' }));
+    fireEvent.change(screen.getByRole('combobox', { name: 'Solution approach' }), { target: { value: 'recursion' } });
+    const before = location.search;
+    fireEvent.click(screen.getByRole('button', { name: 'Run recursion' }));
+    const failure = await screen.findByRole('alert', { name: 'Your input could not run' });
+    expect(failure).toHaveTextContent('Stairs: Must be at most 10.');
+    expect(failure).toHaveTextContent('The run shown is still the previous one.');
+    expect(location.search).toBe(before);
+    expect(screen.getByText('tabulation ran n=5 step 1')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('tab', { name: 'Analysis' }));
+    expect(screen.getByRole('alert', { name: 'Your input could not run' })).toHaveTextContent('Stairs: Must be at most 10.');
+    fireEvent.click(screen.getByRole('button', { name: 'Fix it in the editor' }));
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Try your own input' })).toHaveFocus());
+    expect(screen.getByLabelText('Stairs')).toHaveValue(11);
+    expect(screen.getByRole('alert', { name: 'This input could not run' })).toHaveTextContent('Stairs: Must be at most 10.');
+    expect(posts).toEqual([{ approach: 'recursion', input: { n: 11 } }]);
+  });
+
   it.each([null, { ...definitions[2].teaching, recurrence: null },
     { ...definitions[2].teaching, state: { text: 'Malformed state' } }])(
     'does not break the trace or append a blank row for unavailable teaching %j', async teaching => {

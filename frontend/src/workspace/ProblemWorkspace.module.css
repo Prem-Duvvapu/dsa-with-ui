@@ -83,6 +83,15 @@
 .approachHelp { min-width: 0; color: var(--ink-secondary); font-size: var(--type-meta); }
 .approachHelp summary { display: flex; align-items: center; min-height: var(--target-min); cursor: pointer; }
 .approachHelp p { max-width: var(--width-reading); overflow-wrap: anywhere; margin-block: 6px; }
+.approachLimits { flex-basis: 100%; min-width: 0; color: var(--ink-strong); }
+.approachLimits > div { flex: 1 1 100%; }
+.approachLimits p, .noticeContent p { margin: 0; }
+.approachLimits ul, .noticeContent ul { margin: 6px 0; padding-left: 20px; }
+.approachLimits button { white-space: normal; text-align: left; max-width: 100%; padding-block: 8px; }
+.noticeContent { flex: 1 1 280px; min-width: 0; overflow-wrap: anywhere; }
+.validationDetails { flex-basis: 100%; min-width: 0; overflow-wrap: anywhere; }
+.validationDetails ul { margin: 6px 0; padding-left: 20px; }
+.rejectedInput { min-width: 0; max-width: 100%; margin-block: 6px; white-space: pre-wrap; overflow-wrap: anywhere; font: var(--type-control) var(--font-code); color: var(--ink-strong); }
 
 /* Controls shared by the workspace */
 .control { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: var(--target-min); padding: 0 14px; border: 1px solid var(--control-border); border-radius: var(--radius-control); background: var(--surface-panel); color: var(--ink-strong); font: inherit; font-size: var(--type-control); font-weight: 600; cursor: pointer; white-space: nowrap; }

@@ -261,3 +261,56 @@ RED, mutation and growth-harness proof. RCA-060/061 explain the defects.
 Forty-two of the historical53 non-platform omissions remain.77 platform contexts,
 C++ labelling, compiler-success semantics,41 statements,54 DP candidates and broader
 device/accessibility/performance/security/deployment/release gates remain open.
+
+## Current reconciliation — 2026-10-12
+
+The parametric correctness package merged as #222 / `cb56b83`; its local-publication
+wording above is historical. A real public-API probe now confirms that all11 repaired
+canonical core listings match current local source exactly, with source hashes in
+`dp-approaches/input-guidance/public-requested-five.json`. This closes those earlier
+source-deployment observations, not every catalogue source, input or release gate.
+
+The requested five DP learning paths merged as #223:7/56 candidates are verified,
+49 remain, superseding the old54 count. Historical non-platform omissions remain42;
+the next read-only audit recommends Reverse Every Word, Rabin–Karp, Infix to Postfix
+and Infix to Prefix as a four-owner source batch. Their helpers/constants are genuinely
+absent; compiler/execution/source-anchor and independent oracle checks are required
+before reducing that count.77 platform contexts,41 statements, C++ label honesty and
+the broader semantics/human/device/performance/security/release gates remain open.
+
+### Next-batch preflight — 2026-10-12, unchanged backend at `b3a3497`
+
+The following diagnostic is read-only preparation, not implementation or acceptance.
+All four served `javaCode` values exactly match their current golden sources. Compiling
+each with Java17, only a `Solution` wrapper and JDK `java.util` imports, fails:
+
+| Owner | Missing symbols | Required independent edge checks |
+| --- | --- | --- |
+| Reverse Every Word | `reverse(char[], int, int)` | Leading/trailing/repeated spaces, apostrophes, one-letter words; preserve every space |
+| Rabin–Karp | `hash(String)`, `roll(long, String, int, int)` | Longer pattern, equal-length final window, overlapping matches, hash collision rejected by exact comparison |
+| Infix to Postfix | `precedence(char)` | `A^B^C` → `ABC^^`; `A-B-C` → `AB-C-`; `(A+B)*(C-D)` → `AB+CD-*` |
+| Infix to Prefix | `reverseAndSwapParens(String)`, `precedence(char)` | `A^B^C` → `^A^BC`; `A-B-C` → `--ABC`; `(A+B)*(C-D)` → `*+AB-CD` |
+
+The actual Rabin–Karp implementation uses BASE256/MOD101. `ah` and `ca` both hash to90;
+the real endpoint with text=`ca`, pattern=`ah` returns no match and explicitly records
+a rejected collision. Text=`a`/pattern=`ab` returns []; `aaaaa`/`aa` returns [0,1,2,3];
+`zzabra`/`abra` returns [2]. Complete source must preserve those behaviors, constants,
+the longer-pattern guard and the no-roll-after-final-window guard.
+
+**Separate correctness priority, confirmed on the real endpoint:** both infix tracers
+accept malformed expressions and return HTTP200, `truncated:false` and completion text.
+Postfix `(A+B` yields `AB+(`, `A+B)` yields `AB+`, `A++B` yields `A+B+`, `AB` yields `AB`,
+and `()` yields an empty answer. Prefix yields `+AB`, `(+AB`, `++AB`, `AB` and an empty
+answer respectively. These are ten failing accepted-input behaviors, not ten repaired
+cases. Character-pattern validation is not expression grammar validation.
+
+After the current UI package lands, use separate reviewable packages: repair the two
+string-search/reversal sources; then repair the infix accepted-input boundary together
+with its complete source and explicit grammar tests. The latter must deliberately
+reject invalid forms with field-specific400 before any steps, preserve valid grouping
+and both associativity rules, and prove the prior run/share link survives rejection.
+Do not pass source-only acceptance while silently changing tracer semantics, or certify
+the infix contract solely from its default examples. Derive additional valid expression
+oracles from an independent expression tree rather than copying shunting-yard logic.
+
+No backend source, test, golden or dependency changes were made by this preflight.

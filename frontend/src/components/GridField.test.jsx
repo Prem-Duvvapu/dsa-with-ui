@@ -4,6 +4,15 @@ import '@testing-library/jest-dom';
 import GridField from './GridField';
 
 describe('GridField', () => {
+  it.each([[], null, [[1, 2], null], [[1, 2], 3], [[1], [2, 3]]].map(value => ({ value })))('preserves unsupported grid input instead of inventing cells or crashing: $value', ({ value }) => {
+    const onChange = vi.fn();
+    render(<GridField field={{ type: 'INT_GRID', constraints: { maxRows: 5, maxCols: 5 } }} value={value} onChange={onChange} />);
+    expect(screen.getByText(/cannot show this input as grid cells/i)).toBeInTheDocument();
+    expect(screen.getByLabelText('Current grid input').textContent).toBe(JSON.stringify(value, null, 2));
+    expect(screen.queryByRole('button', { name: /Cell row/ })).not.toBeInTheDocument();
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   it('clicking a cell cycles it toward maxValue then wraps to minValue', () => {
     const field = { name: 'grid', constraints: { minValue: 0, maxValue: 1 } };
     const onChange = vi.fn();

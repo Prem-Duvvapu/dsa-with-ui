@@ -4,6 +4,8 @@ import useInputDraft, { sameInput } from './useInputDraft';
 import useShareableView from './useShareableView';
 import { defaultInput } from '../input/randomizeInput';
 
+const NO_FIELD_ERRORS = Object.freeze({});
+
 /**
  * One problem's learning session: the trace and its playback, the editable draft, what the
  * link shares, and restoring a link someone opened. It lives above every panel, so the
@@ -252,8 +254,20 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
     : null;
   const draftChanged = Boolean(draft.values && committedInput && !sameInput(draft.values, committedInput));
 
+  // A rejected submission and a draft may diverge while a response body is decoding,
+  // during an edit, or when another approach is prepared. Do not mark that new draft
+  // invalid using the old executable's errors. Keep the captured rejection available;
+  // its messages become field errors only for the exact matching input/approach.
+  const rejection = trace.validationFailure;
+  const rejectedApproach = approaches.find(a => a.id === (rejection?.approachId ?? defaultApproachId)) ?? null;
+  const errorsMatchDraft = rejection
+    && (rejection.approachId ?? defaultApproachId) === (selectedApproach?.id ?? null)
+    && sameInput(draft.values, { ...defaultInput(inputSpec), ...rejection.input });
+
   return {
     ...trace,
+    fieldErrors: errorsMatchDraft ? rejection.fieldErrors : NO_FIELD_ERRORS,
+    rejectedApproach,
     problem,
     approaches,
     selectedApproach,

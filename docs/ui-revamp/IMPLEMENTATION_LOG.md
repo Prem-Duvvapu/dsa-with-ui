@@ -2032,3 +2032,124 @@ is not production backend deployment certification, a real-device/virtual-keyboa
 human screen-reader/learner sign-off, or a broad performance result. D6/D7,49 remaining
 DP candidates,42 historical source omissions,77 platform contexts,41 statements,
 language/security/device/performance/deployment/release gaps and P7/P8/P9 remain open.
+
+## 2026-10-12 — continuation: actionable preserved-input guidance (local, not published)
+
+Authoritative starting state: clean native worktree `/home/prem/dsa-p8`, merged main
+`b3a3497` (#223), no open PRs, successful post-merge CI38072295837. The original
+Windows worktree remains untouched. The active completion goal resumes implementation;
+publication of this new package is requested separately, not inferred from approval
+of the previous five-problem batch. Working branch: `fix/approach-input-guidance`.
+
+### The reported LIS journey
+
+The canonical eight-value example is correctly preserved when recursion is prepared,
+but recursion allows at most6 values. A400 kept the old run; Code/Analysis told the
+learner only that some fields were rejected. This package improves that recovery,
+not the algorithm or its safe limits:
+
+- The selector explains mismatches using the selected approach's declared size/value
+  bounds, including actual INT_GRID row/column limits. It does not invent a problem-id
+  rule, act as a second InputValidator, or declare an input valid when hints are absent.
+- Adjust input preserves all values, pauses, returns to Playground when necessary,
+  scrolls below the sticky rail and focuses the editor heading.
+- Replace input with this approach's example is an explicit replacement of the draft.
+  It never runs or shares; the old source, trace, selected step and input echo remain.
+  Both recovery actions are disabled during loading, pending execution and restoration.
+- Code/Analysis show the server's actual field-specific reasons, with the old-result
+  label and editor action. Server validation remains authoritative. Grammar/joint
+  constraints and missing/malformed input are not duplicated in these hints.
+- Validation failures capture submitted input, problem and executable together. Only
+  a structurally matching current draft/selected executable receives field errors;
+  edited or replaced drafts instead retain a separately labelled earlier rejection.
+  That disclosure renders exact JSON, not a summary that assumes validated values.
+- Partial drafts seeded before a spec arrives receive omitted authoritative defaults;
+  explicit null/empty/zero and same-tick edits remain intact. Preparing another approach
+  freezes the old visible defaults before adopting the new schema.
+- Only a newly observed rejection focuses the error summary. A stable workspace tracker
+  survives editor remounts, so editing back to rejected values or switching views does
+  not steal focus. Rejections stay visible in Focus mode; Fix reveals the editor first.
+- Empty/malformed grid input is preserved as raw JSON with an explicit repair message,
+  never fabricated as [[0]] or passed to unsafe row.map calls. Restore defaults remains
+  an explicit draft-only replacement; backend validation is unchanged.
+
+### Verification and review
+
+- Seven final UI regressions fail against `b3a3497`'s selector/workspace;22 pre-existing
+  approach integration cases pass there. The fix is restored after the bounded check.
+  Initial tests without jest-dom setup are excluded; the final baseline run has actual
+  missing guidance/actions and missing field-message assertions, not harness failures.
+- 42 new frontend cases cover those journeys, genuine scalar/string/array/grid types,
+  zero/null/absent limits, no mutation, selected-spec changes and all three busy states.
+  Further RED proofs:5 validation-identity failures,4 partial-default failures,
+  2 malformed captured-JSON failures,1 focus-identity mutation failure,2 remount/Focus
+  failures and5 invalid-grid failures. These staged proofs overlap and are not summed
+  as distinct regressions. All production mutations were restored before acceptance.
+  Clean `npm ci`; final full suite83 files/853 tests passes without weakening assertions.
+  One redundant pre-submit URL snapshot assertion was removed; live successful sharing
+  and failure-retention assertions remain. Production build: JS388.79kB/gzip123.80;
+  CSS98.74kB/gzip17.92, identified by `index-CsVZSNeu.js` / `index-DwejRBy7.css`.
+- Unchanged backend:8,131 reported cases,0 failures/errors,500 existing skips. Maven
+  package and launcher process-tree smoke pass. No backend/golden/dependency change.
+- Final real-backend production-browser sweep:36 rows, Chromium153 and Firefox155.
+  LIS:five widths320/390/768/1366/1440 ×both themes ×both engines (20). Ninja:grid
+  width hints at320/1366 ×both themes ×both engines (8). Climbing Stairs focus journeys
+  at320/1366 light in both engines (4), and malformed shared Ninja rows at320 light
+  in both engines, once with a null row and once with a numeric row (4).
+  Four LIS rows hold a genuine server400 while the learner edits; late errors preserve
+  that draft and its focus. Climbing verifies error reappearance, editor remount and
+  Focus recovery. Malformed-grid journeys verify exact JSON, no crash/fabricated cells
+  and explicit Restore defaults edits only. Normal execution rate limits remain active.
+  Checks include actual400
+  reasons in Code/Analysis, old-run/link retention, explicit example-only editing,
+  real six-value recursive answer3, native Tab/Enter recovery, visible focus outline,
+  unobscured editor heading,44px actions and no page-wide overflow. Final manifest dated
+  2026-10-12T16:21:14.317Z names the final build above and supersedes earlier28/32-row
+  snapshots. The optional late-response flag is true only in its four scheduled LIS rows;
+  false elsewhere means not scheduled, not a failed assertion.
+  Phone guidance and rejection viewport captures were visually inspected; full-page
+  screenshots can capture off-viewport fixed elements and are not the final captures.
+- Parallel independent review found and corrected an initial GRID/INT_GRID seam
+  mistake and reviewed the added validation/draft/focus/raw-grid boundaries. The final
+  reviewer found no additional must-fix. Native keyboard activation/traversal
+  is covered in the browser rather than claimed from a unit-test click.
+- The first public LIS detail probe timed out; a later retry returned200 and advertised
+  Recursion6/Memoization9/Tabulation16. The follow-up production verification script
+  checks exact deployed source/spec/identity, full/delta and recorded answers against
+  current local source and previously independently verified default cases. Its final
+  manifest passes all17 offered default executions for the requested five and all11
+  repaired core canonical source listings, with hashes. This closes those earlier
+  scoped deployment observations; it is not an all-input/all-catalogue load test,
+  public browser verification of this unpublished UI fix or rollback certification.
+
+Evidence/probes: `dp-approaches/input-guidance/`, `input-guidance-journey.cjs`,
+`verify-public-requested-five.cjs`. No PR is created by this local evidence snapshot.
+
+Publication follow-up (2026-10-12): the owner explicitly requested “commit, push and
+merge the changes”. Approval is now granted for this package. A final frontend suite
+and production build are rerun before publishing; PR/merge and CI outcomes are recorded
+in GitHub. Earlier approval-requested/local-only wording describes the verification
+snapshot, not a continuing approval blocker. No next implementation package is stacked.
+
+### Next work and unchanged boundaries
+
+Parallel read-only source audit recommends a four-owner string package: Reverse Every
+Word, Rabin–Karp, Infix to Postfix and Infix to Prefix. Their current listings omit real
+helpers/constants. Reuse standalone source ownership and `DisplayedCoreSolutionTest`;
+preserve actual hash constants, final-window/longer-pattern handling, spacing and both
+infix associativity rules. Expression grammar is a separate diagnosed input-contract
+gap: allowed characters alone admit unmatched parentheses. Do not silently combine a
+source-only golden update with altered trace semantics or call compilation certification
+of all431 solutions. Historical source omissions remain42 until verified repair.
+
+The fresh locked dependency audit still has9 vulnerable package entries (4moderate,
+3high,2critical), not nine distinct advisory records. Two moderate production entries
+are Router/Router DOM; seven are development tooling. Compatible nanoid/source-map-js
+patches and explicit Vite/Vitest and Router migrations are separate reviewable packages;
+do not run forced audit fixes or dismiss critical development-worker risks. Nothing in
+this UI package resolves them.
+
+The full completion objective stays active:49 DP candidates, D6/D7,42 historical source
+omissions,77 platform contexts,41 statements, language honesty, broad renderer/device/
+virtual-keyboard/zoom/screen-reader/learner/performance/security/release and rollback
+work remains. This fix does not close P7/P8/P9 or certify the whole public catalogue.

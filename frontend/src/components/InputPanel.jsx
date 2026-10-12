@@ -38,7 +38,7 @@ import styles from './InputPanel.module.css';
  * case" button's own precedent: the whole point of saving is to remove friction, and
  * loading-without-running would put it straight back.
  */
-export default function InputPanel({ problemId, inputSpec, alternateInput, fieldErrors, running, values, onChange, onRun, draftChanged = false }) {
+export default function InputPanel({ problemId, inputSpec, alternateInput, fieldErrors, fieldErrorIdentity = fieldErrors, errorFocusTracker, running, values, onChange, onRun, draftChanged = false }) {
   const fieldIdBase = useId();
   // The sole editor is the workspace's normal-flow section:
   // fields first, then the actions, each named by its visible text so the accessible name
@@ -46,6 +46,8 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
   const { presets, savePreset, removePreset } = useInputPresets(problemId);
   const [savingName, setSavingName] = useState(null);
   const summaryRef = useRef(null);
+  const localErrorFocusTracker = useRef(null);
+  const focusTracker = errorFocusTracker ?? localErrorFocusTracker;
   const summaryId = useId();
   const draft = values ?? {};
 
@@ -54,10 +56,13 @@ export default function InputPanel({ problemId, inputSpec, alternateInput, field
 
   const errorEntries = Object.entries(fieldErrors ?? {});
   useEffect(() => {
-    if (errorEntries.length > 0) summaryRef.current?.focus();
-    // Keyed on the error object's identity: each rejected submission produces a new one.
+    const newRejection = focusTracker.current !== fieldErrorIdentity;
+    focusTracker.current = fieldErrorIdentity;
+    if (newRejection && errorEntries.length > 0) summaryRef.current?.focus();
+    // Announce a NEW rejection, not old fields becoming visible again while editing.
+    // Direct callers default to fieldErrors; the session supplies the captured rejection.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fieldErrors]);
+  }, [fieldErrorIdentity, focusTracker]);
 
   if (!inputSpec?.fields?.length) {
     return (

@@ -83,6 +83,63 @@ const link = (approach, input, step = 3) => `/problem/climbing-stairs?${new URLS
   ...(input ? { input: encodeInput(input) } : {}), step: String(step), view: 'code' })}`;
 
 describe('approach identity belongs to the committed run, not the candidate', () => {
+  it('ties rejection fields to the submitted input and executable, not another prepared approach', async () => {
+    const { result } = await loaded();
+    act(() => { result.current.draft.replace({ n: 20 }); result.current.selectApproach('recursion'); });
+    await act(async () => result.current.submit(result.current.draft.values));
+    expect(result.current.fieldErrors.n).toBe('Too large for this approach.');
+    const before = location.search;
+    const run = result.current.run;
+    act(() => result.current.selectApproach('memoization'));
+    expect(result.current.draft.values).toEqual({ n: 20 });
+    expect(result.current.fieldErrors).toEqual({});
+    expect(result.current.validationFailure).toMatchObject({ input: { n: 20 }, approachId: 'recursion' });
+    expect(result.current.run).toBe(run);
+    expect(location.search).toBe(before);
+    expect(posts).toHaveLength(1);
+    act(() => result.current.selectApproach('recursion'));
+    expect(result.current.fieldErrors.n).toBe('Too large for this approach.');
+  });
+
+  it('does not label an edited draft with an earlier submission’s field errors', async () => {
+    const { result } = await loaded();
+    act(() => { result.current.draft.replace({ n: 20 }); result.current.selectApproach('recursion'); });
+    await act(async () => result.current.submit(result.current.draft.values));
+    const before = location.search;
+    const run = result.current.run;
+    act(() => result.current.draft.replace({ n: 7 }));
+    expect(result.current.fieldErrors).toEqual({});
+    expect(result.current.run).toBe(run);
+    expect(result.current.draft.values).toEqual({ n: 7 });
+    expect(location.search).toBe(before);
+    expect(posts).toHaveLength(1);
+    act(() => result.current.draft.replace({ n: 20 }));
+    expect(result.current.fieldErrors.n).toBe('Too large for this approach.');
+  });
+
+  it('keeps a delayed400 on its captured draft when a learner edits while its body decodes', async () => {
+    const { result } = await loaded();
+    const original = fetch.getMockImplementation();
+    let release;
+    fetch.mockImplementation((url, options = {}) => options.method === 'POST'
+      ? Promise.resolve({ ok: false, status: 400, json: () => new Promise(resolve => {
+        release = () => resolve({ fieldErrors: { n: 'Too large for this approach.' } });
+      }) }) : original(url, options));
+    act(() => { result.current.draft.replace({ n: 20 }); result.current.selectApproach('recursion'); });
+    const before = location.search;
+    const run = result.current.run;
+    let submission;
+    act(() => { submission = result.current.submit(result.current.draft.values); });
+    await waitFor(() => expect(release).toBeTypeOf('function'));
+    act(() => result.current.draft.replace({ n: 7 }));
+    await act(async () => { release(); await submission; });
+    expect(result.current.validationFailure).toMatchObject({ input: { n: 20 }, approachId: 'recursion' });
+    expect(result.current.fieldErrors).toEqual({});
+    expect(result.current.draft.values).toEqual({ n: 7 });
+    expect(result.current.run).toBe(run);
+    expect(location.search).toBe(before);
+  });
+
   it('preserves an untouched draft when the new approach has different defaults', async () => {
     recursionDefault = 2;
     const { result } = await loaded();
