@@ -1,6 +1,6 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **7/56 candidates verified: Climbing Stairs, Frog Jump and the owner-requested five-problem batch. The new batch is owner-approved for publication after CI; 49 candidates and D6/D7 remain pending.**
+Status: **7/56 candidates verified and merged: Climbing Stairs, Frog Jump and the owner-requested five-problem batch (#223 / `b3a3497`). PR/post-merge CI passed. On 2026-10-12, all17 offered default executions for the requested five match current source/spec/identity and known answers on the public API (full/delta).49 candidates, D6/D7 and broader release/rollback checks remain pending.**
 Current repository work: the parametric-search correctness batch merged #222 / `cb56b83`. The owner explicitly prioritized LIS, Stock with Transaction Fee, Minimum Insertions to Palindrome, Count Partitions with Given Difference and Ninja and His Friends, and authorized commit/push/merge after verification. No unrelated next package is started.
 Prepared 2026-10-07 against merged main `9d0aa10` (PR #208).
 This is a separate feature from the unfinished P8/P9 revamp gates; it does not close them.

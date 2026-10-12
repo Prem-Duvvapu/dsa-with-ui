@@ -23,7 +23,9 @@ export default function useInputDraft(problemId, inputSpec) {
   const defaults = useMemo(() => (hasSpec ? defaultInput(inputSpec) : null), [hasSpec, inputSpec]);
 
   const own = edited.problemId === problemId && problemId ? edited.values : null;
-  const values = own ?? defaults;
+  // A partial link may be seeded before its spec arrives. Fill only omitted fields
+  // from authoritative defaults, as the server does; explicit null/empty edits stay.
+  const values = useMemo(() => own === null ? defaults : { ...defaults, ...own }, [own, defaults]);
 
   /** Replace the whole draft: a field edit, Randomize, Restore defaults, a loaded preset. */
   const replace = useCallback((next) => {
@@ -32,8 +34,11 @@ export default function useInputDraft(problemId, inputSpec) {
 
   /** Keep a derived draft when changing specs, without overwriting a same-tick edit. */
   const preserve = useCallback(() => {
-    setEdited((current) => current.problemId === problemId && current.values !== null
-      ? current : { problemId, values: defaults });
+    setEdited((current) => {
+      const editedValues = current.problemId === problemId ? current.values : null;
+      return { problemId, values: editedValues === null && defaults === null ? null
+        : { ...defaults, ...editedValues } };
+    });
   }, [problemId, defaults]);
 
   return { values, defaults, isEdited: own !== null, replace, preserve };

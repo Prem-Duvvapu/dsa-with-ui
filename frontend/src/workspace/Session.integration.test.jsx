@@ -170,6 +170,31 @@ describe('App session: what ran is what is shown (B2, B3)', () => {
 });
 
 describe('App session: sharing only what succeeded (B4)', () => {
+  it('keeps legacy field errors on a matching partial shared input after omitted defaults are filled', async () => {
+    renderApp(`/problem/two-sum?input=${encodeInput({ target: 999 })}`);
+    const summary = await screen.findByRole('alert', { name: 'This input could not run' });
+    expect(summary).toHaveTextContent('Target sum: Must be at most 100.');
+    expect(screen.getByLabelText('Target sum')).toHaveValue(999);
+    expect(screen.getByLabelText('Target sum')).toHaveAttribute('aria-invalid', 'true');
+    expect(screen.getAllByLabelText(/Position \d+ value/).map(input => Number(input.value)))
+      .toEqual([2, 7, 11, 15]);
+  });
+
+  it('does not mark a legacy restored default invalid after another input was rejected', async () => {
+    await openEditor();
+    await runTarget(999);
+    await screen.findByRole('alert', { name: 'This input could not run' });
+    const before = latestLocation.search;
+    fireEvent.click(screen.getByRole('button', { name: 'Restore defaults' }));
+    expect(screen.getByLabelText('Target sum')).toHaveValue(9);
+    expect(screen.getByLabelText('Target sum')).not.toHaveAttribute('aria-invalid', 'true');
+    expect(screen.queryByRole('alert', { name: 'This input could not run' })).not.toBeInTheDocument();
+    expect(screen.getByRole('status', { name: 'Earlier submission rejected' })).toHaveTextContent('The run shown is still the previous one.');
+    expect(screen.getByText(DEFAULT_STEP)).toBeInTheDocument();
+    expect(latestLocation.search).toBe(before);
+    expect(calls.filter(c => c.method === 'POST')).toHaveLength(1);
+  });
+
   it('writes a successful custom input to the link', async () => {
     await openEditor();
     await runTarget(13);

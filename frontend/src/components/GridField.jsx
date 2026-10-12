@@ -8,14 +8,21 @@ import { Plus, Minus } from 'lucide-react';
  * are bounded by minRows/maxRows/maxCols, matching InputValidator's own checks.
  */
 export default function GridField({ field, value, onChange }) {
-  const grid = Array.isArray(value) && value.length ? value : [[0]];
+  const grid = value;
   const c = field.constraints || {};
   const minRows = c.minRows ?? 1;
   const maxRows = c.maxRows ?? Infinity;
   const maxCols = c.maxCols ?? Infinity;
   const minValue = c.minValue ?? 0;
   const maxValue = c.maxValue ?? 1;
-  const cols = grid[0]?.length ?? 1;
+  const drawable = Array.isArray(grid) && grid.length > 0 && Array.isArray(grid[0]) && grid[0].length > 0
+    && grid.every(row => Array.isArray(row) && row.length === grid[0].length && row.every(Number.isInteger));
+  if (!drawable) return <div className={fields.gridStack}>
+    <p className={fields.inputNotice}>Cannot show this input as grid cells. It is preserved below.
+      {' '}Use Restore defaults to explicitly replace it with an editable example.</p>
+    <pre className={fields.rawInput} aria-label="Current grid input">{JSON.stringify(value, null, 2) ?? 'No grid value provided.'}</pre>
+  </div>;
+  const cols = grid[0].length;
 
   const cycle = (v) => (v >= maxValue ? minValue : v + 1);
 
