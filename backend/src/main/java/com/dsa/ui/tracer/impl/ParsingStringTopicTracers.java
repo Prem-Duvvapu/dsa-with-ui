@@ -1,5 +1,6 @@
 package com.dsa.ui.tracer.impl;
 
+import com.dsa.ui.model.DsType;
 import com.dsa.ui.tracer.*;
 import org.springframework.stereotype.Component;
 
@@ -461,32 +462,17 @@ class SumBeautyAllSubstringsTracer extends StringTracerSupport {
 }
 
 @Component
-class ReverseEveryWordTracer extends StringTracerSupport {
+class ReverseEveryWordTracer extends CompleteSourceTracer {
     public String id() { return "reverse-every-word"; }
 
+    public DsType dsType() { return DsType.STRING; }
+
     public InputSpec inputSpec() {
-        return InputSpec.of(patternedText("s", "Sentence", "Let's take LeetCode contest", 1, 60,
+        return InputSpec.of(StringTracerSupport.patternedText("s", "Sentence", "Let's take LeetCode contest", 1, 60,
                 "[A-Za-z' ]+", "Use letters, apostrophes, and spaces only."));
     }
 
     public Map<String, Object> alternateInput() { return Map.of("s", "God Ding"); }
-
-    public String annotatedCode() {
-        return """
-               public String reverseEveryWord(String s) {
-                   char[] chars = s.toCharArray();
-                   int start = 0;
-                   while (start < chars.length) {
-                       int end = start;
-                       while (end < chars.length && chars[end] != ' ') end++;
-                       // @a reverse
-                       reverse(chars, start, end - 1);
-                       start = end + 1;
-                   }
-                   // @a done
-                   return new String(chars);
-               }""";
-    }
 
     public void run(Inputs in, StepEmitter emit) {
         String s = in.getString("s");

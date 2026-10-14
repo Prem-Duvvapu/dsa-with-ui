@@ -1,5 +1,7 @@
 // Real-backend source/highlight journey. PLAYWRIGHT_MODULE may point to a local install.
-const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const playwright = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
+const engine = process.env.AUDIT_ENGINE || 'chromium';
+if (!['chromium', 'firefox'].includes(engine)) throw Error('Unknown browser engine');
 const fs = require('fs');
 const path = require('path');
 const { createHash } = require('crypto');
@@ -38,10 +40,10 @@ const placeholder = /initialiseBaseCases|evaluateTransitionCandidates|extractAns
       throw Error(`${id}: complete solution is not served`);
     }
   }
-  const browser = await chromium.launch();
+  const browser = await playwright[engine].launch();
   const rows = [];
   const save = complete => fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({
-    generated: new Date().toISOString(), browser: 'Chromium', browserVersion: browser.version(),
+    generated: new Date().toISOString(), browser: engine === 'chromium' ? 'Chromium' : 'Firefox', browserVersion: browser.version(),
     realBackend: true, family, captureId, servedBuild,
     complete, completeSources: ids, rows
   }, null, 2));

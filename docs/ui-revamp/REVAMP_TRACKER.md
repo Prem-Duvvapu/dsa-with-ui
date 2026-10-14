@@ -111,6 +111,21 @@ including exact source/spec/identity/full-delta/known answers, and all11 repaire
 canonical source listings against current local source. The earlier public timeout/429
 snapshots are historical; whole-catalogue deployment/release and rollback remain open.
 
+Continuation (2026-10-13): input guidance merged as #224 / `3a570c7`; PR/post-merge CI
+and production frontend deployment passed. The subsequent local source-only package
+`fix/complete-string-source-batch3` completes Reverse Every Word and Rabin–Karp Java
+resources without changing run/input/alternate/trace data.13 core owners are covered;
+two new source regressions and six compiling mutations prove the guards. See the dated
+log and `evidence/source-code/core-batch3/` for final acceptance counts and scope.
+Publication needs fresh approval;42 historical omissions remain on merged main, with
+40 remaining after this package lands. This is not a new DP candidate or P7/P8/P9 closure.
+Infix grammar/sources and independently reproduced canonical-complexity defects remain
+separate packages; source compilation alone cannot certify the catalogue's metadata.
+
+Publication follow-up (2026-10-14): the owner instructed continuation after the batch3
+publication request; this package now proceeds through CI-gated publishing. GitHub is
+the final PR/merge authority. The local-only wording above describes the earlier snapshot.
+
 ## Baseline (P0, 2026-09-29)
 
 | Item | Value |

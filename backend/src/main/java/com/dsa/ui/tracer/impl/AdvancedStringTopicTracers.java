@@ -199,34 +199,21 @@ class StringHashingTheoryTracer extends StringTracerSupport {
 }
 
 @Component
-class RabinKarpTracer extends StringTracerSupport {
+class RabinKarpTracer extends CompleteSourceTracer {
     private static final int BASE = 256;
     private static final int MOD = 101;
 
     public String id() { return "rabin-karp-algo"; }
 
+    public DsType dsType() { return DsType.STRING; }
+
     public InputSpec inputSpec() {
         return InputSpec.of(
-                patternedText("text", "Text", "abracadabra", 1, 30, "[a-z]+", "Use lowercase letters a-z."),
-                patternedText("pattern", "Pattern", "abra", 1, 12, "[a-z]+", "Use lowercase letters a-z."));
+                StringTracerSupport.patternedText("text", "Text", "abracadabra", 1, 30, "[a-z]+", "Use lowercase letters a-z."),
+                StringTracerSupport.patternedText("pattern", "Pattern", "abra", 1, 12, "[a-z]+", "Use lowercase letters a-z."));
     }
 
     public Map<String, Object> alternateInput() { return Map.of("text", "aaaaa", "pattern", "aa"); }
-
-    public String annotatedCode() {
-        return """
-               public List<Integer> rabinKarp(String text, String pattern) {
-                   List<Integer> matches = new ArrayList<>();
-                   long patternHash = hash(pattern), windowHash = hash(text.substring(0, pattern.length()));
-                   for (int start = 0; start + pattern.length() <= text.length(); start++) {
-                       // @a window
-                       if (patternHash == windowHash && text.startsWith(pattern, start)) matches.add(start);
-                       windowHash = roll(windowHash, text, start, pattern.length());
-                   }
-                   // @a done
-                   return matches;
-               }""";
-    }
 
     public void run(Inputs in, StepEmitter emit) {
         String text = in.getString("text");

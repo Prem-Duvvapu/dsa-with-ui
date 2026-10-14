@@ -1,0 +1,112 @@
+{
+  "verifiedOn": "2026-10-13",
+  "baseline": "3a570c786be3d1e9a496c93f733d6ab6e6fff0a9",
+  "branch": "fix/complete-string-source-batch3",
+  "publication": "Verification snapshot from2026-10-13. On2026-10-14 the owner instructed continuation after the publication request; CI-gated publishing is authorized and GitHub records the final PR/merge state.",
+  "scope": "Two complete learner-facing Java sources; existing runtime algorithms, input specifications, defaults, alternates, sibling owners and trace data unchanged. Reusable evidence probes gain Firefox/string cases; no frontend production or dependency changes.",
+  "sourceContracts": {
+    "owners": 13,
+    "cases": 42,
+    "newJUnitCasesComparedWithMain": 6,
+    "publishedExamples": 30,
+    "originalListingRun": { "cases": 2, "failures": 2, "errors": 0 },
+    "baselineWrapperDiagnostic": "Both old snippets still fail Java17 compilation with only a Solution wrapper and java.util imports: absent reverse or hash/roll helpers.",
+    "compilation": "Exact displayed Java17 on an isolated classpath/platform classloader, without added class/import wrappers or app helpers.",
+    "fixtures": {
+      "reverseExhaustive": 1364,
+      "reverseExplicit": 7,
+      "rabinExhaustivePairs": 868,
+      "rabinExplicitPairs": 9,
+      "rabinSeededCapPairs": 80,
+      "newOracleFixturesTotal": 2328,
+      "scope": "Each fixture executes tracer and compiled source; not2328 unique inputs. Defaults/alternates and30 published examples for all13 owners are additional."
+    },
+    "hashChecks": "Compiled private helper and actual per-window values match independent expanded polynomial arithmetic; BASE256/MOD101; ca/ah hash90 collision rejected, caah/ah returns[2].",
+    "typeChecks": "String declaration for reversal; List<Integer> declaration and actual Integer elements for Rabin, not printed numeric strings.",
+    "mutations": [
+      { "kind": "compiling no-op reversal", "selectedCases": 1, "failures": 1 },
+      { "kind": "compiling hash-only matching", "selectedCases": 1, "failures": 1 },
+      { "kind": "compiling zero hash helper with correct constant declarations retained", "selectedCases": 1, "failures": 1, "observed": "expected90, got0" },
+      { "kind": "unchecked numeric-string indices under List<Integer> declaration", "selectedCases": 1, "failures": 1, "observed": "expected Integer, got String" },
+      { "kind": "CharSequence instead of declared String result", "selectedCases": 1, "failures": 1 },
+      { "kind": "List<String> instead of List<Integer> result", "selectedCases": 1, "failures": 1 }
+    ],
+    "mutationBoundary": "All six compiling mutations restored. Proof stages overlap the same test methods and must not be summed as distinct new tests.",
+    "delivery": "Registry-derived resource ownership, parameter names/types, independent examples, operation anchors and HTTP detail/full/delta source delivery remain covered.",
+    "excludedAttempt": "Initial implementation compilation caught a missing DsType import; corrected. Not acceptance evidence."
+  },
+  "backend": {
+    "command": "mvn -B test",
+    "reportedTestCases": 8137,
+    "failures": 0,
+    "errors": 0,
+    "existingSkips": 500,
+    "finalRun": "Successful full suite after all six mutations restored and all compiled-helper/type guards included",
+    "package": "mvn -B package -DskipTests passed after final full tests; finished2026-10-13T18:36:03Z",
+    "launcher": "bash start-smoke-test.sh passed; both stub service process trees stopped cleanly"
+  },
+  "frontend": {
+    "lockedInstall": "npm ci passed; nine existing vulnerable package entries unchanged",
+    "files": 83,
+    "passed": 853,
+    "failed": 0,
+    "productionBuild": true,
+    "javascriptKB": 388.79,
+    "javascriptGzipKB": 123.80,
+    "cssKB": 98.74,
+    "cssGzipKB": 17.92,
+    "assets": ["index-CsVZSNeu.js", "index-DwejRBy7.css"],
+    "productionCodeChanged": false,
+    "lockfileOrDependenciesChanged": false
+  },
+  "goldens": {
+    "regenerationCases": 432,
+    "failures": 0,
+    "changed": 2,
+    "repairedIds": ["rabin-karp-algo", "reverse-every-word"],
+    "onlyChanges": ["code", "anchors", "steps[].activeLine"],
+    "report": "golden-comparison.json",
+    "unchangedAlgorithmDataAndNarration": true,
+    "sourceSha256": {
+      "rabin-karp-algo": "1f56f888bb9954644a188e7e2493b84ad8b2b6559b5064737e8863e08c06299e",
+      "reverse-every-word": "77f2665e673f818e398720a65e35d12855828970f52c2b055bed8fe6bf53261b"
+    }
+  },
+  "browser": {
+    "realPackagedBackend": true,
+    "mode": "production-preview",
+    "engines": { "chromium": "153.0.8010.12", "firefox": "155.0" },
+    "defaultRows": 104,
+    "rowsPerEngine": 52,
+    "coreOwners": 13,
+    "widths": [320, 1366],
+    "themes": ["light", "dark"],
+    "failures": 0,
+    "newCustomJourneys": 16,
+    "compatibilityJourneys": 2,
+    "exactExecutionsPerCustomJourney": 3,
+    "everySourceHashMatchesCurrentGolden": true,
+    "assetsMatchFinalBuild": true,
+    "normalExecutionRateLimit": "Unchanged60/minute; journeys paced and serial, no bypass",
+    "checks": ["exact first/middle/final source highlights", "source-owned End", "view/step retention", "no page errors or horizontal overflow", "mixed/all-space input preserved", "collision then real final match", "legal longer pattern completes with no matches", "exact successful shared input", "400 summary focus", "400 source/step/link retention", "view changes execute nothing"],
+    "reports": ["chromium/results.json", "firefox/results.json", "chromium/custom/", "firefox/custom/", "previous-core-compatibility/custom-results.json", "dp-compatibility/custom-results.json"],
+    "screenshotsVisuallyInspected": ["chromium/source-320-light.png", "firefox/source-1366-dark.png"]
+  },
+  "liveApiStats": { "catalogued": 431, "traced": 431, "untraced": 0, "duplicateIds": {}, "orphanedTracerIds": [] },
+  "probeHelperTests": { "cases": 3, "passed": 3 },
+  "independentReview": "Read-only review found no new production must-fix; compiled-helper and declared/runtime-type guards adopted; evidence counts, source hashes and custom identities independently checked.",
+  "deferredDefects": [
+    { "problem": "rabin-karp-algo", "observed": "Canonical detail/default/execute complexity says graph O(V+E), visited arrays and recursion", "provider": "AdvancedGraphService.java:255,274", "status": "Existing, not fixed in this source-only package" },
+    { "problem": "reverse-every-word", "observed": "Canonical metadata says O(1) auxiliary despite actual char[] working storage", "provider": "StringService.java:67,76", "status": "Existing, not fixed in this source-only package" }
+  ],
+  "remaining": {
+    "historicalNonPlatformOmissionsOnMergedMain": 42,
+    "afterThisPackageLands": 40,
+    "platformContextSources": 77,
+    "missingStatements": 41,
+    "dpCandidates": 49,
+    "vulnerablePackageEntries": 9,
+    "gates": ["infix grammar/full sources", "canonical complexity metadata", "broader source semantics", "C++ language honesty", "D6/D7", "P7 broader acceptance", "P8 human/device/accessibility/performance/learner", "P9 security/deployment/release/rollback"]
+  },
+  "limits": "This package verifies stated source/algorithm and browser cases, not all431 answers/metadata/inputs, all viewports, real devices, screen readers, learner outcomes or performance. Backend deployment of these unpublished repairs is not certified."
+}

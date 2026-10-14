@@ -1,0 +1,33 @@
+{
+  "generated": "2026-10-13T18:19:41.377Z",
+  "realBackend": true,
+  "passed": true,
+  "id": "balanced-parentheses",
+  "engine": "chromium",
+  "browserVersion": "153.0.8010.12",
+  "width": 1366,
+  "servedBuild": {
+    "assets": [
+      "/assets/index-CsVZSNeu.js",
+      "/assets/index-DwejRBy7.css"
+    ]
+  },
+  "executions": 3,
+  "input": {
+    "expression": "[]{}()"
+  },
+  "rejectedInput": {
+    "expression": "abc"
+  },
+  "checks": [
+    "custom source matches default source",
+    "resolved input matches submitted input",
+    "shared input decodes to committed input",
+    "400 focuses error summary",
+    "400 preserves shared input",
+    "400 preserves shared step",
+    "400 preserves source and step",
+    "view switches execute nothing",
+    "no page-wide overflow"
+  ]
+}

@@ -2153,3 +2153,113 @@ The full completion objective stays active:49 DP candidates, D6/D7,42 historical
 omissions,77 platform contexts,41 statements, language honesty, broad renderer/device/
 virtual-keyboard/zoom/screen-reader/learner/performance/security/release and rollback
 work remains. This fix does not close P7/P8/P9 or certify the whole public catalogue.
+
+## 2026-10-13 — complete string sources, batch3 (local, publication pending)
+
+Starting authority: merged main `3a570c7` (#224), successful PR/post-merge CI and
+production frontend deployment, no open PRs and a clean native worktree. The original
+Windows worktree remains untouched. The owner resumed the full completion goal and
+requested two hours of work. Branch: `fix/complete-string-source-batch3`. Publishing
+approval for this new package was requested separately; it is not inferred from the
+prior package's commit/push/merge instruction. No later implementation package is stacked.
+
+### Source repair and invariants
+
+- Reverse Every Word now owns a complete typed Solution with its actual in-place
+  character-swap helper. All original spaces, including repeated/leading/trailing/all
+  spaces, stay in place. The visualizer's existing extension beyond the authored
+  platform statement is preserved, not silently tightened or normalized.
+- Rabin–Karp now owns a complete typed Solution using actual BASE256/MOD101, a real
+  hash helper, exact comparison after hash equality, negative-remainder normalization
+  and a final-window guard. The first substring is formed only inside a valid window;
+  a longer pattern safely visits no windows. The existing window anchor now highlights
+  the actual window-bound loop, not an unexecuted comparison for a no-window case.
+- Only these two owners migrate from StringTracerSupport to CompleteSourceTracer,
+  retain explicit String dsType and use the same package-visible field helper.
+  Their run methods, alternates and following siblings compare byte-for-byte with
+  the merged baseline; input fields retain identical values/constraints/defaults.
+  No frontend production, dependency, lockfile, registry-ID or trace-data changes.
+
+### Regression and independent review
+
+- Two new source tests fail against the original listings. A separate Java17 compiler
+  diagnostic adds only a class wrapper and JDK imports to the old snippets; both still
+  fail on missing reverse or hash/roll helpers, so the defect is not just missing wrappers.
+- Independent reversal fixtures:1,364 exhaustive strings over letters/apostrophe/space
+  plus7 explicit boundaries. Independent naive-match fixtures:868 exhaustive pairs,
+  9 explicit edge cases and80 seeded30/12-cap pairs. These2,328 fixtures execute both
+  tracer and compiled-source paths, not2,328 unique inputs. The13 core owners' default/
+  alternate cases and all30 published examples remain covered by the generic contract.
+- The compiled hash helper and each live window's hash are checked against independent
+  expanded polynomial arithmetic. Literal constants alone cannot hide a bogus helper.
+  Typed return declarations and actual Integer indices are checked; printed list equality
+  alone cannot distinguish numeric strings from integer answers.
+- Compiling no-op reversal and hash-only matching mutants fail2/2 selected cases;
+  a compiling zero-hash helper fails1/1 even with the correct constants present.
+  A raw-list numeric-string mutant fails the runtime element-type guard. Wrong String/
+  List<Integer> declaration mutations fail2/2 declaration checks; the raw-element mutation
+  fails1/1 despite identical printed indices. These6 compiling mutation checks are separate;
+  their final outcomes and the
+  restored full-suite result are recorded in `core-batch3/verification.json`.
+  Staged proof counts overlap and must not be summed as distinct new tests. A first
+  implementation compile caught a missing DsType import; corrected, and excluded from
+  acceptance. No assertion, timeout, growth fixture or skip was weakened.
+- Independent read-only review found no new production must-fix. It proposed the typed
+  result guard and precise no-added-wrapper README wording; both were adopted. It also
+  verified completed manifests, source hashes, input identities and three-request counts.
+
+### Browser and scope evidence
+
+Real packaged backend with normal60/minute execution limits; fixed production-preview
+assets `index-CsVZSNeu.js` / `index-DwejRBy7.css`.104 default-source rows pass:13 core
+owners ×320/1366px ×both themes ×Chromium153/Firefox155. Exact source hashes agree with
+current goldens; first/middle/final highlights, source End ownership, retained view/step,
+no page errors or horizontal overflow and identical served assets are checked.
+
+Sixteen custom journeys pass: two widths/two engines for preserved mixed spacing,
+60 spaces, a rejected hash collision followed by a genuine final match, and a longer
+pattern with no matches. A400 focuses the summary and retains prior source/step/shared
+input. Every journey observes exactly3 executions; view changes execute nothing.
+The one-step all-space run intentionally omits default step1 from its shared URL.
+Two older Balanced Parentheses and LCS custom compatibility journeys also pass.
+Chromium phone-light and Firefox desktop-dark viewport captures were visually inspected.
+
+Golden regeneration passes432 cases. Exactly two parsed goldens change only code,
+anchors and highlighted lines. Full frontend83 files/853 tests and build pass after
+fresh npm ci; JS388.79kB/gzip123.80, CSS98.74kB/gzip17.92. Full backend, final source
+contract, packaging and launcher results are reconciled in the final verification
+manifest:8,137 reported backend cases,0 failures/errors,500 unchanged skips;42 source
+contracts across13 owners,0 failures; final package and launcher smoke pass. The full
+suite includes the final helper/type guards after all six mutations were restored.
+Probe-helper tests pass3/3. Existing nine vulnerable dependency entries remain.
+
+Evidence: `evidence/source-code/core-batch3/`, the existing now dual-engine source probe
+and extended custom probe. Server processes started for these journeys were stopped
+after completion, before later Maven mutation/verification runs. This is not deployed
+backend-source verification of these unpublished repairs or human/device/learner/
+performance/release sign-off, and it does not close P7/P8/P9 or D6/D7.
+
+### Newly confirmed, separately scoped metadata work
+
+Rabin–Karp's live metadata says graph O(V+E), visited arrays and recursion; Reverse
+Every Word's metadata incorrectly says O(1) auxiliary despite its char[]. These values
+originate in provider bulk templates and are snapshotted into canonical approaches,
+then served on detail/selector/executions. A separate provider-owned correction must
+precede registry snapshots and test independently expected bounds across all seams.
+The audit also found identical graph text on all nine advanced-string rows and generic
+linear text on nested-loop palindrome/beauty owners; broader metadata is not certified.
+No generic replacement or silent metadata change is included in this source-only package.
+
+Merged main still has42 historical non-platform omissions; this verified package prepares
+40 remaining after publication.77 platform contexts,41 statements,49 DP candidates,
+C++ language honesty, infix grammar/full sources, metadata, broader source semantics,
+dependency/security, device/accessibility/zoom/performance/learner/release and rollback
+gates remain. The full completion objective stays active, not redefined around this batch.
+
+Publication follow-up (2026-10-14): after the request to commit/push/merge this verified
+package and then continue, the owner instructed “continue working for next 2 hours”.
+This normal user response is the go-ahead for the proposed publication workflow, not an
+automatic goal continuation. The42 source-contract cases pass again on2026-10-14; the
+package is published through a PR with both CI tiers required before merge. Final
+publication/CI state is the GitHub record. No next implementation package begins until
+this package lands.
