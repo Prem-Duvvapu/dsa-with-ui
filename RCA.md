@@ -1965,7 +1965,8 @@ statement; adding only KEYPAD would not complete those seams.
 ## RCA-066 — Out-of-range numbers became different successful inputs
 
 - **Discovered:** 2026-10-14, read-only InputValidator and real API/browser preflight.
-- **Status:** Open; pre-existing numeric paths are unchanged by the infix grammar fix.
+- **Status:** Fixed locally in the separate exact-integer package; verification/publication
+  is recorded in the dated implementation log. The infix package did not change these paths.
 - **Symptom:** `count-good-numbers` with JSON `n=4294967297`, `-4294967295`, or
   `340282366920938463463374607431768211457` returns200, `resolvedInput.n=1`, answer5.
   Arrays, grids, trees and linked lists exhibit the same wrap. Graph payload numeric
@@ -1990,3 +1991,20 @@ statement; adding only KEYPAD would not complete those seams.
   proof that every endpoint/input was individually reproduced.
 - **Evidence:** `infix-contracts/numeric-boundary-preflight.json`,
   `numeric-boundary-browser.json`/PNG and `numeric-field-inventory.json`.
+
+### RCA-066 implementation
+
+Scalar, array/list/tree and grid values now use the same exact conversion as graph
+payloads before declared bounds. BigInteger uses intValueExact; other integral JSON
+numbers must fit signed32-bit before narrowing. Floating/decimal values are refused,
+not truncated. Tree nulls, existing type-error wording, position/row numbering and
+all subsequent schema constraints are retained. No frontend-only suppression or cap change.
+
+ExactIntegerValidationTest covers all five kinds, positive/negative Long/BigInteger
+overflow, valid32-bit edges, primitive wrappers, decimals, null slots and aggregation.
+ExactIntegerHttpTest exercises six real scalar/collection endpoints in both encodings,
+with the existing checked graph-payload path as control. The initial19-case suite
+fails14 cases on merged #226; the five valid-boundary controls already pass.
+The real browser rejection journey checks previous input/source/step/link identity,
+retained rejected draft and summary focus. This is a shared-boundary fix, not a claim
+that all340 structurally exposed endpoints were individually exercised.

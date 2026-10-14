@@ -2426,3 +2426,37 @@ Continue the38 remaining historical omissions after infix,77 authoritative platf
 contexts,41 statements,49 DP candidate reviews/implementations and D6/D7; then complete
 the still-open P7/P8/P9 human/device/accessibility/performance/release gates. Source
 compilation alone is not mathematical, metadata, UI or project-completion certification.
+
+## 2026-10-14 — Infix publication and exact numeric validation
+
+The owner explicitly requested items1–3. Infix published as #226, squash
+`be91011964587e3dfe8317e0813714fe82eeb6ab`, after both branch/PR backend and frontend,
+GitGuardian and Vercel checks passed. Post-merge CI38616913383 also passed.
+
+The next separate branch, `fix/exact-integer-validation`, fixes RCA-066 at the shared
+InputValidator boundary. Exact conversion precedes all scalar/array/list/tree/grid
+bounds; the existing graph conversion delegates to the same helper. BigInteger uses
+intValueExact, integral JSON wrappers must fit32-bit, and decimal types are rejected.
+Valid inputs, caps, sources, defaults and schema rules are unchanged. Existing type-error
+wording and one-based element messages are preserved; range errors explain signed32-bit.
+
+RED:19 new cases fail14 on #226; the five valid-boundary controls already pass.
+The real API suite checks50 rejected requests in full/delta: positive/negative Long and
+BigInteger aliases across six actual endpoints plus checked graph-payload controls.
+Final full backend8,202 cases/0 failures/errors/500 unchanged skips; frontend83files/
+857tests and build pass. Packaging and launcher pass;432 regenerated golden cases
+produce no content changes. An intermediate helper changed two legacy error strings;
+unchanged numbering assertions detected it and exact wording was restored, not weakened.
+
+Eight packaged-backend production-build journeys pass in Chromium/Firefox,320/1366,
+light/dark. They first run n2 (answer20), seek step3, then submit4294967297. Each gets
+400 and no trace, keeps the rejected draft, focuses the summary and retains the previous
+source, successful input, step and share link. Code switch causes no execution; no
+page errors or horizontal overflow. `evidence/source-code/numeric-integrity/` and
+`numeric-rejection-journey.cjs` record scope and served asset identity. No dependencies
+or frontend production code changed. This does not certify every exposed endpoint or
+close Gas/Phone, metadata, source, DP, security or P7/P8/P9 release gates.
+
+The owner subsequently explicitly approved committing, pushing and CI-gated merging
+the numeric, Gas Stations and Phone fixes as separate verified PRs. The numeric package
+now proceeds through publishing; GitHub records its final merge status.

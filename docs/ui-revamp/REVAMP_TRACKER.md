@@ -170,6 +170,13 @@ the verified infix package, then fix numeric overflow, Gas Stations precision an
 Phone Letter Combinations budget correctness. Earlier local/approval wording is a
 historical snapshot. Each package is separately verified and CI-gated.
 
+Items1–3 follow-up: infix merged as #226 / `be91011` with branch/PR and post-merge CI
+green. Numeric exactness is verified locally:8,202 backend cases/500 unchanged skips,
+857 frontend tests/build,432 regenerated goldens with no changes,50 API refusals and
+8 real Chromium/Firefox rejection-continuity journeys. RCA-066 and the dated log record
+the fix; `evidence/source-code/numeric-integrity/` records exact scope. Gas precision
+and Phone budget are still the next separate packages, not completed by this repair.
+
 ## Baseline (P0, 2026-09-29)
 
 | Item | Value |

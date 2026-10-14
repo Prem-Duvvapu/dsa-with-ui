@@ -1,0 +1,12 @@
+{
+  "baseline": "be91011964587e3dfe8317e0813714fe82eeb6ab",
+  "scope": "Exact signed32-bit conversion before scalar, array/list/tree and grid bounds; graph payload conversion retains its existing checked behavior. No valid input/default/cap/source/trace or dependency change.",
+  "red": {"cases": 19, "failures": 14, "errors": 0, "validBoundaryControlsAlreadyPass": 5},
+  "backend": {"reportedCases": 8202, "failures": 0, "errors": 0, "unchangedSkips": 500, "newCases": 19, "package": true, "launcherSmoke": true},
+  "api": {"encodingModes": ["full", "delta"], "rejectedRequests": 50, "kinds": "Five numeric field kinds plus graph scalar start and checked graph payload control", "refusal": "400 invalid_input, field error, no steps"},
+  "frontend": {"files": 83, "tests": 857, "productionBuild": true, "assets": ["index-ociQG6EK.js", "index-DwejRBy7.css"], "productionCodeChanged": false},
+  "goldens": {"regenerationCases": 432, "changedFiles": 0},
+  "browser": {"journeys": 8, "engines": ["chromium", "firefox"], "widths": [320, 1366], "themes": ["light", "dark"], "requestsPerJourney": 3, "report": "browser-results.json", "checks": "Real400, no trace, exact rejected draft, error-summary focus, prior successful n2 source/input/step/share retained, no reexecution on Code switch, no page errors or horizontal overflow"},
+  "excludedIntermediateAttempt": "Initial shared helper altered two legacy type-error strings. The unchanged numbering tests caught it; separate type/range messages restore exact existing wording. Final full suite uses the restored messages.",
+  "limits": "Structural shared-boundary repair, not individual endpoint certification of all340 exposed problems. No release/device/screen-reader/performance sign-off. Gas precision and Phone branching budget remain separate packages."
+}
