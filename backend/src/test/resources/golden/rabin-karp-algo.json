@@ -1,9 +1,9 @@
 {
   "anchors" : {
-    "done" : 8,
-    "window" : 5
+    "done" : 25,
+    "window" : 15
   },
-  "code" : "public List<Integer> rabinKarp(String text, String pattern) {\n    List<Integer> matches = new ArrayList<>();\n    long patternHash = hash(pattern), windowHash = hash(text.substring(0, pattern.length()));\n    for (int start = 0; start + pattern.length() <= text.length(); start++) {\n        if (patternHash == windowHash && text.startsWith(pattern, start)) matches.add(start);\n        windowHash = roll(windowHash, text, start, pattern.length());\n    }\n    return matches;\n}",
+  "code" : "import java.util.ArrayList;\nimport java.util.List;\n\npublic class Solution {\n    private static final int BASE = 256;\n    private static final int MOD = 101;\n\n    public List<Integer> solve(String text, String pattern) {\n        List<Integer> matches = new ArrayList<>();\n        long high = 1;\n        for (int index = 1; index < pattern.length(); index++) high = high * BASE % MOD;\n        long patternHash = hash(pattern);\n        long windowHash = 0;\n        // Check the bound before forming the first substring: a longer pattern visits no windows.\n        for (int start = 0; start + pattern.length() <= text.length(); start++) {\n            if (start == 0) windowHash = hash(text.substring(0, pattern.length()));\n            if (patternHash == windowHash && text.startsWith(pattern, start)) matches.add(start);\n            // There is no incoming character after the final full window.\n            if (start + pattern.length() < text.length()) {\n                windowHash = (windowHash - text.charAt(start) * high) % MOD;\n                if (windowHash < 0) windowHash += MOD;\n                windowHash = (windowHash * BASE + text.charAt(start + pattern.length())) % MOD;\n            }\n        }\n        return matches;\n    }\n\n    private static long hash(String value) {\n        long hash = 0;\n        for (int index = 0; index < value.length(); index++) hash = (hash * BASE + value.charAt(index)) % MOD;\n        return hash;\n    }\n}\n",
   "problemId" : "rabin-karp-algo",
   "resolvedInput" : {
     "pattern" : "abra",
@@ -12,7 +12,7 @@
   "stepCount" : 9,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 5,
+    "activeLine" : 15,
     "description" : "Window [0,3] \"abra\" has hash 10; pattern hash is 10. Exact match recorded.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -87,7 +87,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 5,
+    "activeLine" : 15,
     "description" : "Window [1,4] \"brac\" has hash 2; pattern hash is 10. Move on.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -162,7 +162,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 5,
+    "activeLine" : 15,
     "description" : "Window [2,5] \"raca\" has hash 5; pattern hash is 10. Move on.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -237,7 +237,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 5,
+    "activeLine" : 15,
     "description" : "Window [3,6] \"acad\" has hash 92; pattern hash is 10. Move on.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -312,7 +312,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 5,
+    "activeLine" : 15,
     "description" : "Window [4,7] \"cada\" has hash 85; pattern hash is 10. Move on.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -387,7 +387,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 5,
+    "activeLine" : 15,
     "description" : "Window [5,8] \"adab\" has hash 77; pattern hash is 10. Move on.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -462,7 +462,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 5,
+    "activeLine" : 15,
     "description" : "Window [6,9] \"dabr\" has hash 100; pattern hash is 10. Move on.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -537,7 +537,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 5,
+    "activeLine" : 15,
     "description" : "Window [7,10] \"abra\" has hash 10; pattern hash is 10. Exact match recorded.",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -612,7 +612,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 8,
+    "activeLine" : 25,
     "description" : "Rabin–Karp found pattern \"abra\" at indices [0, 7].",
     "queueOrStackState" : null,
     "callStack" : [ ],

@@ -1858,3 +1858,36 @@ or a promise that a draft without size/value warnings passes grammar/joint const
 - **Lesson:** validation belongs to the submitted input, not whatever is currently edited.
   A closed disclosure still renders its children. Never apply validated-data formatters to
   rejected shared input, fabricate replacement values, or treat editor remount as a new error.
+
+### RCA-057 follow-up — 2026-10-13 complete string reversal and rolling-hash sources
+
+Reverse Every Word called an absent `reverse` helper. Rabin–Karp called absent `hash`
+and `roll` helpers, formed an out-of-range first substring for a longer pattern, and
+unconditionally rolled beyond its final window. Adding only a class/JDK-import wrapper
+to either original listing still fails Java17 compilation. Their live tracers already
+handled these inputs correctly; this is a displayed-source defect, not a new algorithm.
+
+The local source-only package moves just those owners to the existing strict core-source
+resource family, retaining explicit String type and unchanged runtime/spec/alternate
+behavior. Reverse preserves every space and includes its actual swap helper. Rabin–Karp
+uses the genuine BASE256/MOD101 hash, exact collision verification, negative-remainder
+normalization, safe first-window initialization and a guarded final roll. Its existing
+window marker now points at the window-bound loop, which also truthfully explains a
+longer-pattern no-window decision without adding an unreachable anchor.
+
+Two new source tests fail against the original listings. Independently compiled sources
+are compared with exhaustive token-reversal and naive-match oracles; compiled hash values
+and emitted window hashes are checked against expanded polynomial arithmetic. Compiling
+no-op reversal, hash-only matches and zero-hash-helper mutations all fail their selected
+regressions, then are restored. Declared/runtime return-type guards catch three further
+compiling mutants with numeric strings or incorrect result declarations. All six are
+restored. Source ownership, typed fields, published examples and HTTP detail/full/delta
+delivery remain registry-derived. Exactly two parsed goldens
+change only code/anchors/highlight lines. Final counts, completed browser manifests,
+excluded compilation attempts and publication limits are recorded in the batch3 evidence.
+
+This does not repair pre-existing canonical complexity metadata: Rabin–Karp receives
+graph-traversal metadata from AdvancedGraphService, and Reverse Every Word's StringService
+template incorrectly claims constant auxiliary space. Correct provider-owned authored
+values before canonical approach snapshots in a separate tested package. Default source
+compilation and source/trace agreement are not catalogue-wide metadata certification.

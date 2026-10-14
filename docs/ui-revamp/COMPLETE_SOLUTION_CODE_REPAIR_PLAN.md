@@ -314,3 +314,55 @@ the infix contract solely from its default examples. Derive additional valid exp
 oracles from an independent expression tree rather than copying shunting-yard logic.
 
 No backend source, test, golden or dependency changes were made by this preflight.
+
+## String-source batch3 — local continuation, 2026-10-13
+
+The input-guidance package merged as #224 / `3a570c7`, with successful PR/post-merge CI
+and production frontend deployment. The next separate working branch is
+`fix/complete-string-source-batch3`, based on that merged commit.
+
+Reverse Every Word and Rabin–Karp now own complete typed Java17 resources under
+`solutions/core/`; their old incomplete overrides are removed. Only these two owners
+leave StringTracerSupport; they retain explicit String dsType and call the same
+package-visible input-field helper. All runtime algorithms, defaults, input limits,
+alternates and sibling tracers remain unchanged. The older11 core owners remain covered.
+
+Independent source fixtures:1,364 exhaustive spacing/apostrophe strings plus7 explicit
+boundaries;868 exhaustive text/pattern pairs plus9 explicit and80 seeded full-cap cases.
+These2,328 fixtures execute each of the tracer and compiled-source paths, not2,328 unique
+inputs. Default/alternate and all30 published examples across13 core owners are additional.
+The compiled hash helper and live per-window values are checked against independently
+expanded polynomial hashes. Actual collision `ca`/`ah` must not match; `caah`/`ah` must
+find index2. Long patterns, final windows, overlaps and all-space sentences are covered.
+
+Two original-listing regressions fail; a class/JDK-import-only diagnostic confirms that
+missing helpers persist even with a wrapper. Six compiling semantic/type mutations fail
+their selected tests and are restored. Exactly two parsed goldens change source,
+anchors and activeLine only. No frontend production, dependency, lockfile, catalogue
+registration or trace-data change. Final suites/browser evidence are in
+`evidence/source-code/core-batch3/`; publication requires fresh owner approval.
+
+This prepares a reduction of historical omissions42→40 when the verified package lands,
+not a claim that all remaining listings compile independently. Infix grammar/full sources
+remain the next separate correctness package.49 DP candidates,77 platform contexts,
+41 statements, C++ labels, broader source semantics and P7/P8/P9 remain open.
+
+### Separately reproduced canonical-complexity defects
+
+Rabin–Karp's served detail/default approach has O(V+E) time/space and graph-traversal/
+visited-array/recursion explanations. AdvancedGraphService's shared constructor supplies
+those values to all nine advanced-string rows. Reverse Every Word has O(1) auxiliary
+space despite its actual `char[]`; StringService's template also labels nested-loop
+Longest Palindromic Substring and Sum of Beauty as linear. These are not repaired here.
+
+Canonical approaches snapshot provider metadata at registry construction; changing only
+a response map or mutating catalogue values later is insufficient. A bounded next metadata
+package should author these two owners' actual bounds before canonical registration and
+assert independent expected values on detail/default/custom/full/delta/nested approach
+responses. Reverse needs O(N) working char storage and O(N) output, not O(1) auxiliary.
+Rabin needs a clearly defined worst-case verification bound (N=text length,M=pattern
+length,W=max(0,N−M+1),C=equal-hash candidates): O(M+W+C×M), with C≤W; no unconditional
+average-linear promise for a fixed small modulus. Working storage can be O(M) due to the
+initial Java17 substring copy; output holds R indices. Exclude input strings and animation
+instrumentation explicitly. Broader provider-template metadata requires its own per-owner
+inventory, never another generic replacement or automatic closure of all431 problems.

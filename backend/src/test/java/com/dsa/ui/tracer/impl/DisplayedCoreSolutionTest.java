@@ -169,6 +169,126 @@ class DisplayedCoreSolutionTest {
     }
 
     @Test
+    void reverseEveryWordPreservesEverySpaceAgainstIndependentTokenReversal() throws Exception {
+        var tracer = owner(ReverseEveryWordTracer.class);
+        try (var solution = compile(tracer)) {
+            assertEquals(String.class, solution.entry().getReturnType());
+            for (String input : List.of(" ", " ".repeat(60), " a  BC'  d ", "'", "B",
+                    "a".repeat(60), " aB'".repeat(15))) {
+                assertWordReversal(tracer, solution, input);
+            }
+            // Empty split tokens preserve leading/trailing/repeated spaces independently
+            // of the tracer's character-array scan and in-place swap implementation.
+            char[] alphabet = {'a', 'B', '\'', ' '};
+            for (int length = 1; length <= 5; length++) {
+                int cases = 1 << (2 * length);
+                for (int encoded = 0; encoded < cases; encoded++) {
+                    int remainder = encoded;
+                    var input = new StringBuilder();
+                    for (int index = 0; index < length; index++) {
+                        input.append(alphabet[remainder & 3]);
+                        remainder >>= 2;
+                    }
+                    assertWordReversal(tracer, solution, input.toString());
+                }
+            }
+        }
+    }
+
+    private void assertWordReversal(AlgorithmTracer tracer, Compiled solution, String input) throws Exception {
+        String expected = Arrays.stream(input.split(" ", -1))
+                .map(word -> new StringBuilder(word).reverse().toString()).collect(Collectors.joining(" "));
+        var trace = assertAgrees(tracer, solution, Map.of("s", input), "answer", expected);
+        String answer = trace.getSteps().get(trace.getStepCount() - 1).getVariables().get("answer");
+        assertEquals(input.length(), answer.length());
+        for (int index = 0; index < input.length(); index++) {
+            assertEquals(input.charAt(index) == ' ', answer.charAt(index) == ' ', "Space index " + index);
+        }
+    }
+
+    @Test
+    void rabinKarpMatchesNaiveSearchAndIndependentWindowHashesAcrossCollisionsAndBounds() throws Exception {
+        var tracer = owner(RabinKarpTracer.class);
+        try (var solution = compile(tracer)) {
+            assertEquals("java.util.List<java.lang.Integer>", solution.entry().getGenericReturnType().getTypeName());
+            String source = AnnotatedCode.parse(tracer.annotatedCode()).getDisplayCode();
+            assertTrue(source.contains("private static final int BASE = 256;"));
+            assertTrue(source.contains("private static final int MOD = 101;"));
+            assertEquals(90, polynomialHash("ca"));
+            assertEquals(90, polynomialHash("ah"));
+            for (var pair : List.of(List.of("ca", "ah"), List.of("caah", "ah"),
+                    List.of("a", "ab"), List.of("a", "a"), List.of("a", "b"),
+                    List.of("aaaaa", "aa"), List.of("zzabra", "abra"),
+                    List.of("abracadabra", "abra"), List.of("z".repeat(30), "z".repeat(12)))) {
+                assertRabinKarp(tracer, solution, pair.get(0), pair.get(1));
+            }
+            List<String> texts = binaryWords(5), patterns = binaryWords(3);
+            for (String text : texts) for (String pattern : patterns) {
+                assertRabinKarp(tracer, solution, text, pattern);
+            }
+            var random = new Random(256101);
+            for (int index = 0; index < 80; index++) {
+                String text = random.ints(30, 'a', 'z' + 1)
+                        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+                String pattern = index % 2 == 0 ? text.substring(18)
+                        : random.ints(12, 'a', 'z' + 1)
+                        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+                assertRabinKarp(tracer, solution, text, pattern);
+            }
+        }
+    }
+
+    private List<String> binaryWords(int maximumLength) {
+        var words = new ArrayList<String>();
+        for (int length = 1; length <= maximumLength; length++) {
+            for (int encoded = 0; encoded < (1 << length); encoded++) {
+                var word = new StringBuilder();
+                for (int index = 0; index < length; index++) word.append((encoded & (1 << index)) == 0 ? 'a' : 'b');
+                words.add(word.toString());
+            }
+        }
+        return words;
+    }
+
+    private void assertRabinKarp(AlgorithmTracer tracer, Compiled solution, String text, String pattern) throws Exception {
+        Method sourceHash = solution.instance().getClass().getDeclaredMethod("hash", String.class);
+        sourceHash.setAccessible(true);
+        assertEquals(polynomialHash(pattern), ((Number) sourceHash.invoke(solution.instance(), pattern)).longValue(),
+                "The compiled helper, not just an unused BASE/MOD declaration, must implement the displayed hash");
+        var expected = new ArrayList<Integer>();
+        for (int start = 0; start + pattern.length() <= text.length(); start++) {
+            if (text.regionMatches(start, pattern, 0, pattern.length())) expected.add(start);
+        }
+        var trace = assertAgrees(tracer, solution, Map.of("text", text, "pattern", pattern), "answer", expected.toString());
+        var observed = trace.getSteps().stream().filter(step -> step.getVariables().containsKey("start")).toList();
+        assertEquals(Math.max(0, text.length() - pattern.length() + 1), observed.size());
+        for (int index = 0; index < observed.size(); index++) {
+            var variables = observed.get(index).getVariables();
+            String window = text.substring(index, index + pattern.length());
+            assertEquals(String.valueOf(index), variables.get("start"));
+            assertEquals(String.valueOf(polynomialHash(pattern)), variables.get("patternHash"));
+            assertEquals(String.valueOf(polynomialHash(window)), variables.get("windowHash"));
+            assertEquals(polynomialHash(window), ((Number) sourceHash.invoke(solution.instance(), window)).longValue());
+            int current = index;
+            assertEquals(expected.stream().filter(match -> match <= current).toList().toString(), variables.get("matches"));
+        }
+        if (text.equals("ca") && pattern.equals("ah")) {
+            assertTrue(trace.getSteps().get(0).getDescription().contains("Hash collision rejected"));
+        }
+    }
+
+    private long polynomialHash(String value) {
+        // Recompute a polynomial independently, not by reusing the rolling recurrence.
+        long result = 0;
+        for (int index = 0; index < value.length(); index++) {
+            long weight = 1;
+            for (int exponent = 0; exponent < value.length() - index - 1; exponent++) weight = weight * 256 % 101;
+            result = (result + value.charAt(index) * weight) % 101;
+        }
+        return result;
+    }
+
+    @Test
     void bookAllocationMatchesExhaustiveContiguousPartitionsIncludingImpossibleStudents() throws Exception {
         var tracer = owner(BookAllocationTracer.class);
         try (var solution = compile(tracer)) {
@@ -345,6 +465,10 @@ class DisplayedCoreSolutionTest {
         checkLine(owner(QuickSortTracer.class), "done", "return nums;");
         checkLine(owner(QuickSortTracer.class), "base", "return;");
         checkLine(owner(QuickSortTracer.class), "placePivot", "swap(nums, low, i);");
+        checkLine(owner(ReverseEveryWordTracer.class), "reverse", "reverse(chars, start, end - 1);");
+        checkLine(owner(ReverseEveryWordTracer.class), "done", "return new String(chars);");
+        checkLine(owner(RabinKarpTracer.class), "window", "for (int start = 0; start + pattern.length() <= text.length(); start++) {");
+        checkLine(owner(RabinKarpTracer.class), "done", "return matches;");
         checkLine(owner(BookAllocationTracer.class), "impossible", "if (m > pages.length) return -1;");
         checkLine(owner(BookAllocationTracer.class), "newStudent", "students++;");
         checkLine(owner(BookAllocationTracer.class), "addToCurrent", "pageSum += p;");
@@ -386,7 +510,7 @@ class DisplayedCoreSolutionTest {
         return matches.get(0);
     }
 
-    private void assertAgrees(AlgorithmTracer tracer, Compiled solution, Map<String, Object> input,
+    private ExecutionTrace assertAgrees(AlgorithmTracer tracer, Compiled solution, Map<String, Object> input,
                               String answerVariable, String expected) throws Exception {
         var trace = runner.run(tracer, input);
         assertFalse(trace.isTruncated(), tracer.id() + " " + input);
@@ -394,6 +518,10 @@ class DisplayedCoreSolutionTest {
         Object[] arguments = Arrays.stream(solution.entry().getParameters()).map(p ->
                 json.convertValue(trace.getResolvedInput().get(p.getName()), p.getType())).toArray();
         Object answer = solution.entry().invoke(solution.instance(), arguments);
+        if (tracer instanceof RabinKarpTracer) {
+            assertInstanceOf(List.class, answer);
+            for (Object position : (List<?>) answer) assertInstanceOf(Integer.class, position);
+        }
         String rendered = answer instanceof int[] array ? Arrays.toString(array) : String.valueOf(answer);
         var finalStep = trace.getSteps().get(trace.getStepCount() - 1);
         assertEquals(finalStep.getVariables().get(answerVariable), rendered, tracer.id() + " " + input);
@@ -402,6 +530,7 @@ class DisplayedCoreSolutionTest {
         if (tracer instanceof NextPermutationTracer || tracer instanceof QuickSortTracer) {
             assertSame(arguments[0], answer);
         }
+        return trace;
     }
 
     private Compiled compile(AlgorithmTracer tracer) throws Exception {

@@ -1,9 +1,9 @@
 {
   "anchors" : {
-    "done" : 10,
-    "reverse" : 7
+    "done" : 15,
+    "reverse" : 12
   },
-  "code" : "public String reverseEveryWord(String s) {\n    char[] chars = s.toCharArray();\n    int start = 0;\n    while (start < chars.length) {\n        int end = start;\n        while (end < chars.length && chars[end] != ' ') end++;\n        reverse(chars, start, end - 1);\n        start = end + 1;\n    }\n    return new String(chars);\n}",
+  "code" : "public class Solution {\n    public String solve(String s) {\n        char[] chars = s.toCharArray();\n        int start = 0;\n        while (start < chars.length) {\n            if (chars[start] == ' ') {\n                start++;\n                continue;\n            }\n            int end = start;\n            while (end < chars.length && chars[end] != ' ') end++;\n            reverse(chars, start, end - 1);\n            start = end + 1;\n        }\n        return new String(chars);\n    }\n\n    private static void reverse(char[] chars, int left, int right) {\n        while (left < right) {\n            char temporary = chars[left];\n            chars[left++] = chars[right];\n            chars[right--] = temporary;\n        }\n    }\n}\n",
   "problemId" : "reverse-every-word",
   "resolvedInput" : {
     "s" : "Let's take LeetCode contest"
@@ -11,7 +11,7 @@
   "stepCount" : 5,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 7,
+    "activeLine" : 12,
     "description" : "Reverse word [0,4]; sentence becomes \"s'teL take LeetCode contest\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -165,7 +165,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 7,
+    "activeLine" : 12,
     "description" : "Reverse word [6,9]; sentence becomes \"s'teL ekat LeetCode contest\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -319,7 +319,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 7,
+    "activeLine" : 12,
     "description" : "Reverse word [11,18]; sentence becomes \"s'teL ekat edoCteeL contest\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -473,7 +473,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 7,
+    "activeLine" : 12,
     "description" : "Reverse word [20,26]; sentence becomes \"s'teL ekat edoCteeL tsetnoc\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
@@ -627,7 +627,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 10,
+    "activeLine" : 15,
     "description" : "Every word reversed in place while spaces stay fixed: \"s'teL ekat edoCteeL tsetnoc\".",
     "queueOrStackState" : null,
     "callStack" : [ ],
