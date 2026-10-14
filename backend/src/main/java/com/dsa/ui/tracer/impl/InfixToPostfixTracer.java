@@ -12,12 +12,12 @@ import java.util.Map;
  * Shunting-yard conversion from infix to postfix (Reverse Polish Notation).
  *
  * <p>Operators sit on a stack ordered by precedence. An arriving operator pops everything
- * of equal or higher precedence first, because those operators bind more tightly and must
- * appear earlier in the output. Parentheses override that: an opening paren pushes a
- * precedence floor, and a closing paren flushes back to it.
+ * of higher precedence first, and equal precedence for left-associative operators (not '^').
+ * Those operators must appear earlier in the output. Parentheses override that: an opening
+ * paren pushes a precedence floor, and a closing paren flushes back to it.
  */
 @Component
-public class InfixToPostfixTracer implements AlgorithmTracer {
+public class InfixToPostfixTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -34,8 +34,9 @@ public class InfixToPostfixTracer implements AlgorithmTracer {
         return InputSpec.of(
                 InputField.of("expression", FieldType.STRING)
                         .label("Infix expression")
-                        .help("Single uppercase letters as operands, +, -, *, /, ^, and parentheses.")
+                        .help("Single A-Z operands with binary +, -, *, /, ^ and balanced parentheses. No unary operators, spaces or implicit multiplication (write A*B, not AB or A(B)).")
                         .length(1, 40)
+                        .constraint("requireInfixExpression", true)
                         .constraint("pattern", "[A-Z+\\-*/^()]{1,40}")
                         .constraint("patternHint",
                                 "Use A-Z as operands, +, -, *, /, ^ as operators, and ( ) for grouping.")
@@ -47,45 +48,6 @@ public class InfixToPostfixTracer implements AlgorithmTracer {
     @Override
     public Map<String, Object> alternateInput() {
         return Map.of("expression", "(A+B)*(C-D)");
-    }
-
-    @Override
-    public String annotatedCode() {
-        return """
-               public String infixToPostfix(String s) {
-                   // @a init
-                   StringBuilder result = new StringBuilder();
-                   Deque<Character> stack = new ArrayDeque<>();
-                   for (char c : s.toCharArray()) {
-                       if (Character.isLetter(c)) {
-                           // @a operand
-                           result.append(c);
-                       } else if (c == '(') {
-                           // @a openParen
-                           stack.push(c);
-                       } else if (c == ')') {
-                           while (stack.peek() != '(') {
-                               // @a closeParen
-                               result.append(stack.pop());
-                           }
-                           stack.pop();
-                       } else {
-                           while (!stack.isEmpty() && (precedence(stack.peek()) > precedence(c)
-                                   || (precedence(stack.peek()) == precedence(c) && c != '^'))) {
-                               // @a higherPrec
-                               result.append(stack.pop());
-                           }
-                           // @a pushOp
-                           stack.push(c);
-                       }
-                   }
-                   while (!stack.isEmpty()) {
-                       // @a flush
-                       result.append(stack.pop());
-                   }
-                   // @a done
-                   return result.toString();
-               }""";
     }
 
     /**

@@ -207,6 +207,126 @@ class DisplayedCoreSolutionTest {
     }
 
     @Test
+    void infixPostfixMatchesAnIndependentExpressionTreeIncludingAssociativity() throws Exception {
+        assertInfixSources(owner(InfixToPostfixTracer.class), false);
+    }
+
+    @Test
+    void infixPrefixMatchesAnIndependentExpressionTreeIncludingAssociativity() throws Exception {
+        assertInfixSources(owner(InfixToPrefixTracer.class), true);
+    }
+
+    private void assertInfixSources(AlgorithmTracer tracer, boolean prefix) throws Exception {
+        try (var solution = compile(tracer)) {
+            assertEquals(String.class, solution.entry().getReturnType());
+            var inputs = new LinkedHashSet<>(List.of("A", "(A)", "(((A)))", "A^B^C", "A-B-C", "A/B/C",
+                    "A+B*C^D^E", "(A+B)*(C-D)", "A^(B^C)", "(A^B)^C", "A-(B-C)", "A/(B/C)",
+                    "A" + "+A".repeat(19), "(" + "A" + "^B".repeat(18) + ")"));
+            // Exhaustive short strings exercise both grammar and all operator kinds. The
+            // oracle is recursive descent -> syntax tree traversal, not shunting yard.
+            char[] alphabet = {'A', '+', '-', '*', '/', '^', '(', ')'};
+            for (int length = 1; length <= 4; length++) {
+                int count = 1 << (3 * length);
+                for (int encoded = 0; encoded < count; encoded++) {
+                    int remaining = encoded;
+                    var input = new StringBuilder();
+                    for (int i = 0; i < length; i++) { input.append(alphabet[remaining & 7]); remaining >>= 3; }
+                    inputs.add(input.toString());
+                }
+            }
+            var random = new Random(55057);
+            for (int index = 0; index < 250; index++) inputs.add(randomExpression(random, 3));
+            int validCases = 0, invalidCases = 0;
+            for (String input : inputs) {
+                ExpressionNode tree;
+                try { tree = new ExpressionParser(input).parse(); }
+                catch (IllegalArgumentException invalid) {
+                    invalidCases++;
+                    assertThrows(InputValidationException.class,
+                            () -> InputValidator.validate(tracer.inputSpec(), Map.of("expression", input)), input);
+                    var failure = assertThrows(java.lang.reflect.InvocationTargetException.class,
+                            () -> solution.entry().invoke(solution.instance(), input), input);
+                    assertInstanceOf(IllegalArgumentException.class, failure.getCause(), input);
+                    continue;
+                }
+                validCases++;
+                assertAgrees(tracer, solution, Map.of("expression", input), "answer", tree.render(prefix));
+            }
+            System.out.printf("Infix oracle %s: %d valid / %d invalid unique expressions%n",
+                    tracer.id(), validCases, invalidCases);
+            for (String invalid : List.of("", "AB", "A++B", "(A+B", "A+B)", "()", "A(B)",
+                    "a+b", "A B", "A& B")) {
+                var failure = assertThrows(java.lang.reflect.InvocationTargetException.class,
+                        () -> solution.entry().invoke(solution.instance(), invalid), invalid);
+                assertInstanceOf(IllegalArgumentException.class, failure.getCause());
+            }
+            var nullFailure = assertThrows(java.lang.reflect.InvocationTargetException.class,
+                    () -> solution.entry().invoke(solution.instance(), new Object[]{null}));
+            assertInstanceOf(IllegalArgumentException.class, nullFailure.getCause());
+        }
+    }
+
+    private String randomExpression(Random random, int depth) {
+        if (depth == 0 || random.nextInt(4) == 0) return String.valueOf((char) ('A' + random.nextInt(26)));
+        String value = randomExpression(random, depth - 1) + "+-*/^".charAt(random.nextInt(5))
+                + randomExpression(random, depth - 1);
+        return random.nextBoolean() ? "(" + value + ")" : value;
+    }
+
+    private record ExpressionNode(char token, ExpressionNode left, ExpressionNode right) {
+        String render(boolean prefix) {
+            if (left == null) return String.valueOf(token);
+            return prefix ? token + left.render(true) + right.render(true)
+                    : left.render(false) + right.render(false) + token;
+        }
+    }
+
+    /** Conventional grammar: sums -> products -> right-associative powers -> grouped operands. */
+    private static final class ExpressionParser {
+        private final String text;
+        private int cursor;
+        ExpressionParser(String text) { this.text = text; }
+        ExpressionNode parse() {
+            ExpressionNode result = sum();
+            if (cursor != text.length()) throw new IllegalArgumentException();
+            return result;
+        }
+        private ExpressionNode sum() {
+            ExpressionNode node = product();
+            while (cursor < text.length() && "+-".indexOf(text.charAt(cursor)) >= 0) {
+                char op = text.charAt(cursor++);
+                node = new ExpressionNode(op, node, product());
+            }
+            return node;
+        }
+        private ExpressionNode product() {
+            ExpressionNode node = power();
+            while (cursor < text.length() && "*/".indexOf(text.charAt(cursor)) >= 0) {
+                char op = text.charAt(cursor++);
+                node = new ExpressionNode(op, node, power());
+            }
+            return node;
+        }
+        private ExpressionNode power() {
+            ExpressionNode node = atom();
+            if (cursor < text.length() && text.charAt(cursor) == '^') {
+                cursor++;
+                node = new ExpressionNode('^', node, power());
+            }
+            return node;
+        }
+        private ExpressionNode atom() {
+            if (cursor == text.length()) throw new IllegalArgumentException();
+            char token = text.charAt(cursor++);
+            if (token >= 'A' && token <= 'Z') return new ExpressionNode(token, null, null);
+            if (token != '(') throw new IllegalArgumentException();
+            ExpressionNode node = sum();
+            if (cursor == text.length() || text.charAt(cursor++) != ')') throw new IllegalArgumentException();
+            return node;
+        }
+    }
+
+    @Test
     void rabinKarpMatchesNaiveSearchAndIndependentWindowHashesAcrossCollisionsAndBounds() throws Exception {
         var tracer = owner(RabinKarpTracer.class);
         try (var solution = compile(tracer)) {
@@ -469,6 +589,17 @@ class DisplayedCoreSolutionTest {
         checkLine(owner(ReverseEveryWordTracer.class), "done", "return new String(chars);");
         checkLine(owner(RabinKarpTracer.class), "window", "for (int start = 0; start + pattern.length() <= text.length(); start++) {");
         checkLine(owner(RabinKarpTracer.class), "done", "return matches;");
+        checkLine(owner(InfixToPostfixTracer.class), "done", "return result.toString();");
+        checkLine(owner(InfixToPrefixTracer.class), "init", "String reversed = reverseAndSwap(expression);");
+        checkLine(owner(InfixToPrefixTracer.class), "done", "return result.reverse().toString();");
+        for (var tracer : List.of(owner(InfixToPostfixTracer.class), owner(InfixToPrefixTracer.class))) {
+            checkLine(tracer, "operand", "result.append(c);");
+            checkLine(tracer, "openParen", "stack.push(c);");
+            checkLine(tracer, "closeParen", "result.append(stack.pop());");
+            checkLine(tracer, "higherPrec", "result.append(stack.pop());");
+            checkLine(tracer, "pushOp", "stack.push(c);");
+            checkLine(tracer, "flush", "result.append(stack.pop());");
+        }
         checkLine(owner(BookAllocationTracer.class), "impossible", "if (m > pages.length) return -1;");
         checkLine(owner(BookAllocationTracer.class), "newStudent", "students++;");
         checkLine(owner(BookAllocationTracer.class), "addToCurrent", "pageSum += p;");

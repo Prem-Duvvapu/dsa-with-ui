@@ -1,0 +1,220 @@
+{
+  "checkedOn": "2026-10-14",
+  "scope": "Read-only npm registry audit of unchanged lockfile. No dependency upgrade, lockfile edit, install fix or vulnerability remediation performed.",
+  "fullVulnerablePackageEntries": {
+    "info": 0,
+    "low": 0,
+    "moderate": 4,
+    "high": 3,
+    "critical": 2,
+    "total": 9
+  },
+  "productionOnlyVulnerablePackageEntries": {
+    "info": 0,
+    "low": 0,
+    "moderate": 2,
+    "high": 0,
+    "critical": 0,
+    "total": 2
+  },
+  "productionAffectedPackages": [
+    "react-router",
+    "react-router-dom"
+  ],
+  "uniqueAdvisoryCount": 11,
+  "affectedPackages": [
+    {
+      "name": "esbuild",
+      "severity": "moderate",
+      "isDirect": false,
+      "range": "<=0.24.2",
+      "npmSuggestedFix": {
+        "name": "vite",
+        "version": "8.3.4",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "nanoid",
+      "severity": "high",
+      "isDirect": false,
+      "range": "<3.3.18",
+      "npmSuggestedFix": true
+    },
+    {
+      "name": "react-router",
+      "severity": "moderate",
+      "isDirect": false,
+      "range": "6.0.0 - 7.17.0",
+      "npmSuggestedFix": {
+        "name": "react-router-dom",
+        "version": "7.18.4",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "react-router-dom",
+      "severity": "moderate",
+      "isDirect": true,
+      "range": "6.0.0-alpha.0 - 7.17.0",
+      "npmSuggestedFix": {
+        "name": "react-router-dom",
+        "version": "7.18.4",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "source-map-js",
+      "severity": "high",
+      "isDirect": false,
+      "range": "1.0.0 - 1.2.1",
+      "npmSuggestedFix": true
+    },
+    {
+      "name": "tinypool",
+      "severity": "critical",
+      "isDirect": false,
+      "range": "<=2.1.1",
+      "npmSuggestedFix": {
+        "name": "vitest",
+        "version": "4.1.11",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "vite",
+      "severity": "high",
+      "isDirect": true,
+      "range": "<=6.4.2",
+      "npmSuggestedFix": {
+        "name": "vite",
+        "version": "8.3.4",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "vite-node",
+      "severity": "moderate",
+      "isDirect": false,
+      "range": "<=2.2.0-beta.2",
+      "npmSuggestedFix": {
+        "name": "vitest",
+        "version": "4.1.11",
+        "isSemVerMajor": true
+      }
+    },
+    {
+      "name": "vitest",
+      "severity": "critical",
+      "isDirect": true,
+      "range": "<=4.0.0-beta.19",
+      "npmSuggestedFix": {
+        "name": "vitest",
+        "version": "4.1.11",
+        "isSemVerMajor": true
+      }
+    }
+  ],
+  "advisories": [
+    {
+      "package": "esbuild",
+      "title": "esbuild enables any website to send any requests to the development server and read the response",
+      "url": "https://github.com/advisories/GHSA-67mh-4wv8-2f99",
+      "severity": "moderate",
+      "range": "<=0.24.2"
+    },
+    {
+      "package": "nanoid",
+      "title": "nanoid: custom generators can loop indefinitely when size is zero",
+      "url": "https://github.com/advisories/GHSA-2v37-7h3g-55p8",
+      "severity": "high",
+      "range": "<3.3.18"
+    },
+    {
+      "package": "react-router",
+      "title": "React Router: Open redirect via backslash in <Link> and useNavigate (CVE-2025-68470 bypass)",
+      "url": "https://github.com/advisories/GHSA-wrjc-x8rr-h8h6",
+      "severity": "moderate",
+      "range": ">=6.0.0 <7.18.0"
+    },
+    {
+      "package": "react-router",
+      "title": "React Router: Arbitrary Constructor Injection via deserializeErrors() in React Router SSR Hydration",
+      "url": "https://github.com/advisories/GHSA-337j-9hxr-rhxg",
+      "severity": "moderate",
+      "range": ">=6.4.0 <7.18.0"
+    },
+    {
+      "package": "source-map-js",
+      "title": "source-map-js allows event-loop denial of service through indexed source-map section offsets",
+      "url": "https://github.com/advisories/GHSA-68fv-2mgg-jv7q",
+      "severity": "high",
+      "range": ">=1.0.0 <1.2.2"
+    },
+    {
+      "package": "tinypool",
+      "title": "Tinypool: Prototype Pollution gadget in worker options leads to Remote Code Execution",
+      "url": "https://github.com/advisories/GHSA-5gmw-xhrv-c9v3",
+      "severity": "critical",
+      "range": "<=2.1.0"
+    },
+    {
+      "package": "tinypool",
+      "title": "Tinypool: Prototype Pollution Gadget to RCE in run() options",
+      "url": "https://github.com/advisories/GHSA-85c8-ppgw-ccpr",
+      "severity": "critical",
+      "range": "<2.1.2"
+    },
+    {
+      "package": "vite",
+      "title": "Vite Vulnerable to Path Traversal in Optimized Deps `.map` Handling",
+      "url": "https://github.com/advisories/GHSA-4w7w-66w2-5vf9",
+      "severity": "moderate",
+      "range": "<=6.4.1"
+    },
+    {
+      "package": "vite",
+      "title": "launch-editor: NTLMv2 hash disclosure via UNC path handling on Windows",
+      "url": "https://github.com/advisories/GHSA-v6wh-96g9-6wx3",
+      "severity": "moderate",
+      "range": "<=6.4.2"
+    },
+    {
+      "package": "vite",
+      "title": "vite: `server.fs.deny` bypass on Windows alternate paths",
+      "url": "https://github.com/advisories/GHSA-fx2h-pf6j-xcff",
+      "severity": "high",
+      "range": "<=6.4.2"
+    },
+    {
+      "package": "vitest",
+      "title": "When Vitest UI server is listening, arbitrary file can be read and executed",
+      "url": "https://github.com/advisories/GHSA-5xrq-8626-4rwp",
+      "severity": "critical",
+      "range": "<3.2.6"
+    }
+  ],
+  "migrationMetadata": {
+    "localNode": "20.19.4",
+    "ciNodeMajor": 20,
+    "npmSuggestedVite": "8.3.4",
+    "viteNodeEngine": "^20.19.0 || >=22.12.0",
+    "npmSuggestedVitest": "4.1.11",
+    "vitestVitePeer": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "npmSuggestedRouterDom": "7.18.4",
+    "routerNodeEngine": ">=20.0.0",
+    "routerReactPeer": ">=18",
+    "latestReactPluginObserved": "6.1.2",
+    "pluginVitePeer": "^8.0.0",
+    "note": "Registry metadata only, not a tested upgrade recommendation. Review optional peer metadata and official migration guidance; do not bypass peers or force-upgrade blindly."
+  },
+  "context": "Production-only audit reports React Router packages. Other reported vulnerable entries are development/build/test tooling, which still requires remediation or explicit owner risk acceptance. This is not an exploitability assessment and does not certify backend dependency security.",
+  "requiredGates": [
+    "separate medium PRs with owner approval",
+    "compatible toolchain/plugin and Node matrix",
+    "React Router concurrent URL/share/Back/Forward/session regressions",
+    "retain test assertions and complete suite counts",
+    "production build, bundle and cross-browser parity",
+    "fresh full/production audit after changes"
+  ]
+}

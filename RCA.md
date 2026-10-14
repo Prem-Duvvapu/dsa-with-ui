@@ -1891,3 +1891,102 @@ graph-traversal metadata from AdvancedGraphService, and Reverse Every Word's Str
 template incorrectly claims constant auxiliary space. Correct provider-owned authored
 values before canonical approach snapshots in a separate tested package. Default source
 compilation and source/trace agreement are not catalogue-wide metadata certification.
+
+## RCA-064 — A character whitelist was mistaken for valid expression grammar
+
+- **Discovered:** 2026-10-14, while following up the incomplete-source inventory.
+- **Status:** Local fix on `fix/infix-source-validation`; publication tracked separately.
+- **Symptom:** both infix converters accepted `(A+B`, `A+B)`, `A++B`, `AB` and `()` and
+  returned HTTP200, `truncated:false` and completion narration. Postfix could include a
+  literal unmatched `(` or an empty answer. The input contained allowed characters but
+  was not an expression under either problem's authored binary-operator statement.
+  The displayed code also omitted precedence helpers; Prefix omitted reverse-and-swap.
+  Review also found Prefix's equal-exponent pop narrated as `3 < 3` although its answer
+  was correct; that custom-run explanation now names reversed-scan associativity.
+- **Root cause:** the input spec restricted alphabet/length only. Correct conversion on
+  valid defaults, associativity regressions and anchor reachability did not establish
+  the precondition on arbitrary accepted input. The generic Randomize path generated
+  lowercase strings even for these uppercase-only expression fields.
+- **Fix:** each spec declares `requireInfixExpression`; InputValidator checks operand/
+  operator order and balanced nonempty groups before source parsing or trace execution.
+  Field errors name `expression`. Served help explicitly excludes unary operators,
+  spaces and implicit multiplication. Exact standalone sources include the real helpers
+  and their own grammar guards. Only flagged frontend string fields use the bounded
+  infix randomizer; Randomize remains a draft edit, not a run or share operation.
+- **Guard (RED first):** all39 initial selected source/grammar/API/spec cases fail on the
+  old implementation. Each final source is independently compiled and checked against
+  recursive-descent trees on233 valid expressions, and refuses4,673 invalid expressions
+  alongside the shared validator. Disabling shared validation fails36/38 selected checks;
+  flipped source associativity and removed source guards each fail2/2. Four frontend
+  guards fail when the generator branch is disabled. All mutations restored before
+  final suites. The separate narration regression is RED on the old message, classified
+  by the actual incoming highlighted operator, not just the popped symbol. See
+  `docs/ui-revamp/evidence/source-code/infix-contracts/` for completed
+  acceptance evidence and excluded attempts; staged proof counts overlap.
+- **Lesson:** allowed characters are not a valid program. Enforce declared grammatical
+  preconditions at the trust boundary, and make input-generating controls honor them.
+  Exact displayed-source execution is a separate contract from a correct animation.
+
+### RCA-056 follow-up — 2026-10-14 Phone Combinations input budget (open)
+
+Read-only candidate preflight finds another accepted input that cannot finish:
+`letter-combinations-phone`, `digits="777777"`, passes the declared1–6/[2-9] spec but
+stops at2,367 steps/2 MB after1,014 of4,096 expected captures, without the final count.
+The response honestly says `truncated:true`; this is a usability/input-budget gap, not
+a falsely completed answer. `77777` finishes1,024 captures in2,389 steps; `222222`
+finishes729 in1,822. A fix must measure worst-case branching, not blindly raise global
+budgets. Preserve rejected drafts/prior runs and disclose any visualizer-specific bound.
+
+No fix or permanent regression test has been implemented. Before closing this follow-up,
+prove largest accepted inputs finish with independent Cartesian-product results, refuse
+one over the declared budget with a field error, and exercise the actual UI. The owner
+still needs complete source, an honest enumeration-result contract and an authored
+statement; adding only KEYPAD would not complete those seams.
+
+## RCA-065 — Fixed real-number search iterations overstated answer precision
+
+- **Discovered:** 2026-10-14, read-only next-source preflight.
+- **Status:** Open; not part of the infix implementation.
+- **Symptom:** Gas Stations accepts `stations=[0,1000], k=2` and reports `333.34351`.
+  The exact optimum is1000/3; reported two decimals333.34 differ from333.33, contradicting
+  the authored statement's “exact to two decimal places” claim. `[0,999], k=2` reports
+  333.01016 instead of333; `[0,100,500,1000], k=5` reports133.34656 instead of400/3.
+- **Root cause:**15 halvings leave a possible interval width of1000/2^15 (~0.03052)
+  at the declared coordinate cap. Printing five decimals is not five-decimal accuracy.
+- **Required fix:** choose a justified precision/iteration contract, correct source and
+  runtime together, and align displayed precision, examples and continuous-search bounds.
+  Check maximum-input trace budgets instead of raising them blindly. Do not certify
+  this candidate merely by filling the missing `max` helper.
+- **Evidence / guard still needed:** independent enumeration of rational candidates
+  `gap/pieces`, with exact integer feasibility, reproduces4 mismatches among9 sampled
+  legal cases. `infix-contracts/next-candidate-preflight.json` records results. No permanent
+  regression has been written yet; the next implementation must establish RED first.
+
+## RCA-066 — Out-of-range numbers became different successful inputs
+
+- **Discovered:** 2026-10-14, read-only InputValidator and real API/browser preflight.
+- **Status:** Open; pre-existing numeric paths are unchanged by the infix grammar fix.
+- **Symptom:** `count-good-numbers` with JSON `n=4294967297`, `-4294967295`, or
+  `340282366920938463463374607431768211457` returns200, `resolvedInput.n=1`, answer5.
+  Arrays, grids, trees and linked lists exhibit the same wrap. Graph payload numeric
+  conversion correctly refuses overflow, but a graph's scalar `start=4294967296` still
+  becomes0. Nine of ten targeted requests accept a different value instead of400.
+- **Real UI:** the number control is natively invalid, but Run is server-authoritative.
+  It succeeds with draft/share input4294967297, while “Input used” and the trace show1,
+  with no field error. This is not a frontend atomic-session race: the server silently
+  changed the requested integer before validating it.
+- **Root cause:** `checkInt`, `checkIntArray` (also list/tree) and `checkGrid` call
+  `Number.intValue()` before checking declared bounds. Long/BigInteger overflow wraps.
+  The checked `graphInteger` path demonstrates the missing precondition elsewhere.
+- **Required fix:** validate exact representability before narrowing at the shared
+  trust boundary. Retain whole-number/type rules, position numbering, null tree slots,
+  all declared bounds and collection semantics. A client-only fix is insufficient.
+- **Guard still needed:** RED-first unit and real HTTP cases for positive/negative
+  Long and BigInteger overflow across all affected field types;32-bit boundary/control
+  values where allowed; existing Graph refusal;400 with no trace; a browser rejected-run
+  preserving prior result/step/link and focusing its field error. No implementation or
+  permanent test has started. Canonical InputSpec inventory finds478 numeric field
+  declarations across340 problems using these paths; this is structural exposure, not
+  proof that every endpoint/input was individually reproduced.
+- **Evidence:** `infix-contracts/numeric-boundary-preflight.json`,
+  `numeric-boundary-browser.json`/PNG and `numeric-field-inventory.json`.

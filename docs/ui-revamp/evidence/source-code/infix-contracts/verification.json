@@ -1,0 +1,250 @@
+{
+  "verifiedOn": "2026-10-14",
+  "baseline": "bec487cbe0404c0cbf629d10a228ca36784dfde9",
+  "branch": "fix/infix-source-validation",
+  "publication": "Verification snapshot was local/unpublished. Owner subsequently explicitly authorized item1: commit, push and CI-gated merge of this infix package. GitHub records final publication status; PR225 approval is not reused.",
+  "scope": "Both infix grammars, complete standalone sources, truthful equal-exponent Prefix narration, and Randomize for declared infix string fields. Valid algorithms, answers, state, defaults, caps, identities and dsType unchanged; custom equal-exponent pop narration is intentionally corrected.",
+  "backend": {
+    "command": "mvn -B test",
+    "reportedCases": 8183,
+    "failures": 0,
+    "errors": 0,
+    "existingSkips": 500,
+    "finishedAt": "2026-10-14T16:07:38Z",
+    "packageFinishedAt": "2026-10-14T16:08:00Z",
+    "launcherSmoke": true,
+    "newBackendCasesComparedWithBase": 46
+  },
+  "sourceContracts": {
+    "owners": 15,
+    "cases": 48,
+    "publishedExamples": 35,
+    "compilation": "Exact displayed standalone Java17, isolated classpath/platform loader; no injected class/import/app-helper wrappers.",
+    "infixSpecificCases": 38,
+    "sharedValidatorCases": 41,
+    "validUniqueExpressionsPerConverter": 233,
+    "invalidUniqueExpressionsPerConverter": 4673,
+    "oracle": "Independent recursive descent to expression tree with prefix/postfix traversals, not shunting yard. Valid expressions run in both tracer and compiled source. Invalid ones run in InputValidator and standalone source, not the tracer.",
+    "extra": "Defaults, alternates, published examples and explicit null/alphabet cases are additional to the unique expression set.",
+    "proofs": [
+      {
+        "kind": "original source/grammar/API/spec",
+        "cases": 39,
+        "failures": 39
+      },
+      {
+        "kind": "shared grammar enforcement disabled",
+        "cases": 38,
+        "failures": 36,
+        "note": "Two served-declaration checks still pass; enforcement absence is detected independently."
+      },
+      {
+        "kind": "compiling associativity reversals in two resources",
+        "cases": 2,
+        "failures": 2
+      },
+      {
+        "kind": "standalone source grammar guards removed",
+        "cases": 2,
+        "failures": 2
+      },
+      {
+        "kind": "original false Prefix narration with final incoming-operator classification",
+        "cases": 1,
+        "failures": 1
+      },
+      {
+        "kind": "live browser guard on old equal-exponent message",
+        "journeys": 1,
+        "failures": 1
+      }
+    ],
+    "baselineWrapperDiagnostic": "Both old snippets still fail with only a Solution wrapper and JDK imports: missing precedence; Prefix additionally misses reverseAndSwapParens.",
+    "mutationsRestored": true,
+    "proofCountsOverlap": true
+  },
+  "frontend": {
+    "lockedInstall": true,
+    "files": 83,
+    "tests": 857,
+    "failures": 0,
+    "productionBuild": true,
+    "jsKB": 389.24,
+    "jsGzipKB": 124.01,
+    "cssKB": 98.74,
+    "cssGzipKB": 17.92,
+    "assets": [
+      "index-ociQG6EK.js",
+      "index-DwejRBy7.css"
+    ],
+    "newCases": 4,
+    "initialRandomizerRed": {
+      "cases": 16,
+      "failures": 2
+    },
+    "disabledFinishedGenerator": {
+      "cases": 36,
+      "failures": 4
+    },
+    "productionChanges": "One constraint-driven generator branch and bounded infix construction; no generic regex generation, layout, dependency or lockfile changes.",
+    "existingVulnerablePackageEntries": 9
+  },
+  "goldens": {
+    "regenerationCases": 432,
+    "changed": 2,
+    "onlyChanges": [
+      "code",
+      "anchors",
+      "steps[].activeLine"
+    ],
+    "defaultStateAndNarrationUnchanged": true,
+    "customNarrationException": "Prefix equal-precedence '^' pop no longer claims 3 < 3; no default golden exercises that branch.",
+    "report": "golden-comparison.json",
+    "sourceHashes": {
+      "infix-to-postfix": "8983a623673ce160e1afd6a3182b664f5d78dc90460cc85ee21cfd912e9bf9d3",
+      "infix-to-prefix": "cf639f4a15468c19c31a07875b5bf6c3c02ba90dae494aa78e7ed49516c9d78d"
+    }
+  },
+  "browser": {
+    "generated": "2026-10-14T16:21:10.073Z",
+    "allPassed": true,
+    "finalPackageFinishedAt": "2026-10-14T16:08:00Z",
+    "engines": [
+      {
+        "engine": "chromium",
+        "version": "153.0.8010.12",
+        "defaultRows": 60,
+        "sessionRows": 8,
+        "customRows": 16
+      },
+      {
+        "engine": "firefox",
+        "version": "155.0",
+        "defaultRows": 60,
+        "sessionRows": 8,
+        "customRows": 16
+      }
+    ],
+    "coreOwners": 15,
+    "defaultRows": 120,
+    "sessionRows": 16,
+    "customRows": 32,
+    "capRows": 16,
+    "compatibilityRows": 2,
+    "totalJourneys": 170,
+    "allDefaultAndSessionSourceHashesMatchCurrentGoldens": true,
+    "allAssetsMatchFinalProductionBuild": true,
+    "allManifestsPostdateFinalPackagedBackend": true,
+    "capProbeAssertsRenderedStackItems": 19,
+    "horizontalOverflowFailures": 0,
+    "sourceHashes": {
+      "infix-to-postfix": "8983a623673ce160e1afd6a3182b664f5d78dc90460cc85ee21cfd912e9bf9d3",
+      "infix-to-prefix": "cf639f4a15468c19c31a07875b5bf6c3c02ba90dae494aa78e7ed49516c9d78d"
+    },
+    "limits": "Two widths and themes. All19 stack DOM entries rendered, not simultaneously visible; tall stacks still require vertical scrolling. Not human/device/screen-reader/performance/release sign-off.",
+    "reports": [
+      "chromium/results.json",
+      "firefox/results.json",
+      "chromium/session/session-results.json",
+      "firefox/session/session-results.json",
+      "chromium/custom/",
+      "firefox/custom/",
+      "core-compatibility/custom-results.json",
+      "dp-compatibility/custom-results.json"
+    ],
+    "executionRequestsPerCustom": 3,
+    "executionRequestsPerSession": 5,
+    "normalRateLimit": "60/minute, paced serially, no bypass",
+    "newCustomNarrationGuard": true,
+    "peakStackDOMCountAsserted": 19,
+    "screenshotsInspected": [
+      "chromium/source-320-light.png",
+      "firefox/source-1366-dark.png",
+      "chromium/custom/infix-postfix-cap-320-dark/peak-stage.png",
+      "firefox/custom/infix-prefix-cap-1366-light/peak-stage.png"
+    ]
+  },
+  "probeHelperTests": {
+    "cases": 3,
+    "passed": 3
+  },
+  "liveLocalStats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "publicPreviousPackage": {
+    "report": "public-merged-string-225.json",
+    "scope": "PR225 exact detail sources and8 full/delta executions of4 independently known string cases only; not these unpublished infix changes or whole deployed commit verification.",
+    "nodeFetchDetailTimeouts": 2,
+    "curlDetailSources": 2,
+    "curlExecutionRequests": 8,
+    "passed": true
+  },
+  "excludedAttempts": [
+    "Initial input-panel test used a Vitest matcher unavailable in v1.6; replaced with equivalent count and exact-argument assertions.",
+    "First narration assertion classified all popped '^' as equal, including arriving '*'; its intermediate full run had one false failure. Final test uses actual highlighted incoming character and a strict-greater negative guard, re-proved RED, then full8183-case suite passed.",
+    "Earlier pre-narration browser manifests were superseded by complete post-package runs; no double counting.",
+    "Node public detail fetch timed out twice; curl transport then succeeded. Both outcomes disclosed."
+  ],
+  "review": {
+    "backend": "Grammar checked before code parsing/emission; expression field errors and no steps on400; old type/alphabet/size/unknown-field checks retained.",
+    "frontend": "Randomize uses actual served declaration and does not execute/share; fresh full suite and build pass; source/class/token guard tests pass.",
+    "ui": "Both engines/themes at320 and1366, error-summary focus, source key ownership, view/Focus/step continuity and real19-item render checked. Long stacks still need vertical scrolling.",
+    "product": "No unverified solver/default substitution. Complete source actually executes; malformed grammar refuses rather than completes.",
+    "architecture": "Existing strict family, registry-derived owner/resource/compiler/HTTP contracts, no id-based production routing, no new dependency; old snippets deleted.",
+    "qa": "RED-first, compiling mutations, independent oracle, exact-source delivery, parsed goldens, final packaged browser manifests and old compatibility cases."
+  },
+  "remaining": {
+    "historicalNonPlatformOmissionsOnMerged225": 40,
+    "afterThisPackageLands": 38,
+    "platformContexts": 77,
+    "missingStatements": 41,
+    "dpCandidates": 49,
+    "vulnerablePackageEntries": 9,
+    "gates": [
+      "exact whole-number representability before narrowing (RCA-066)",
+      "Phone Combinations accepted-input budget and enumeration-result contract",
+      "Gas Stations precision and continuous-search bounds (RCA-065)",
+      "canonical string complexity metadata",
+      "broader source/Randomize semantics",
+      "C++ language honesty",
+      "D6/D7",
+      "P7 broader/device acceptance",
+      "P8 frame/device/screen-reader/zoom/performance/learner",
+      "P9 security/release/deployment/rollback"
+    ]
+  },
+  "separateReadOnlyContinuation": {
+    "candidateRuntimeCases": 89,
+    "countGoodNumbersAllowedLengthsPassed": 60,
+    "spfTrialDivisionCasesPassed": 12,
+    "phoneSampledCases": 8,
+    "phoneAcceptedSixDigitCaseTruncated": true,
+    "gasTwoDecimalDisagreements": "4 of9 sampled legal inputs",
+    "numericBoundaryRequests": 10,
+    "numericBoundaryWronglyAcceptedAliases": 9,
+    "graphPayloadControlCorrectlyRefused": 1,
+    "numericBrowserMismatchConfirmed": true,
+    "canonicalNumericFieldDeclarations": 478,
+    "canonicalProblemsUsingUncheckedNumericFields": 340,
+    "inventoryIsNotAnEndpointFailureCount": true,
+    "npmVulnerablePackageEntries": 9,
+    "uniqueNpmAdvisories": 11,
+    "productionOnlyAffectedPackageEntries": 2,
+    "implementationOrPermanentRegressionAdded": false,
+    "nextCorrectnessPriority": "RCA-066, after infix publication/merge approval",
+    "reports": [
+      "next-candidate-preflight.json",
+      "numeric-boundary-preflight.json",
+      "numeric-boundary-browser.json",
+      "numeric-boundary-browser.png",
+      "numeric-field-inventory.json",
+      "dependency-preflight.json"
+    ],
+    "scope": "Known-failing diagnostics and inventory, not additional passing infix tests, fixes, exploitability proof or release acceptance. No dependency/lockfile change."
+  },
+  "limits": "This verifies only stated compiler/input/algorithm/browser/deployment scopes. It does not certify all431 answers/metadata/sources, every input or viewport, real-device/virtual-keyboard, human screen-reader/learner outcomes or performance. No project/release-complete claim."
+}

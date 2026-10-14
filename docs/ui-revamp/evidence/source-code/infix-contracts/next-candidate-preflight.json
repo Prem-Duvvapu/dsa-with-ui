@@ -1,0 +1,1401 @@
+{
+  "generated": "2026-10-14T16:28:39.224Z",
+  "scope": "Read-only next-candidate runtime preflight; no source repair or permanent test implementation. Not infix-package acceptance.",
+  "details": [
+    {
+      "id": "count-good-numbers",
+      "inputSpec": {
+        "fields": [
+          {
+            "name": "n",
+            "label": "Length (N)",
+            "type": "INT",
+            "defaultValue": 4,
+            "help": "",
+            "constraints": {
+              "max": 60,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "complexity": {
+        "timeComplexity": "O(2^N)",
+        "timeExplanation": "Time Complexity: Exponential backtracking tree exploration.",
+        "timeWhy": "Recursion",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: Recursion stack depth.",
+        "spaceWhy": "Call Stack",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "hasAuthoredStatement": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "inputSpec": {
+        "fields": [
+          {
+            "name": "n",
+            "label": "N",
+            "type": "INT",
+            "defaultValue": 30,
+            "help": "Integer to factorise using a precomputed smallest-prime-factor table.",
+            "constraints": {
+              "max": 100000,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "complexity": {
+        "timeComplexity": "O(1) / O(log N)",
+        "timeExplanation": "Time Complexity: Bitwise operation or binary exponentiation.",
+        "timeWhy": "Bitwise",
+        "spaceComplexity": "O(1)",
+        "spaceExplanation": "Space Complexity: Constant memory.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(1)",
+        "dataStructureSpace": "Memory"
+      },
+      "hasAuthoredStatement": true
+    },
+    {
+      "id": "letter-combinations-phone",
+      "inputSpec": {
+        "fields": [
+          {
+            "name": "digits",
+            "label": "Digits",
+            "type": "STRING",
+            "defaultValue": "23",
+            "help": "Digits 2-9 only (0 and 1 map to no letters).",
+            "constraints": {
+              "maxLength": 6,
+              "pattern": "[2-9]+",
+              "minLength": 1,
+              "patternHint": "Digits 2-9 only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "complexity": {
+        "timeComplexity": "O(2^N)",
+        "timeExplanation": "Time Complexity: Exponential backtracking tree exploration.",
+        "timeWhy": "Recursion",
+        "spaceComplexity": "O(N)",
+        "spaceExplanation": "Space Complexity: Recursion stack depth.",
+        "spaceWhy": "Call Stack",
+        "auxiliarySpace": "Auxiliary Space: O(N)",
+        "dataStructureSpace": "Memory"
+      },
+      "hasAuthoredStatement": false
+    },
+    {
+      "id": "minimize-max-distance-gas-station",
+      "inputSpec": {
+        "fields": [
+          {
+            "name": "stations",
+            "label": "Existing station positions",
+            "type": "INT_ARRAY",
+            "defaultValue": [
+              1,
+              13,
+              17,
+              23
+            ],
+            "help": "Sorted, strictly increasing positions along the road.",
+            "constraints": {
+              "maxValue": 1000,
+              "minLength": 2,
+              "requireSorted": true,
+              "maxLength": 15,
+              "requireDistinct": true,
+              "minValue": 0
+            }
+          },
+          {
+            "name": "k",
+            "label": "New stations to add (K)",
+            "type": "INT",
+            "defaultValue": 4,
+            "help": "",
+            "constraints": {
+              "max": 50,
+              "min": 1
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "complexity": {
+        "timeComplexity": "O(log N)",
+        "timeExplanation": "Time Complexity: Binary search halving over answer search space.",
+        "timeWhy": "BS on Answers",
+        "spaceComplexity": "O(1)",
+        "spaceExplanation": "Space Complexity: Iterative pointers low, high, mid.",
+        "spaceWhy": "Memory",
+        "auxiliarySpace": "Auxiliary Space: O(1)",
+        "dataStructureSpace": "Pointers"
+      },
+      "hasAuthoredStatement": true
+    }
+  ],
+  "rows": [
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 1
+      },
+      "expected": "5",
+      "actual": "5",
+      "truncated": false,
+      "stepCount": 5,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 2
+      },
+      "expected": "20",
+      "actual": "20",
+      "truncated": false,
+      "stepCount": 6,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 3
+      },
+      "expected": "100",
+      "actual": "100",
+      "truncated": false,
+      "stepCount": 7,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 4
+      },
+      "expected": "400",
+      "actual": "400",
+      "truncated": false,
+      "stepCount": 8,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 5
+      },
+      "expected": "2000",
+      "actual": "2000",
+      "truncated": false,
+      "stepCount": 8,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 6
+      },
+      "expected": "8000",
+      "actual": "8000",
+      "truncated": false,
+      "stepCount": 8,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 7
+      },
+      "expected": "40000",
+      "actual": "40000",
+      "truncated": false,
+      "stepCount": 9,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 8
+      },
+      "expected": "160000",
+      "actual": "160000",
+      "truncated": false,
+      "stepCount": 10,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 9
+      },
+      "expected": "800000",
+      "actual": "800000",
+      "truncated": false,
+      "stepCount": 10,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 10
+      },
+      "expected": "3200000",
+      "actual": "3200000",
+      "truncated": false,
+      "stepCount": 10,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 11
+      },
+      "expected": "16000000",
+      "actual": "16000000",
+      "truncated": false,
+      "stepCount": 10,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 12
+      },
+      "expected": "64000000",
+      "actual": "64000000",
+      "truncated": false,
+      "stepCount": 10,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 13
+      },
+      "expected": "320000000",
+      "actual": "320000000",
+      "truncated": false,
+      "stepCount": 10,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 14
+      },
+      "expected": "279999993",
+      "actual": "279999993",
+      "truncated": false,
+      "stepCount": 10,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 15
+      },
+      "expected": "399999958",
+      "actual": "399999958",
+      "truncated": false,
+      "stepCount": 11,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 16
+      },
+      "expected": "599999825",
+      "actual": "599999825",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 17
+      },
+      "expected": "999999111",
+      "actual": "999999111",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 18
+      },
+      "expected": "999996423",
+      "actual": "999996423",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 19
+      },
+      "expected": "999982087",
+      "actual": "999982087",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 20
+      },
+      "expected": "999928327",
+      "actual": "999928327",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 21
+      },
+      "expected": "999641607",
+      "actual": "999641607",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 22
+      },
+      "expected": "998566407",
+      "actual": "998566407",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 23
+      },
+      "expected": "992832007",
+      "actual": "992832007",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 24
+      },
+      "expected": "971328007",
+      "actual": "971328007",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 25
+      },
+      "expected": "856640007",
+      "actual": "856640007",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 26
+      },
+      "expected": "426560007",
+      "actual": "426560007",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 27
+      },
+      "expected": "132800021",
+      "actual": "132800021",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 28
+      },
+      "expected": "531200084",
+      "actual": "531200084",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 29
+      },
+      "expected": "656000406",
+      "actual": "656000406",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 30
+      },
+      "expected": "624001610",
+      "actual": "624001610",
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 31
+      },
+      "expected": "120008029",
+      "actual": "120008029",
+      "truncated": false,
+      "stepCount": 13,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 32
+      },
+      "expected": "480032116",
+      "actual": "480032116",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 33
+      },
+      "expected": "400160566",
+      "actual": "400160566",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 34
+      },
+      "expected": "600642257",
+      "actual": "600642257",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 35
+      },
+      "expected": "3211264",
+      "actual": "3211264",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 36
+      },
+      "expected": "12845056",
+      "actual": "12845056",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 37
+      },
+      "expected": "64225280",
+      "actual": "64225280",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 38
+      },
+      "expected": "256901120",
+      "actual": "256901120",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 39
+      },
+      "expected": "284505593",
+      "actual": "284505593",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 40
+      },
+      "expected": "138022365",
+      "actual": "138022365",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 41
+      },
+      "expected": "690111825",
+      "actual": "690111825",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 42
+      },
+      "expected": "760447286",
+      "actual": "760447286",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 43
+      },
+      "expected": "802236409",
+      "actual": "802236409",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 44
+      },
+      "expected": "208945615",
+      "actual": "208945615",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 45
+      },
+      "expected": "44728068",
+      "actual": "44728068",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 46
+      },
+      "expected": "178912272",
+      "actual": "178912272",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 47
+      },
+      "expected": "894561360",
+      "actual": "894561360",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 48
+      },
+      "expected": "578245419",
+      "actual": "578245419",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 49
+      },
+      "expected": "891227081",
+      "actual": "891227081",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 50
+      },
+      "expected": "564908303",
+      "actual": "564908303",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 51
+      },
+      "expected": "824541501",
+      "actual": "824541501",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 52
+      },
+      "expected": "298165983",
+      "actual": "298165983",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 53
+      },
+      "expected": "490829908",
+      "actual": "490829908",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 54
+      },
+      "expected": "963319625",
+      "actual": "963319625",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 55
+      },
+      "expected": "816598097",
+      "actual": "816598097",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 56
+      },
+      "expected": "266392367",
+      "actual": "266392367",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 57
+      },
+      "expected": "331961828",
+      "actual": "331961828",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 58
+      },
+      "expected": "327847305",
+      "actual": "327847305",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 59
+      },
+      "expected": "639236518",
+      "actual": "639236518",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "count-good-numbers",
+      "input": {
+        "n": 60
+      },
+      "expected": "556946058",
+      "actual": "556946058",
+      "truncated": false,
+      "stepCount": 14,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 1
+      },
+      "expected": [],
+      "actual": [],
+      "truncated": false,
+      "stepCount": 2,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 2
+      },
+      "expected": [
+        2
+      ],
+      "actual": [
+        2
+      ],
+      "truncated": false,
+      "stepCount": 3,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 4
+      },
+      "expected": [
+        2,
+        2
+      ],
+      "actual": [
+        2,
+        2
+      ],
+      "truncated": false,
+      "stepCount": 4,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 30
+      },
+      "expected": [
+        2,
+        3,
+        5
+      ],
+      "actual": [
+        2,
+        3,
+        5
+      ],
+      "truncated": false,
+      "stepCount": 5,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 64
+      },
+      "expected": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "actual": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "truncated": false,
+      "stepCount": 8,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 97
+      },
+      "expected": [
+        97
+      ],
+      "actual": [
+        97
+      ],
+      "truncated": false,
+      "stepCount": 3,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 2310
+      },
+      "expected": [
+        2,
+        3,
+        5,
+        7,
+        11
+      ],
+      "actual": [
+        2,
+        3,
+        5,
+        7,
+        11
+      ],
+      "truncated": false,
+      "stepCount": 7,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 65536
+      },
+      "expected": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "actual": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "truncated": false,
+      "stepCount": 18,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 99990
+      },
+      "expected": [
+        2,
+        3,
+        3,
+        5,
+        11,
+        101
+      ],
+      "actual": [
+        2,
+        3,
+        3,
+        5,
+        11,
+        101
+      ],
+      "truncated": false,
+      "stepCount": 8,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 99991
+      },
+      "expected": [
+        99991
+      ],
+      "actual": [
+        99991
+      ],
+      "truncated": false,
+      "stepCount": 3,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 99999
+      },
+      "expected": [
+        3,
+        3,
+        41,
+        271
+      ],
+      "actual": [
+        3,
+        3,
+        41,
+        271
+      ],
+      "truncated": false,
+      "stepCount": 6,
+      "passed": true
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "input": {
+        "n": 100000
+      },
+      "expected": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "actual": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "truncated": false,
+      "stepCount": 12,
+      "passed": true
+    },
+    {
+      "id": "letter-combinations-phone",
+      "input": {
+        "digits": "2"
+      },
+      "expectedCount": 3,
+      "completedCount": "3",
+      "capturedCount": 3,
+      "capturedOrderMatchesFullExpected": true,
+      "truncated": false,
+      "stepCount": 7,
+      "passed": true
+    },
+    {
+      "id": "letter-combinations-phone",
+      "input": {
+        "digits": "23"
+      },
+      "expectedCount": 9,
+      "completedCount": "9",
+      "capturedCount": 9,
+      "capturedOrderMatchesFullExpected": true,
+      "truncated": false,
+      "stepCount": 22,
+      "passed": true
+    },
+    {
+      "id": "letter-combinations-phone",
+      "input": {
+        "digits": "79"
+      },
+      "expectedCount": 16,
+      "completedCount": "16",
+      "capturedCount": 16,
+      "capturedOrderMatchesFullExpected": true,
+      "truncated": false,
+      "stepCount": 37,
+      "passed": true
+    },
+    {
+      "id": "letter-combinations-phone",
+      "input": {
+        "digits": "279"
+      },
+      "expectedCount": 48,
+      "completedCount": "48",
+      "capturedCount": 48,
+      "capturedOrderMatchesFullExpected": true,
+      "truncated": false,
+      "stepCount": 112,
+      "passed": true
+    },
+    {
+      "id": "letter-combinations-phone",
+      "input": {
+        "digits": "7777"
+      },
+      "expectedCount": 256,
+      "completedCount": "256",
+      "capturedCount": 256,
+      "capturedOrderMatchesFullExpected": true,
+      "truncated": false,
+      "stepCount": 597,
+      "passed": true
+    },
+    {
+      "id": "letter-combinations-phone",
+      "input": {
+        "digits": "77777"
+      },
+      "expectedCount": 1024,
+      "completedCount": "1024",
+      "capturedCount": 1024,
+      "capturedOrderMatchesFullExpected": true,
+      "truncated": false,
+      "stepCount": 2389,
+      "passed": true
+    },
+    {
+      "id": "letter-combinations-phone",
+      "input": {
+        "digits": "222222"
+      },
+      "expectedCount": 729,
+      "completedCount": "729",
+      "capturedCount": 729,
+      "capturedOrderMatchesFullExpected": true,
+      "truncated": false,
+      "stepCount": 1822,
+      "passed": true
+    },
+    {
+      "id": "letter-combinations-phone",
+      "input": {
+        "digits": "777777"
+      },
+      "expectedCount": 4096,
+      "completedCount": null,
+      "capturedCount": 1014,
+      "capturedOrderMatchesFullExpected": false,
+      "truncated": true,
+      "truncationReason": "Stopped after 2367 steps at the 2000 KB response limit. Try a smaller input.",
+      "stepCount": 2367,
+      "passed": false
+    },
+    {
+      "id": "minimize-max-distance-gas-station",
+      "input": {
+        "stations": [
+          0,
+          1000
+        ],
+        "k": 2
+      },
+      "optimum": {
+        "numerator": 1000,
+        "denominator": 3,
+        "value": 333.3333333333333
+      },
+      "actual": 333.34351,
+      "absoluteError": 0.010176666666666279,
+      "exactTwoDecimals": "333.33",
+      "reportedTwoDecimals": "333.34",
+      "agreesWithAuthoredTwoDecimalClaim": false,
+      "truncated": false,
+      "stepCount": 47
+    },
+    {
+      "id": "minimize-max-distance-gas-station",
+      "input": {
+        "stations": [
+          0,
+          1000
+        ],
+        "k": 50
+      },
+      "optimum": {
+        "numerator": 1000,
+        "denominator": 51,
+        "value": 19.607843137254903
+      },
+      "actual": 19.6228,
+      "absoluteError": 0.01495686274509822,
+      "exactTwoDecimals": "19.61",
+      "reportedTwoDecimals": "19.62",
+      "agreesWithAuthoredTwoDecimalClaim": false,
+      "truncated": false,
+      "stepCount": 47
+    },
+    {
+      "id": "minimize-max-distance-gas-station",
+      "input": {
+        "stations": [
+          0,
+          999
+        ],
+        "k": 2
+      },
+      "optimum": {
+        "numerator": 999,
+        "denominator": 3,
+        "value": 333
+      },
+      "actual": 333.01016,
+      "absoluteError": 0.010159999999984848,
+      "exactTwoDecimals": "333.00",
+      "reportedTwoDecimals": "333.01",
+      "agreesWithAuthoredTwoDecimalClaim": false,
+      "truncated": false,
+      "stepCount": 47
+    },
+    {
+      "id": "minimize-max-distance-gas-station",
+      "input": {
+        "stations": [
+          0,
+          1
+        ],
+        "k": 2
+      },
+      "optimum": {
+        "numerator": 1,
+        "denominator": 3,
+        "value": 0.3333333333333333
+      },
+      "actual": 0.33334,
+      "absoluteError": 0.000006666666666710341,
+      "exactTwoDecimals": "0.33",
+      "reportedTwoDecimals": "0.33",
+      "agreesWithAuthoredTwoDecimalClaim": true,
+      "truncated": false,
+      "stepCount": 47
+    },
+    {
+      "id": "minimize-max-distance-gas-station",
+      "input": {
+        "stations": [
+          1,
+          13,
+          17,
+          23
+        ],
+        "k": 4
+      },
+      "optimum": {
+        "numerator": 12,
+        "denominator": 3,
+        "value": 4
+      },
+      "actual": 4.00012,
+      "absoluteError": 0.00011999999999989797,
+      "exactTwoDecimals": "4.00",
+      "reportedTwoDecimals": "4.00",
+      "agreesWithAuthoredTwoDecimalClaim": true,
+      "truncated": false,
+      "stepCount": 77
+    },
+    {
+      "id": "minimize-max-distance-gas-station",
+      "input": {
+        "stations": [
+          0,
+          500,
+          1000
+        ],
+        "k": 2
+      },
+      "optimum": {
+        "numerator": 500,
+        "denominator": 2,
+        "value": 250
+      },
+      "actual": 250,
+      "absoluteError": 0,
+      "exactTwoDecimals": "250.00",
+      "reportedTwoDecimals": "250.00",
+      "agreesWithAuthoredTwoDecimalClaim": true,
+      "truncated": false,
+      "stepCount": 62
+    },
+    {
+      "id": "minimize-max-distance-gas-station",
+      "input": {
+        "stations": [
+          0,
+          1,
+          1000
+        ],
+        "k": 3
+      },
+      "optimum": {
+        "numerator": 999,
+        "denominator": 4,
+        "value": 249.75
+      },
+      "actual": 249.75,
+      "absoluteError": 0,
+      "exactTwoDecimals": "249.75",
+      "reportedTwoDecimals": "249.75",
+      "agreesWithAuthoredTwoDecimalClaim": true,
+      "truncated": false,
+      "stepCount": 62
+    },
+    {
+      "id": "minimize-max-distance-gas-station",
+      "input": {
+        "stations": [
+          0,
+          100,
+          500,
+          1000
+        ],
+        "k": 5
+      },
+      "optimum": {
+        "numerator": 400,
+        "denominator": 3,
+        "value": 133.33333333333334
+      },
+      "actual": 133.34656,
+      "absoluteError": 0.013226666666668052,
+      "exactTwoDecimals": "133.33",
+      "reportedTwoDecimals": "133.35",
+      "agreesWithAuthoredTwoDecimalClaim": false,
+      "truncated": false,
+      "stepCount": 77
+    },
+    {
+      "id": "minimize-max-distance-gas-station",
+      "input": {
+        "stations": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "k": 50
+      },
+      "optimum": {
+        "numerator": 1,
+        "denominator": 4,
+        "value": 0.25
+      },
+      "actual": 0.25,
+      "absoluteError": 0,
+      "exactTwoDecimals": "0.25",
+      "reportedTwoDecimals": "0.25",
+      "agreesWithAuthoredTwoDecimalClaim": true,
+      "truncated": false,
+      "stepCount": 242
+    }
+  ],
+  "finished": "2026-10-14T16:30:19.346Z"
+}

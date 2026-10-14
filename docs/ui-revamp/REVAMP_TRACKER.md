@@ -126,6 +126,50 @@ Publication follow-up (2026-10-14): the owner instructed continuation after the 
 publication request; this package now proceeds through CI-gated publishing. GitHub is
 the final PR/merge authority. The local-only wording above describes the earlier snapshot.
 
+Continuation (2026-10-14): batch3 merged as #225 / `bec487c` after both CI tiers,
+security and Vercel checks passed; post-merge CI passed. A bounded curl-based public
+verification now confirms both exact sources and8 full/delta executions across4 known
+string cases. The preceding Node-fetch attempt timed out; this is recorded, not treated
+as a passing check. This closes only the stated deployment-source/execution scope,
+not whole-catalogue correctness, metadata or release/rollback gates.
+
+The next local package, `fix/infix-source-validation`, addresses both infix converters:
+declared binary grammar enforced at InputValidator; readable served field help; complete
+standalone source with all helpers; a bounded grammar-aware Randomize path for flagged
+strings; and a truthful explanation of Prefix's equal-exponent pop (previously `3 < 3`).
+Valid algorithms, answers, state, defaults and bounds are unchanged; that custom narration
+is the only non-source trace correction. Forty historical non-platform omissions remain
+on merged main;38 after this package lands. No new DP form is implemented.
+
+Final local backend passes8,183 cases/0 failures/errors/500 unchanged skips; source
+contracts48 across15 owners and35 authored examples; frontend83 files/857 tests and
+build pass. Two default goldens change source/anchors/highlights only. The final packaged
+backend passes170 completed browser journeys across Chromium/Firefox,320/1366 and both
+themes:120 default rows,16 sessions,32 custom cases and2 compatibility journeys. All
+recorded source hashes and served assets match; every manifest postdates final packaging.
+The16 peak-stack cases are included in the32 custom cases, not double-counted. Existing
+vertical reading/stack-height limitations remain. Final counts, exclusions and scope are
+in `evidence/source-code/infix-contracts/`. Publication awaits a
+separate owner decision. Canonical complexity metadata, the other38 historical sources,
+77 platform contexts,41 statements,49 DP candidates, D6/D7 and P7/P8/P9 remain open.
+
+Read-only continuation found further open correctness gates (no next implementation
+started): RCA-066 numeric overflow accepts different values instead of refusing input;
+9/10 targeted requests and a real UI reproduce it.478 canonical numeric fields across340
+problems use the unchecked conversion paths; that is structural scope, not340 tested
+failures. It is the next priority after infix lands. RCA-065 records Gas Stations' failed
+two-decimal claim; RCA-056 records an accepted Phone input that truncates.89 independent
+candidate cases and the10 numeric probes are explicitly not additional passing infix
+tests. Fresh npm audit still reports9 affected entries/11 advisories,2 production-only
+Router entries; no dependency was changed. Evidence and the next medium-PR sequence are
+in the dated log and `infix-contracts/` preflight reports. The current implementation
+package remains ready locally, awaiting owner approval to publish/merge.
+
+Publication authorization: the owner has now explicitly requested items1–3: publish
+the verified infix package, then fix numeric overflow, Gas Stations precision and
+Phone Letter Combinations budget correctness. Earlier local/approval wording is a
+historical snapshot. Each package is separately verified and CI-gated.
+
 ## Baseline (P0, 2026-09-29)
 
 | Item | Value |

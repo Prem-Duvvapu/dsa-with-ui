@@ -1,15 +1,15 @@
 {
   "anchors" : {
-    "closeParen" : 11,
-    "done" : 25,
-    "flush" : 23,
-    "higherPrec" : 17,
-    "init" : 2,
-    "openParen" : 8,
-    "operand" : 6,
-    "pushOp" : 19
+    "closeParen" : 16,
+    "done" : 29,
+    "flush" : 27,
+    "higherPrec" : 21,
+    "init" : 7,
+    "openParen" : 13,
+    "operand" : 11,
+    "pushOp" : 23
   },
-  "code" : "public String infixToPostfix(String s) {\n    StringBuilder result = new StringBuilder();\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : s.toCharArray()) {\n        if (Character.isLetter(c)) {\n            result.append(c);\n        } else if (c == '(') {\n            stack.push(c);\n        } else if (c == ')') {\n            while (stack.peek() != '(') {\n                result.append(stack.pop());\n            }\n            stack.pop();\n        } else {\n            while (!stack.isEmpty() && (precedence(stack.peek()) > precedence(c)\n                    || (precedence(stack.peek()) == precedence(c) && c != '^'))) {\n                result.append(stack.pop());\n            }\n            stack.push(c);\n        }\n    }\n    while (!stack.isEmpty()) {\n        result.append(stack.pop());\n    }\n    return result.toString();\n}",
+  "code" : "import java.util.ArrayDeque;\nimport java.util.Deque;\n\npublic class Solution {\n    public String solve(String expression) {\n        requireInfix(expression);\n        StringBuilder result = new StringBuilder();\n        Deque<Character> stack = new ArrayDeque<>();\n        for (char c : expression.toCharArray()) {\n            if (c >= 'A' && c <= 'Z') {\n                result.append(c);\n            } else if (c == '(') {\n                stack.push(c);\n            } else if (c == ')') {\n                while (stack.peek() != '(') {\n                    result.append(stack.pop());\n                }\n                stack.pop();\n            } else {\n                while (!stack.isEmpty() && stack.peek() != '(' && popsBefore(stack.peek(), c)) {\n                    result.append(stack.pop());\n                }\n                stack.push(c);\n            }\n        }\n        while (!stack.isEmpty()) {\n            result.append(stack.pop());\n        }\n        return result.toString();\n    }\n\n    // Equal precedence pops for left-associative operators, but not for '^'.\n    private static boolean popsBefore(char top, char arriving) {\n        return precedence(top) > precedence(arriving)\n                || (precedence(top) == precedence(arriving) && arriving != '^');\n    }\n\n    private static int precedence(char operator) {\n        return switch (operator) {\n            case '+', '-' -> 1;\n            case '*', '/' -> 2;\n            case '^' -> 3;\n            default -> 0;\n        };\n    }\n\n    // The visualizer additionally caps input at 40 characters; this solver has no UI size cap.\n    // Grammar: single A-Z operands, binary + - * / ^, balanced groups; no spaces or unary operators.\n    private static void requireInfix(String expression) {\n        if (expression == null || expression.isEmpty()) throw new IllegalArgumentException(\"Expression is required.\");\n        boolean needsOperand = true;\n        int depth = 0;\n        for (char token : expression.toCharArray()) {\n            if (token >= 'A' && token <= 'Z') {\n                if (!needsOperand) throw new IllegalArgumentException(\"Expected a binary operator.\");\n                needsOperand = false;\n            } else if (token == '(') {\n                if (!needsOperand) throw new IllegalArgumentException(\"Write an operator before '('.\");\n                depth++;\n            } else if (token == ')') {\n                if (needsOperand || depth == 0) throw new IllegalArgumentException(\"Invalid closing parenthesis.\");\n                depth--;\n            } else if (\"+-*/^\".indexOf(token) >= 0) {\n                if (needsOperand) throw new IllegalArgumentException(\"Expected an operand.\");\n                needsOperand = true;\n            } else throw new IllegalArgumentException(\"Unsupported character.\");\n        }\n        if (needsOperand || depth != 0) throw new IllegalArgumentException(\"Incomplete expression or unmatched parentheses.\");\n    }\n}\n",
   "problemId" : "infix-to-postfix",
   "resolvedInput" : {
     "expression" : "A+B*C-D"
@@ -17,7 +17,7 @@
   "stepCount" : 12,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 7,
     "description" : "Convert infix \"A+B*C-D\" to postfix. Empty operator stack, empty output.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -70,7 +70,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 6,
+    "activeLine" : 11,
     "description" : "'A' is an operand — append directly to the output.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -123,7 +123,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 19,
+    "activeLine" : 23,
     "description" : "Push operator '+' (precedence 1) onto the stack.",
     "queueOrStackState" : [ "+" ],
     "callStack" : [ ],
@@ -176,7 +176,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 6,
+    "activeLine" : 11,
     "description" : "'B' is an operand — append directly to the output.",
     "queueOrStackState" : [ "+" ],
     "callStack" : [ ],
@@ -229,7 +229,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 19,
+    "activeLine" : 23,
     "description" : "Push operator '*' (precedence 2) onto the stack.",
     "queueOrStackState" : [ "*", "+" ],
     "callStack" : [ ],
@@ -282,7 +282,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 6,
+    "activeLine" : 11,
     "description" : "'C' is an operand — append directly to the output.",
     "queueOrStackState" : [ "*", "+" ],
     "callStack" : [ ],
@@ -335,7 +335,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 17,
+    "activeLine" : 21,
     "description" : "'-' (precedence 1) is not higher than '*' (precedence 2) on top — pop '*' to output.",
     "queueOrStackState" : [ "+" ],
     "callStack" : [ ],
@@ -388,7 +388,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 17,
+    "activeLine" : 21,
     "description" : "'-' (precedence 1) is not higher than '+' (precedence 1) on top — pop '+' to output.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -441,7 +441,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 19,
+    "activeLine" : 23,
     "description" : "Push operator '-' (precedence 1) onto the stack.",
     "queueOrStackState" : [ "-" ],
     "callStack" : [ ],
@@ -494,7 +494,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 6,
+    "activeLine" : 11,
     "description" : "'D' is an operand — append directly to the output.",
     "queueOrStackState" : [ "-" ],
     "callStack" : [ ],
@@ -547,7 +547,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 23,
+    "activeLine" : 27,
     "description" : "Flush remaining operator '-' from the stack to output.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -600,7 +600,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 25,
+    "activeLine" : 29,
     "description" : "Conversion complete. Postfix: \"ABC*+D-\".",
     "queueOrStackState" : [ ],
     "callStack" : [ ],

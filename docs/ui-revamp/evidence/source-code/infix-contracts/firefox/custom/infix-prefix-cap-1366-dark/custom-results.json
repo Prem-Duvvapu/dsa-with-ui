@@ -1,0 +1,41 @@
+{
+  "generated": "2026-10-14T16:19:14.265Z",
+  "realBackend": true,
+  "passed": true,
+  "id": "infix-to-prefix",
+  "engine": "firefox",
+  "browserVersion": "155.0",
+  "width": 1366,
+  "theme": "dark",
+  "servedBuild": {
+    "assets": [
+      "/assets/index-DwejRBy7.css",
+      "/assets/index-ociQG6EK.js"
+    ]
+  },
+  "executions": 3,
+  "input": {
+    "expression": "A-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B-B"
+  },
+  "rejectedInput": {
+    "expression": "A++B"
+  },
+  "fieldError": "Expected an A-Z operand or '(' at character 3.",
+  "peakStack": {
+    "depth": 19,
+    "step": 39
+  },
+  "checks": [
+    "custom source matches default source",
+    "resolved input matches submitted input",
+    "shared input decodes to committed input",
+    "400 focuses error summary",
+    "400 preserves shared input",
+    "400 preserves shared step",
+    "400 preserves source and step",
+    "view switches execute nothing",
+    "no page-wide overflow",
+    "39-character input and peak 19-operator stack fit the page",
+    "independent custom answer is -------------------ABBBBBBBBBBBBBBBBBBB"
+  ]
+}

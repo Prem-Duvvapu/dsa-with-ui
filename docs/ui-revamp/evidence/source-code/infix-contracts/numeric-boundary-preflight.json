@@ -1,0 +1,195 @@
+{
+  "generated": "2026-10-14T16:49:39.187Z",
+  "scope": "Read-only trust-boundary diagnostic. No production fix or permanent regression test implemented.",
+  "rows": [
+    {
+      "id": "count-good-numbers",
+      "rawJsonBody": "{\"n\":4294967297}",
+      "expectedStatus": 400,
+      "actualStatus": 200,
+      "fieldErrors": null,
+      "resolvedInput": {
+        "n": 1
+      },
+      "finalVariables": {
+        "answer": "5"
+      },
+      "truncated": false,
+      "correctlyRefused": false
+    },
+    {
+      "id": "count-good-numbers",
+      "rawJsonBody": "{\"n\":-4294967295}",
+      "expectedStatus": 400,
+      "actualStatus": 200,
+      "fieldErrors": null,
+      "resolvedInput": {
+        "n": 1
+      },
+      "finalVariables": {
+        "answer": "5"
+      },
+      "truncated": false,
+      "correctlyRefused": false
+    },
+    {
+      "id": "count-good-numbers",
+      "rawJsonBody": "{\"n\":340282366920938463463374607431768211457}",
+      "expectedStatus": 400,
+      "actualStatus": 200,
+      "fieldErrors": null,
+      "resolvedInput": {
+        "n": 1
+      },
+      "finalVariables": {
+        "answer": "5"
+      },
+      "truncated": false,
+      "correctlyRefused": false
+    },
+    {
+      "id": "prime-factorisation-queries",
+      "rawJsonBody": "{\"n\":4295067296}",
+      "expectedStatus": 400,
+      "actualStatus": 200,
+      "fieldErrors": null,
+      "resolvedInput": {
+        "n": 100000
+      },
+      "finalVariables": {
+        "factors": "[2, 2, 2, 2, 2, 5, 5, 5, 5, 5]"
+      },
+      "truncated": false,
+      "correctlyRefused": false
+    },
+    {
+      "id": "largest-element",
+      "rawJsonBody": "{\"nums\":[4294967297,4294967298]}",
+      "expectedStatus": 400,
+      "actualStatus": 200,
+      "fieldErrors": null,
+      "resolvedInput": {
+        "nums": [
+          1,
+          2
+        ]
+      },
+      "finalVariables": {
+        "best": "2"
+      },
+      "truncated": false,
+      "correctlyRefused": false
+    },
+    {
+      "id": "matrix-median",
+      "rawJsonBody": "{\"matrix\":[[4294967297]]}",
+      "expectedStatus": 400,
+      "actualStatus": 200,
+      "fieldErrors": null,
+      "resolvedInput": {
+        "matrix": [
+          [
+            1
+          ]
+        ]
+      },
+      "finalVariables": {
+        "answer": "1"
+      },
+      "truncated": false,
+      "correctlyRefused": false
+    },
+    {
+      "id": "tree-preorder",
+      "rawJsonBody": "{\"tree\":[4294967297]}",
+      "expectedStatus": 400,
+      "actualStatus": 200,
+      "fieldErrors": null,
+      "resolvedInput": {
+        "tree": [
+          1
+        ]
+      },
+      "finalVariables": {
+        "output": "[1]"
+      },
+      "truncated": false,
+      "correctlyRefused": false
+    },
+    {
+      "id": "reverse-linked-list",
+      "rawJsonBody": "{\"values\":[4294967297]}",
+      "expectedStatus": 400,
+      "actualStatus": 200,
+      "fieldErrors": null,
+      "resolvedInput": {
+        "values": [
+          1
+        ]
+      },
+      "finalVariables": {
+        "newHead": "1",
+        "result": "[1]"
+      },
+      "truncated": false,
+      "correctlyRefused": false
+    },
+    {
+      "id": "bfs-traversal",
+      "rawJsonBody": "{\"graph\":{\"vertices\":4294967297,\"edges\":[]}}",
+      "expectedStatus": 400,
+      "actualStatus": 400,
+      "fieldErrors": {
+        "graph": "The vertex count must be a whole number in the supported range."
+      },
+      "resolvedInput": null,
+      "finalVariables": null,
+      "truncated": null,
+      "correctlyRefused": true
+    },
+    {
+      "id": "bfs-traversal",
+      "rawJsonBody": "{\"start\":4294967296}",
+      "expectedStatus": 400,
+      "actualStatus": 200,
+      "fieldErrors": null,
+      "resolvedInput": {
+        "start": 0,
+        "graph": {
+          "vertices": 6,
+          "edges": [
+            [
+              0,
+              1
+            ],
+            [
+              0,
+              2
+            ],
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              3,
+              5
+            ],
+            [
+              4,
+              5
+            ]
+          ]
+        }
+      },
+      "finalVariables": {
+        "order": "[0, 1, 2, 3, 4, 5]"
+      },
+      "truncated": false,
+      "correctlyRefused": false
+    }
+  ]
+}

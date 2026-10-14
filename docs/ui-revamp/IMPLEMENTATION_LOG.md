@@ -2263,3 +2263,166 @@ automatic goal continuation. The42 source-contract cases pass again on2026-10-14
 package is published through a PR with both CI tiers required before merge. Final
 publication/CI state is the GitHub record. No next implementation package begins until
 this package lands.
+
+## 2026-10-14 — batch3 published; infix grammar and complete sources
+
+The owner resumed with “continue working for next 2 hours” after the explicit request
+to publish verified batch3. That real user response authorized the proposed publication,
+not an automatic goal continuation. Batch3 committed as `3f1c3b4`, merged through #225
+as `bec487c` after backend/frontend CI, GitGuardian and Vercel passed. Post-merge CI also
+passed. Only then was `fix/infix-source-validation` cut from merged main. The original
+dirty Windows worktree remains untouched.
+
+A bounded public check confirms both batch3 detail sources and8 full/delta executions
+of4 independently known cases: Rabin–Karp collision/final match, longer pattern with no
+window, mixed spacing/apostrophe reversal and60 spaces. Inputs/source/identity/known
+answers and normalized full/delta states agree;431 traced/0 duplicates. The first Node
+fetch attempt timed out; curl succeeded. `infix-contracts/public-merged-string-225.json`
+records the precise scope and source baseline, not proof of the whole deployed commit,
+every catalogue answer, metadata or release/rollback readiness.
+
+### Local infix package
+
+Both converters accepted allowed-character strings that were not valid binary infix:
+`(A+B`, `A+B)`, `A++B`, `AB`, `()`. They returned HTTP200 and successful completion,
+including literal parentheses or an empty answer. A character whitelist was not a
+grammar. The displayed Java omitted precedence, and Prefix also omitted reverse-and-swap.
+
+Each input spec now declares `requireInfixExpression`. InputValidator enforces operand/
+operator order and balanced nonempty groups before source parsing or execution; errors
+belong to `expression`. Served help names binary operators, A-Z operands, grouping,
+and the exclusions (unary operators, spaces, implicit multiplication). The bounds,
+defaults, alternate inputs, canonical identities and Stack renderer are unchanged.
+
+Both owners use the existing strict core-source family with complete standalone Java17,
+typed `String solve(String expression)`, real helper bodies and independent validation.
+The standalone solver is not artificially capped at the UI's40 characters. Source
+anchors still describe each actual operation; no fallback or new dependency is added.
+Randomize gains a bounded grammar-aware generator only for flagged strings, rather than
+the prior lowercase output. It edits the draft and requires explicit Run. Other regex/
+string generation and broader randomizer contracts remain outside this package.
+
+Critical review also found Prefix's equal-`^` pop narrated as `3 < 3`. Its answer and
+state were already correct. The custom-run message now explains reverse-scan associativity;
+strictly-higher pops keep their existing message. No valid algorithm/answer/state changes.
+
+### Proof and local verification
+
+- All39 initial selective backend cases fail on the original listings/validation:
+  two source cases plus37 independent converter grammar/API/spec checks. Even a class
+  and JDK-import wrapper leaves the original helpers undefined.
+- Each source is compared with a recursive-descent expression tree on233 valid unique
+  expressions;4,673 invalid unique expressions are rejected by both compiled source
+  and InputValidator. The sets include exhaustive short strings, explicit grouping/
+  associativity/cap cases and seeded constructions. Defaults/alternates and35 authored
+  examples across15 core owners are additional, not duplicate-counted as new fixtures.
+- Shared-validator removal fails36/38 selective checks; two served-declaration cases
+  still pass as expected. Compiling flipped-associativity sources fail2/2, and removed
+  standalone guards fail2/2. All restored.
+- Two initial frontend grammar regressions fail before implementation; disabling the
+  finished generator branch fails all4 new tests across36 selected cases. Existing
+  tests are not weakened. The unavailable Vitest matcher was replaced by equivalent
+  call-count and exact-argument checks; that failed attempt is excluded.
+- The new narration test and browser guard are RED on the original false message.
+  An intermediate test overclassified a popped `^` with incoming `*`; its one failing
+  full run is excluded. The final test uses the actual incoming highlighted character,
+  adds a strict-greater negative guard, and is re-proved RED on the original `3 < 3`.
+- Final backend passes8,183 reported cases,0 failures/errors,500 unchanged skips;
+  core-source contracts48, infix-specific cases38. Packaging and launcher smoke pass.
+  Frontend83 files/857 tests and build pass; JS389.24kB/gzip124.01, CSS98.74kB/gzip17.92.
+  Dependencies/lockfile are unchanged; nine existing vulnerable package entries remain.
+- Golden regeneration passes432 cases. Exactly two default goldens differ, and parsed
+  comparison permits only source, anchors and highlighted lines. Default narration and
+  state are unchanged. The custom equal-exponent narration correction is explicitly scoped.
+
+Final browser checks on the packaged post-narration backend pass170 completed journeys:
+120 default-source rows,16 link/Randomize/Focus/reload sessions,32 custom-run/rejected-run
+cases and2 older-family compatibility journeys. The16 cap cases genuinely render19 DOM
+items but still require vertical scrolling; they are included in the32 custom cases.
+Both engines,320/1366, both themes, source hashes, served build identity and package
+timestamps are reconciled in `evidence/source-code/infix-contracts/manifest-audit.json`.
+No page errors or horizontal overflow; the existing phone useful-source-height limitation
+remains open. Earlier pre-narration manifests are superseded,
+not counted twice. No Maven command runs while the same worktree serves a journey.
+An optional publication question has been sent; the infix package remains local until
+the owner approves commit/push/merge. No subsequent implementation package has started.
+
+Remaining:40 historical non-platform omissions on merged #225,38 after infix lands;
+77 platform contexts,41 statements,49 DP candidates, canonical string complexity defects,
+C++ honesty, broader source/randomizer semantics, dependency security, D6/D7 and P7/P8/P9.
+Phone useful-frame exceptions, human/device/virtual-keyboard/screen-reader/zoom/performance/
+learner acceptance and release/rollback remain open. This is not project completion.
+
+### Read-only preflight while awaiting infix publication approval
+
+No next implementation package was started.89 paced local API cases check four possible
+source candidates independently: Count Good Numbers passes every allowed n=1..60 using
+iterative BigInteger choices;12 SPF cases (1, primes, prime powers, cap100000) match trial
+division. Phone `777777` truncates at2,367 steps/2 MB after1,014 of4,096 captures; the
+five-digit four-letter case and six-digit three-letter case finish. Gas Stations has4/9
+sampled two-decimal disagreements with independent rational-candidate enumeration,
+including `[0,1000],k=2`:333.34351 versus1000/3. These are not source-only repair candidates
+until their input/precision/result contracts are corrected. Generic complexity text is
+also inaccurate for all four; Phone still lacks an authored statement.
+
+Inspection found a higher-priority, pre-existing trust-boundary defect: INT, INT_ARRAY,
+INT_GRID, BINARY_TREE and LINKED_LIST convert `Number.intValue()` before checking bounds.
+Ten real requests show9 accepted aliases, including positive/negative Long and BigInteger
+overflow. Graph payload conversion is checked, but graph scalar start is not. A real
+Chromium UI reproduction accepts n4294967297, keeps it in the draft/share link and shows
+actual input1/answer5 without a field error. Canonical spec inventory identifies478 numeric
+field declarations across340 problems using the unchecked paths; not every endpoint was
+individually reproduced. Numeric code is unchanged in this branch. RCA-066 is open.
+
+Read-only npm audit confirms9 vulnerable entries/11 unique advisories, including2
+production-only Router entries. Registry-suggested major Vite/Vitest/Router versions and
+plugin/Node peer metadata are recorded, not installed or declared validated. No dependency
+or lockfile changed. This is not a backend dependency audit or an exploitability sign-off.
+
+Reports: `infix-contracts/next-candidate-preflight.json`, `numeric-boundary-preflight.json`,
+`numeric-boundary-browser.json`/PNG, `numeric-field-inventory.json`, `dependency-preflight.json`.
+They are explicitly separate from the170 passing infix browser journeys and do not
+constitute fixes or permanent RED-first regression suites for the newly found defects.
+
+### Publication authorization and next implementation sequence
+
+The owner explicitly requested “do 1,2 and 3”: publish and CI-gated merge the
+verified infix package, then implement numeric exactness, Gas Stations precision and
+Phone Letter Combinations budget correctness. The infix verification above records
+the pre-publication snapshot; GitHub remains authoritative for its eventual merge.
+The following correctness packages remain separate and land in sequence.
+
+1. **Exact numeric validation, one correctness PR.** Reuse the checked-conversion idea
+   already present for graph values at the shared InputValidator boundary, before any
+   narrowing. Add RED-first Long/BigInteger positive/negative overflow and valid32-bit
+   boundary tests for every numeric field kind. Preserve null tree slots, element/row
+   numbering, all existing schema checks and Graph refusals. Assert field-specific400
+   with no trace, and a real rejected-run UI preserving prior source/step/link. Valid
+   goldens should not change. Do not rely on disabled buttons or client-only validation.
+2. **Precision and input-budget correctness, separately scoped PRs.** For Gas Stations,
+   establish a defensible epsilon/iteration/display contract, independent rational oracle,
+   current paired continuous bounds and largest accepted trace budget, with source and
+   authored examples updated together. For Phone, justify the branching/cap budget,
+   preserve rejected input identity, add complete source and a genuine enumeration-result
+   contract/statement; do not replace the algorithm's List result with a count-only solver.
+3. **Authored per-owner complexity, a bounded metadata PR.** Correct provider-owned
+   values before SolutionApproachRegistry takes immutable canonical snapshots. Test exact
+   independently expected values on detail, approach summaries and full/delta default/
+   custom executions. Do not patch only a late controller view or replace one generic
+   template with another. Keep trace instrumentation distinct from algorithm cost.
+4. **Next simple source batch.** Count Good Numbers and SPF are the cleaner candidates:
+   missing constants/helpers, correct measured runtime answers. Retain exact algorithms,
+   typed results, independent oracles, real operation anchors and strict resource ownership;
+   fix stale even/odd comments and actual preprocessing documentation. Establish RED on
+   old code, then full compiler/API/budget/golden/browser gates. Phone and Gas need the
+   correctness seams above, not just KEYPAD/max helper bodies.
+5. **Security migration PR sequence.** Review current official migration/peer requirements;
+   upgrade compatible existing packages without force/legacy-peer bypass. Preserve all
+   lifecycle/URL/concurrent-router assertions and compare production output/browser parity.
+   Re-run full and production-only audits; do not declare release ready from dev-only
+   mitigations or a partial transitive patch. Backend dependency review remains separate.
+
+Continue the38 remaining historical omissions after infix,77 authoritative platform
+contexts,41 statements,49 DP candidate reviews/implementations and D6/D7; then complete
+the still-open P7/P8/P9 human/device/accessibility/performance/release gates. Source
+compilation alone is not mathematical, metadata, UI or project-completion certification.
