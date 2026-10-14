@@ -1,0 +1,22 @@
+{
+  "generated": "2026-10-14T16:44:32.728Z",
+  "scope": "Read-only reproduction of existing integer narrowing; not a passing regression test.",
+  "id": "count-good-numbers",
+  "requested": {
+    "n": 4294967297
+  },
+  "nativeFieldValidity": false,
+  "expectedStatus": 400,
+  "actualStatus": 200,
+  "resolvedInput": {
+    "n": 1
+  },
+  "answer": "5",
+  "summary": "Input used\nn\n1",
+  "draft": "4294967297",
+  "sharedInput": {
+    "n": 4294967297
+  },
+  "fieldErrorCount": 0,
+  "confirmedMismatch": true
+}

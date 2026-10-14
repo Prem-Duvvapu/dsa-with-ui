@@ -86,6 +86,60 @@ describe('randomizeValue', () => {
     });
   });
 
+  it('declared binary infix strings satisfy an independent recursive grammar and length bounds', () => {
+    // Recursive groups/atoms, not the generator's iterative construction.
+    function accepts(text) {
+      let cursor = 0;
+      function atom() {
+        if (text[cursor] === '(') {
+          cursor++;
+          if (!expression() || text[cursor++] !== ')') return false;
+          return true;
+        }
+        return /^[A-Z]$/.test(text[cursor++] ?? '');
+      }
+      function expression() {
+        if (!atom()) return false;
+        while ('+-*/^'.includes(text[cursor] ?? '\0')) {
+          cursor++;
+          if (!atom()) return false;
+        }
+        return true;
+      }
+      return expression() && cursor === text.length;
+    }
+    for (const [minLength, maxLength] of [[1, 40], [1, 1], [7, 7], [9, 12], [39, 40]]) {
+      forManySeeds(rng => {
+        const value = randomizeValue({ type: 'STRING', constraints: {
+          minLength, maxLength, requireInfixExpression: true
+        } }, rng);
+        expect(value.length).toBeGreaterThanOrEqual(minLength);
+        expect(value.length).toBeLessThanOrEqual(maxLength);
+        expect(accepts(value), value).toBe(true);
+      });
+    }
+  });
+
+  it('infix randomization varies operands, operators and grouped expressions without problem ids', () => {
+    const field = { name: 'expression', type: 'STRING', constraints: {
+      minLength: 1, maxLength: 40, requireInfixExpression: true
+    } };
+    const values = new Set();
+    const rng = seeded(55057);
+    for (let count = 0; count < 100; count++) {
+      values.add(randomizeInput({ fields: [field] }, rng).expression);
+    }
+    expect(values.size).toBeGreaterThan(50);
+    const all = [...values].join('');
+    for (const token of ['+', '-', '*', '/', '^', '(', ')']) expect(all).toContain(token);
+  });
+
+  it('refuses an impossible infix size declaration instead of looping or inventing a default', () => {
+    expect(() => randomizeValue({ type: 'STRING', constraints: {
+      minLength: 2, maxLength: 2, requireInfixExpression: true
+    } }, seeded(1))).toThrow(/odd-length expression/);
+  });
+
   it('INT_GRID is rectangular and within row/col/value bounds', () => {
     const field = {
       type: 'INT_GRID',

@@ -16,7 +16,7 @@ import java.util.Map;
  * for left-associative operators, then reverse the result.
  */
 @Component
-public class InfixToPrefixTracer implements AlgorithmTracer {
+public class InfixToPrefixTracer extends CompleteSourceTracer {
 
     @Override
     public String id() {
@@ -33,8 +33,9 @@ public class InfixToPrefixTracer implements AlgorithmTracer {
         return InputSpec.of(
                 InputField.of("expression", FieldType.STRING)
                         .label("Infix expression")
-                        .help("Single uppercase letters as operands, +, -, *, /, ^, and parentheses.")
+                        .help("Single A-Z operands with binary +, -, *, /, ^ and balanced parentheses. No unary operators, spaces or implicit multiplication (write A*B, not AB or A(B)).")
                         .length(1, 40)
+                        .constraint("requireInfixExpression", true)
                         .constraint("pattern", "[A-Z+\\-*/^()]{1,40}")
                         .constraint("patternHint",
                                 "Use A-Z as operands, +, -, *, /, ^ as operators, and ( ) for grouping.")
@@ -45,46 +46,6 @@ public class InfixToPrefixTracer implements AlgorithmTracer {
     @Override
     public Map<String, Object> alternateInput() {
         return Map.of("expression", "(A-B)*(C+D)");
-    }
-
-    @Override
-    public String annotatedCode() {
-        return """
-               public String infixToPrefix(String s) {
-                   // @a init
-                   String reversed = reverseAndSwapParens(s);
-                   StringBuilder result = new StringBuilder();
-                   Deque<Character> stack = new ArrayDeque<>();
-                   for (char c : reversed.toCharArray()) {
-                       if (Character.isLetter(c)) {
-                           // @a operand
-                           result.append(c);
-                       } else if (c == '(') {
-                           // @a openParen
-                           stack.push(c);
-                       } else if (c == ')') {
-                           while (stack.peek() != '(') {
-                               // @a closeParen
-                               result.append(stack.pop());
-                           }
-                           stack.pop();
-                       } else {
-                           while (!stack.isEmpty() && (precedence(stack.peek()) > precedence(c)
-                                   || (precedence(stack.peek()) == precedence(c) && c == '^'))) {
-                               // @a higherPrec
-                               result.append(stack.pop());
-                           }
-                           // @a pushOp
-                           stack.push(c);
-                       }
-                   }
-                   while (!stack.isEmpty()) {
-                       // @a flush
-                       result.append(stack.pop());
-                   }
-                   // @a done
-                   return result.reverse().toString();
-               }""";
     }
 
     /**
@@ -160,9 +121,12 @@ public class InfixToPrefixTracer implements AlgorithmTracer {
                 while (!stack.isEmpty() && stack.peek() != '(' && popsBefore(stack.peek(), c)) {
                     char popped = stack.pop();
                     result.append(popped);
+                    String reason = precedence(c) == precedence(popped)
+                            ? "Equal '^' precedence in the reversed scan — pop '^' so exponentiation stays right-associative."
+                            : String.format("'%c' (prec %d) < '%c' (prec %d) on top — pop '%c'.",
+                                    c, precedence(c), popped, precedence(popped), popped);
                     emit.at("higherPrec")
-                            .say("'%c' (prec %d) < '%c' (prec %d) on top — pop '%c'.",
-                                    c, precedence(c), popped, precedence(popped), popped)
+                            .say("%s", reason)
                             .var("popped", popped).var("result", result.toString())
                             .chars(reversed, i).stack(stack).step();
                 }

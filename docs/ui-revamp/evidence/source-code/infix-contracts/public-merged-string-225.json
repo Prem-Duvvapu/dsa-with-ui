@@ -1,0 +1,68 @@
+{
+  "at": "2026-10-14T16:01:06.812Z",
+  "base": "https://dsa-with-ui.vercel.app",
+  "verifiedSourceBaseline": "bec487c",
+  "transport": "curl",
+  "detailCheckedAt": "2026-10-14T15:59:34.523Z",
+  "detailSources": [
+    { "id": "rabin-karp-algo", "matchesMergedSource": true, "sourceSha256": "1f56f888bb9954644a188e7e2493b84ad8b2b6559b5064737e8863e08c06299e" },
+    { "id": "reverse-every-word", "matchesMergedSource": true, "sourceSha256": "77f2665e673f818e398720a65e35d12855828970f52c2b055bed8fe6bf53261b" }
+  ],
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "rows": [
+    {
+      "id": "rabin-karp-algo",
+      "input": {
+        "text": "caah",
+        "pattern": "ah"
+      },
+      "answer": "[2]",
+      "fullDeltaEqual": true,
+      "complete": true,
+      "stepCount": 4,
+      "sourceSha256": "1f56f888bb9954644a188e7e2493b84ad8b2b6559b5064737e8863e08c06299e"
+    },
+    {
+      "id": "rabin-karp-algo",
+      "input": {
+        "text": "a",
+        "pattern": "ab"
+      },
+      "answer": "[]",
+      "fullDeltaEqual": true,
+      "complete": true,
+      "stepCount": 2,
+      "sourceSha256": "1f56f888bb9954644a188e7e2493b84ad8b2b6559b5064737e8863e08c06299e"
+    },
+    {
+      "id": "reverse-every-word",
+      "input": {
+        "s": " a  BC'  d "
+      },
+      "answer": " a  'CB  d ",
+      "fullDeltaEqual": true,
+      "complete": true,
+      "stepCount": 4,
+      "sourceSha256": "77f2665e673f818e398720a65e35d12855828970f52c2b055bed8fe6bf53261b"
+    },
+    {
+      "id": "reverse-every-word",
+      "input": {
+        "s": "                                                            "
+      },
+      "answer": "                                                            ",
+      "fullDeltaEqual": true,
+      "complete": true,
+      "stepCount": 1,
+      "sourceSha256": "77f2665e673f818e398720a65e35d12855828970f52c2b055bed8fe6bf53261b"
+    }
+  ],
+  "scope": "Eight bounded public full/delta executions of four independently known string cases; not whole-project, metadata, human or rollback acceptance",
+  "earlierExcludedAttempt": "Node fetch timed out for both detail requests; curl then verified both exact detail sources and these executions."
+}

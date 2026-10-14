@@ -167,7 +167,36 @@ public final class InputValidator {
             throw new IllegalArgumentException(
                     hint instanceof String h ? h : "Contains unsupported characters.");
         }
+        if (f.flag("requireInfixExpression")) checkInfixExpression(s);
         return s;
+    }
+
+    /** Binary infix grammar over single A-Z operands; no implicit multiplication or unary operators. */
+    private static void checkInfixExpression(String expression) {
+        boolean needsOperand = true;
+        int depth = 0;
+        for (int index = 0; index < expression.length(); index++) {
+            char token = expression.charAt(index);
+            String position = " at character " + (index + 1) + ".";
+            if (token >= 'A' && token <= 'Z') {
+                if (!needsOperand) throw new IllegalArgumentException("Expected a binary operator" + position);
+                needsOperand = false;
+            } else if (token == '(') {
+                if (!needsOperand) throw new IllegalArgumentException("Write an operator before '('" + position);
+                depth++;
+            } else if (token == ')') {
+                if (needsOperand) throw new IllegalArgumentException("Expected an operand before ')'" + position);
+                if (depth == 0) throw new IllegalArgumentException("Unmatched ')'" + position);
+                depth--;
+            } else if ("+-*/^".indexOf(token) >= 0) {
+                if (needsOperand) throw new IllegalArgumentException("Expected an A-Z operand or '('" + position);
+                needsOperand = true;
+            } else {
+                throw new IllegalArgumentException("Use A-Z operands, binary +, -, *, /, ^ and parentheses only.");
+            }
+        }
+        if (needsOperand) throw new IllegalArgumentException("The expression needs an A-Z operand at the end.");
+        if (depth != 0) throw new IllegalArgumentException("Unmatched '(': close every group with ')'.");
     }
 
     private static List<List<Number>> checkGrid(InputField f, Object value) {

@@ -1,15 +1,15 @@
 {
   "anchors" : {
-    "closeParen" : 12,
-    "done" : 26,
-    "flush" : 24,
-    "higherPrec" : 18,
-    "init" : 2,
-    "openParen" : 9,
-    "operand" : 7,
-    "pushOp" : 20
+    "closeParen" : 17,
+    "done" : 30,
+    "flush" : 28,
+    "higherPrec" : 22,
+    "init" : 7,
+    "openParen" : 14,
+    "operand" : 12,
+    "pushOp" : 24
   },
-  "code" : "public String infixToPrefix(String s) {\n    String reversed = reverseAndSwapParens(s);\n    StringBuilder result = new StringBuilder();\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : reversed.toCharArray()) {\n        if (Character.isLetter(c)) {\n            result.append(c);\n        } else if (c == '(') {\n            stack.push(c);\n        } else if (c == ')') {\n            while (stack.peek() != '(') {\n                result.append(stack.pop());\n            }\n            stack.pop();\n        } else {\n            while (!stack.isEmpty() && (precedence(stack.peek()) > precedence(c)\n                    || (precedence(stack.peek()) == precedence(c) && c == '^'))) {\n                result.append(stack.pop());\n            }\n            stack.push(c);\n        }\n    }\n    while (!stack.isEmpty()) {\n        result.append(stack.pop());\n    }\n    return result.reverse().toString();\n}",
+  "code" : "import java.util.ArrayDeque;\nimport java.util.Deque;\n\npublic class Solution {\n    public String solve(String expression) {\n        requireInfix(expression);\n        String reversed = reverseAndSwap(expression);\n        StringBuilder result = new StringBuilder();\n        Deque<Character> stack = new ArrayDeque<>();\n        for (char c : reversed.toCharArray()) {\n            if (c >= 'A' && c <= 'Z') {\n                result.append(c);\n            } else if (c == '(') {\n                stack.push(c);\n            } else if (c == ')') {\n                while (stack.peek() != '(') {\n                    result.append(stack.pop());\n                }\n                stack.pop();\n            } else {\n                while (!stack.isEmpty() && stack.peek() != '(' && popsBefore(stack.peek(), c)) {\n                    result.append(stack.pop());\n                }\n                stack.push(c);\n            }\n        }\n        while (!stack.isEmpty()) {\n            result.append(stack.pop());\n        }\n        return result.reverse().toString();\n    }\n\n    // Reversing the scan reverses associativity: equal precedence pops ONLY for '^'.\n    private static boolean popsBefore(char top, char arriving) {\n        return precedence(top) > precedence(arriving)\n                || (precedence(top) == precedence(arriving) && arriving == '^');\n    }\n\n    private static int precedence(char operator) {\n        return switch (operator) {\n            case '+', '-' -> 1;\n            case '*', '/' -> 2;\n            case '^' -> 3;\n            default -> 0;\n        };\n    }\n\n    private static String reverseAndSwap(String expression) {\n        StringBuilder reversed = new StringBuilder();\n        for (int index = expression.length() - 1; index >= 0; index--) {\n            char token = expression.charAt(index);\n            reversed.append(token == '(' ? ')' : token == ')' ? '(' : token);\n        }\n        return reversed.toString();\n    }\n\n    // The visualizer additionally caps input at 40 characters; this solver has no UI size cap.\n    // Grammar: single A-Z operands, binary + - * / ^, balanced groups; no spaces or unary operators.\n    private static void requireInfix(String expression) {\n        if (expression == null || expression.isEmpty()) throw new IllegalArgumentException(\"Expression is required.\");\n        boolean needsOperand = true;\n        int depth = 0;\n        for (char token : expression.toCharArray()) {\n            if (token >= 'A' && token <= 'Z') {\n                if (!needsOperand) throw new IllegalArgumentException(\"Expected a binary operator.\");\n                needsOperand = false;\n            } else if (token == '(') {\n                if (!needsOperand) throw new IllegalArgumentException(\"Write an operator before '('.\");\n                depth++;\n            } else if (token == ')') {\n                if (needsOperand || depth == 0) throw new IllegalArgumentException(\"Invalid closing parenthesis.\");\n                depth--;\n            } else if (\"+-*/^\".indexOf(token) >= 0) {\n                if (needsOperand) throw new IllegalArgumentException(\"Expected an operand.\");\n                needsOperand = true;\n            } else throw new IllegalArgumentException(\"Unsupported character.\");\n        }\n        if (needsOperand || depth != 0) throw new IllegalArgumentException(\"Incomplete expression or unmatched parentheses.\");\n    }\n}\n",
   "problemId" : "infix-to-prefix",
   "resolvedInput" : {
     "expression" : "A+B*C"
@@ -17,7 +17,7 @@
   "stepCount" : 9,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 2,
+    "activeLine" : 7,
     "description" : "Convert infix \"A+B*C\" to prefix. Step 1: reverse and swap parens → \"C*B+A\".",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -60,7 +60,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 7,
+    "activeLine" : 12,
     "description" : "'C' is an operand — append to intermediate result.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -103,7 +103,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 20,
+    "activeLine" : 24,
     "description" : "Push operator '*' (precedence 2).",
     "queueOrStackState" : [ "*" ],
     "callStack" : [ ],
@@ -145,7 +145,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 7,
+    "activeLine" : 12,
     "description" : "'B' is an operand — append to intermediate result.",
     "queueOrStackState" : [ "*" ],
     "callStack" : [ ],
@@ -188,7 +188,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 18,
+    "activeLine" : 22,
     "description" : "'+' (prec 1) < '*' (prec 2) on top — pop '*'.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -231,7 +231,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 20,
+    "activeLine" : 24,
     "description" : "Push operator '+' (precedence 1).",
     "queueOrStackState" : [ "+" ],
     "callStack" : [ ],
@@ -273,7 +273,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 7,
+    "activeLine" : 12,
     "description" : "'A' is an operand — append to intermediate result.",
     "queueOrStackState" : [ "+" ],
     "callStack" : [ ],
@@ -316,7 +316,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 24,
+    "activeLine" : 28,
     "description" : "Flush '+' from remaining stack.",
     "queueOrStackState" : [ ],
     "callStack" : [ ],
@@ -359,7 +359,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 26,
+    "activeLine" : 30,
     "description" : "Reverse intermediate \"CB*A+\" → prefix: \"+A*BC\".",
     "queueOrStackState" : [ ],
     "callStack" : [ ],

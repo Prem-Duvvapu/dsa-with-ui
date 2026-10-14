@@ -85,6 +85,24 @@ describe('InputPanel', () => {
     expect(chips()).toEqual([5, 4, 3, 2, 1]);
   });
 
+  it('randomizes the served infix grammar as a draft and submits that same expression only on Run', () => {
+    const onRun = vi.fn();
+    const inputSpec = { fields: [{ name: 'expression', type: 'STRING', label: 'Infix expression',
+      defaultValue: 'A', constraints: { minLength: 1, maxLength: 40, requireInfixExpression: true } }] };
+    const random = vi.spyOn(Math, 'random').mockReturnValue(0.5);
+    try {
+      render(<Controlled problemId="infix-to-postfix" inputSpec={inputSpec} onRun={onRun} />);
+      fireEvent.click(screen.getByRole('button', { name: 'Randomize' }));
+      const expression = screen.getByLabelText('Infix expression').value;
+      expect(expression).toMatch(/^[A-Z+\-*/^()]+$/);
+      expect(expression).not.toBe('A');
+      expect(onRun).not.toHaveBeenCalled();
+      fireEvent.click(screen.getByRole('button', { name: 'Run input' }));
+      expect(onRun).toHaveBeenCalledTimes(1);
+      expect(onRun).toHaveBeenCalledWith({ expression });
+    } finally { random.mockRestore(); }
+  });
+
   it('points at the rejected fields and moves focus to the summary', () => {
     render(<Controlled fieldErrors={{ nums: 'Needs at least 2 values.' }} />);
     const summary = screen.getByRole('alert', { name: /could not run/i });

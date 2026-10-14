@@ -67,6 +67,7 @@ function randomIntList(rng, field, { allowNulls = false } = {}) {
 
 function randomString(rng, field) {
   const c = field.constraints || {};
+  if (c.requireInfixExpression === true) return randomInfix(rng, c);
   const minLen = c.minLength ?? 3;
   const maxLen = Math.min(c.maxLength ?? 10, Math.max(minLen, 10));
   const length = intBetween(rng, minLen, maxLen);
@@ -76,6 +77,27 @@ function randomString(rng, field) {
     out += alphabet[Math.floor(rng() * alphabet.length)];
   }
   return out;
+}
+
+// Build a short legal binary expression; no retry loop and no problem-id routing.
+// A valid expression has odd length (2*operands - 1, plus pairs of parentheses).
+function randomInfix(rng, constraints) {
+  const minLength = Math.max(1, constraints.minLength ?? 1);
+  const maxLength = Math.min(constraints.maxLength ?? 15, Math.max(minLength, 15));
+  const minOperands = Math.ceil((minLength + 1) / 2);
+  const maxOperands = Math.floor((maxLength + 1) / 2);
+  if (minOperands > maxOperands) throw new RangeError('Infix bounds must permit an odd-length expression.');
+  const operands = intBetween(rng, minOperands, maxOperands);
+  const letter = () => String.fromCharCode(intBetween(rng, 65, 90));
+  let result = letter();
+  for (let index = 1; index < operands; index++) {
+    // Reserve two characters for every remaining operator/operand pair.
+    if (result.length > 1 && result.length + 2 + 2 * (operands - index) <= maxLength && rng() < 0.5) {
+      result = `(${result})`;
+    }
+    result += '+-*/^'[intBetween(rng, 0, 4)] + letter();
+  }
+  return result;
 }
 
 function randomGrid(rng, field) {

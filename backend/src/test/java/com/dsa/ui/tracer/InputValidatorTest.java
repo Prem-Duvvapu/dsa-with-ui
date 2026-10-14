@@ -201,6 +201,26 @@ class InputValidatorTest {
             assertEquals("Lowercase letters only.",
                     reject(spec, Map.of("s", "ABC")).getFieldErrors().get("s"));
         }
+
+        @Test
+        void declaredInfixGrammarIsEnforcedWithoutAPatternOrAProblemId() {
+            InputSpec infix = InputSpec.of(InputField.of("s", FieldType.STRING)
+                    .constraint("requireInfixExpression", true).defaultValue("A+B").build());
+            for (String valid : List.of("A", "((Z))", "A-(B-C)", "A^B^C", "(A+B)*(C/D)")) {
+                assertEquals(valid, InputValidator.validate(infix, Map.of("s", valid)).getString("s"));
+            }
+            for (String invalid : List.of("", "AB", "A++B", "(A+B", "A+B)", "()", "A(B)", "a", "A B", "A&B")) {
+                assertTrue(reject(infix, Map.of("s", invalid)).getFieldErrors().containsKey("s"));
+            }
+        }
+
+        @Test
+        void plainStringsAreNotAccidentallySubjectToInfixRules() {
+            InputSpec plain = InputSpec.of(InputField.of("s", FieldType.STRING).defaultValue("AB").build());
+            for (String text : List.of("", "AB", "A++B", " ", "lowercase", "🙂")) {
+                assertEquals(text, InputValidator.validate(plain, Map.of("s", text)).getString("s"));
+            }
+        }
     }
 
     @Nested
