@@ -75,10 +75,8 @@ public final class InputValidator {
     }
 
     private static int checkInt(InputField f, Object value) {
-        if (!(value instanceof Number n) || value instanceof Double || value instanceof Float) {
-            throw new IllegalArgumentException("Expected a whole number.");
-        }
-        int v = n.intValue();
+        int v = checkedInteger(value, "Expected a whole number.",
+                "Expected a whole number in the signed 32-bit range.");
         Integer min = f.intConstraint("min");
         Integer max = f.intConstraint("max");
         if (min != null && v < min) {
@@ -120,10 +118,8 @@ public final class InputValidator {
                 out.add(null);
                 continue;
             }
-            if (!(raw instanceof Number n) || raw instanceof Double || raw instanceof Float) {
-                throw new IllegalArgumentException("Position " + (i + 1) + " is not a whole number.");
-            }
-            int v = n.intValue();
+            int v = checkedInteger(raw, "Position " + (i + 1) + " is not a whole number.",
+                    "Position " + (i + 1) + " must be a whole number in the signed 32-bit range.");
             if (minVal != null && v < minVal) {
                 throw new IllegalArgumentException("Values must be at least " + minVal + ".");
             }
@@ -247,11 +243,10 @@ public final class InputValidator {
             List<Number> parsed = new ArrayList<>(row.size());
             for (int c = 0; c < row.size(); c++) {
                 Object cell = row.get(c);
-                if (!(cell instanceof Number n) || cell instanceof Double || cell instanceof Float) {
-                    throw new IllegalArgumentException(
-                            "Row " + (r + 1) + ", column " + (c + 1) + " is not a whole number.");
-                }
-                int v = n.intValue();
+                int v = checkedInteger(cell,
+                        "Row " + (r + 1) + ", column " + (c + 1) + " is not a whole number.",
+                        "Row " + (r + 1) + ", column " + (c + 1)
+                                + " must be a whole number in the signed 32-bit range.");
                 if (minVal != null && v < minVal) {
                     throw new IllegalArgumentException("Cells must be at least " + minVal + ".");
                 }
@@ -357,24 +352,29 @@ public final class InputValidator {
     }
 
     private static int graphInteger(Object value, String errorMessage) {
+        return checkedInteger(value, errorMessage, errorMessage);
+    }
+
+    /** Check the original integer before narrowing: overflow must never alias a valid input. */
+    private static int checkedInteger(Object value, String typeError, String rangeError) {
         if (!(value instanceof Number number)
                 || value instanceof Double
                 || value instanceof Float
                 || value instanceof BigDecimal) {
-            throw new IllegalArgumentException(errorMessage);
+            throw new IllegalArgumentException(typeError);
         }
 
         if (number instanceof BigInteger bigInteger) {
             try {
                 return bigInteger.intValueExact();
             } catch (ArithmeticException outOfRange) {
-                throw new IllegalArgumentException(errorMessage);
+                throw new IllegalArgumentException(rangeError);
             }
         }
 
         long candidate = number.longValue();
         if (candidate < Integer.MIN_VALUE || candidate > Integer.MAX_VALUE) {
-            throw new IllegalArgumentException(errorMessage);
+            throw new IllegalArgumentException(rangeError);
         }
         return (int) candidate;
     }
