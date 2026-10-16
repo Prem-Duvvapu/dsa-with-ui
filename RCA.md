@@ -1965,8 +1965,9 @@ statement; adding only KEYPAD would not complete those seams.
 ## RCA-066 — Out-of-range numbers became different successful inputs
 
 - **Discovered:** 2026-10-14, read-only InputValidator and real API/browser preflight.
-- **Status:** Fixed locally in the separate exact-integer package; verification/publication
-  is recorded in the dated implementation log. The infix package did not change these paths.
+- **Status:** Fixed and merged in #227 / `e65cc95` after branch/PR/post-merge CI passed.
+  Verification is recorded in the dated implementation log. The infix package did not
+  change these paths; public whole-catalogue deployment is not certified by the merge.
 - **Symptom:** `count-good-numbers` with JSON `n=4294967297`, `-4294967295`, or
   `340282366920938463463374607431768211457` returns200, `resolvedInput.n=1`, answer5.
   Arrays, grids, trees and linked lists exhibit the same wrap. Graph payload numeric
@@ -1982,11 +1983,11 @@ statement; adding only KEYPAD would not complete those seams.
 - **Required fix:** validate exact representability before narrowing at the shared
   trust boundary. Retain whole-number/type rules, position numbering, null tree slots,
   all declared bounds and collection semantics. A client-only fix is insufficient.
-- **Guard still needed:** RED-first unit and real HTTP cases for positive/negative
+- **Guard originally required:** RED-first unit and real HTTP cases for positive/negative
   Long and BigInteger overflow across all affected field types;32-bit boundary/control
   values where allowed; existing Graph refusal;400 with no trace; a browser rejected-run
-  preserving prior result/step/link and focusing its field error. No implementation or
-  permanent test has started. Canonical InputSpec inventory finds478 numeric field
+  preserving prior result/step/link and focusing its field error. At discovery no fix or
+  permanent test existed; the implementation below now supplies them. Inventory finds478 numeric field
   declarations across340 problems using these paths; this is structural exposure, not
   proof that every endpoint/input was individually reproduced.
 - **Evidence:** `infix-contracts/numeric-boundary-preflight.json`,

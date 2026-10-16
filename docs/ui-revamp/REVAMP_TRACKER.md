@@ -177,6 +177,18 @@ green. Numeric exactness is verified locally:8,202 backend cases/500 unchanged s
 the fix; `evidence/source-code/numeric-integrity/` records exact scope. Gas precision
 and Phone budget are still the next separate packages, not completed by this repair.
 
+DP priority follow-up (2026-10-14): numeric validation merged as #227 / `e65cc95` with
+green branch/PR/post-merge CI. The owner then prioritized DP. Three more candidates are
+verified locally: Frog Jump K Distance, Maximum Sum of Non-Adjacent Elements and Grid
+Unique Paths. Six new genuine recursive/memo executables preserve the exact canonical
+tabulation objects/source/spec/defaults/IDs.8,217 backend cases/500 unchanged skips,
+857 frontend tests/build,432 unchanged regenerated goldens,18 full/delta API scenarios
+and114 browser/comparison journeys pass. `dp-approaches/linear-grid/`, the DP plan and
+dated log record independent source/oracle and budget proof. Inventory changes only
+those three rows:10 locally verified, seven merged,46 other candidates still pending.
+The new DP package is not yet published; Gas/Phone remain open under the priority change.
+D6/D7 and the broader human/device/security/release gates remain pending.
+
 ## Baseline (P0, 2026-09-29)
 
 | Item | Value |

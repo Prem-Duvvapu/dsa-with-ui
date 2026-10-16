@@ -12,6 +12,7 @@ final class RecursiveDpExecution {
     private final Integer[][][] memo;
     private final List<String> rows, cols;
     private final String slicePrefix;
+    private final String functionName;
     private final Set<State> computed = new HashSet<>();
     private int calls, hits, evaluations;
 
@@ -19,10 +20,15 @@ final class RecursiveDpExecution {
         this(emit, cached, layers, rows, cols, null);
     }
     RecursiveDpExecution(StepEmitter emit, boolean cached, int layers, List<String> rows, List<String> cols, String slicePrefix) {
+        this(emit, cached, layers, rows, cols, slicePrefix, "solve");
+    }
+    RecursiveDpExecution(StepEmitter emit, boolean cached, int layers, List<String> rows, List<String> cols,
+                         String slicePrefix, String functionName) {
         this.emit = emit;
         this.rows = rows;
         this.cols = cols;
         this.slicePrefix = slicePrefix;
+        this.functionName = Objects.requireNonNull(functionName);
         memo = cached ? new Integer[layers][rows.size()][cols.size()] : null;
     }
 
@@ -34,7 +40,7 @@ final class RecursiveDpExecution {
 
     int evaluate(State state, boolean base, String choices, IntSupplier recurrence) {
         int call = ++calls;
-        emit.push("solve(" + state.label + ") #" + call);
+        emit.push(functionName + "(" + state.label + ") #" + call);
         int answer;
         String anchor;
         try {
