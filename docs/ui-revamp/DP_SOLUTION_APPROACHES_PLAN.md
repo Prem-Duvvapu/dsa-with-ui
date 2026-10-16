@@ -1,7 +1,55 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **7/56 candidates verified and merged: Climbing Stairs, Frog Jump and the owner-requested five-problem batch (#223 / `b3a3497`). PR/post-merge CI passed. On 2026-10-12, all17 offered default executions for the requested five match current source/spec/identity and known answers on the public API (full/delta).49 candidates, D6/D7 and broader release/rollback checks remain pending.**
-Current repository work: the parametric-search correctness batch merged #222 / `cb56b83`. The owner explicitly prioritized LIS, Stock with Transaction Fee, Minimum Insertions to Palindrome, Count Partitions with Given Difference and Ninja and His Friends, and authorized commit/push/merge after verification. No unrelated next package is started.
+Status: **7/56 candidates merged, with three more fully verified locally on2026-10-14:
+Frog Jump K Distance, Maximum Sum of Non-Adjacent Elements and Grid Unique Paths.
+This is10 locally verified candidates, not10 merged candidates.46 other candidates,
+D6/D7 and broader release/rollback checks remain pending.** The earlier seven are
+Climbing Stairs, Frog Jump and the owner-requested five-problem batch (#223 / `b3a3497`).
+Their PR/post-merge CI passed; bounded public verification is recorded below.
+Current continuation (2026-10-14): the owner reprioritized DP after numeric validation
+merged as #227 / `e65cc95`. A separate three-candidate batch adds Frog Jump K Distance,
+Maximum Sum of Non-Adjacent Elements and Grid Unique Paths. Its six new recursive/memo
+executables pass backend/source, API and114 browser/comparison journeys. Publication
+of this new DP package still needs its own owner approval; earlier approval covered
+numeric/Gas/Phone. The seven merged count above is not promoted before publication.
+Gas Stations and Phone correctness fixes remain deferred by this priority change.
+
+### D5 linear/grid batch — verified locally, 2026-10-14
+
+| Problem | Same recursive/memo state | Recursive visualizer limit | Memo limit | Existing default |
+| --- | --- | --- | --- | --- |
+| Frog Jump K Distance | energy(i), all legal predecessors within K | 2–8 heights, K1–8;128 calls at maximum | 2–16 heights;93 calls at maximum | Unchanged K-predecessor tabulation |
+| Maximum Sum of Non-Adjacent Elements | best(count) for a prefix, take/skip | 1–10 values;177 calls at maximum | 1–20 values;39 calls at maximum | Unchanged prefix tabulation |
+| Grid Unique Paths | paths(row,col), above + left | 1–4 rows/columns;39 calls at4×4 | 1–8 rows/columns;99 calls at8×8 | Unchanged row-major tabulation |
+
+Heights/values remain0..999. The first two use one-dimensional nullable caches; Grid
+Paths uses a genuine2D nullable cache. Its origin may stay unknown when edge base cases
+return before visiting it:63 computed states at8×8, not a fabricated64. Tables show
+only real known values, and every actual call stays within the220-node renderer limit.
+Preparation retains the complete draft and requires explicit Run; rejected recursive
+limits keep the previous memo source, input, step and link. Canonical source/spec/default/
+IDs and goldens remain intact. Each canonical option is accurately labelled Tabulation.
+
+Verification:8,217 backend cases/500 unchanged skips;857 frontend tests/build;432
+golden-regeneration cases with no content changes; all nine displayed sources compiled
+and checked against independent forward-path, index-subset and binomial references.
+All15 initial tests fail on the previous implementation; three compiling zero-return
+source mutations fail3/3 checks and are restored.18 full/delta API scenarios agree on
+decoded state and independent answers. Largest measured full response970,761 bytes.
+
+Browser evidence is problem-keyed:30 standard Chromium rows,12 Firefox rows,12 native
+200% Chromium zoom rows,24 maximum rows in each engine, plus12 isolated comparison
+journeys =114. The34 standard/maximum rows and four comparison rows for each candidate
+are validated independently, not borrowed from another problem. Source hashes match
+the current backend and every manifest postdates the same final packaged backend and
+uses the same production assets. Local panning and vertical scrolling remain necessary
+for large trees and tables; all calls/cells being present does not mean all fit at once.
+
+See `dp-approaches/linear-grid/`, `linear-grid-{api,journey,comparison,audit}.cjs` and
+the dated implementation log. Five evidence-gate/oracle helper tests reject incomplete,
+mixed-build, wrong-problem/zoom and missing-comparison matrices. No dependencies or
+frontend production code changed. Public deployment, real-device/virtual-keyboard,
+screen-reader/learner/performance and D6/D7/P7/P8/P9 gates are not closed by this batch.
 Prepared 2026-10-07 against merged main `9d0aa10` (PR #208).
 This is a separate feature from the unfinished P8/P9 revamp gates; it does not close them.
 The owner authorized implementation on 2026-10-07 after merging PR #210.

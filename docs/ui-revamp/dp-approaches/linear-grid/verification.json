@@ -1,0 +1,37 @@
+{
+  "baseline": "e65cc9596f9763912d293ce17181ade93afc3253",
+  "branch": "feat/dp-linear-grid-approaches",
+  "publication": "Verified-local snapshot. On2026-10-16 the owner requested a two-hour continuation after the explicit publication-approval question; proceed with the proposed commit/push/CI-gated merge of this batch. The automatic goal continuation alone was not approval. GitHub records final publication status.",
+  "problems": ["frog-jump-k-distance", "max-sum-non-adjacent", "grid-unique-paths"],
+  "scope": "Six real recursive/memo executables and teaching/complexity metadata; exact canonical tracer objects, source, specs, defaults, identities and algorithms preserved. No frontend production or dependency changes.",
+  "backend": {"reportedCases": 8217, "failures": 0, "errors": 0, "unchangedSkips": 500, "newCases": 15, "finalFinishedAt": "2026-10-14T19:25:25Z", "packageFinishedAt": "2026-10-14T19:09:55Z", "launcherSmoke": true, "productionUnchangedAfterBrowserPackaging": true},
+  "sourceAndAlgorithms": {
+    "initialRed": {"cases": 15, "failures": 3, "unavailableApproachErrors": 12},
+    "displayedSourcesCompiled": 9,
+    "newSources": "Six exact standalone Java17 classes, no injected wrappers or helpers",
+    "existingCanonicalSources": "Three complete unchanged methods receive only an outer Solution class for compilation",
+    "independentInputs": {"frogJumpK": 1440, "nonAdjacentSum": 363, "gridPaths": 16, "total": 1819},
+    "evaluationsPerPathAcrossThreeForms": 5457,
+    "references": "Forward jump-path enumeration; legal index-subset enumeration; binomial path counts. Not comparing implementations only with one another.",
+    "sourceMutationProof": {"compilingZeroReturnRecursiveSources": 3, "independentChecksFailed": 3, "restored": true},
+    "otherGuards": "Exact maximum call counts; every source anchor emitted; zero cache reuse; unique evaluations; cache-hit returns without children; original minimum/value/K/column rules and max+1 refusals;3-step budget stops expansion without an answer; actual function names in call stacks."
+  },
+  "frontend": {"files": 83, "tests": 857, "productionBuild": true, "jsKB": 389.24, "jsGzipKB": 124.01, "cssKB": 98.74, "cssGzipKB": 17.92},
+  "goldens": {"regenerationCases": 432, "contentChangedFiles": 0},
+  "api": {"scenarios": 18, "requests": 36, "encodings": ["full", "delta"], "productionDecoderEquality": true, "independentAnswers": true, "allCompleteWithinExistingBudgets": true, "maxMeasuredFullBytes": 970761, "report": "api-results.json"},
+  "browser": {
+    "standardChromium": 30, "standardFirefox": 12, "nativeChromium200PercentZoom": 12,
+    "maximumChromium": 24, "maximumFirefox": 24, "comparisonsBothEngines": 12,
+    "totalJourneys": 114, "perCandidate": {"standardAndMaximumRows": 34, "comparisonRows": 4},
+    "allPassed": true, "pageWideOverflowFailures": 0, "uncaughtPageErrors": 0,
+    "sameSourceHashesAndProductionAssets": true, "manifestsPostdateFinalPackagedBackend": true,
+    "audit": "manifest-audit.json",
+    "checks": "All three forms execute; preparation preserves drafts/link; source/Analysis view changes keep step without requests; max+1 rejection focuses summary and retains prior memo run/input/step/link and exact rejected draft; shared input restores before step; every actual call and memo cell rendered; maximum roots locally visible; comparison native activation and independent sliders use committed input without changing main draft/step/link.",
+    "screenshotsInspected": ["frog-jump-k-distance-memoization-1366-light.png", "max-sum-non-adjacent-recursion-320-dark.png", "grid-unique-paths-memoization-1366-light.png", "grid-unique-paths-memoization-320-dark.png"],
+    "limits": "Every call/cell present does not mean all fit simultaneously. Large trees pan locally; tables/page require vertical scrolling. No human/device/screen-reader/performance acceptance."
+  },
+  "evidenceGuards": {"newHelperTests": 5, "existingProbeHelperTests": 3, "allPass": true, "rejects": "Incomplete, wrong-problem/engine/zoom, duplicate-axis, mixed-build and missing-comparison manifests cannot advance the candidate."},
+  "inventory": {"candidates": 56, "mergedVerifiedCandidates": 7, "newLocallyVerifiedCandidates": 3, "totalLocallyVerified": 10, "otherCandidatesRemaining": 46, "changedProblemRowsOnly": ["frog-jump-k-distance", "grid-unique-paths", "max-sum-non-adjacent"], "applicability": "Candidates are not a promise of56 genuine three-form implementations; existing category exceptions require a separately justified formulation."},
+  "excludedAttempts": ["Initial six phone smoke rows are superseded by the complete standard matrix, not double counted.", "Initial Chromium maximum screenshots scrolled roots behind the sticky rail. Captures align below the measured rail, assert an unobscured root and repeat all24 cases; final files supersede earlier images.", "The pre-function-name backend run is not final proof. Full suites repeated after implementation and after strengthened test assertions. Only tests/docs/evidence changed after browser packaging."],
+  "remaining": "DP publication approval/CI merge;46 other candidate assessments/implementations; D6/D7; public deployment; real-device/virtual-keyboard/screen-reader/learner/performance and P7/P8/P9 gates. Gas/Phone fixes are deferred by the owner DP priority change. No project/DP-complete claim."
+}

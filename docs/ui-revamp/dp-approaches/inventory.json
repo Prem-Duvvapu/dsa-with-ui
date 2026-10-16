@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-10T17:27:18.445Z",
+  "generated": "2026-10-14T19:24:06.596Z",
   "stats": {
     "catalogued": 431,
     "traced": 431,
@@ -1153,16 +1153,96 @@
       },
       "canonicalComplexity": {
         "timeComplexity": "O(N * K)",
-        "timeExplanation": "Weighs up to K reachable predecessors for each of the N stairs.",
-        "timeWhy": "1D tabulation over a K-wide window",
+        "timeExplanation": "Compute each stair once and inspect at most K predecessors.",
+        "timeWhy": "Bottom-up recurrence",
         "spaceComplexity": "O(N)",
-        "spaceExplanation": "Keeps one energy cell per stair.",
+        "spaceExplanation": "The actual complete table; no recursive stack.",
         "spaceWhy": "DP table",
-        "auxiliarySpace": "Auxiliary Space: O(N)",
-        "dataStructureSpace": "DP table"
+        "auxiliarySpace": "O(N)",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "maxValue": 999,
+                  "minLength": 2,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  10,
+                  30,
+                  40,
+                  20,
+                  50
+                ],
+                "help": "Up to 8 heights keeps every call visible even when K reaches 8.",
+                "label": "Stair heights",
+                "name": "heights",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 8,
+                  "min": 1
+                },
+                "defaultValue": 3,
+                "help": "Only predecessors that exist and are within K stairs are evaluated.",
+                "label": "Max jump distance",
+                "name": "k",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 16,
+                  "maxValue": 999,
+                  "minLength": 2,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  10,
+                  30,
+                  40,
+                  20,
+                  50
+                ],
+                "help": "Cache the minimum energy for each stair, including zero.",
+                "label": "Stair heights",
+                "name": "heights",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 8,
+                  "min": 1
+                },
+                "defaultValue": 3,
+                "help": "Only predecessors that exist and are within K stairs are evaluated.",
+                "label": "Max jump distance",
+                "name": "k",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "grid-unique-paths",
@@ -1208,17 +1288,81 @@
         "maxBytes": 2000000
       },
       "canonicalComplexity": {
-        "timeComplexity": "O(M * N)",
-        "timeExplanation": "Fills one cell per grid position, each from two neighbours.",
-        "timeWhy": "2D tabulation",
-        "spaceComplexity": "O(M * N)",
-        "spaceExplanation": "Keeps the whole M by N table so both directions of dependency stay visible.",
+        "timeComplexity": "O(R * C)",
+        "timeExplanation": "Each reached grid coordinate is computed at most once from at most two neighbours.",
+        "timeWhy": "Bottom-up recurrence",
+        "spaceComplexity": "O(R * C)",
+        "spaceExplanation": "The actual complete table; no recursive stack.",
         "spaceWhy": "DP table",
-        "auxiliarySpace": "Auxiliary Space: O(M * N)",
-        "dataStructureSpace": "DP table"
+        "auxiliarySpace": "O(R * C)",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "max": 4,
+                  "min": 1
+                },
+                "defaultValue": 3,
+                "help": "Up to 4 rows and 4 columns keeps every recursive call visible.",
+                "label": "Rows",
+                "name": "rows",
+                "type": "INT"
+              },
+              {
+                "constraints": {
+                  "max": 4,
+                  "min": 1
+                },
+                "defaultValue": 3,
+                "help": "Up to 4 rows and 4 columns keeps every recursive call visible.",
+                "label": "Columns",
+                "name": "cols",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "max": 8,
+                  "min": 1
+                },
+                "defaultValue": 3,
+                "help": "Cache paths(row,col); unknown cells remain distinct from known counts.",
+                "label": "Rows",
+                "name": "rows",
+                "type": "INT"
+              },
+              {
+                "constraints": {
+                  "max": 8,
+                  "min": 1
+                },
+                "defaultValue": 3,
+                "help": "Cache paths(row,col); unknown cells remain distinct from known counts.",
+                "label": "Columns",
+                "name": "cols",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "house-robber-2",
@@ -2072,16 +2216,78 @@
       },
       "canonicalComplexity": {
         "timeComplexity": "O(N)",
-        "timeExplanation": "Decides each index once between taking it and skipping it.",
-        "timeWhy": "1D tabulation",
+        "timeExplanation": "Each prefix is computed once from at most two smaller prefixes.",
+        "timeWhy": "Bottom-up recurrence",
         "spaceComplexity": "O(N)",
-        "spaceExplanation": "Keeps one best-sum cell per index.",
+        "spaceExplanation": "The actual complete table; no recursive stack.",
         "spaceWhy": "DP table",
-        "auxiliarySpace": "Auxiliary Space: O(N)",
-        "dataStructureSpace": "DP table"
+        "auxiliarySpace": "O(N)",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 10,
+                  "maxValue": 999,
+                  "minLength": 1,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  2,
+                  1,
+                  4,
+                  9,
+                  4,
+                  1,
+                  8
+                ],
+                "help": "Up to 10 values keeps all take/skip calls visible. Adjacent picks remain forbidden.",
+                "label": "Values",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 20,
+                  "maxValue": 999,
+                  "minLength": 1,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  2,
+                  1,
+                  4,
+                  9,
+                  4,
+                  1,
+                  8
+                ],
+                "help": "Cache best(count) for the complete prefix; zero is a computed value.",
+                "label": "Values",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "mcm-cost-eval",

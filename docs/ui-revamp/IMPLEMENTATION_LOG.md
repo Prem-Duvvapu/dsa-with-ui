@@ -2460,3 +2460,88 @@ close Gas/Phone, metadata, source, DP, security or P7/P8/P9 release gates.
 The owner subsequently explicitly approved committing, pushing and CI-gated merging
 the numeric, Gas Stations and Phone fixes as separate verified PRs. The numeric package
 now proceeds through publishing; GitHub records its final merge status.
+
+## 2026-10-14 — DP priority resumed: linear and grid recurrence batch
+
+Numeric validation merged as #227 / `e65cc9596f9763912d293ce17181ade93afc3253`
+after branch/PR backend/frontend, security and Vercel checks passed; post-merge
+CI38619881662 passed. A mistyped initial head guard was correctly refused by GitHub;
+the merge used the actual checked branch head. No incorrect head was merged.
+The owner then requested “try completing dp”, superseding Gas/Phone implementation
+priority. Those known findings remain open, not silently dropped or claimed fixed.
+
+Branch `feat/dp-linear-grid-approaches` preserves the exact canonical tracer objects,
+sources, input specs, defaults and public canonical IDs for Frog Jump K Distance,
+Maximum Sum of Non-Adjacent Elements and Grid Unique Paths. Each now offers real
+recursion and memoization in addition to the existing tabulation. Canonical approach
+complexity is authored from the actual table, rather than inheriting generic catalogue
+metadata. No canonical algorithm or golden change; no dependency or frontend production
+change. Unknown cache entries remain null, and zero is a reusable computed value.
+
+Measured caps: Frog K recursion2–8 heights/K1–8 (128 calls at maximum), memo2–16;
+Non-Adjacent recursion1–10 values (177 calls), memo1–20; Grid Paths recursion1–4
+rows/columns (39 calls at4×4), memo1–8. Existing tabulation limits are unchanged.
+All values/field names are preserved; no automatic smaller input is substituted.
+The shared recursive instrumentation accepts an actual function name for these new
+tracers (energy/best/paths); its default solve labels for prior owners are unchanged.
+
+Initial15 new contract cases fail before registration (3 assertions,12 unavailable
+approach errors). All nine displayed sources compile and execute independently: the
+six new sources are exact standalone Java17; the three unchanged canonical complete
+methods receive only an outer class wrapper. Independent forward jump enumeration,
+index-subset enumeration and a binomial formula cover1,819 deterministic inputs across
+the three problems, each through all three tracers and compiled sources (5,457 calls
+per path, not5,457 distinct inputs). Three compiling constant-zero recursive source
+mutations fail3/3 independent source checks and are restored.
+
+Final backend8,217 reported cases/0 failures/errors/500 unchanged skips; frontend
+83files/857tests and production build pass; packaging and launcher pass.432 regenerated
+canonical golden cases produce no content changes. A pre-function-label run is not the
+final backend proof; the full suite was repeated after that change and the packaged
+backend completed at19:09:55Z. Five evidence-gate/oracle helper tests and three existing
+probe helper tests pass. No Maven runs while the same worktree serves browser checks.
+
+All18 real API default/maximum scenarios (36 paced full/delta requests) agree with
+independent answers, source, approach/type/complexity/input identity and normalized
+production-decoder states. Largest measured full response970,761 bytes (8×8 memo grid),
+without truncation or hidden calls above220. `dp-approaches/linear-grid/api-results.json`.
+Final browser acceptance passes114 journeys:30 standard Chromium,12 standard Firefox,
+12 native200% Chromium zoom,24 maximum cases per engine and12 comparison journeys.
+Each candidate has its own34 standard/maximum rows and four comparison rows, all on
+the same production assets and final packaged backend. Normal journeys execute all
+three forms, preserve step through views, refuse oversized recursive drafts without
+changing the prior memo run/link, and reload shared input before seeking. Maximum
+cases verify every actual call and memo cell is present. Comparison uses the committed
+input rather than an edited draft; native keyboard activation and independent side
+sliders keep the main draft/step/link unchanged. No page-wide overflow or uncaught
+page errors in these cases. Large trees/tables still need local/vertical scrolling.
+
+`linear-grid/manifest-audit.json` reconciles114 rows,18 API scenarios, current source
+hashes, package timestamps and production assets. The refreshed56-candidate inventory
+advances only these three rows:10 locally verified, seven already merged,46 other
+candidates remaining. Its new evidence gate rejects incomplete, wrong-problem/engine/
+zoom, duplicate axes, mixed-build and missing-comparison manifests; five helper tests
+exercise these refusals and independent oracle controls. Three existing probe helpers
+also pass. Earlier six smoke rows are superseded by the complete standard matrix and
+not double-counted. Initial maximum screenshots scrolled roots behind the sticky rail;
+the capture aligns below its measured height, asserts an unobscured root, and repeats
+all24 Chromium maximum cases. Those final files supersede the early captures.
+Inspected final captures: Frog K memo1366light, Non-Adjacent recursion320dark, and
+Grid Paths memo1366light/320dark. The Grid cache honestly leaves its unvisited origin
+unknown when edge bases return before reaching it (63 known states at8×8).
+
+Only test assertions were tightened after browser packaging (minimum/value/K/column
+bounds and exact maximum call counts); production sources/specs remain unchanged.
+The full backend suite was repeated after stopping both servers:8,217 cases pass
+at19:25:25Z with500 unchanged skips. Publication of this
+new DP package needs its own approval; the earlier approval covered numeric/Gas/Phone.
+This does not close public deployment, human/device/virtual-keyboard/screen-reader/
+learner/performance, all DP candidates, D6/D7 or the broader P7/P8/P9 gates.
+
+### 2026-10-16 publication continuation
+
+After the explicit request to approve publishing this verified DP batch, the owner
+requested another two-hour working window. This real user continuation authorizes
+the proposed commit/push/CI-gated merge of the linear/grid package; the automatic
+goal continuation alone was not treated as approval. Earlier local-only wording is
+the verification snapshot. The next implementation package starts only after merge.

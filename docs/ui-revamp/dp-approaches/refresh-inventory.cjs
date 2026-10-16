@@ -68,6 +68,45 @@ function requestedCandidateUiVerified(problemId) {
       && (index !== 0 || rows.some(row => row.comparisonChecked) && rows.some(row => row.reloadAndRefusalChecked));
   });
 }
+function linearGridCandidateUiVerified(problemId) {
+  const comparisonFile = path.join(__dirname, 'linear-grid', 'comparison-results.json');
+  if (!fs.existsSync(comparisonFile)) return false;
+  const comparison = JSON.parse(fs.readFileSync(comparisonFile, 'utf8'));
+  const comparisonRows = comparison.rows?.filter(r=>r.problemId===problemId) ?? [];
+  if (!comparison.realBackend || comparisonRows.length !== 4
+    || new Set(comparisonRows.map(r=>`${r.engine}:${r.width}:${r.theme}`)).size !== 4
+    || !comparisonRows.every(r=>['chromium','firefox'].includes(r.engine)
+      && (r.width===390&&r.theme==='dark'||r.width===1366&&r.theme==='light')
+      && r.passed && r.noUnsolicitedExecution && r.sameCommittedInput
+      && r.nativeKeyboardActivation && r.independentSliders && r.mainDraftStepAndLinkRetained)) return false;
+  const expected = [
+    ['chromium-standard-zoom1', 'chromium', 1, ['320x568','390x844','768x1024','1366x768','1440x900']],
+    ['firefox-standard-zoom1', 'firefox', 1, ['390x844','1366x768']],
+    ['chromium-standard-zoom2', 'chromium', 2, ['640x1136','1366x768']],
+    ['chromium-maximum-zoom1', 'chromium', 1, ['320x568','1366x768']],
+    ['firefox-maximum-zoom1', 'firefox', 1, ['320x568','1366x768']]
+  ];
+  const identity = JSON.stringify(comparison.servedBuild?.assets);
+  return expected.every(([name, engine, zoom, sizes]) => {
+    const file = path.join(__dirname, 'linear-grid', `${name}.json`);
+    if (!fs.existsSync(file)) return false;
+    const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
+    const assets = doc.servedBuild?.assets;
+    if (!assets?.some(a=>a.endsWith('.js')) || !assets?.some(a=>a.endsWith('.css'))) return false;
+    if (!doc.realBackend || doc.buildMode !== 'production-preview' || doc.engine !== engine
+      || JSON.stringify(assets) !== identity) return false;
+    const maximum = name.includes('maximum');
+    const rows = doc.rows?.filter(r=>r.problemId===problemId) ?? [];
+    if (rows.length !== sizes.length*2*(maximum?2:1)) return false;
+    if (new Set(rows.map(r=>`${r.width}x${r.height}:${r.theme}:${r.initial}`)).size !== rows.length) return false;
+    return rows.every(r=>sizes.includes(`${r.width}x${r.height}`) && ['light','dark'].includes(r.theme)
+      && r.nativeZoom===zoom && r.noOverflowOrErrors && (maximum
+        ? ['recursion','memoization'].includes(r.initial) && r.allCallsRenderedAndRootVisible
+          && (r.initial!=='memoization'||r.memoCellsRendered)
+        : r.initial==='recursion' && r.allThreeExecuted && r.inputAndStepRestored
+          && r.viewsDoNotExecute && r.refusalPreservesRunAndDraft));
+  });
+}
 (async () => {
   const inventoryPath = path.join(__dirname, 'inventory.json');
   const previous = fs.existsSync(inventoryPath) ? JSON.parse(fs.readFileSync(inventoryPath, 'utf8')) : null;
@@ -101,7 +140,7 @@ function requestedCandidateUiVerified(problemId) {
       canonicalInputSpec: detail.inputSpec, canonicalComplexity: detail.complexity,
       alternativeStatus: detail.approaches?.length > 1 ? (problem.id === 'climbing-stairs' && verifiedPilot
         ? verifiedTeachingComparison ? 'backend-and-UI-teaching-comparison-pilot-verified; family rollout pending'
-          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id) || requestedCandidateUiVerified(problem.id)
+          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id) || requestedCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id)
             ? 'backend-and-UI-candidate-verified; family rollout pending' : 'backend-pilot; UI pending')
         : reviewed.get(problem.id).plannedForms.length ? 'planned' : 'requires-different-formulation',
       alternativeSafetyBounds: detail.approaches?.length > 1
