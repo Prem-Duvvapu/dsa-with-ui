@@ -2053,3 +2053,20 @@ that all340 structurally exposed endpoints were individually exercised.
   not answer. This is not a fabricated/wrong total, but future approach comparison needs
   an explicit backend answer field; do not guess it in the frontend or mark an absent
   recorded answer as a successful comparison.
+
+## RCA-068 — HTTP fixtures consumed a shared production rate-limit bucket
+
+- **Discovered:**2026-10-16, #229 push CI38940505920. PR CI passed on the same head,
+  but the fast push run reported two HttpCachingTest failures with429 responses.
+- **Root cause:** the new approach boundary POST requests used MockMvc's default
+  client address. Spring's shared test context retained that client's normal60/minute
+  bucket, so unrelated caching requests could run out of tokens. Slower local runs
+  replenish enough tokens to hide this order/runtime-dependent fixture pollution.
+- **Fix:** each new boundary scenario uses its own problem+approach client identity,
+  matching the existing discovery/encoding fixtures. No production limiter, cache,
+  runtime, dependency or global test cap is changed; assertions are not weakened.
+- **Guard (RED first):** each boundary case now asserts the request's actual isolated
+  client identity. All three parametrized cases fail against the old default-address
+  request, independent of token timing; the scoped request must satisfy the assertion
+  and still return field-level400 with no trace. Full suites and both CI events are
+  repeated before merge. This also constrains future approach HTTP fixtures.

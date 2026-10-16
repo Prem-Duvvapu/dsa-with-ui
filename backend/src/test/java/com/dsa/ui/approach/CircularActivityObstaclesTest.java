@@ -86,8 +86,11 @@ class CircularActivityObstaclesTest {
             if(field.equals("nums")){var values=new ArrayList<>((List<Integer>)input.get(field));values.add(0);over.put(field,values);}
             else{var rows=new ArrayList<>((List<List<Integer>>)input.get(field));rows.add(rows.get(0));over.put(field,rows);}
             assertThrows(InputValidationException.class,()->runner.run(tracer,over));
-            http.perform(post("/api/problems/{id}/execute",problem).param("approach",form).contentType("application/json").content(json.writeValueAsString(over)))
-                    .andExpect(status().isBadRequest()).andExpect(jsonPath("$.fieldErrors."+field).isString()).andExpect(jsonPath("$.steps").doesNotExist());
+            String client="cao-bounds-"+problem+form;
+            http.perform(post("/api/problems/{id}/execute",problem).param("approach",form).contentType("application/json").content(json.writeValueAsString(over))
+                            .with(request->{request.setRemoteAddr(client);return request;}))
+                    .andExpect(status().isBadRequest()).andExpect(jsonPath("$.fieldErrors."+field).isString()).andExpect(jsonPath("$.steps").doesNotExist())
+                    .andDo(result->assertEquals(client,result.getRequest().getRemoteAddr(),"Boundary fixtures must not consume another test's rate-limit budget"));
             for(var invalid:invalidInputs(problem))assertThrows(InputValidationException.class,()->runner.run(tracer,invalid));
         }
     }

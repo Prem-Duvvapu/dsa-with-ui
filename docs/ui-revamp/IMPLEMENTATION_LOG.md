@@ -2679,3 +2679,16 @@ activity/obstacles package. Earlier automatic continuations were not approval. E
 local-only/approval-pending paragraphs above are verification snapshots. Subsequent
 Falling Path/Triangle implementation starts only after this package lands, and publishing
 that next package requires separate approval. No direct main edit or CI bypass is allowed.
+
+Published initial head `456c792` as PR #229. Its PR backend/frontend, security and Vercel
+checks pass, but the separate push backend job fails two existing caching tests with429.
+The normal limiter's shared default MockMvc client bucket was consumed by the new
+boundary fixtures; this is not an algorithm answer failure. No merge is attempted.
+RCA-068 records the fixture pollution and deterministic guard: all three boundary cases
+fail when asserting the required isolated client on the old request. Boundary POSTs now
+use problem+approach-scoped clients; production limits/cache/algorithms and browser
+assets/source remain unchanged. The complete backend suite and CI are repeated.
+
+The post-isolation complete backend run passes8,234 cases,0 failures/errors,500 unchanged
+skips at17:38:01Z. Only tests and evidence/docs changed since final browser packaging;
+all production source hashes/assets and the128 completed journeys remain applicable.
