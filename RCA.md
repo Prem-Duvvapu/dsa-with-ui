@@ -1609,6 +1609,22 @@ not CSS scaling; captures use the actual zoomed surface because CSS-sized clips 
   - "Truncated, and says so" is honest, but it is not the same as usable: an input the editor accepts should be able to finish. Bound inputs by what they cost, and give the reader a field error rather than a run that cannot end.
   - A constraint a tracer *declares* is not a constraint the validator *enforces*. A declared but unknown key should be found by a test, not by a 500.
 
+### RCA-056 follow-up — 2026-10-16 grid editor minimum columns
+
+The API enforced minCols, but GridField's removal button and handler still stopped only
+at one column. Ninja's Training could therefore be edited from its required three columns
+to two and immediately rejected. The editor now reads the declared minimum for both
+the disabled state and mutation guard. It does not silently repair an existing rejected
+two-column draft: Add column remains an explicit action. Two new GridField tests fail
+against the old editor (nine controls pass), then all eleven pass after the fix.
+
+Zero-valued Training inputs also exposed misleading canonical narration: strict `> best`
+left the predecessor activity at -1 when every candidate tied at zero. Selecting the first
+real eligible predecessor before comparing later ones preserves answers, states, source
+and positive-input goldens while eliminating the invented activity. The new backend
+zero-score regression fails on the previous implementation; exhaustive binary-score
+and seeded full-domain answer/source checks guard the affected algorithm family.
+
 ### RCA-056 follow-up — 2026-10-09 Frog Jump approach bounds
 
 The first array-input approach rollout exposed a scalar-only comparison summary: it
@@ -2009,3 +2025,48 @@ fails14 cases on merged #226; the five valid-boundary controls already pass.
 The real browser rejection journey checks previous input/source/step/link identity,
 retained rejected draft and summary focus. This is a shared-boundary fix, not a claim
 that all340 structurally exposed endpoints were individually exercised.
+
+## RCA-067 — Correct DP totals paired with incorrect predecessor/counting explanations
+
+- **Discovered:**2026-10-16, read-only preflight of the next grid recurrence package.
+- **Status:** Open. No fix or permanent RED regression is implemented yet. Not part of
+  the verified House Robber II/Training/Obstacle approaches; no next package is stacked.
+- **Falling path:** `MinimumFallingPathSumTracer.java:136` chooses a three-predecessor
+  explanation, otherwise assumes two predecessors at either edge. A one-column matrix
+  has only ONE predecessor. Real HTTP full trace for matrix[[2],[3]] returns200, complete
+  answer5 and candidates1, yet says it read two cells including upper-right. The numeric
+  execution and DP payload are correct; the narration describes a nonexistent cell.
+- **Square counting:** `CountSquareSubmatricesTracer.java:99` adds side-length s to total,
+  then claims every smaller square at that endpoint was counted earlier. For an all-ones
+  2×2 grid, the last cell contributes2 and total becomes5. Both its1×1 and2×2 ending
+  squares are counted NOW; only the other three endpoints'1×1 squares were counted earlier.
+  Real HTTP confirms those values and the contradictory sentence. The answer is correct.
+- **Root cause:** explanations encoded a common-shape assumption or copied an intuitive
+  story instead of stating the actual eligible predecessors/current contribution.
+- **Required fix/guard:** establish RED before changing code. Falling-path cases must
+  cover1×1,R×1,1×C and both edges/interior, comparing narrated valid predecessors with
+  real candidates/read coordinates. Count-squares cases must assert the contribution
+  means one square of each size1..s ending HERE, plus independent totals on all-zero,
+  single-cell,2×2 ones and asymmetric grids. Regenerate and read affected goldens; keep
+  correct answers, actual source and input semantics unchanged.
+- **Separate integration prerequisite:** the square tracer currently reports final total,
+  not answer. This is not a fabricated/wrong total, but future approach comparison needs
+  an explicit backend answer field; do not guess it in the frontend or mark an absent
+  recorded answer as a successful comparison.
+
+## RCA-068 — HTTP fixtures consumed a shared production rate-limit bucket
+
+- **Discovered:**2026-10-16, #229 push CI38940505920. PR CI passed on the same head,
+  but the fast push run reported two HttpCachingTest failures with429 responses.
+- **Root cause:** the new approach boundary POST requests used MockMvc's default
+  client address. Spring's shared test context retained that client's normal60/minute
+  bucket, so unrelated caching requests could run out of tokens. Slower local runs
+  replenish enough tokens to hide this order/runtime-dependent fixture pollution.
+- **Fix:** each new boundary scenario uses its own problem+approach client identity,
+  matching the existing discovery/encoding fixtures. No production limiter, cache,
+  runtime, dependency or global test cap is changed; assertions are not weakened.
+- **Guard (RED first):** each boundary case now asserts the request's actual isolated
+  client identity. All three parametrized cases fail against the old default-address
+  request, independent of token timing; the scoped request must satisfy the assertion
+  and still return field-level400 with no trace. Full suites and both CI events are
+  repeated before merge. This also constrains future approach HTTP fixtures.

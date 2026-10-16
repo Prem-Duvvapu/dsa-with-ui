@@ -1,18 +1,118 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **7/56 candidates merged, with three more fully verified locally on2026-10-14:
-Frog Jump K Distance, Maximum Sum of Non-Adjacent Elements and Grid Unique Paths.
-This is10 locally verified candidates, not10 merged candidates.46 other candidates,
-D6/D7 and broader release/rollback checks remain pending.** The earlier seven are
+Status: **10/56 candidates merged. Frog Jump K Distance, Maximum Sum of Non-Adjacent
+Elements and Grid Unique Paths merged as #228 / `a14bce5` on2026-10-16, with green
+PR and post-merge CI. Three further candidates are fully verified locally but not yet
+published: House Robber II, Ninja's Training and Unique Paths II. This is13 locally
+verified,10 merged,43 other candidates pending. D6/D7 and broader release/rollback
+checks remain pending.** The earlier seven are
 Climbing Stairs, Frog Jump and the owner-requested five-problem batch (#223 / `b3a3497`).
 Their PR/post-merge CI passed; bounded public verification is recorded below.
 Current continuation (2026-10-14): the owner reprioritized DP after numeric validation
 merged as #227 / `e65cc95`. A separate three-candidate batch adds Frog Jump K Distance,
 Maximum Sum of Non-Adjacent Elements and Grid Unique Paths. Its six new recursive/memo
 executables pass backend/source, API and114 browser/comparison journeys. Publication
-of this new DP package still needs its own owner approval; earlier approval covered
-numeric/Gas/Phone. The seven merged count above is not promoted before publication.
+of this package was subsequently approved by the owner's2026-10-16 continuation;
+the local-only text below records its pre-publication verification snapshot.
 Gas Stations and Phone correctness fixes remain deferred by this priority change.
+
+Current local package (2026-10-16): House Robber II, Ninja's Training and Unique Paths II
+have genuine recursive/memo implementations and complete Java listings. The full
+backend suite (8,234 cases,500 unchanged skips), frontend suite (859 tests), production
+builds and432 unchanged golden cases pass. Real API/source/answer, full/delta and browser
+checks pass after a call-label readability fix:21 full/delta scenarios,128 browser
+journeys and a source/package/production-asset audit. The inventory advances ONLY these
+three rows to UI-verified; they are NOT counted as merged. Publication requires approval.
+
+### D5 circular/activity/obstacles — verified locally, 2026-10-16
+
+| Problem | Actual recursive/memo state | Recursive visualizer limit | Memo limit | Existing default |
+| --- | --- | --- | --- | --- |
+| House Robber II | best(pass,n), n prefix houses in one allowed range | 2–10 houses;218 calls | 2–16 houses;58 calls | Unchanged two-pass tabulation |
+| Ninja's Training | score(day,task), ending on task | 1–6 days, exactly3 activities;189 calls | 1–10 days;57 calls | Unchanged ending-activity tabulation |
+| Unique Paths II | paths(row,col), obstacle-aware above+left | 1–4 rows/columns;69 calls | 1–8 rows/columns;113 calls | Unchanged obstacle-aware tabulation |
+
+House values remain0..999; Training merits0..100; obstacle cells0/1. These are measured
+visualizer limits, not platform constraints. All stay under existing5,000-step/2 MB
+budgets and220 rendered calls. House Robber has TWO real roots, independently keyed by
+pass; Training has THREE real final-activity roots. The driver is never fabricated as a
+recursive node. Unknown stays null; zero is reusable, including blocked/unreachable paths.
+House labels/source/teaching use n so both coordinates remain visible inside the existing
+13-character node label; for n>0 the tabulation endpoint is i=pass+n-1.
+
+Six exact standalone Java17 listings and three unchanged canonical method listings
+(outer class only) compile and match independent legal-subset/schedule/path references:
+1,626 exhaustive inputs,90 seeded full-domain inputs, plus default/alternate/max controls,
+through all three forms (5,175 comparisons per tracer and compiled-source path, not that
+many distinct inputs). Initial16 tests fail before registration; wrong-result source
+mutations fail3/3, an aliased House range key fails its regression, and the later label
+guard fails on the long frame. All mutations are restored before final full verification.
+
+Two pre-existing family defects are also fixed: canonical zero-score Training narration
+no longer names activity -1, and GridField respects declared minCols. Rejected two-column
+drafts remain exact until the user explicitly adds a column; eight real-backend recovery
+journeys prove the400, preserved default run/step, explicit repair and successful sharing.
+
+Evidence: `dp-approaches/circular-activity-obstacles/{verification,manifest-audit}.json`
+and its manifests/screenshots.128 journeys comprise30 standard Chromium,12 standard
+Firefox,12 native200% Chromium zoom,24 maximum per engine,12 isolated comparisons and
+8 input recovery cases, plus6 phone compatibility journeys for the previous linear/grid
+batch. Each new candidate has its own34 standard/maximum rows and4 comparison rows.
+All actual nodes/cells are rendered; each real root is locally reachable, and visible
+node text retains the state arguments. This is not simultaneous all-node/cell visibility:
+large forests pan locally and tables/page scroll. No page-wide overflow or uncaught page
+errors in completed cases. Training's edited comparison draft independently answers151
+while the committed input and both comparison runs answer150.
+
+All manifest source hashes match the current packaged backend and use the same final
+production assets. One incomplete comparison attempt coincided with the backend's
+confirmed exit143; cause unknown, no exception/OOM evidence. The unchanged jar was
+restarted only after terminal/port checks; incomplete attempts are excluded and API,
+comparison/recovery checks were rerun successfully. No Maven ran during browser checks.
+Nine evidence/oracle helpers and three existing probe helpers pass; the previous inventory
+script fails one of nine checks. No new dependency, endpoint, session owner or budget.
+The batch does not close broader DP rollout, D6/D7, public deployment or P7/P8/P9 gates.
+
+### Next grid package preflight — read-only, 2026-10-16
+
+No next implementation is stacked before the current circular/activity/obstacles batch
+is approved and merged. The next recurrence-family package should cover Minimum Falling
+Path Sum and Triangle Minimum Path Sum. Existing canonical sources are complete method
+listings on inspection; the new package must independently compile/execute them, not infer
+certification from the existing RemainingDpTracer-only compiler family test.
+
+- Falling paths must keep cost(row,col), valid directly-up/left/right predecessors and a
+  minimum over ALL bottom-row roots. Preserve signed values -100..100; null is unknown,
+  since zero and -1 are legitimate cached results. The driver is not a fake recursive root.
+  Analytic call counts for that proposed recurrence are188 at4×6,228 at4×7 and268 at4×8;
+  memo8×8 is expected to make162 calls. These are preflight counts, NOT measured published
+  caps: actual traces/bytes/source/renderer/one-over checks remain required.
+- Triangle must preserve n=min(rows,columns), including ignored rectangular padding and
+  unused extra rows. Real API controls3×1→n1/answer2,3×2→n2/answer5 and2×3→n2/answer5
+  pass with full resolved input intact. Do not silently square/crop/replace that input.
+  Recursion depth7 would make127 calls; depth8 would make255, above the220-node renderer.
+  Memo depth8 is expected to make57 calls. Negative and zero values remain valid. The
+  unused upper-right triangle must stay permanently excluded (`#`/void), not masquerade
+  as a valid unknown state (`·`) in a future memo companion.
+- Include the existing Falling Path single-column narration defect in its next package:
+  matrix[[2],[3]] returns the correct5 and candidates1 but says it read two cells and an
+  upper-right predecessor. RCA-067 records the real HTTP evidence and RED guard required.
+- Keep Count Square Submatrices for a later, separately reviewed in-place/grid package.
+  Its2×2 all-ones answer5 is correct, but the last contribution wrongly says the smaller
+  square was counted earlier; RCA-067 records that explanation defect. Its final total is
+  real, but canonical comparison will need an explicitly instrumented answer rather than
+  a frontend guessed alias. Never read mutated input as original data in recursive forms.
+- P7 input follow-up: GridField cycles integer values by clicking, even over -100..100.
+  Entering2→-1 requires198 clicks. Typed non-binary cells should be a separately verified
+  input-UX change, retaining binary toggles, empty/invalid drafts, server-authoritative
+  validation, bounds, problem identity and session sharing. This is not implemented by
+  the current minCols repair or certified by automated approach journeys.
+
+Future code must establish RED for the two narration defects and new approaches, then
+repeat independent enumerated answers/source compilation, negative/zero cache reuse,
+default/alternate/rectangular/boundary cases, both encodings, full suites/goldens, actual
+maximum byte/call budgets, shared-link refusals and both-engine/zoom/browser matrices.
+This preflight adds no options and advances no coverage row.
 
 ### D5 linear/grid batch — verified locally, 2026-10-14
 

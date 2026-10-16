@@ -133,7 +133,7 @@ public class NinjasTrainingTracer implements AlgorithmTracer {
                         continue;
                     }
                     reads.add(new GridDpTable.Coord(day - 1, prev));
-                    if (dp[day - 1][prev] > best) {
+                    if (bestPrev < 0 || dp[day - 1][prev] > best) {
                         best = dp[day - 1][prev];
                         bestPrev = prev;
                     }

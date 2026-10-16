@@ -4,6 +4,27 @@ import '@testing-library/jest-dom';
 import GridField from './GridField';
 
 describe('GridField', () => {
+  it('respects a declared minimum column count such as three training activities', () => {
+    const onChange = vi.fn();
+    render(<GridField field={{ constraints: { minCols: 3, maxCols: 3, maxValue: 100 } }} value={[[10, 20, 30]]} onChange={onChange} />);
+    expect(screen.getByRole('button', { name: 'Remove a column' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Add a column' })).toBeDisabled();
+    fireEvent.click(screen.getByRole('button', { name: 'Remove a column' }));
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('keeps a below-minimum draft exact until the user explicitly adds its missing column', () => {
+    const onChange = vi.fn();
+    render(<GridField field={{ constraints: { minCols: 3, maxCols: 3, minValue: 0, maxValue: 100 } }} value={[[10, 20], [30, 40]]} onChange={onChange} />);
+    expect(screen.getAllByRole('button', { name: /^Cell row/ })).toHaveLength(4);
+    expect(screen.getByLabelText('Cell row 2, column 2, value 40')).toBeVisible();
+    expect(screen.getByRole('button', { name: 'Remove a column' })).toBeDisabled();
+    expect(onChange).not.toHaveBeenCalled();
+    fireEvent.click(screen.getByRole('button', { name: 'Add a column' }));
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith([[10, 20, 0], [30, 40, 0]]);
+  });
+
   it.each([[], null, [[1, 2], null], [[1, 2], 3], [[1], [2, 3]]].map(value => ({ value })))('preserves unsupported grid input instead of inventing cells or crashing: $value', ({ value }) => {
     const onChange = vi.fn();
     render(<GridField field={{ type: 'INT_GRID', constraints: { maxRows: 5, maxCols: 5 } }} value={value} onChange={onChange} />);

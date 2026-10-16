@@ -1,0 +1,962 @@
+{
+  "generated": "2026-10-16T16:57:22.510Z",
+  "realBackend": true,
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "rows": [
+    {
+      "problemId": "house-robber-2",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "nums": [
+          2,
+          7,
+          9,
+          3,
+          1
+        ]
+      },
+      "sourceHash": "e367d96def169de44f8fed04de45d7e729b82778f6dc4e48834583aebe0c7e28",
+      "answer": "11",
+      "calls": "18",
+      "cacheHits": "0",
+      "states": "10",
+      "rootCount": 2,
+      "steps": 66,
+      "fullBytes": 32958,
+      "deltaBytes": 20081,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "house-robber-2",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999
+        ]
+      },
+      "sourceHash": "e367d96def169de44f8fed04de45d7e729b82778f6dc4e48834583aebe0c7e28",
+      "answer": "4995",
+      "calls": "218",
+      "cacheHits": "0",
+      "states": "20",
+      "rootCount": 2,
+      "steps": 766,
+      "fullBytes": 435740,
+      "deltaBytes": 259818,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "house-robber-2",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "nums": [
+          2,
+          7,
+          9,
+          3,
+          1
+        ]
+      },
+      "sourceHash": "443002026fff01422f37076993022ac049586bbb1da83bc4b4bda42b757f5b7d",
+      "answer": "11",
+      "calls": "14",
+      "cacheHits": "4",
+      "states": "10",
+      "rootCount": 2,
+      "steps": 52,
+      "fullBytes": 50493,
+      "deltaBytes": 29835,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "house-robber-2",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999
+        ]
+      },
+      "sourceHash": "443002026fff01422f37076993022ac049586bbb1da83bc4b4bda42b757f5b7d",
+      "answer": "7992",
+      "calls": "58",
+      "cacheHits": "26",
+      "states": "32",
+      "rootCount": 2,
+      "steps": 206,
+      "fullBytes": 382001,
+      "deltaBytes": 224230,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "house-robber-2",
+      "approachId": "memoization",
+      "label": "zero",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "sourceHash": "443002026fff01422f37076993022ac049586bbb1da83bc4b4bda42b757f5b7d",
+      "answer": "0",
+      "calls": "22",
+      "cacheHits": "8",
+      "states": "14",
+      "rootCount": 2,
+      "steps": 80,
+      "fullBytes": 89265,
+      "deltaBytes": 52902,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "house-robber-2",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "nums": [
+          2,
+          7,
+          9,
+          3,
+          1
+        ]
+      },
+      "sourceHash": "f88ca497d0c0e318d6430630504def0fd72cf0b57e28323780b3170d9a6f75d3",
+      "answer": "11",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 12,
+      "fullBytes": 14240,
+      "deltaBytes": 11614,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "house-robber-2",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999,
+          999
+        ]
+      },
+      "sourceHash": "f88ca497d0c0e318d6430630504def0fd72cf0b57e28323780b3170d9a6f75d3",
+      "answer": "7992",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 34,
+      "fullBytes": 78696,
+      "deltaBytes": 71082,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninjas-training",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "points": [
+          [
+            10,
+            40,
+            70
+          ],
+          [
+            20,
+            50,
+            80
+          ],
+          [
+            30,
+            10,
+            20
+          ]
+        ]
+      },
+      "sourceHash": "3c226a58533689bfb9ea68adaf3351e0663ea8bc243d8a8a51ff61b9b5972734",
+      "answer": "150",
+      "calls": "21",
+      "cacheHits": "0",
+      "states": "9",
+      "rootCount": 3,
+      "steps": 77,
+      "fullBytes": 38583,
+      "deltaBytes": 23581,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninjas-training",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "points": [
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ]
+        ]
+      },
+      "sourceHash": "3c226a58533689bfb9ea68adaf3351e0663ea8bc243d8a8a51ff61b9b5972734",
+      "answer": "600",
+      "calls": "189",
+      "cacheHits": "0",
+      "states": "18",
+      "rootCount": 3,
+      "steps": 665,
+      "fullBytes": 374925,
+      "deltaBytes": 225023,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninjas-training",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "points": [
+          [
+            10,
+            40,
+            70
+          ],
+          [
+            20,
+            50,
+            80
+          ],
+          [
+            30,
+            10,
+            20
+          ]
+        ]
+      },
+      "sourceHash": "4020055b22eb2bcca2685b543fc7fc3705ee20d4ed03dd973e6e3f8f3279fe91",
+      "answer": "150",
+      "calls": "15",
+      "cacheHits": "6",
+      "states": "9",
+      "rootCount": 3,
+      "steps": 56,
+      "fullBytes": 51958,
+      "deltaBytes": 31212,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninjas-training",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "points": [
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ]
+        ]
+      },
+      "sourceHash": "4020055b22eb2bcca2685b543fc7fc3705ee20d4ed03dd973e6e3f8f3279fe91",
+      "answer": "1000",
+      "calls": "57",
+      "cacheHits": "27",
+      "states": "30",
+      "rootCount": 3,
+      "steps": 203,
+      "fullBytes": 349916,
+      "deltaBytes": 205487,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninjas-training",
+      "approachId": "memoization",
+      "label": "zero",
+      "input": {
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "sourceHash": "4020055b22eb2bcca2685b543fc7fc3705ee20d4ed03dd973e6e3f8f3279fe91",
+      "answer": "0",
+      "calls": "27",
+      "cacheHits": "12",
+      "states": "15",
+      "rootCount": 3,
+      "steps": 98,
+      "fullBytes": 111182,
+      "deltaBytes": 65573,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninjas-training",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "points": [
+          [
+            10,
+            40,
+            70
+          ],
+          [
+            20,
+            50,
+            80
+          ],
+          [
+            30,
+            10,
+            20
+          ]
+        ]
+      },
+      "sourceHash": "48c7b8d457150225b287771b5e878f26edf1364be90e2967b73f87ca3cc84977",
+      "answer": "150",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 14,
+      "fullBytes": 14404,
+      "deltaBytes": 12018,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "ninjas-training",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "points": [
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ],
+          [
+            100,
+            100,
+            100
+          ]
+        ]
+      },
+      "sourceHash": "48c7b8d457150225b287771b5e878f26edf1364be90e2967b73f87ca3cc84977",
+      "answer": "1000",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 35,
+      "fullBytes": 62349,
+      "deltaBytes": 56225,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unique-paths-2",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "grid": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "sourceHash": "d35534a406d525414034f12814434cad61dea35c342099df20ec52007f27932e",
+      "answer": "2",
+      "calls": "11",
+      "cacheHits": "0",
+      "states": "9",
+      "rootCount": 1,
+      "steps": 42,
+      "fullBytes": 22119,
+      "deltaBytes": 13551,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unique-paths-2",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "grid": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "sourceHash": "d35534a406d525414034f12814434cad61dea35c342099df20ec52007f27932e",
+      "answer": "20",
+      "calls": "69",
+      "cacheHits": "0",
+      "states": "16",
+      "rootCount": 1,
+      "steps": 258,
+      "fullBytes": 146103,
+      "deltaBytes": 86087,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unique-paths-2",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "grid": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "sourceHash": "94f5cef24978d945ccaa64f950183cb585c505e1359142c6ea368dd9760cad96",
+      "answer": "2",
+      "calls": "11",
+      "cacheHits": "2",
+      "states": "9",
+      "rootCount": 1,
+      "steps": 42,
+      "fullBytes": 39690,
+      "deltaBytes": 23351,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unique-paths-2",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "grid": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "sourceHash": "94f5cef24978d945ccaa64f950183cb585c505e1359142c6ea368dd9760cad96",
+      "answer": "3432",
+      "calls": "113",
+      "cacheHits": "49",
+      "states": "64",
+      "rootCount": 1,
+      "steps": 404,
+      "fullBytes": 1133356,
+      "deltaBytes": 651857,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unique-paths-2",
+      "approachId": "memoization",
+      "label": "zero",
+      "input": {
+        "grid": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "sourceHash": "94f5cef24978d945ccaa64f950183cb585c505e1359142c6ea368dd9760cad96",
+      "answer": "0",
+      "calls": "13",
+      "cacheHits": "4",
+      "states": "9",
+      "rootCount": 1,
+      "steps": 49,
+      "fullBytes": 46202,
+      "deltaBytes": 27140,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unique-paths-2",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "grid": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "sourceHash": "a817daa8a62ea4cb65411bf4f9b9b5864fc542b57bfbd0180b658c2a2f47ec86",
+      "answer": "2",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 11,
+      "fullBytes": 10407,
+      "deltaBytes": 8555,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unique-paths-2",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "grid": [
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "sourceHash": "a817daa8a62ea4cb65411bf4f9b9b5864fc542b57bfbd0180b658c2a2f47ec86",
+      "answer": "3432",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 66,
+      "fullBytes": 173837,
+      "deltaBytes": 162278,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    }
+  ]
+}

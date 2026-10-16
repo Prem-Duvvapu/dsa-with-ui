@@ -189,6 +189,16 @@ those three rows:10 locally verified, seven merged,46 other candidates still pen
 The new DP package is not yet published; Gas/Phone remain open under the priority change.
 D6/D7 and the broader human/device/security/release gates remain pending.
 
+Publication reconciliation (2026-10-16): the linear/grid package above merged as #228 /
+`a14bce5` at15:59:09Z after green PR checks; post-merge CI38928322194 passed. The current
+merged tally is10/56. House Robber II, Ninja's Training and Unique Paths II are now fully
+verified locally:8,234 backend cases/500 unchanged skips,859 frontend tests/build,
+432 unchanged regenerated goldens,21 full/delta API scenarios and128 browser journeys
+(including6 previous-batch compatibility rows). Their source/package/assets audit passes;
+only those three inventory rows advance. This is13 locally verified,10 merged,43 other
+candidates pending. Publication requires separate approval. Historical local-only/seven-
+merged and earlier browser-in-progress paragraphs are dated snapshots, not current counts.
+
 ## Baseline (P0, 2026-09-29)
 
 | Item | Value |

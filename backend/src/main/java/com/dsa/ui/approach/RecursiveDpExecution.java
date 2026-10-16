@@ -33,6 +33,8 @@ final class RecursiveDpExecution {
     }
 
     void start(State root, String description) { event("start", "start", root, -1, null, description); }
+    /** A real caller phase, not a fabricated recursive call or cache evaluation. */
+    void note(String anchor, State context, String description) { event(anchor, "phase", context, -1, null, description); }
     void done(State root, int answer) {
         step("done", "done", root, -1, answer, "All calls returned. Answer = " + answer + ".")
                 .var("answer", answer).step();

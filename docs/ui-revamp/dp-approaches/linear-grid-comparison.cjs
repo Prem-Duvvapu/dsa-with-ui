@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
 const types=require(process.env.PLAYWRIGHT_MODULE||'playwright');
-const {cases}=require('./linear-grid-cases.cjs');
+const {family,cases,oracle}=require('./dp-audit-profile.cjs');
 const base=process.env.FRONTEND_URL||'http://127.0.0.1:5180';
 const pace=require('../evidence/pace-executions.cjs')();
 (async()=>{
@@ -15,16 +15,26 @@ const pace=require('../evidence/pace-executions.cjs')();
         const page=await browser.newPage({viewport:{width,height:844},colorScheme:theme});
         await pace(page);
         await page.addInitScript(theme=>{localStorage.setItem('dsa-ui:seenWelcome','true');localStorage.setItem('dsa-ui:theme',JSON.stringify(theme));},theme);
-        let requests=0;const errors=[];
+        let requests=0;const errors=[],responses=[];
         page.on('request',r=>{if(new URL(r.url()).pathname.endsWith('/execute'))requests++;});
         page.on('pageerror',e=>errors.push(e.message));
+        page.on('response',r=>{if(new URL(r.url()).pathname.endsWith('/execute'))responses.push({url:r.url(),status:r.status()});});
         const input=Buffer.from(JSON.stringify(c.input)).toString('base64url');
         await page.goto(`${base}/problem/${c.id}?approach=memoization&input=${input}&step=3`);
         const main=page.getByRole('slider',{name:'Seek to step',exact:true});
         await page.waitForFunction(()=>document.querySelector('input[aria-label="Seek to step"]')?.value==='2');
         await page.getByRole('button',{name:'Edit input',exact:true}).click();
-        const draft=c.id==='grid-unique-paths'?page.getByLabel('Rows',{exact:true}):page.getByLabel('Position 1 value',{exact:true});
-        await draft.fill(c.id==='grid-unique-paths'?'2':'9');
+        const matrix=Boolean(c.input.points||c.input.grid);
+        const [draftRow,draftCol]=c.draftCell??[0,0];
+        const draft=matrix?page.getByRole('button',{name:new RegExp(`^Cell row ${draftRow+1}, column ${draftCol+1}, value `)})
+          :c.id==='grid-unique-paths'?page.getByLabel('Rows',{exact:true}):page.getByLabel('Position 1 value',{exact:true});
+        if(matrix)await draft.click();else await draft.fill(c.id==='grid-unique-paths'?'2':'9');
+        const draftValue=matrix?await draft.getAttribute('aria-label'):await draft.inputValue();
+        const edited=structuredClone(c.input);
+        if(matrix)edited[c.input.points?'points':'grid'][draftRow][draftCol]=Number(draftValue.match(/value (-?\d+)$/)[1]);
+        else if(c.id==='grid-unique-paths')edited.rows=Number(draftValue);
+        else(edited.heights??edited.nums)[0]=Number(draftValue);
+        assert.notEqual(String(oracle(c.id,edited)),c.answer,'Dirty draft must change the independent answer to detect a comparison snapshot leak');
         const committed=page.url(),before=requests;
         await page.getByRole('button',{name:'Compare approaches',exact:true}).click();
         assert.equal(requests,before,'Opening comparison executed');
@@ -33,7 +43,12 @@ const pace=require('../evidence/pace-executions.cjs')();
         await panel.getByLabel('Approach 2',{exact:true}).selectOption('recursion');
         const run=panel.getByRole('button',{name:'Run comparison',exact:true});
         await run.focus();await page.keyboard.press('Enter');
-        await panel.getByText('Both complete runs recorded the same answer.',{exact:true}).waitFor();
+        try{await panel.getByText('Both complete runs recorded the same answer.',{exact:true}).waitFor();}
+        catch(error){
+          console.error(JSON.stringify({problemId:c.id,engine,width,theme,requests,responses,errors,url:page.url(),
+            focus:await page.evaluate(()=>document.activeElement?.outerHTML),panel:await panel.textContent()},null,2));
+          throw error;
+        }
         assert.equal(requests,before+2);
         for(const label of ['Memoization comparison','Recursion comparison']) {
           const side=panel.getByRole('region',{name:label,exact:true});
@@ -47,7 +62,7 @@ const pace=require('../evidence/pace-executions.cjs')();
         await recursion.focus();await page.keyboard.press('ArrowRight');
         assert.equal(await recursion.inputValue(),'2');assert.equal(await memo.inputValue(),'2');
         assert.equal(await main.inputValue(),'2');assert.equal(page.url(),committed);
-        assert.equal(await draft.inputValue(),c.id==='grid-unique-paths'?'2':'9');
+        assert.equal(matrix?await draft.getAttribute('aria-label'):await draft.inputValue(),draftValue);
         await page.getByRole('button',{name:'Hide approach comparison',exact:true}).click();
         assert.deepEqual(errors,[]);
         assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
@@ -58,5 +73,6 @@ const pace=require('../evidence/pace-executions.cjs')();
       }
     } finally {await browser.close();}
   }
-  fs.writeFileSync(path.join(__dirname,'linear-grid','comparison-results.json'),JSON.stringify({generated:new Date().toISOString(),realBackend:true,servedBuild,rows},null,2));
+  fs.mkdirSync(path.join(__dirname,family),{recursive:true});
+  fs.writeFileSync(path.join(__dirname,family,'comparison-results.json'),JSON.stringify({generated:new Date().toISOString(),realBackend:true,servedBuild,rows},null,2));
 })().catch(e=>{console.error(e);process.exitCode=1;});
