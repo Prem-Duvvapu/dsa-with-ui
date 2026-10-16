@@ -2545,3 +2545,137 @@ requested another two-hour working window. This real user continuation authorize
 the proposed commit/push/CI-gated merge of the linear/grid package; the automatic
 goal continuation alone was not treated as approval. Earlier local-only wording is
 the verification snapshot. The next implementation package starts only after merge.
+
+Publication result: #228 merged as `a14bce5cd06e4a3e9b14cbc124a2eb46c238ae63`
+at2026-10-16T15:59:09Z after green PR/backend/frontend/security/Vercel checks.
+Post-merge CI38928322194 passed. `feat/dp-circular-activity-obstacles` starts from
+that merged main; the original Windows worktree is untouched. The merged DP tally
+is now10/56, with46 other candidates remaining, not a completed family rollout.
+
+### 2026-10-16 local continuation — circular ranges, activities and obstacles
+
+Scope: House Robber II, Ninja's Training and Unique Paths II. Six new alternative
+executables provide genuine recursion/memoization; nine offered forms keep the exact
+canonical/default tracer objects, IDs, input specs, defaults and sources. House Robber
+uses two real root calls with `(pass,count)` cache keys; Training uses three real final
+activity roots and `(day,task)` keys. Neither fabricates a driver root. Obstacles are
+checked before the origin; blocked/unreachable zero is cached, unknown stays null.
+
+Initial16 backend cases fail against merged #228:4 assertions and12 unavailable-
+approach errors. Three compiling wrong-result source mutations fail3/3 checks;
+aliasing House Robber's pass cache key fails1/3 checks (`[2,7]`: wrong2 vs correct7),
+with the other problems as controls. All mutations are restored before full testing.
+Independent legal-subset, forward-schedule and forward-path references cover1,626
+exhaustive small inputs,90 seeded full-domain inputs and default/alternate/max controls
+through all three tracers and compiled displayed sources. Six new files compile exactly
+as standalone Java17; three unchanged canonical method listings get an outer class only.
+
+Two discovered pre-existing defects are fixed alongside the affected input family:
+zero-score Training narration no longer invents activity -1; GridField now enforces
+declared minCols in its removal button and handler. Two new editor tests fail before
+the fix (9 existing cases pass), then all11 pass; existing two-column rejected drafts
+are preserved until an explicit Add column action, never silently filled or clamped.
+
+Full verification:8,233 backend cases,0 failures/errors,500 unchanged skips;83 frontend
+files/859 tests pass.432 golden-regeneration cases produce no content changes. Backend
+packaging and frontend production build pass; JS389.26kB/gzip124.02 and CSS98.74/gzip17.92.
+Final backend package completed16:27:47Z, after all mutations were restored. No Maven
+is run while the worktree serves browser journeys.21 real API scenarios (42 paced
+full/delta requests) match independent answers, source/type/complexity/input/approach
+identity and the production decoder; largest full response1,133,356 bytes (8×8 obstacle
+memo), below the unchanged2 MB cap. Recursion maximum calls218/189/69; memo58/57/113.
+Browser gates and documentation reconciliation are ongoing. These three are not yet
+credited as UI-verified or merged, and no further package is stacked on this branch.
+
+Readability follow-up during browser review: `pass=0,count=9` exceeds the existing
+13-character node label, hiding the count in every House Robber call. A new regression
+fails on that exact frame. Both standalone sources, executable state/call labels and
+teaching now consistently use `best(pass,n)`; n is the prefix count, mapped to canonical
+endpoint `i=pass+n-1` for n>0. The renderer itself is unchanged. The initial30 Chromium
+standard rows and21 API scenarios precede this final label/source change and must be
+superseded, not counted as final proof. Servers were stopped before the new RED check
+and full-suite/package rerun. The maximum browser probe now also compares actual visible
+SVG text (not hover titles) with each state's full arguments and pans to EVERY real root.
+Its root census uses the production tree builder, since data-recursion-root is only the
+first-root auto-scroll anchor. Existing single-root evidence remains historical.
+
+Final post-label checks pass8,234 backend cases with500 unchanged skips,83 frontend
+files/859 tests after fresh npm ci,432 unchanged golden cases and both production
+builds. Startup process-group smoke passes. Final package completed16:41:53Z; source,
+specs and production frontend remain frozen throughout subsequent browser checks.
+All30 Chromium standard,12 Firefox standard,12 native200% zoom and24 maximum rows in
+each engine passed. Actual visible node text retains full state arguments; all forest
+roots are locally reachable. Inspected House Robber recursion1366light, Training
+memo320dark and Obstacle memo1366light captures; large trees still require panning and
+memo tables/page require scrolling, not simultaneous all-node/all-cell visibility.
+
+Comparison review tightened the dirty-draft control: Training's first score10→11 does
+not change its optimum150, so it cannot expose a snapshot leak. The authored edit now
+changes the participating score70→71 (independent optimum151 vs committed150). The
+browser checks assert that EVERY dirty draft changes the independent answer before
+running the comparisons. Nine evidence-gate/oracle helpers and three existing probe
+helpers pass; the old inventory script fails one of nine guards, with eight controls.
+
+The first comparison attempt passed one phone row, then timed out; its diagnostic rerun
+could not restore the initial link. The backend handle was then confirmed terminal
+(exit143), and8923 had no listener. Logs show no application exception or OOM evidence;
+termination cause is unknown. The unchanged final jar was restarted only after that
+confirmation. API/comparison/recovery checks are repeated; incomplete comparison attempts
+are excluded, not counted as passes. Completed standard/zoom/maximum manifests retain
+their same-package/source/assets identity and are reconciled by the final audit.
+
+Final reconciliation at16:59:50Z: all21 full/delta API scenarios (42 executions),12
+comparison journeys and8 input-recovery journeys pass after restart. An extra6 Chromium
+320px/both-theme journeys recheck the prior linear/grid batch without overwriting its
+historical manifests. `circular-activity-obstacles/manifest-audit.json` reconciles128
+browser journeys, current source hashes, production assets and package timestamps.
+Each new candidate has its own34 standard/maximum rows and4 comparison rows. Comparisons
+use materially different dirty drafts, native Enter activation and independent sliders,
+with the main input/step/link unchanged. The two-column recovery specifically checks
+the points field's minimum-three-column error, preservation, explicit Add column repair,
+the independent answer50 and sharing only that successful repaired input.
+
+The refreshed56-candidate inventory changes only house-robber-2, ninjas-training and
+unique-paths-2.13 candidates are verified locally,10 merged,43 others pending; catalogue
+stats remain431/431 traced,0 duplicates/orphans. Nine new/extended evidence helpers and
+three existing probe helpers pass. No canonical golden/dependency/production changes
+after browser packaging. `verification.json` records exact scope, RED/mutation evidence,
+completed checks, screenshots inspected and excluded incomplete attempts.
+
+Publication of this subsequent medium batch still needs approval. The optional approval
+question has not received an actual reply; neither its preselected option nor an automatic
+goal continuation is treated as permission. No commit/push/PR/merge was made for this
+branch, and no next implementation package is stacked.43 other DP candidates,D6/D7,
+38 source omissions,77 platform contexts,41 statements, Gas/Phone, metadata/C++ honesty,
+security and broader P7/P8/P9 human/device/performance/deployment/release gates remain.
+
+### 2026-10-16 next-package preflight — no next implementation
+
+Publishing approval is still absent; main remains #228 / `a14bce5` (remote rechecked).
+A bounded read-only preflight identifies Falling Path and Triangle as the next natural
+grid batch. The DP plan records actual state/driver/padding/cache requirements and
+analytical call counts, explicitly not advertised or measured future caps. Real API
+controls confirm the one-column Falling Path narration contradiction and Triangle's
+min(rows,columns) effective depth with full rectangular input retained. An initial
+Triangle request containing999 is correctly400 for its declared -100..100 value domain;
+the three subsequent valid rectangular controls all return200 with expected answers.
+
+RCA-067 records two open explanation defects: Falling Path claims two predecessors in
+one column, and Count Squares claims smaller endpoint squares were counted earlier
+although the current contribution includes them. The latter's2×2 ones total5 is correct;
+its missing explicit answer is a future comparison-instrumentation prerequisite, not a
+wrong current total. No code fix or permanent RED guard for these new findings exists
+yet. The signed-grid cycle-only editor's198-click2→-1 interaction is an open P7 UX issue,
+not resolved by current minCols changes. No options/coverage rows are added by preflight,
+and no next implementation or publication was performed. The diagnostic server is
+stopped after these checks; no Maven ran alongside it.
+
+### 2026-10-16 second two-hour continuation — publication authority
+
+After the outstanding request to approve publishing this verified three-problem batch,
+the owner explicitly requested another two-hour working window at17:31 UTC. This real
+user continuation authorizes the proposed commit/push/PR/CI-gated merge of the circular/
+activity/obstacles package. Earlier automatic continuations were not approval. Existing
+local-only/approval-pending paragraphs above are verification snapshots. Subsequent
+Falling Path/Triangle implementation starts only after this package lands, and publishing
+that next package requires separate approval. No direct main edit or CI bypass is allowed.

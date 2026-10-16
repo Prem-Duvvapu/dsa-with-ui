@@ -3,7 +3,10 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const script = fs.readFileSync(path.join(__dirname,'refresh-inventory.cjs'),'utf8').split('(async () => {')[0];
+const source = process.env.DP_INVENTORY_BASELINE === '1'
+  ? require('node:child_process').execFileSync('git',['show','HEAD:docs/ui-revamp/dp-approaches/refresh-inventory.cjs'],{cwd:__dirname,encoding:'utf8'})
+  : fs.readFileSync(path.join(__dirname,'refresh-inventory.cjs'),'utf8');
+const script = source.split('(async () => {')[0];
 function documents() {
   const docs={'comparison-results.json':{realBackend:true,servedBuild:{assets:['/assets/real.js','/assets/real.css']},
     rows:['chromium','firefox'].flatMap(engine=>[[390,'dark'],[1366,'light']].map(([width,theme])=>({
@@ -25,12 +28,13 @@ function documents() {
     }))))};
   return docs;
 }
-function verified(docs) {
+function verified(docs, folder='linear-grid', problemId='test-problem') {
+  const exists=file=>path.dirname(file)===path.join(__dirname,folder)&&Object.hasOwn(docs,path.basename(file));
   const context={__dirname,process:{env:{}},require:name=>name==='fs'?{
-    existsSync:file=>Object.hasOwn(docs,path.basename(file)),
-    readFileSync:file=>JSON.stringify(docs[path.basename(file)])
+    existsSync:exists,
+    readFileSync:file=>{assert(exists(file),'Wrong evidence folder');return JSON.stringify(docs[path.basename(file)]);}
   }:require(name)};
-  vm.runInNewContext(script+'\nresult = linearGridCandidateUiVerified("test-problem");',context);
+  vm.runInNewContext(script+`\nresult = linearGridCandidateUiVerified(${JSON.stringify(problemId)}, ${JSON.stringify(folder)});`,context);
   return context.result;
 }
 test('only a complete per-problem same-build matrix can advance a DP candidate',()=>assert.equal(verified(documents()),true));
@@ -38,6 +42,40 @@ test('missing or incomplete manifests cannot certify a candidate',()=>{
   const missing=documents();delete missing['firefox-maximum-zoom1.json'];assert.equal(verified(missing),false);
   const partial=documents();partial['chromium-standard-zoom1.json'].rows.pop();assert.equal(verified(partial),false);
   const noComparison=documents();delete noComparison['comparison-results.json'];assert.equal(verified(noComparison),false);
+});
+test('circular/activity/obstacles use the same complete per-problem gate',()=>{
+  const docs=documents();
+  for(const doc of Object.values(docs))for(const row of doc.rows){row.problemId='house-robber-2';row.rootCount=2;row.allStateCoordinatesVisible=true;}
+  const check=()=>verified(docs,'circular-activity-obstacles','house-robber-2');
+  assert.equal(check(),true);
+  docs['firefox-maximum-zoom1.json'].rows[0].rootCount=1;assert.equal(check(),false);
+  docs['firefox-maximum-zoom1.json'].rows[0].rootCount=2;
+  docs['firefox-maximum-zoom1.json'].rows[0].allStateCoordinatesVisible=false;assert.equal(check(),false);
+  docs['firefox-maximum-zoom1.json'].rows[0].allStateCoordinatesVisible=true;
+  docs['firefox-maximum-zoom1.json'].rows.pop();assert.equal(check(),false);
+});
+test('independent circular, schedule and obstacle references include zero and endpoint controls',()=>{
+  const {cases,oracle}=require('./circular-activity-obstacles-cases.cjs');
+  for(const c of cases){assert.equal(String(oracle(c.id,c.input)),c.answer);assert.equal(oracle(c.id,c.zero),0);}
+  assert.equal(oracle('house-robber-2',{nums:[2,7]}),7);
+  assert.equal(oracle('house-robber-2',{nums:[9,1,1,9]}),10);
+  assert.equal(oracle('ninjas-training',{points:[[1,0,0],[1,0,0]]}),1);
+  assert.equal(oracle('unique-paths-2',{grid:[[0]]}),1);
+  assert.equal(oracle('unique-paths-2',{grid:[[0,0],[0,1]]}),0);
+  assert.throws(()=>oracle('unwritten-problem',{}),/No independent reference/);
+});
+test('an unknown evidence profile is refused instead of borrowing another family',()=>{
+  const result=require('node:child_process').spawnSync(process.execPath,['-e','require("./dp-audit-profile.cjs")'],
+    {cwd:__dirname,env:{...process.env,DP_AUDIT_FAMILY:'unknown-family'},encoding:'utf8'});
+  assert.notEqual(result.status,0);assert.match(result.stderr,/Unknown DP evidence profile/);
+});
+test('authored matrix comparison edits materially change the independent answer',()=>{
+  const {cases,oracle}=require('./circular-activity-obstacles-cases.cjs');
+  for(const c of cases.filter(c=>c.input.points||c.input.grid)){
+    const edited=structuredClone(c.input),key=c.input.points?'points':'grid';
+    const [row,col]=c.draftCell??[0,0];edited[key][row][col]++;
+    assert.notEqual(String(oracle(c.id,edited)),c.answer);
+  }
 });
 test('another problem, duplicate axes and a different production build cannot be borrowed',()=>{
   for(const mutate of [

@@ -12,6 +12,7 @@ export default function GridField({ field, value, onChange }) {
   const c = field.constraints || {};
   const minRows = c.minRows ?? 1;
   const maxRows = c.maxRows ?? Infinity;
+  const minCols = Math.max(c.minCols ?? 1, 1);
   const maxCols = c.maxCols ?? Infinity;
   const minValue = c.minValue ?? 0;
   const maxValue = c.maxValue ?? 1;
@@ -48,7 +49,7 @@ export default function GridField({ field, value, onChange }) {
   };
 
   const removeCol = () => {
-    if (cols <= 1) return;
+    if (cols <= minCols) return;
     onChange(grid.map((row) => row.slice(0, -1)));
   };
 
@@ -89,7 +90,7 @@ export default function GridField({ field, value, onChange }) {
           <span className={fields.microLabel}>Cols</span>
           <button
             type="button" className={`btn btn-outline ${fields.tinyButton}`}
-            onClick={removeCol} disabled={cols <= 1}
+            onClick={removeCol} disabled={cols <= minCols}
             aria-label="Remove a column"
           ><Minus size={11} /></button>
           <button

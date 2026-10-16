@@ -4,12 +4,13 @@ const path = require('node:path');
 const assert = require('node:assert/strict');
 const { createHash } = require('node:crypto');
 const types = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
-const { cases, maximum, oracle } = require('./linear-grid-cases.cjs');
+const { family, cases, maximum, oracle } = require('./dp-audit-profile.cjs');
 const engine = process.env.AUDIT_ENGINE || 'chromium';
 const zoom = Number(process.env.AUDIT_NATIVE_ZOOM || 1);
 const mode = process.env.AUDIT_MODE || 'standard';
 const base = process.env.FRONTEND_URL || 'http://127.0.0.1:5180';
-const out = path.join(__dirname, 'linear-grid');
+// A bounded compatibility smoke can write outside historical complete matrices.
+const out = process.env.AUDIT_OUTPUT_DIR ? path.resolve(process.env.AUDIT_OUTPUT_DIR) : path.join(__dirname, family);
 const sizes = process.env.AUDIT_SIZES ? process.env.AUDIT_SIZES.split(',').map(s => s.split('x').map(Number))
   : [[320,568],[390,844],[768,1024],[1366,768],[1440,900]];
 assert(['chromium','firefox'].includes(engine));
@@ -19,7 +20,7 @@ const pace = require('../evidence/pace-executions.cjs')();
 const selector = page => page.getByRole('combobox', { name:'Solution approach', exact:true });
 const seek = page => page.getByRole('slider', { name:'Seek to step', exact:true });
 const share = input => Buffer.from(JSON.stringify(input)).toString('base64url');
-let decodeTrace;
+let decodeTrace,buildRecursionTree;
 async function ready(page) {
   await selector(page).waitFor();
   await page.waitForFunction(() => !document.querySelector('select[id]')?.disabled);
@@ -52,6 +53,24 @@ async function safe(page,errors) {
 async function edit(page,id,input) {
   const open = page.getByRole('button',{name:'Edit input',exact:true});
   if(await open.isVisible()) await open.click();
+  if(input.points||input.grid){
+    const values=input.points??input.grid;
+    const current=()=>page.getByRole('button',{name:/^Cell row/}).evaluateAll(es=>{
+      const rows=[];for(const e of es){const [,r,c,v]=e.getAttribute('aria-label').match(/^Cell row (\d+), column (\d+), value (-?\d+)$/);(rows[Number(r)-1]??=[])[Number(c)-1]=Number(v);}return rows;
+    });
+    while((await current()).length<values.length)await page.getByRole('button',{name:'Add a row',exact:true}).click();
+    while((await current()).length>values.length)await page.getByRole('button',{name:'Remove a row',exact:true}).click();
+    while((await current())[0].length<values[0].length)await page.getByRole('button',{name:'Add a column',exact:true}).click();
+    while((await current())[0].length>values[0].length)await page.getByRole('button',{name:'Remove a column',exact:true}).click();
+    for(let r=0;r<values.length;r++)for(let c=0;c<values[0].length;c++){
+      let attempts=0;
+      while((await current())[r][c]!==values[r][c]){
+        assert(attempts++<102,'Grid value cannot be reached through the declared cycle');
+        await page.getByRole('button',{name:new RegExp(`^Cell row ${r+1}, column ${c+1}, value `)}).click();
+      }
+    }
+    return;
+  }
   if(id === 'grid-unique-paths') {
     await page.getByLabel('Rows',{exact:true}).fill(String(input.rows));
     await page.getByLabel('Columns',{exact:true}).fill(String(input.cols));
@@ -65,6 +84,12 @@ async function edit(page,id,input) {
   if(input.k !== undefined) await page.getByLabel('Max jump distance',{exact:true}).fill(String(input.k));
 }
 async function assertDraft(page,id,input) {
+  if(input.points||input.grid){
+    const actual=await page.getByRole('button',{name:/^Cell row/}).evaluateAll(es=>{
+      const rows=[];for(const e of es){const [,r,c,v]=e.getAttribute('aria-label').match(/^Cell row (\d+), column (\d+), value (-?\d+)$/);(rows[Number(r)-1]??=[])[Number(c)-1]=Number(v);}return rows;
+    });
+    assert.deepEqual(actual,input.points??input.grid);return;
+  }
   if(id === 'grid-unique-paths') {
     assert.equal(await page.getByLabel('Rows',{exact:true}).inputValue(),String(input.rows));
     assert.equal(await page.getByLabel('Columns',{exact:true}).inputValue(),String(input.cols));
@@ -78,6 +103,7 @@ function assertAnswer(run,input) {
 }
 (async()=>{
   ({decodeTrace}=await import(path.resolve(__dirname,'../../../frontend/src/trace/decodeTrace.js')));
+  ({buildRecursionTree}=await import(path.resolve(__dirname,'../../../frontend/src/trace/recursionTree.js')));
   fs.mkdirSync(out,{recursive:true});
   const servedBuild=await require('../evidence/served-build-identity.cjs')(base);
   const browser=zoom===2?await require('../evidence/native-browser-zoom.cjs')(types.chromium):await types[engine].launch();
@@ -101,7 +127,7 @@ function assertAnswer(run,input) {
         await page.waitForFunction(()=>document.querySelector('input[aria-label="Seek to step"]')?.value==='2');
         if(zoom===2) await browser.setZoom(page,2);
         assert.equal(await page.evaluate(()=>innerWidth),Math.round(width/zoom));
-        let maximumCalls=null;
+        let maximumCalls=null,rootCount=null;
         if(mode==='maximum') {
           maximumCalls=Number(run.steps.at(-1).variables.calls);
           assert(maximumCalls<=220);
@@ -109,11 +135,26 @@ function assertAnswer(run,input) {
           await page.getByRole('img',{name:`Recursion tree, ${maximumCalls} calls explored`,exact:true}).waitFor();
           const tree=page.locator('[data-recursion-diagram]');
           assert.equal(await tree.locator('g[data-state]').count(),maximumCalls);
-          const root=tree.locator('[data-recursion-root]');
+          // data-recursion-root is the FIRST-root auto-scroll anchor, not a forest census.
+          // Use the production tree builder's actual parent identities and rendered order.
+          const model=buildRecursionTree(run.steps,run.steps.length-1);
+          assert(!model.truncated);
+          for(const node of model.nodes){
+            const argumentsText=node.label.slice(node.label.indexOf('(')+1,node.label.lastIndexOf(')'));
+            assert.equal(await tree.locator('g[data-state]').nth(node.id).locator('text').evaluate(el=>el.firstChild.textContent.trim()),argumentsText,
+              'Visible node text must retain the actual state coordinates, not only its hover title');
+          }
+          const roots=model.nodes.filter(node=>node.parentId===null);
+          rootCount=roots.length;assert.equal(rootCount,c.roots??1);
+          for(const node of roots){
+          const root=tree.locator('g[data-state]').nth(node.id);
+          await root.scrollIntoViewIfNeeded();
           assert(await root.evaluate(el=>{
             const r=el.getBoundingClientRect(),s=el.closest('[data-testid="recursion-tree-stage"]').getBoundingClientRect();
             return r.right>s.left&&r.left<s.right&&r.bottom>s.top&&r.top<s.bottom;
-          }),'All calls exist but root is outside the local viewport');
+          }),'A real root cannot be reached inside the local viewport');
+          }
+          await tree.locator('g[data-state]').nth(roots[0].id).scrollIntoViewIfNeeded();
           if(form==='memoization') {
             await page.getByText('Memo table',{exact:true}).click();
             const table=page.locator('table.dp-table');
@@ -149,9 +190,18 @@ function assertAnswer(run,input) {
           const committed=page.url();
           // Build an over-recursion draft under the wider memo limits, then prepare recursion.
           const rejected=maximum(c.id,'recursion');
-          if(c.id==='grid-unique-paths')rejected.rows++;
+          if(c.input.points||c.input.grid){
+            const key=c.input.points?'points':'grid';
+            rejected[key]=c.input[key].map(row=>row.slice());
+            while(rejected[key].length<=c.recursionRows)rejected[key].push(Array(rejected[key][0].length).fill(0));
+          }
+          else if(c.id==='grid-unique-paths')rejected.rows++;
           else(rejected.heights??rejected.nums).push(0);
           await edit(page,c.id,rejected);
+          if(c.fixedCols){
+            assert(await page.getByRole('button',{name:'Remove a column',exact:true}).isDisabled());
+            assert(await page.getByRole('button',{name:'Add a column',exact:true}).isDisabled());
+          }
           const beforePrepare=requests;
           await selector(page).selectOption('recursion');
           assert.equal(requests,beforePrepare);
@@ -175,12 +225,13 @@ function assertAnswer(run,input) {
         let screenshot=null;
         if(mode==='maximum'&&engine==='chromium'&&(width===320&&theme==='dark'||width===1366&&theme==='light')) {
           const filename=`${c.id}-${form}-${width}-${theme}.png`;
+          await page.locator('[data-recursion-root]').first().scrollIntoViewIfNeeded();
           await page.evaluate(()=>{
             const stage=document.querySelector('[data-testid="recursion-tree-stage"]');
             const rail=document.querySelector('nav[aria-label="Learning views"]');
             window.scrollTo({top:Math.max(0,scrollY+stage.getBoundingClientRect().top-rail.getBoundingClientRect().height-12),behavior:'instant'});
           });
-          assert(await page.locator('[data-recursion-root]').evaluate(el=>{
+          assert(await page.locator('[data-recursion-root]').first().evaluate(el=>{
             const root=el.getBoundingClientRect(),rail=document.querySelector('nav[aria-label="Learning views"]').getBoundingClientRect();
             return root.top>=rail.bottom&&root.bottom<=innerHeight;
           }),'Screenshot must show the root below the sticky rail, not behind it');
@@ -188,6 +239,8 @@ function assertAnswer(run,input) {
           screenshot=filename;
         }
         rows.push({problemId:c.id,width,height,theme,nativeZoom:zoom,initial:form,maximumCalls,screenshot,requests,
+          rootCount,
+          allStateCoordinatesVisible:mode==='maximum',
           shownApproach:run.approachId,sourceHash:createHash('sha256').update(run.code).digest('hex'),
           noOverflowOrErrors:true,allThreeExecuted:mode==='standard',inputAndStepRestored:mode==='standard',
           viewsDoNotExecute:mode==='standard',refusalPreservesRunAndDraft:mode==='standard',
