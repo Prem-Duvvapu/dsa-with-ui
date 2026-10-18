@@ -88,12 +88,17 @@ export function describeStep(step, dsType) {
   return '';
 }
 
+function describeCell(cell) {
+  // The grid/memo contract uses # + void for permanently excluded cells, not unknowns.
+  if (cell?.state === 'void') return cell.value === '#' ? 'excluded (#)' : 'unknown';
+  return `${cell?.value ?? 'unavailable'} (${cell?.state ?? 'state unavailable'})`;
+}
+
 function describeTable(table) {
   if (!Array.isArray(table?.cells) || table.cells.length === 0) return '';
   return `DP table, ${table.cells.length} rows. ` + table.cells.map((row, r) =>
     `Row ${table.rowLabels?.[r] ?? r}: ${listOf(row.map((cell, c) =>
-      `column ${table.colLabels?.[c] ?? c}: ${cell?.state === 'void' ? 'unknown'
-        : `${cell?.value ?? 'unavailable'} (${cell?.state ?? 'state unavailable'})`}`))}`
+      `column ${table.colLabels?.[c] ?? c}: ${describeCell(cell)}`))}`
   ).join('. ') + '.';
 }
 

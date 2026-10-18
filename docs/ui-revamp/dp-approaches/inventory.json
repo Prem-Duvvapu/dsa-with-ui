@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-16T16:59:51.300Z",
+  "generated": "2026-10-18T12:11:53.037Z",
   "stats": {
     "catalogued": 431,
     "traced": 431,
@@ -2688,17 +2688,99 @@
         "maxBytes": 2000000
       },
       "canonicalComplexity": {
-        "timeComplexity": "O(N^2)",
-        "timeExplanation": "Fills one cell per matrix position, each from up to three predecessors, then reduces across the last row.",
-        "timeWhy": "2D tabulation with a final row-wide minimum",
-        "spaceComplexity": "O(N^2)",
-        "spaceExplanation": "Keeps the whole N by N table so every candidate predecessor stays visible.",
+        "timeComplexity": "O(R * C)",
+        "timeExplanation": "Compute each valid state once from already-known neighbours.",
+        "timeWhy": "Bottom-up recurrence",
+        "spaceComplexity": "O(R * C)",
+        "spaceExplanation": "The actual full table; no recursive stack.",
         "spaceWhy": "DP table",
-        "auxiliarySpace": "Auxiliary Space: O(N^2)",
-        "dataStructureSpace": "DP table"
+        "auxiliarySpace": "O(R * C)",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxCols": 6,
+                  "maxRows": 4,
+                  "maxValue": 100,
+                  "minCols": 1,
+                  "minRows": 1,
+                  "minValue": -100
+                },
+                "defaultValue": [
+                  [
+                    2,
+                    1,
+                    3
+                  ],
+                  [
+                    6,
+                    5,
+                    4
+                  ],
+                  [
+                    7,
+                    8,
+                    9
+                  ]
+                ],
+                "help": "Start at any top-row column; move below or one column sideways. Up to4 rows and6 columns keeps all bottom-root calls within the220-call renderer; pan locally as needed.",
+                "label": "Matrix",
+                "name": "matrix",
+                "type": "INT_GRID"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxCols": 8,
+                  "maxRows": 8,
+                  "maxValue": 100,
+                  "minCols": 1,
+                  "minRows": 1,
+                  "minValue": -100
+                },
+                "defaultValue": [
+                  [
+                    2,
+                    1,
+                    3
+                  ],
+                  [
+                    6,
+                    5,
+                    4
+                  ],
+                  [
+                    7,
+                    8,
+                    9
+                  ]
+                ],
+                "help": "Start at any top-row column; move below or one column sideways. Cache signed costs by row and column; -1 and zero are known values.",
+                "label": "Matrix",
+                "name": "matrix",
+                "type": "INT_GRID"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "ninja-and-his-friends",
@@ -3927,16 +4009,116 @@
       },
       "canonicalComplexity": {
         "timeComplexity": "O(N^2)",
-        "timeExplanation": "Fills one cell per triangle position, each from two children below it.",
-        "timeWhy": "2D tabulation, bottom-up",
+        "timeExplanation": "Compute each valid state once from already-known neighbours.",
+        "timeWhy": "Bottom-up recurrence",
         "spaceComplexity": "O(N^2)",
-        "spaceExplanation": "Keeps the whole N by N table plus which cells fall outside the triangle's shape.",
+        "spaceExplanation": "The actual full table; no recursive stack.",
         "spaceWhy": "DP table",
-        "auxiliarySpace": "Auxiliary Space: O(N^2)",
-        "dataStructureSpace": "DP table"
+        "auxiliarySpace": "O(N^2)",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxCols": 7,
+                  "maxRows": 7,
+                  "maxValue": 100,
+                  "minCols": 1,
+                  "minRows": 1,
+                  "minValue": -100
+                },
+                "defaultValue": [
+                  [
+                    2,
+                    0,
+                    0,
+                    0
+                  ],
+                  [
+                    3,
+                    4,
+                    0,
+                    0
+                  ],
+                  [
+                    6,
+                    5,
+                    7,
+                    0
+                  ],
+                  [
+                    4,
+                    1,
+                    8,
+                    3
+                  ]
+                ],
+                "help": "Effective depth is min(rows,columns); only columns0..row of that depth are used. Other input entries remain ignored, not replaced. Each dimension is capped at7 to keep the complete binary call tree below220 nodes.",
+                "label": "Triangle",
+                "name": "triangle",
+                "type": "INT_GRID"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxCols": 8,
+                  "maxRows": 8,
+                  "maxValue": 100,
+                  "minCols": 1,
+                  "minRows": 1,
+                  "minValue": -100
+                },
+                "defaultValue": [
+                  [
+                    2,
+                    0,
+                    0,
+                    0
+                  ],
+                  [
+                    3,
+                    4,
+                    0,
+                    0
+                  ],
+                  [
+                    6,
+                    5,
+                    7,
+                    0
+                  ],
+                  [
+                    4,
+                    1,
+                    8,
+                    3
+                  ]
+                ],
+                "help": "Effective depth is min(rows,columns); only columns0..row of that depth are used. Other input entries remain ignored, not replaced. Cache real signed costs; # marks excluded padding, not an unknown state.",
+                "label": "Triangle",
+                "name": "triangle",
+                "type": "INT_GRID"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "unbounded-knapsack",

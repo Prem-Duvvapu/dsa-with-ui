@@ -519,13 +519,13 @@ describe('one approach selector above one committed workspace', () => {
     await selectAndRun('memoization');
     const disclosure = screen.getByText('Memo table');
     fireEvent.click(disclosure);
-    expect(screen.getAllByRole('cell').some(cell => cell.getAttribute('aria-label')?.includes('void'))).toBe(true);
+    expect(screen.getByRole('cell', { name: 'row memo, column 1: · (unknown)' })).toBeInTheDocument();
     expect(screen.getByTestId('step-state-summary')).toHaveTextContent(/unknown/i);
     expect(screen.queryByText('Live Array State:')).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole('tab', { name: 'Analysis' }));
     expect(screen.getByText('Memo table')).toBeInTheDocument();
     fireEvent.click(screen.getByText('Memo table'));
-    expect(screen.getAllByRole('cell').some(cell => cell.getAttribute('aria-label')?.includes('void'))).toBe(true);
+    expect(screen.getByRole('cell', { name: 'row memo, column 1: · (unknown)' })).toBeInTheDocument();
   });
 
   it('preserves follow/scroll for preparation and view changes, but resets for a new executed source', async () => {

@@ -1,10 +1,12 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
 
 function DpCell({ className, glyph, state, value, rowLabel, columnLabel }) {
+  const spokenState = state === 'void' && value === '#' ? 'excluded'
+    : state === 'void' && value === '·' ? 'unknown' : state;
   return (
     <td
       className={className}
-      aria-label={`row ${rowLabel}, column ${columnLabel}: ${value || 'empty'} (${state})`}
+      aria-label={`row ${rowLabel}, column ${columnLabel}: ${value || 'empty'} (${spokenState})`}
     >
       <span className="dp-glyph" aria-hidden="true">{glyph}</span>
       <span className="dp-value">{value}</span>

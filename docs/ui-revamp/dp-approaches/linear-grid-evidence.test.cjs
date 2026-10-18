@@ -70,12 +70,29 @@ test('an unknown evidence profile is refused instead of borrowing another family
   assert.notEqual(result.status,0);assert.match(result.stderr,/Unknown DP evidence profile/);
 });
 test('authored matrix comparison edits materially change the independent answer',()=>{
-  const {cases,oracle}=require('./circular-activity-obstacles-cases.cjs');
-  for(const c of cases.filter(c=>c.input.points||c.input.grid)){
-    const edited=structuredClone(c.input),key=c.input.points?'points':'grid';
+  for(const family of ['circular-activity-obstacles','falling-triangle']){
+  const {cases,oracle}=require(`./${family}-cases.cjs`);
+  for(const c of cases.filter(c=>c.input.points||c.input.grid||c.field)){
+    const edited=structuredClone(c.input),key=c.field??(c.input.points?'points':'grid');
     const [row,col]=c.draftCell??[0,0];edited[key][row][col]++;
     assert.notEqual(String(oracle(c.id,edited)),c.answer);
   }
+  }
+});
+test('signed path references preserve rectangular depth, negatives, zero and default answers',()=>{
+  const {cases,oracle,maximum}=require('./falling-triangle-cases.cjs');
+  for(const c of cases){assert.equal(String(oracle(c.id,c.input)),c.answer);assert.equal(oracle(c.id,c.zero),0);assert.equal(oracle(c.id,c.negative),-4);}
+  assert.equal(oracle(cases[0].id,maximum(cases[0].id,'recursion')),-400);
+  assert.equal(oracle(cases[1].id,maximum(cases[1].id,'recursion')),-700);
+  for(const input of Object.values(cases[1].extra))assert.equal(oracle(cases[1].id,input),5);
+  assert.throws(()=>oracle('unwritten',{}),/No independent reference/);
+});
+test('falling-path evidence requires every real endpoint root for each advertised size',()=>{
+  const docs=documents();
+  for(const doc of Object.values(docs))for(const row of doc.rows){row.problemId='minimum-falling-path-sum';row.rootCount=row.initial==='memoization'?8:6;row.allStateCoordinatesVisible=true;}
+  const check=()=>verified(docs,'falling-triangle','minimum-falling-path-sum');
+  assert.equal(check(),true);
+  docs['firefox-maximum-zoom1.json'].rows[0].rootCount=1;assert.equal(check(),false);
 });
 test('another problem, duplicate axes and a different production build cannot be borrowed',()=>{
   for(const mutate of [

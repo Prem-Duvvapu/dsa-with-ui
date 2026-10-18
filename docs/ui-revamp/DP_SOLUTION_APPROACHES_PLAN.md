@@ -1,11 +1,20 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **10/56 candidates merged. Frog Jump K Distance, Maximum Sum of Non-Adjacent
-Elements and Grid Unique Paths merged as #228 / `a14bce5` on2026-10-16, with green
-PR and post-merge CI. Three further candidates are fully verified locally but not yet
-published: House Robber II, Ninja's Training and Unique Paths II. This is13 locally
-verified,10 merged,43 other candidates pending. D6/D7 and broader release/rollback
-checks remain pending.** The earlier seven are
+Status: **13/56 candidates merged. House Robber II, Ninja's Training and Unique Paths II
+merged as #229 / `da63085` on2026-10-16 after corrected-head push/PR checks; post-merge
+CI38942409698 passed. The preceding linear/grid batch merged as #228 / `a14bce5`.
+Two more candidates are verified locally, awaiting publishing approval;41 others remain
+outside this package. D6/D7 and broader release/rollback checks remain pending.**
+2026-10-18 follow-up: the current batch's screen-reader text conflated #/void excluded
+padding with unknown cells. Two summary RED guards and a cell-name RED guard prove the
+defect. The local correction passes24 targeted cases, all863 frontend tests (one worker,
+unchanged assertion/time limits), repeated backend/goldens/build and all100 current-bundle
+browser journeys. Source/package/assets reconciliation passes (RCA-069). Publication
+approval is still outstanding; no next implementation is stacked on this package.
+The owner subsequently explicitly approved commit/push/CI-gated merge on2026-10-18,
+then continuation with the planned next package. Publishing is in progress; the earlier
+approval-pending wording records the pre-authorization snapshot, not current authority.
+The earlier seven are
 Climbing Stairs, Frog Jump and the owner-requested five-problem batch (#223 / `b3a3497`).
 Their PR/post-merge CI passed; bounded public verification is recorded below.
 Current continuation (2026-10-14): the owner reprioritized DP after numeric validation
@@ -16,13 +25,91 @@ of this package was subsequently approved by the owner's2026-10-16 continuation;
 the local-only text below records its pre-publication verification snapshot.
 Gas Stations and Phone correctness fixes remain deferred by this priority change.
 
-Current local package (2026-10-16): House Robber II, Ninja's Training and Unique Paths II
+Merged package verification snapshot (2026-10-16): House Robber II, Ninja's Training and Unique Paths II
 have genuine recursive/memo implementations and complete Java listings. The full
 backend suite (8,234 cases,500 unchanged skips), frontend suite (859 tests), production
 builds and432 unchanged golden cases pass. Real API/source/answer, full/delta and browser
 checks pass after a call-label readability fix:21 full/delta scenarios,128 browser
 journeys and a source/package/production-asset audit. The inventory advances ONLY these
-three rows to UI-verified; they are NOT counted as merged. Publication requires approval.
+three rows to UI-verified. That local-only snapshot was subsequently published as #229;
+the current merged tally above supersedes earlier approval-pending paragraphs.
+
+Current new package (2026-10-16): Minimum Falling Path Sum and Triangle Minimum Path Sum
+are implemented locally. Initial12 backend cases were RED (3 failures,9 unavailable
+approach errors), then all12 passed. Four exact standalone Java17 sources and two
+canonical method listings compile against independent signed forward-path references.
+Wrong-result source mutations fail2/2, treating zero/-1 as unknown fails2/2, and removing
+Triangle's exclusion mask fails its guard. All mutations are restored. The single-column
+canonical narration is corrected without changing its source/answers/defaults. A memo
+companion reads its exclusion explanation from actual run metadata; the new UI test is
+RED before that addition and all3 targeted cases pass afterward. Final full suites,
+transport budgets and100 browser journeys pass; only these two inventory rows advance.
+They are verified locally, NOT published. Their publication requires separate approval.
+
+### D5 Falling Path/Triangle — verified locally, revalidated 2026-10-18
+
+| Problem | Actual recursive/memo state | Recursive visualizer limit | Memo limit | Preserved default |
+| --- | --- | --- | --- | --- |
+| Minimum Falling Path Sum | cost(row,col), minimum over every bottom-row root | 1–4 rows ×1–6 columns;188 calls,6 roots at maximum | 1–8 each dimension;162 calls,8 roots at maximum | Existing top-to-bottom tabulation |
+| Triangle Minimum Path Sum | cost(row,col), two real children toward the effective base | Each physical dimension1–7;127 calls at depth7 | Each dimension1–8;57 calls,36 valid states at depth8 | Existing bottom-to-top tabulation |
+
+Signed cells remain-100..100. Triangle preserves the entire submitted rectangular grid,
+using exactly the canonical depth min(rows,columns); upper-right memo padding is #/void,
+not a valid unknown dot. A caption from the actual run explains that exclusion. Zero/-1
+cache entries are real known values. Falling's driver is not a fabricated recursive root.
+Its canonical1-column narration now names only its real predecessor; source, values,
+IDs, defaults/specs and all canonical goldens remain unchanged. Count Squares' separate
+narration/answer-field prerequisite remains open in RCA-067.
+The state text and actual table-cell names now also distinguish #/void exclusion from
+unknown dots, known zero/-1 and a known literal #. This reads actual state/value pairs,
+not problem IDs; RCA-069 records the RED/controls, fixture updates and excluded attempts.
+
+Full verification repeated2026-10-18:8,246 backend cases,0 failures/errors,500 unchanged
+skips;863 frontend tests across83 files, production build and successful packaging;
+the locked install/unchanged-launcher cleanup smoke dates toOctober16. The final frontend
+suite uses one worker with identical assertions/time limits after shared-load setup
+failures in default-worker attempts (recorded, not counted as passes). All
+432 regenerated golden cases pass with no content changes. Six displayed sources compile independently
+(four exact standalone classes; two unchanged methods with only an outer class).
+Independent forward paths cover1,553 exhaustive grids,60 seeded full-domain inputs,
+defaults/alternates/maxima across all three forms:4,857 comparisons per tracer AND
+compiled-source path, not4,857 unique inputs. Mutations are all restored before final
+full suites/package.14 evidence/probe helper cases pass; the previous inventory script
+fails one of11 family guards with ten controls passing.
+
+Twenty-five full/delta API scenarios (50 requests) agree on decoded payloads, independent
+answers, selected source/type/complexity/input identity and completion. Largest full
+response is1,545,609 bytes. Existing5,000-step/2 MB and220-node budgets are not raised.
+One-over shape/value/invalid/ragged/empty inputs are rejected; tiny-budget executions
+stop before reporting an answer.
+
+The100 real-browser journeys are20 standard Chromium,8 standard Firefox,8 native200%
+Chromium zoom,16 maximum per engine,8 committed-input comparisons,18 one-column/rectangular
+shape checks in both engines and6 previous House/Training/Obstacle phone compatibility
+rows. Each new candidate has its own34 standard/maximum and4 comparison rows.
+Twelve memo/tabulation shape rows check actual workspace excluded/unknown summary counts
+after restoration and at the final step, and every final table-cell accessible name.
+These are part of the18 shape rows, not extra journeys or real-screen-reader acceptance.
+Shared step/input restoration, explicit Run, no view-triggered execution, success/error
+focus and400 draft/run/link retention pass. Every actual call/cell is rendered and each
+real root is locally reachable; large forests still require substantial local panning.
+This is not all-at-once visibility or human/device/screen-reader/learner/performance acceptance.
+
+`dp-approaches/falling-triangle/{verification,manifest-audit}.json`, manifests and eight
+maximum screenshots record scope. Source hashes match the current backend; all browser
+manifests postdate the final jar and use the same production JS/CSS assets. The shape
+probe initially counted restoration's default GET plus shared POST as a single request;
+diagnostic proof corrected its baseline, not production code. Two incomplete attempts
+are excluded. Main matrices ran serially with the normal limiter; no Maven ran live.
+
+Inventory refresh changes EXACTLY these two rows:15 locally verified,13 merged,41 other
+candidates. No new dependency or endpoint/session owner. Fresh npm ci reports9 existing
+locked-dependency findings (4 moderate,3 high,2 critical), confirmed by read-only npm audit
+on2026-10-18 and not remediated here. Separately, the2026-10-16 bounded public check of
+nine PUBLIC default scenarios/18 full-delta executions confirms the already merged #229
+House/Training/Obstacle sources/specs/metadata/inputs/answers. That report does NOT mean
+the local Falling/Triangle package is deployed. Approval/CI-gated publication, the next
+subset package and all broader D6/D7/P7/P8/P9/source/security/release gates remain pending.
 
 ### D5 circular/activity/obstacles — verified locally, 2026-10-16
 
@@ -73,7 +160,7 @@ Nine evidence/oracle helpers and three existing probe helpers pass; the previous
 script fails one of nine checks. No new dependency, endpoint, session owner or budget.
 The batch does not close broader DP rollout, D6/D7, public deployment or P7/P8/P9 gates.
 
-### Next grid package preflight — read-only, 2026-10-16
+### Historical grid preflight — read-only snapshot before this package, 2026-10-16
 
 No next implementation is stacked before the current circular/activity/obstacles batch
 is approved and merged. The next recurrence-family package should cover Minimum Falling
@@ -113,6 +200,44 @@ repeat independent enumerated answers/source compilation, negative/zero cache re
 default/alternate/rectangular/boundary cases, both encodings, full suites/goldens, actual
 maximum byte/call budgets, shared-link refusals and both-engine/zoom/browser matrices.
 This preflight adds no options and advances no coverage row.
+
+### Next subset-family package — read-only preflight, 2026-10-16
+
+Do not start this implementation before the Falling Path/Triangle package is approved,
+merged and pulled. Proposed next medium package: Subset Sum Equal Target, Partition Equal
+Subset Sum and Count Subsets with Sum K. Inspection found complete canonical method
+listings, but independent compilation/execution remains a gate, not an inferred pass.
+
+1. Preserve the actual three field contracts. Subset/Equal Partition accept nums0..20,
+   length1..10; Subset target0..40. Count Subsets accepts POSITIVE nums1..15, length1..10
+   and k0..60. Its classification's generic zero note is not permission to widen input.
+   Seven real canonical HTTP controls confirm zero/false/odd/duplicate-index/empty-subset
+   semantics: Subset([0,0],0)=true; Subset([2,4],3)=false; Equal([0,0])=true;
+   Equal([1,2])=false in one parity-only step; Count([1,1],1)=2;
+   Count([1,1],0)=1; Count([0,0],0) is400 with a nums field error.
+2. Define real prefix states possible(n,s) and count(n,s), base n=0. Evaluate skip, then
+   take when the actual item fits. Equal Partition rejects odd totals without constructing
+   subset states or a fabricated call-tree root. Keep canonical objects/source/defaults,
+   false results, indexed duplicates and the existing225-cell tabulation guard intact.
+3. Boolean traces need ACTUAL boolean results/caches and true/false answers, not the
+   integer helper's numeric0/1 answers relabelled in the UI. Unknown must be null, distinct
+   from cached false. Use explicit T/F cell values with known/read/store states; do not
+   treat false as missing. Count Subsets can reuse the integer recurrence instrumenter.
+   Keep visible state arguments short enough for the existing13-character node text.
+4. Proposed recursion cap6 items has an analytic worst-case127 calls when both decisions
+   are valid;7 would allow255. These are preflight counts, NOT measured/approved limits.
+   Evaluate a separate memo joint-table limit (initial proposal100 cells), preserving
+   submitted target/values and refusing oversize inputs rather than shrinking them.
+   Measure actual calls, table copies, source/bytes and one-over rejections before publishing.
+5. Establish RED, then compare all three actual tracers and independently compiled exact
+   displayed sources with index-subset enumeration. Include cached false/zero reuse,
+   zero-valued BOOLEAN inputs, positive-only count refusal, duplicate indices, odd totals,
+   targets above total, target0, defaults/alternates/maxima and tiny-budget truncation.
+6. Repeat HTTP full/delta/source/identity, full suites/goldens, real selector/editor/share
+   rejection and comparison checks, both engines, native zoom and maximum trees/tables.
+   An odd-total answer has no recursion frames: verify the honest no-calls state rather
+   than manufacturing one to satisfy a renderer/probe. Advance only the three individually
+   verified inventory rows; this preflight advances none and implements no next package.
 
 ### D5 linear/grid batch — verified locally, 2026-10-14
 
@@ -604,7 +729,7 @@ main/live inventory, create a new feature branch, and execute D0 → D1 → D2 �
 reviewable packages. Complete the pilot before expanding to D4/D5. Preserve the canonical
 API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 
-## 11. Implementation progress — reconciled 2026-10-10
+## 11. Implementation progress — reconciled 2026-10-18
 
 | Package | Current status | Evidence / boundary |
 | --- | --- | --- |
@@ -613,7 +738,7 @@ API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 | D2 | Verified | Genuine recursion/memoization/tabulation, independently compiled source, oracle and boundary tests; `dp-approaches/d2-results.json` |
 | D3 | Verified pilot | Explicit selector, committed metadata, approach-aware links/presets/input comparison, truthful memo/recursive views; `dp-approaches/d3-results.json` |
 | D4 | Merged #215 / `2709d8b` | Audited teaching metadata, isolated two-approach comparison, passing PR/post-merge CI; dated D4 evidence below |
-| D5 | Seven candidates verified; new five-problem publication authorized | Frog Jump merged #216 / `4ad9fc3`; requested five-problem code/API/full-suite/168-row browser checks pass.49 candidates remain; no completed family rollout |
+| D5 | 13 candidates merged;2 more verified locally, approval pending | #229 / `da63085` is green post-merge. Falling/Triangle pass full suites,50 API executions and100 browser journeys; only those two inventory rows advance.41 other candidates and broader family/release gates remain open |
 | D6/D7 | Pending | Broad accessibility/performance, coverage reconciliation and release gates |
 
 Inventory correction: this LIS's canonical solution is two-dimensional take/skip tabulation,

@@ -2692,3 +2692,176 @@ assets/source remain unchanged. The complete backend suite and CI are repeated.
 The post-isolation complete backend run passes8,234 cases,0 failures/errors,500 unchanged
 skips at17:38:01Z. Only tests and evidence/docs changed since final browser packaging;
 all production source hashes/assets and the128 completed journeys remain applicable.
+
+Publication completed: corrected head `794c1884049d774c332c8399e8a8c143fcb36517`
+passed push CI38941262711 and PR CI38941270663, GitGuardian and Vercel. The first guarded
+merge request hit a TLS handshake timeout; authoritative checks showed PR OPEN and
+main unchanged before retry. #229 then squash-merged as
+`da63085f24aedf0f1387f0af5e424b1aa995f111` at17:47:39Z. Post-merge CI38942409698 passed.
+The native worktree is clean before cutting `feat/dp-falling-triangle` from that merged
+origin/main; no next implementation was stacked before landing.13 candidates are merged.
+
+### 2026-10-16 Falling Path/Triangle — local implementation in progress
+
+Two new real recurrence owners add four recursion/memo executables, complete Java17
+sources, signed-cost teaching and actual canonical Tabulation objects. Falling Path
+uses cost(row,col), valid above/left/right predecessors and one real root per bottom
+column. Triangle preserves n=min(rows,columns), rectangular padding/extra-row semantics,
+and the actual two-child recurrence. Its unused upper-right memo cells are permanently
+#/void, not valid unknown states; a run-sourced memoDomain caption explains that shape.
+The instrumentation adds only an optional structural exclusion predicate/caption; old
+callers retain an all-included domain and unchanged event/source behavior.
+
+Initial12 backend cases fail with3 assertions and9 unavailable-approach errors. All12
+pass after implementation, including exact displayed source compilation and independent
+forward-path references over signed exhaustive, seeded, default/alternate/max cases.
+Two compiling wrong-result source mutations fail2/2; removed Triangle exclusion fails
+1/2 cases with the Falling control passing; treating cached0/-1 as unknown fails2/2.
+All mutations are restored before the full suite/build/package runs. One new memo-caption
+UI guard fails on previous code; all3 targeted tests pass afterward. The prior inventory
+gate fails1/11 extended evidence helper tests; current11 pass. No dependency/cap change.
+
+The one-column Falling canonical narration now describes its one actual predecessor;
+source/answers/input spec/defaults remain unchanged. The strengthened guard also covers
+all1..3 row/column shapes and checks actual DP read coordinates. RCA-067 remains partial:
+Count Squares' separate narration defect is not fixed here. Full suites, both encodings,
+actual byte budgets, browser/zoom/comparison and inventory reconciliation are still in
+progress. Neither new candidate is promoted yet, and publication is not authorized by
+the current-batch approval. No Maven is run while this worktree serves live journeys.
+
+### 2026-10-16 Falling Path/Triangle — final local verification
+
+The full backend suite finishes18:03:13Z with8,246 cases,0 failures/errors and500
+unchanged skips. All432 golden-regeneration cases pass with no content changes;
+the final jar packages at18:04:26Z. Fresh npm ci, all860 frontend tests across83 files
+and production build pass: JS389.40 kB/gzip124.04, CSS98.74/gzip17.92. Launcher cleanup
+smoke passes. No manifests/lock/dependencies change; the locked audit still reports
+9 findings (4 moderate,3 high,2 critical), an open release issue, not remediated here.
+
+Six exact displayed sources compile and match independently enumerated forward paths:
+668 exhaustive Falling grids,885 Triangle grids,30 seeded per problem and each form's
+default/alternate/maximum. This is4,857 comparisons through each tracer and compiled-source
+path, not4,857 unique inputs. Actual maxima are188/162 Falling recursion/memo calls
+and127/57 Triangle calls. Falling's maximum forest has6/8 actual roots; Triangle has1.
+Recursion bounds remain4×6 and each dimension7 respectively; memo/canonical8 each,
+signed-100..100. No default, public canonical ID, algorithm source or global cap changes.
+
+All25 real full/delta API scenarios (50 requests) agree on independent answers, source,
+type, complexity, identity, input and decoded state. Largest full response1,545,609 bytes.
+The100 completed browser journeys comprise20 standard Chromium,8 standard Firefox,
+8 native Chromium200% zoom,16 maximum per engine,8 isolated comparisons,18 one-column/
+rectangular checks across both engines and6 prior House/Training/Obstacle phone rows.
+Main matrices are run serially with normal request pacing; limits are not raised/disabled.
+No Maven runs while serving the packaged backend/production preview. Each new candidate
+has its own34 standard/maximum and4 comparison rows. True input/step restoration,
+explicit execution, no view reruns, focus, refusal retention, every call/cell, visible
+coordinates and local reachability of all real roots are checked. The rectangular probe
+inspects the actual editor, preserving ignored values and physical dimensions exactly.
+
+The new shape probe initially counted both canonical-default GET and shared-input POST
+as one request. A diagnostic repeat records their actual methods/URLs; no product rerun
+bug is found. The probe now requires exactly one shared-input POST and no additional
+executions after restoration. Both incomplete attempts are excluded; final18 pass.
+The source/package/asset reconciliation passes at18:18:20Z: all six source digests match
+the current backend, every manifest postdates the final jar and uses the same served
+production bundle.14 family/probe helper cases pass. Three maximum screenshots are
+visually inspected, including phone/dark coordinates and desktop/light excluded # cells.
+Large forests still need substantial local panning; present does not mean simultaneously
+visible. Human/device/SR/learner/performance/public-deployment acceptance remains open.
+
+Refresh changes exactly Minimum Falling Path Sum and Triangle Minimum Path Sum inventory
+rows:15 locally verified,13 merged,41 outside this package. Final evidence is in
+`dp-approaches/falling-triangle/{verification,manifest-audit}.json` and its manifests/
+eight maximum screenshots. Six role-based self-review gates are recorded, not claimed
+as an independent human/agent review. This package is NOT committed/pushed/merged;
+separate publishing approval is requested before CI-gated publication/next implementation.
+
+A separate bounded HTTPS probe verifies the already merged #229 batch on the PUBLIC
+site:9 default scenarios/18 full-delta executions, actual source/spec/type/complexity,
+identity/input and independent answers match. Direct Node discovery timed out; explicit
+curl HTTPS discovery/stats and all executions succeed. No fallback response or deployment
+claim for the local Falling/Triangle code is made. `merged-baseline-public.json` records
+that narrow scope. Seven read-only canonical subset-family HTTP controls inform the
+next plan: boolean zero/false/parity, indexed duplicate counts, empty-subset count1 and
+positive-only Count Subsets refusal. No next implementation or coverage promotion follows.
+Count Squares narration, typed signed-grid editing, Gas/Phone, source/platform/statement/
+complexity/C++/security and all broader D6/D7/P7/P8/P9/release/rollback gates stay open.
+
+## 2026-10-18 — Falling/Triangle pre-publication accessibility correction (RCA-069)
+
+Goal resumption is not publishing approval. Authoritative fetch still shows #229 /
+da63085 on main and no open PR. The current local batch is reviewed before considering
+its approval gate. Review finds a real contradiction: #/void padding is visibly excluded
+and explained correctly, but StepStateSummary calls every void cell unknown. Both the
+new Triangle memo and existing canonical triangle/obstacle tables are affected.
+
+Two rendered summary tests (RecursionTree and DpTable) fail with eight existing controls
+passing. The correction reads the existing state/value pair: #/void means excluded (#),
+not unknown. Known zero/-1 and a known literal # retain their actual meanings. A separate
+cell-name guard fails with13 controls passing; table cells now call #/void excluded and
+dot/void unknown, with no visual/CSS/glyph/backend changes. All24 targeted cases pass.
+The rectangular journey now checks actual workspace summary counts after link restoration
+and at the final step, plus every final table-cell accessible name against the response.
+The audit requires these proofs for all memo/canonical shape rows. This is DOM text/ARIA
+evidence, not real-screen-reader acceptance.
+
+One existing integration assertion expected the old void wording. It is strengthened to
+require the exact unknown cell name in Playground AND Analysis; no assertion is removed.
+A full run reports861/863 passing: that stale assertion and an unrelated Frog five-second
+timeout fail. After the wording update, all31 approach tests pass, but the unchanged Frog
+case times out again under shared machine load. Its seven Add clicks each requery the
+entire page for the same button. Caching that stable button removes six redundant global
+role searches, retaining every draft/run/URL/rejection/focus assertion and the same5s
+timeout. All four Frog cases then pass. The complete suite/build is repeated, not bypassed.
+
+The backend full suite repeats successfully at11:38:39Z:8,246 cases,0 failures/errors,
+500 unchanged skips.432 golden-regeneration cases pass with no content change. Packaging
+finishes11:42:34Z before the live backend starts; no Maven runs while it serves journeys.
+An early API process is terminal with ECONNREFUSED before startup completes; it is
+excluded, not treated as a product pass or a reason to restart the live backend. After
+HTTP readiness confirms431/431 with no duplicate/orphan IDs, all25 full/delta scenarios
+(50 executions) pass again; max full payload remains1,545,609 bytes. The frontend final
+build and all100 current-bundle browser journeys still need to finish before renewed
+local sign-off. Prior October16 browser counts are a historical snapshot until replaced.
+
+### Final2026-10-18 result
+
+The default-worker full repeat after the Frog query adjustment passes861/863 cases,
+with two Sharing setup waits observing step0 instead of the restored step2. All seven
+Sharing cases then pass unchanged in isolation. To reduce shared-machine contention,
+the COMPLETE suite runs with one worker (`npx vitest run --maxWorkers=1 --minWorkers=1`):
+83/83 files and863/863 tests pass, retaining every assertion and time limit. This is the
+final full-suite proof, not a claim that the failed default-worker runs passed. No
+timeout, mock response, production renderer/session rule or global test cap is relaxed.
+
+The production build passes at11:58:11Z: JS389.53 kB/gzip124.10, CSS98.74/gzip17.92.
+All100 browser journeys are repeated on that exact bundle and the final packaged backend:
+20 Chromium standard,8 Firefox standard,8 native200% zoom,16 maxima per engine,
+8 comparisons,18 shapes and6 previous-batch phone compatibility rows. Twelve memo/
+canonical shape rows now prove the actual workspace unknown/excluded summary after
+restoration and at the final step, PLUS every final table-cell accessible name. Those
+12 are part of the18 shape rows, not extra journeys or actual-screen-reader sign-off.
+
+The final audit passes at12:11:28Z; source digests match the current backend, all manifests
+postdate the11:42:34Z jar and use index-C9w1PyPL.js / index-DwejRBy7.css. Three refreshed
+maximum screenshots are visually inspected. Large forests still need substantial local
+panning; node presence/scripted reachability do not establish best human usability.
+All14 evidence/probe helper cases pass. A fresh read-only npm audit still reports9
+affected packages (4 moderate,3 high,2 critical); no dependency/lock/manifest changes.
+
+Inventory refresh again changes exactly Falling Path and Triangle versus the merged
+baseline:15 verified locally,13 merged,41 others pending. Verification.json, the plan,
+tracker and RCA-069 reconcile current numbers, limits and excluded attempts. No next
+implementation is stacked, no publishing approval is inferred from automatic goal
+resumption, and this batch remains uncommitted/unpushed/unmerged. The full project/DP
+rollout and all other documented correctness/source/security/human/release gates stay open.
+
+### 2026-10-18 — explicit publication approval
+
+The owner replied "approved" to the scoped commit/push/CI-gated merge request, then
+continuation with the subset family. This is actual publishing authority, unlike the
+earlier automatic goal resumptions. Publish the verified Falling/Triangle batch first,
+require its checks to pass, merge/pull it, then cut the next implementation branch.
+Historical approval-pending statements above are superseded by this explicit decision;
+GitHub records final publication checks/outcome. No future package's publishing approval
+is inferred beyond this approved batch.

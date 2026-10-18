@@ -24,7 +24,8 @@ async function request(route, input) {
   for (const c of cases) for (const form of ['recursion', 'memoization', 'canonical']) {
     const {id}=c;
     const detail = (await request(`/api/problems/${id}?approach=${form}`)).body;
-    for (const [label, input] of [['default', undefined], ['maximum', maximum(id, form)], ...(c.zero&&form==='memoization'?[['zero',c.zero]]:[])]) {
+    for (const [label, input] of [['default', undefined], ['maximum', maximum(id, form)],
+      ...(c.zero&&form==='memoization'?[['zero',c.zero]]:[]),...(c.negative&&form==='memoization'?[['negative',c.negative]]:[]),...Object.entries(c.extra??{})]) {
       const route = `/api/problems/${id}/execute?approach=${form}`;
       const full = await request(`${route}&encoding=full`, input);
       const delta = await request(`${route}&encoding=delta`, input);
@@ -48,7 +49,15 @@ async function request(route, input) {
       if(final.variables.calls!=null){
         const tree=buildRecursionTree(normalized,normalized.length-1);
         assert(!tree.truncated);assert.equal(tree.nodes.length,Number(final.variables.calls));
-        rootCount=tree.nodes.filter(n=>n.parentId===null).length;assert.equal(rootCount,c.roots??1);
+        rootCount=tree.nodes.filter(n=>n.parentId===null).length;
+        assert.equal(rootCount,typeof c.roots==='function'?c.roots(full.body.resolvedInput):c.roots??1);
+      }
+      if(c.field==='triangle'&&form==='memoization'){
+        assert(final.variables.memoDomain.includes('excluded'));
+        final.dpTable.cells.forEach((row,r)=>row.forEach((cell,col)=>{if(col>r)assert.deepEqual(cell,{value:'#',state:'void'});}));
+      }
+      if(label==='one-column'&&form==='canonical')for(const step of normalized.filter(s=>s.variables?.candidates)){
+        assert.equal(step.variables.candidates,'1');assert(step.description.includes('only the cell directly above'));
       }
       rows.push({ problemId: id, approachId: form, label, input: full.body.resolvedInput,
         sourceHash: createHash('sha256').update(full.body.code).digest('hex'),

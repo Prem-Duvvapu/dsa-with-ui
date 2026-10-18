@@ -5,6 +5,20 @@ import { describe, expect, it } from 'vitest';
 import StepStateSummary, { describeStep } from './StepStateSummary';
 
 describe('StepStateSummary', () => {
+  it.each(['RecursionTree', 'DpTable'])('distinguishes excluded padding from unknown and known values in %s', dsType => {
+    render(<StepStateSummary dsType={dsType} step={{ callStack: [], dpTable: {
+      rowLabels: ['row=0'], colLabels: ['outside', 'pending', 'zero', 'negative', 'literal'],
+      cells: [[{ value: '#', state: 'void' }, { value: '·', state: 'void' },
+        { value: '0', state: 'known' }, { value: '-1', state: 'read' }, { value: '#', state: 'known' }]]
+    } }} />);
+    const text = screen.getByTestId('step-state-summary').textContent;
+    expect(text).toContain('column outside: excluded (#)');
+    expect(text).not.toContain('column outside: unknown');
+    expect(text).toContain('column pending: unknown');
+    expect(text).toContain('column zero: 0 (known)');
+    expect(text).toContain('column negative: -1 (read)');
+    expect(text).toContain('column literal: # (known)');
+  });
   it('describes recursive frames and real memo entries, keeping unknown distinct from zero', () => {
     const text = describeStep({ callStack: ['ways(5) #1'], dpTable: {
       rowLabels: ['memo'], colLabels: ['0', '1'], cells: [[{ value: '0', state: 'known' }, { value: '·', state: 'void' }]]

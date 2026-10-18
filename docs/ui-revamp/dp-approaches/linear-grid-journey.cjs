@@ -53,8 +53,9 @@ async function safe(page,errors) {
 async function edit(page,id,input) {
   const open = page.getByRole('button',{name:'Edit input',exact:true});
   if(await open.isVisible()) await open.click();
-  if(input.points||input.grid){
-    const values=input.points??input.grid;
+  const gridKey=['points','grid','matrix','triangle'].find(key=>Array.isArray(input[key]));
+  if(gridKey){
+    const values=input[gridKey];
     const current=()=>page.getByRole('button',{name:/^Cell row/}).evaluateAll(es=>{
       const rows=[];for(const e of es){const [,r,c,v]=e.getAttribute('aria-label').match(/^Cell row (\d+), column (\d+), value (-?\d+)$/);(rows[Number(r)-1]??=[])[Number(c)-1]=Number(v);}return rows;
     });
@@ -65,7 +66,7 @@ async function edit(page,id,input) {
     for(let r=0;r<values.length;r++)for(let c=0;c<values[0].length;c++){
       let attempts=0;
       while((await current())[r][c]!==values[r][c]){
-        assert(attempts++<102,'Grid value cannot be reached through the declared cycle');
+        assert(attempts++<202,'Grid value cannot be reached through the declared cycle');
         await page.getByRole('button',{name:new RegExp(`^Cell row ${r+1}, column ${c+1}, value `)}).click();
       }
     }
@@ -84,11 +85,12 @@ async function edit(page,id,input) {
   if(input.k !== undefined) await page.getByLabel('Max jump distance',{exact:true}).fill(String(input.k));
 }
 async function assertDraft(page,id,input) {
-  if(input.points||input.grid){
+  const gridKey=['points','grid','matrix','triangle'].find(key=>Array.isArray(input[key]));
+  if(gridKey){
     const actual=await page.getByRole('button',{name:/^Cell row/}).evaluateAll(es=>{
       const rows=[];for(const e of es){const [,r,c,v]=e.getAttribute('aria-label').match(/^Cell row (\d+), column (\d+), value (-?\d+)$/);(rows[Number(r)-1]??=[])[Number(c)-1]=Number(v);}return rows;
     });
-    assert.deepEqual(actual,input.points??input.grid);return;
+    assert.deepEqual(actual,input[gridKey]);return;
   }
   if(id === 'grid-unique-paths') {
     assert.equal(await page.getByLabel('Rows',{exact:true}).inputValue(),String(input.rows));
@@ -145,7 +147,7 @@ function assertAnswer(run,input) {
               'Visible node text must retain the actual state coordinates, not only its hover title');
           }
           const roots=model.nodes.filter(node=>node.parentId===null);
-          rootCount=roots.length;assert.equal(rootCount,c.roots??1);
+          rootCount=roots.length;assert.equal(rootCount,typeof c.roots==='function'?c.roots(input):c.roots??1);
           for(const node of roots){
           const root=tree.locator('g[data-state]').nth(node.id);
           await root.scrollIntoViewIfNeeded();
@@ -161,6 +163,10 @@ function assertAnswer(run,input) {
             await table.waitFor();
             const cells=run.steps.at(-1).dpTable.cells;
             assert.equal(await table.locator('td').count(),cells.reduce((n,row)=>n+row.length,0));
+            if(c.field==='triangle'){
+              await page.getByText('Memo table',{exact:true}).locator('..').getByText(run.steps.at(-1).variables.memoDomain,{exact:true}).waitFor();
+              assert.equal(await table.locator('td').filter({hasText:'#'}).count(),cells.length*(cells.length-1)/2);
+            }
           }
         } else {
           const beforeSelection=requests;
@@ -190,10 +196,10 @@ function assertAnswer(run,input) {
           const committed=page.url();
           // Build an over-recursion draft under the wider memo limits, then prepare recursion.
           const rejected=maximum(c.id,'recursion');
-          if(c.input.points||c.input.grid){
-            const key=c.input.points?'points':'grid';
+          const key=['points','grid','matrix','triangle'].find(key=>Array.isArray(c.input[key]));
+          if(key){
             rejected[key]=c.input[key].map(row=>row.slice());
-            while(rejected[key].length<=c.recursionRows)rejected[key].push(Array(rejected[key][0].length).fill(0));
+            while(rejected[key].length<=c.recursionRows)rejected[key].push(Array(rejected[key][0].length).fill(c.minValue??0));
           }
           else if(c.id==='grid-unique-paths')rejected.rows++;
           else(rejected.heights??rejected.nums).push(0);

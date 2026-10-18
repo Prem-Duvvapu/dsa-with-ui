@@ -133,7 +133,8 @@ public class MinimumFallingPathSumTracer implements AlgorithmTracer {
                 }
                 int total = matrix[i][j] + best;
 
-                String shape = reads.size() == 3 ? "all three diagonals above it"
+                String shape = reads.size() == 1 ? "only the cell directly above — this matrix has one column"
+                        : reads.size() == 3 ? "all three diagonals above it"
                         : j == 0 ? "only the two above it and to its upper-right — there is "
                                 + "no upper-left, this is the first column"
                                 : "only the two above it and to its upper-left — there is no "

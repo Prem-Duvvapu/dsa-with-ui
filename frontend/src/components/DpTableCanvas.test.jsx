@@ -40,6 +40,17 @@ const dpTable = {
 };
 
 describe('DpTableCanvas', () => {
+  it('names excluded and unknown cells distinctly without relabelling known values', () => {
+    render(<DpTableCanvas step={{ dpTable: {
+      rowLabels: ['r0'], colLabels: ['outside', 'pending', 'zero', 'literal'],
+      cells: [[{ value: '#', state: 'void' }, { value: '·', state: 'void' },
+        { value: '0', state: 'known' }, { value: '#', state: 'known' }]]
+    } }} />);
+    expect(screen.getByRole('cell', { name: 'row r0, column outside: # (excluded)' })).toHaveClass('dp-cell-void');
+    expect(screen.getByRole('cell', { name: 'row r0, column pending: · (unknown)' })).toHaveClass('dp-cell-void');
+    expect(screen.getByRole('cell', { name: 'row r0, column zero: 0 (known)' })).toHaveClass('dp-cell-known');
+    expect(screen.getByRole('cell', { name: 'row r0, column literal: # (known)' })).toHaveClass('dp-cell-known');
+  });
   it('renders labels, values, and all five states with non-colour glyphs', () => {
     render(<DpTableCanvas currentStep={{ dpTable }} />);
 
