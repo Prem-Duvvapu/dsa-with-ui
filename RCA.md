@@ -2029,8 +2029,13 @@ that all340 structurally exposed endpoints were individually exercised.
 ## RCA-067 — Correct DP totals paired with incorrect predecessor/counting explanations
 
 - **Discovered:**2026-10-16, read-only preflight of the next grid recurrence package.
-- **Status:** Open. No fix or permanent RED regression is implemented yet. Not part of
-  the verified House Robber II/Training/Obstacle approaches; no next package is stacked.
+- **Status:** Partially fixed locally in the following Falling Path/Triangle package:
+  the one-column narration guard was RED before its correction. It now covers1×1,
+  R×1,1×C and edge/interior predecessor counts/read coordinates. Full verification passes:
+  8,246 backend cases/500 unchanged skips, unchanged432 goldens, real HTTP one-column
+  checks and100 browser journeys. Publication is pending separate approval.
+  The separate square-counting explanation remains OPEN;
+  neither issue was changed by the preceding merged House/Training/Obstacle package.
 - **Falling path:** `MinimumFallingPathSumTracer.java:136` chooses a three-predecessor
   explanation, otherwise assumes two predecessors at either edge. A one-column matrix
   has only ONE predecessor. Real HTTP full trace for matrix[[2],[3]] returns200, complete
@@ -2070,3 +2075,34 @@ that all340 structurally exposed endpoints were individually exercised.
   request, independent of token timing; the scoped request must satisfy the assertion
   and still return field-level400 with no trace. Full suites and both CI events are
   repeated before merge. This also constrains future approach HTTP fixtures.
+
+## RCA-069 — Text alternative called permanently excluded DP cells unknown
+
+- **Discovered:**2026-10-18, current-batch review before publishing Falling Path/Triangle.
+- **Status:** Fixed and verified locally; separate publication approval outstanding.
+- **Symptom:** Triangle's actual table has #/void padding and its new memo caption correctly
+  explains exclusion. StepStateSummary nevertheless calls every void cell unknown. A
+  screen-reader user receives a contradictory account, in both recursive memo and existing
+  tabulation. Canonical obstacle tables share the same #/void contract.
+- **Root cause:** the text alternative reduced the table's state/value pair to state alone.
+  Automated visual/domain-caption/cell-count checks did not inspect that text alternative.
+- **Fix:** recognise the existing # PLUS void contract as excluded (#), without problem-ID
+  inference or a new payload state. Unknown dots remain unknown; known zero/-1 stay actual
+  known/read values; a literal # with a known state is not inferred to be excluded. Actual
+  table-cell accessible names distinguish #/void as excluded and dot/void as unknown,
+  preserving CSS/glyphs and the other existing state/value labels.
+- **Guard (RED first):** two rendered StepStateSummary cases, using the actual RecursionTree
+  and DpTable wire types, fail on the previous summary with eight existing controls passing.
+  All ten pass after the fix. A cell-label guard fails before its correction with13
+  existing controls passing; all24 targeted tests across both components pass afterward.
+  The real shape probe now compares excluded/unknown counts
+  in the workspace text alternative with actual step cells, both after shared-step
+  restoration and at the final step. The final audit requires that proof on every memo/
+  canonical shape row, together with exact per-cell accessible names from the payload.
+  Broader real-screen-reader acceptance remains open.
+- **Verification:**8246 backend cases/500 unchanged skips;432 unchanged golden cases;
+  863 frontend tests across83 files with one worker and unchanged assertion/time limits;
+  fresh build and100 repeated current-bundle browser journeys. Twelve actual table-shape
+  rows prove both text alternatives. Source/package/assets audit passes2026-10-18.
+  Default-worker timing/setup failures and fixture adjustments are explicitly recorded
+  in the implementation log/verification.json, not counted as passing runs.

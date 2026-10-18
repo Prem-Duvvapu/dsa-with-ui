@@ -69,9 +69,11 @@ function requestedCandidateUiVerified(problemId) {
   });
 }
 function linearGridCandidateUiVerified(problemId, folder = 'linear-grid') {
-  const expectedRoots = folder === 'circular-activity-obstacles'
-    ? require('./circular-activity-obstacles-cases.cjs').cases.find(c=>c.id===problemId)?.roots : null;
-  if (folder === 'circular-activity-obstacles' && expectedRoots === undefined) return false;
+  const profile = ['circular-activity-obstacles','falling-triangle'].includes(folder) ? require(`./${folder}-cases.cjs`) : null;
+  const candidate = profile?.cases.find(c=>c.id===problemId);
+  if (profile && !candidate) return false;
+  const rootsFor = form => typeof candidate?.roots === 'function'
+    ? candidate.roots(profile.maximum(problemId,form)) : candidate?.roots??null;
   const comparisonFile = path.join(__dirname, folder, 'comparison-results.json');
   if (!fs.existsSync(comparisonFile)) return false;
   const comparison = JSON.parse(fs.readFileSync(comparisonFile, 'utf8'));
@@ -105,7 +107,7 @@ function linearGridCandidateUiVerified(problemId, folder = 'linear-grid') {
     return rows.every(r=>sizes.includes(`${r.width}x${r.height}`) && ['light','dark'].includes(r.theme)
       && r.nativeZoom===zoom && r.noOverflowOrErrors && (maximum
         ? ['recursion','memoization'].includes(r.initial) && r.allCallsRenderedAndRootVisible
-          && (expectedRoots === null || r.rootCount === expectedRoots && r.allStateCoordinatesVisible)
+          && (rootsFor(r.initial) === null || r.rootCount === rootsFor(r.initial) && r.allStateCoordinatesVisible)
           && (r.initial!=='memoization'||r.memoCellsRendered)
         : r.initial==='recursion' && r.allThreeExecuted && r.inputAndStepRestored
           && r.viewsDoNotExecute && r.refusalPreservesRunAndDraft));
@@ -144,7 +146,7 @@ function linearGridCandidateUiVerified(problemId, folder = 'linear-grid') {
       canonicalInputSpec: detail.inputSpec, canonicalComplexity: detail.complexity,
       alternativeStatus: detail.approaches?.length > 1 ? (problem.id === 'climbing-stairs' && verifiedPilot
         ? verifiedTeachingComparison ? 'backend-and-UI-teaching-comparison-pilot-verified; family rollout pending'
-          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id) || requestedCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id, 'circular-activity-obstacles')
+          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id) || requestedCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id, 'circular-activity-obstacles') || linearGridCandidateUiVerified(problem.id, 'falling-triangle')
             ? 'backend-and-UI-candidate-verified; family rollout pending' : 'backend-pilot; UI pending')
         : reviewed.get(problem.id).plannedForms.length ? 'planned' : 'requires-different-formulation',
       alternativeSafetyBounds: detail.approaches?.length > 1

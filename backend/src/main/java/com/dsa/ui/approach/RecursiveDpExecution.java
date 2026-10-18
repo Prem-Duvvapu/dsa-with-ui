@@ -4,6 +4,7 @@ import com.dsa.ui.model.*;
 import com.dsa.ui.tracer.StepEmitter;
 import java.util.*;
 import java.util.function.IntSupplier;
+import java.util.function.BiPredicate;
 
 /** Request-local instrumentation only: the owning tracer supplies every real recurrence. */
 final class RecursiveDpExecution {
@@ -13,6 +14,8 @@ final class RecursiveDpExecution {
     private final List<String> rows, cols;
     private final String slicePrefix;
     private final String functionName;
+    private final BiPredicate<Integer,Integer> excluded;
+    private final String memoDomain;
     private final Set<State> computed = new HashSet<>();
     private int calls, hits, evaluations;
 
@@ -24,11 +27,17 @@ final class RecursiveDpExecution {
     }
     RecursiveDpExecution(StepEmitter emit, boolean cached, int layers, List<String> rows, List<String> cols,
                          String slicePrefix, String functionName) {
+        this(emit, cached, layers, rows, cols, slicePrefix, functionName, (row,col)->false, null);
+    }
+    RecursiveDpExecution(StepEmitter emit, boolean cached, int layers, List<String> rows, List<String> cols,
+                         String slicePrefix, String functionName, BiPredicate<Integer,Integer> excluded, String memoDomain) {
         this.emit = emit;
         this.rows = rows;
         this.cols = cols;
         this.slicePrefix = slicePrefix;
         this.functionName = Objects.requireNonNull(functionName);
+        this.excluded = Objects.requireNonNull(excluded);
+        this.memoDomain = memoDomain;
         memo = cached ? new Integer[layers][rows.size()][cols.size()] : null;
     }
 
@@ -41,6 +50,7 @@ final class RecursiveDpExecution {
     }
 
     int evaluate(State state, boolean base, String choices, IntSupplier recurrence) {
+        if (excluded.test(state.row, state.col)) throw new IllegalArgumentException("Cannot evaluate excluded state: " + state.label);
         int call = ++calls;
         emit.push(functionName + "(" + state.label + ") #" + call);
         int answer;
@@ -85,6 +95,7 @@ final class RecursiveDpExecution {
             for (int r = 0; r < rows.size(); r++) {
                 List<DpCell> row = new ArrayList<>();
                 for (int c = 0; c < cols.size(); c++) {
+                    if (excluded.test(r,c)) { row.add(new DpCell("#", "void")); continue; }
                     Integer v = memo[state.layer][r][c];
                     String colour = v == null ? "void" : r == state.row && c == state.col
                             ? "cache-hit".equals(event) ? "read"
@@ -94,6 +105,7 @@ final class RecursiveDpExecution {
                 cells.add(row);
             }
             step.dpTable(new DpTable(rows, cols, cells));
+            if (memoDomain != null) step.var("memoDomain", memoDomain);
             if (slicePrefix != null) step.var("memoSlice", slicePrefix + state.layer)
                     .var("row", state.layer).var("col1", state.row).var("col2", state.col);
         }

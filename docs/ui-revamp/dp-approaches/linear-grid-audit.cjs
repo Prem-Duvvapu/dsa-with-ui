@@ -9,19 +9,20 @@ const api=process.env.BACKEND_URL||'http://127.0.0.1:8923';
 const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
 (async()=>{
   const transport=read('api-results.json');
-  const scenarios=cases.reduce((sum,c)=>sum+6+(c.zero?1:0),0);
+  const scenarios=cases.reduce((sum,c)=>sum+6+(c.zero?1:0)+(c.negative?1:0)+3*Object.keys(c.extra??{}).length,0);
   assert.equal(transport.rows.length,scenarios);
   const expectedKeys=cases.flatMap(c=>['recursion','memoization','canonical'].flatMap(form=>
-    ['default','maximum',...(c.zero&&form==='memoization'?['zero']:[])].map(label=>`${c.id}/${form}/${label}`)));
+    ['default','maximum',...(c.zero&&form==='memoization'?['zero']:[]),...(c.negative&&form==='memoization'?['negative']:[]),...Object.keys(c.extra??{})].map(label=>`${c.id}/${form}/${label}`)));
   assert.deepEqual(transport.rows.map(row=>`${row.problemId}/${row.approachId}/${row.label}`).sort(),expectedKeys.sort());
   const packaged=fs.statSync(path.resolve(__dirname,'../../../backend/target/dsa-backend-1.0.0.jar')).mtimeMs;
   assert(Date.parse(transport.generated)>=packaged);
   const hashes=new Map();
   for(const row of transport.rows) {
     const candidate=cases.find(c=>c.id===row.problemId);assert(candidate);
-    assert.deepEqual(row.input,row.label==='maximum'?maximum(row.problemId,row.approachId):row.label==='zero'?candidate.zero:candidate.input);
+    const expectedInput=row.label==='maximum'?maximum(row.problemId,row.approachId):row.label==='zero'?candidate.zero:row.label==='negative'?candidate.negative:candidate.extra?.[row.label]??candidate.input;
+    assert.deepEqual(row.input,expectedInput);
     assert.equal(row.answer,String(oracle(row.problemId,row.input)));
-    if(row.calls!==null)assert.equal(row.rootCount,candidate.roots??1);
+    if(row.calls!==null)assert.equal(row.rootCount,typeof candidate.roots==='function'?candidate.roots(row.input):candidate.roots??1);
     const key=`${row.problemId}/${row.approachId}`;
     if(!hashes.has(key)) {
       const response=await fetch(`${api}/api/problems/${row.problemId}?approach=${row.approachId}`);
@@ -32,14 +33,14 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
     assert(row.fullDeltaEqual&&row.independentAnswerMatches&&row.sourceAndIdentityMatch);
     assert(row.fullBytes<2_000_000&&row.deltaBytes<2_000_000);
   }
-  const names=[['chromium-standard-zoom1.json',30],['firefox-standard-zoom1.json',12],
-    ['chromium-standard-zoom2.json',12],['chromium-maximum-zoom1.json',24],['firefox-maximum-zoom1.json',24]];
+  const names=[['chromium-standard-zoom1.json',cases.length*10],['firefox-standard-zoom1.json',cases.length*4],
+    ['chromium-standard-zoom2.json',cases.length*4],['chromium-maximum-zoom1.json',cases.length*8],['firefox-maximum-zoom1.json',cases.length*8]];
   const documents=names.map(([name,count])=>{
     const doc=read(name);assert.equal(doc.rows.length,count);
     assert(Date.parse(doc.generated)>=packaged);
     return doc;
   });
-  const comparison=read('comparison-results.json');assert.equal(comparison.rows.length,12);
+  const comparison=read('comparison-results.json');assert.equal(comparison.rows.length,cases.length*4);
   assert(Date.parse(comparison.generated)>=packaged);
   const recovery=family==='circular-activity-obstacles'?read('input-recovery-results.json'):null;
   if(recovery){
@@ -49,11 +50,30 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
     for(const row of recovery.rows)assert(row.passed&&row.rejectedDraftPreserved&&row.defaultRunAndStepKept
       &&row.noAutomaticRepair&&row.explicitColumnRepair&&row.minimumColumnsEnforced&&row.successfulInputShared&&row.answer==='50');
   }
-  const compatibility=family==='circular-activity-obstacles'?read('linear-grid-compatibility/chromium-standard-zoom1.json'):null;
+  const shapes=family==='falling-triangle'?read('shape-results.json'):null;
+  if(shapes){
+    assert(shapes.realBackend&&shapes.buildMode==='production-preview');
+    assert(Date.parse(shapes.generated)>=packaged);
+    const axes=['chromium','firefox'].flatMap(engine=>cases.flatMap(c=>Object.keys(c.extra??{}).flatMap(shape=>
+      ['recursion','memoization','canonical'].map(form=>`${engine}:${c.id}:${shape}:${form}`))));
+    assert.deepEqual(shapes.rows.map(row=>`${row.engine}:${row.problemId}:${row.shape}:${row.approachId}`).sort(),axes.sort());
+    for(const row of shapes.rows){
+      const candidate=cases.find(c=>c.id===row.problemId);assert(candidate);
+      assert.deepEqual(row.input,candidate.extra[row.shape]);
+      assert.equal(row.answer,String(oracle(row.problemId,row.input)));
+      assert.equal(row.sourceHash,hashes.get(`${row.problemId}/${row.approachId}`));
+      assert(row.width===320&&row.height===568&&row.theme==='dark'&&row.passed&&row.sharedStepRestored
+        &&row.exactSubmittedGridRetained&&row.noUnsolicitedExecution&&row.noOverflowOrErrors);
+      if(candidate.field==='triangle'&&row.approachId==='memoization')assert(row.memoDomainAndExcludedCells);
+      if(row.approachId!=='recursion')assert(row.tableSummaryMatchesActualCells&&row.tableCellLabelsMatchActualCells);
+    }
+  }
+  const compatibilityFamily=family==='circular-activity-obstacles'?'linear-grid':family==='falling-triangle'?'circular-activity-obstacles':null;
+  const compatibility=compatibilityFamily?read(`${compatibilityFamily==='linear-grid'?'linear-grid':'circular'}-compatibility/chromium-standard-zoom1.json`):null;
   if(compatibility){
     assert(compatibility.realBackend&&compatibility.buildMode==='production-preview'&&compatibility.engine==='chromium');
     assert(Date.parse(compatibility.generated)>=packaged);
-    const expected=require('./linear-grid-cases.cjs').cases.flatMap(c=>['light','dark'].map(theme=>`${c.id}:${theme}`));
+    const expected=require(`./${compatibilityFamily}-cases.cjs`).cases.flatMap(c=>['light','dark'].map(theme=>`${c.id}:${theme}`));
     assert.deepEqual(compatibility.rows.map(r=>`${r.problemId}:${r.theme}`).sort(),expected.sort());
     for(const row of compatibility.rows){
       assert(row.width===320&&row.height===568&&row.nativeZoom===1&&row.noOverflowOrErrors
@@ -63,14 +83,15 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
     }
   }
   const assets=documents[0].servedBuild.assets;
-  for(const doc of [...documents,comparison,...(recovery?[recovery]:[]),...(compatibility?[compatibility]:[])])assert.deepEqual(doc.servedBuild.assets,assets);
+  for(const doc of [...documents,comparison,...(recovery?[recovery]:[]),...(compatibility?[compatibility]:[]),...(shapes?[shapes]:[])])assert.deepEqual(doc.servedBuild.assets,assets);
   const html=fs.readFileSync(path.resolve(__dirname,'../../../frontend/dist/index.html'),'utf8');
   for(const asset of assets)assert(html.includes(asset));
   for(const doc of documents)for(const row of doc.rows) {
     assert.equal(row.sourceHash,hashes.get(`${row.problemId}/${row.shownApproach}`));
     assert(row.noOverflowOrErrors);
-    if(row.allCallsRenderedAndRootVisible&&family==='circular-activity-obstacles'){
-      assert.equal(row.rootCount,cases.find(c=>c.id===row.problemId)?.roots??1);
+    if(row.allCallsRenderedAndRootVisible&&family!=='linear-grid'){
+      const c=cases.find(c=>c.id===row.problemId);assert(c);
+      assert.equal(row.rootCount,typeof c.roots==='function'?c.roots(maximum(c.id,row.initial)):c.roots??1);
       assert(row.allStateCoordinatesVisible);
     }
   }
@@ -78,13 +99,14 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
   const result={generated:new Date().toISOString(),passed:true,sourceHashes:Object.fromEntries(hashes),
     packagedBackendAt:new Date(packaged).toISOString(),assets,apiScenarios:scenarios,apiRequests:scenarios*2,
     browserJourneys:rows.length,comparisonJourneys:comparison.rows.length,inputRecoveryJourneys:recovery?.rows.length??0,
+    shapeJourneys:shapes?.rows.length??0,
     legacyCompatibilityJourneys:compatibility?.rows.length??0,
-    totalJourneys:rows.length+comparison.rows.length+(recovery?.rows.length??0)+(compatibility?.rows.length??0),
+    totalJourneys:rows.length+comparison.rows.length+(recovery?.rows.length??0)+(compatibility?.rows.length??0)+(shapes?.rows.length??0),
     perProblem:cases.map(c=>({problemId:c.id,browserRows:rows.filter(r=>r.problemId===c.id).length,
       comparisonRows:comparison.rows.filter(r=>r.problemId===c.id).length})),
     maxFullResponseBytes:Math.max(...transport.rows.map(r=>r.fullBytes)),
     allSourceHashesMatchCurrentBackend:true,allManifestsPostdatePackagedBackend:true,allAssetsMatchProductionBuild:true,
-    limits:'Bounded automated scenarios for these three candidates only; not all56 DP candidates, public deployment, human/device/screen-reader/learner/performance/release acceptance.'};
+    limits:`Bounded automated scenarios for these${cases.length} candidates only; not all56 DP candidates, public deployment, human/device/screen-reader/learner/performance/release acceptance.`};
   fs.writeFileSync(path.join(out,'manifest-audit.json'),JSON.stringify(result,null,2));
   console.log(JSON.stringify(result,null,2));
 })().catch(e=>{console.error(e);process.exitCode=1;});

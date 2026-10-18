@@ -199,6 +199,46 @@ only those three inventory rows advance. This is13 locally verified,10 merged,43
 candidates pending. Publication requires separate approval. Historical local-only/seven-
 merged and earlier browser-in-progress paragraphs are dated snapshots, not current counts.
 
+Publication outcome (2026-10-16): #229 merged as `da63085` at17:47:39Z. Initial head's
+push backend exposed shared MockMvc rate-limit fixture pollution; isolated clients and
+an actual-address RED guard fixed it without changing production limits (RCA-068).
+Corrected head `794c188` passed both CI events/security/Vercel; post-merge CI38942409698
+also passed.13 DP candidates are now merged,43 others remain. Falling Path/Triangle
+are the next local implementation, still undergoing full verification; no new coverage
+row or P7/P8/P9 completion claim follows from their initial targeted green checks.
+
+Final local Falling Path/Triangle gate (2026-10-16):8,246 backend cases/500 unchanged
+skips,860 frontend tests/build,432 unchanged regenerated goldens,25 full/delta scenarios
+(50 requests) and100 real-browser journeys pass. Four genuine recursive/memo executions,
+six independently compiled sources and signed forward-path references agree. Triangle
+preserves rectangular input and labels excluded # padding from actual run metadata;
+Falling's one-column narration is corrected. Source/package/production-asset audit passes;
+only these two inventory rows advance:15 locally verified,13 merged,41 other candidates.
+`dp-approaches/falling-triangle/verification.json` records limits and excluded probe attempts.
+Separate publication approval is requested; no commit/push/merge of this package yet.
+Nine public default scenarios/18 executions verify ONLY the preceding merged #229 batch,
+not deployment of this local work. The next subset-family preflight is read-only and
+starts no stacked implementation. Count Squares narration, signed-grid typed editing,
+the nine locked-dependency findings and all previously open broader gates remain open.
+
+2026-10-18 current-batch follow-up (RCA-069): review found the text alternative called
+excluded #/void cells unknown, despite correct visual padding/domain metadata. Two
+summary RED guards and one cell-label RED guard now pass; all24 component cases pass.
+The local correction distinguishes actual exclusion from unknown, preserves known
+zero/-1/literal # and other labels, and adds real workspace-summary/cell-name assertions
+to the rectangular probe. Full backend/goldens/package repeat successfully; the final
+frontend suite passes863 cases/83 files with one worker, unchanged assertion/time limits,
+after explicitly recorded default-worker failures. Build and all100 repeated browser
+journeys pass;12 existing table-shape rows prove both actual text alternatives. Final
+source/package/assets audit passes at2026-10-18T12:11:28Z. JS389.53 kB/gzip124.10,
+CSS98.74/gzip17.92; the read-only dependency audit still reports9 affected packages.
+Current inventory remains15 locally verified,13 merged and41 other candidates; the
+October16 frontend860 counts above are historical. Publication approval is still
+outstanding; no next implementation package is started.
+The owner subsequently explicitly approved this batch's commit/push/CI-gated merge,
+then the next implementation, on2026-10-18. Publication now proceeds; final GitHub
+checks/merge determine its outcome, not the preceding approval-pending snapshots.
+
 ## Baseline (P0, 2026-09-29)
 
 | Item | Value |

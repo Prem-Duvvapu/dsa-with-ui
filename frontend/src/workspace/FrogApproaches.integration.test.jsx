@@ -67,7 +67,8 @@ describe('Frog Jump array session with genuine API fixtures', () => {
   it('keeps an eleven-element draft and old run/link when recursion is refused', async () => {
     mount();
     const selector = await ready();
-    for (let i = 0; i < 7; i++) fireEvent.click(screen.getByRole('button', { name: 'Add', exact: true }));
+    const add = screen.getByRole('button', { name: 'Add', exact: true });
+    for (let i = 0; i < 7; i++) fireEvent.click(add);
     expect(screen.getAllByRole('spinbutton')).toHaveLength(11);
     const before = location.search;
     fireEvent.change(selector, { target: { value: 'recursion' } });

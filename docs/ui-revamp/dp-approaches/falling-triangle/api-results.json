@@ -1,0 +1,1250 @@
+{
+  "generated": "2026-10-18T11:44:53.578Z",
+  "realBackend": true,
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "rows": [
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "matrix": [
+          [
+            2,
+            1,
+            3
+          ],
+          [
+            6,
+            5,
+            4
+          ],
+          [
+            7,
+            8,
+            9
+          ]
+        ]
+      },
+      "sourceHash": "0b2f404689fe62f399cc50207c25857df96e894eb4be4aef61265591afd6173c",
+      "answer": "13",
+      "calls": "27",
+      "cacheHits": "0",
+      "states": "9",
+      "rootCount": 3,
+      "steps": 96,
+      "fullBytes": 47612,
+      "deltaBytes": 28981,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "matrix": [
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "0b2f404689fe62f399cc50207c25857df96e894eb4be4aef61265591afd6173c",
+      "answer": "-400",
+      "calls": "188",
+      "cacheHits": "0",
+      "states": "24",
+      "rootCount": 6,
+      "steps": 638,
+      "fullBytes": 329697,
+      "deltaBytes": 199344,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "recursion",
+      "label": "one-column",
+      "input": {
+        "matrix": [
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      "sourceHash": "0b2f404689fe62f399cc50207c25857df96e894eb4be4aef61265591afd6173c",
+      "answer": "5",
+      "calls": "2",
+      "cacheHits": "0",
+      "states": "2",
+      "rootCount": 1,
+      "steps": 10,
+      "fullBytes": 5999,
+      "deltaBytes": 4242,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "matrix": [
+          [
+            2,
+            1,
+            3
+          ],
+          [
+            6,
+            5,
+            4
+          ],
+          [
+            7,
+            8,
+            9
+          ]
+        ]
+      },
+      "sourceHash": "95a9e014c6f9431e1850a85f9b6d9fcf90d4c441b6e8eb274e7e463c9d39745b",
+      "answer": "13",
+      "calls": "17",
+      "cacheHits": "8",
+      "states": "9",
+      "rootCount": 3,
+      "steps": 62,
+      "fullBytes": 56663,
+      "deltaBytes": 34240,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "matrix": [
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "95a9e014c6f9431e1850a85f9b6d9fcf90d4c441b6e8eb274e7e463c9d39745b",
+      "answer": "-800",
+      "calls": "162",
+      "cacheHits": "98",
+      "states": "64",
+      "rootCount": 8,
+      "steps": 552,
+      "fullBytes": 1545609,
+      "deltaBytes": 923989,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "memoization",
+      "label": "zero",
+      "input": {
+        "matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "sourceHash": "95a9e014c6f9431e1850a85f9b6d9fcf90d4c441b6e8eb274e7e463c9d39745b",
+      "answer": "0",
+      "calls": "34",
+      "cacheHits": "18",
+      "states": "16",
+      "rootCount": 4,
+      "steps": 120,
+      "fullBytes": 137148,
+      "deltaBytes": 81207,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "memoization",
+      "label": "negative",
+      "input": {
+        "matrix": [
+          [
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            -1
+          ]
+        ]
+      },
+      "sourceHash": "95a9e014c6f9431e1850a85f9b6d9fcf90d4c441b6e8eb274e7e463c9d39745b",
+      "answer": "-4",
+      "calls": "34",
+      "cacheHits": "18",
+      "states": "16",
+      "rootCount": 4,
+      "steps": 120,
+      "fullBytes": 138327,
+      "deltaBytes": 81978,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "memoization",
+      "label": "one-column",
+      "input": {
+        "matrix": [
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      "sourceHash": "95a9e014c6f9431e1850a85f9b6d9fcf90d4c441b6e8eb274e7e463c9d39745b",
+      "answer": "5",
+      "calls": "2",
+      "cacheHits": "0",
+      "states": "2",
+      "rootCount": 1,
+      "steps": 10,
+      "fullBytes": 8024,
+      "deltaBytes": 5402,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "matrix": [
+          [
+            2,
+            1,
+            3
+          ],
+          [
+            6,
+            5,
+            4
+          ],
+          [
+            7,
+            8,
+            9
+          ]
+        ]
+      },
+      "sourceHash": "b9ba9cb0279995df98f48e0ddd2f0df3e339744993f36599b0a3c07876a9b8c6",
+      "answer": "13",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 13,
+      "fullBytes": 12767,
+      "deltaBytes": 10559,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "matrix": [
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "b9ba9cb0279995df98f48e0ddd2f0df3e339744993f36599b0a3c07876a9b8c6",
+      "answer": "-800",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 73,
+      "fullBytes": 205727,
+      "deltaBytes": 192922,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-falling-path-sum",
+      "approachId": "canonical",
+      "label": "one-column",
+      "input": {
+        "matrix": [
+          [
+            2
+          ],
+          [
+            3
+          ]
+        ]
+      },
+      "sourceHash": "b9ba9cb0279995df98f48e0ddd2f0df3e339744993f36599b0a3c07876a9b8c6",
+      "answer": "5",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 4,
+      "fullBytes": 3683,
+      "deltaBytes": 3077,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "triangle": [
+          [
+            2,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            4,
+            0,
+            0
+          ],
+          [
+            6,
+            5,
+            7,
+            0
+          ],
+          [
+            4,
+            1,
+            8,
+            3
+          ]
+        ]
+      },
+      "sourceHash": "c7cc1e3d2e66010341fb01c79d0e814ec4b2158a0c383e46728362f14f3707b8",
+      "answer": "11",
+      "calls": "15",
+      "cacheHits": "0",
+      "states": "10",
+      "rootCount": 1,
+      "steps": 54,
+      "fullBytes": 27984,
+      "deltaBytes": 17176,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "triangle": [
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "c7cc1e3d2e66010341fb01c79d0e814ec4b2158a0c383e46728362f14f3707b8",
+      "answer": "-700",
+      "calls": "127",
+      "cacheHits": "0",
+      "states": "28",
+      "rootCount": 1,
+      "steps": 446,
+      "fullBytes": 256803,
+      "deltaBytes": 153892,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "recursion",
+      "label": "rectangular-tall",
+      "input": {
+        "triangle": [
+          [
+            2,
+            99
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            -100,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "c7cc1e3d2e66010341fb01c79d0e814ec4b2158a0c383e46728362f14f3707b8",
+      "answer": "5",
+      "calls": "3",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 12,
+      "fullBytes": 6651,
+      "deltaBytes": 4511,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "recursion",
+      "label": "rectangular-wide",
+      "input": {
+        "triangle": [
+          [
+            2,
+            -100,
+            -100
+          ],
+          [
+            3,
+            4,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "c7cc1e3d2e66010341fb01c79d0e814ec4b2158a0c383e46728362f14f3707b8",
+      "answer": "5",
+      "calls": "3",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 12,
+      "fullBytes": 6651,
+      "deltaBytes": 4511,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "triangle": [
+          [
+            2,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            4,
+            0,
+            0
+          ],
+          [
+            6,
+            5,
+            7,
+            0
+          ],
+          [
+            4,
+            1,
+            8,
+            3
+          ]
+        ]
+      },
+      "sourceHash": "30726fa60c6c88b5d96574103d12ea80c8538b7088d7510a78321329ba3a2560",
+      "answer": "11",
+      "calls": "13",
+      "cacheHits": "3",
+      "states": "10",
+      "rootCount": 1,
+      "steps": 47,
+      "fullBytes": 60062,
+      "deltaBytes": 38040,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "triangle": [
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "30726fa60c6c88b5d96574103d12ea80c8538b7088d7510a78321329ba3a2560",
+      "answer": "-800",
+      "calls": "57",
+      "cacheHits": "21",
+      "states": "36",
+      "rootCount": 1,
+      "steps": 201,
+      "fullBytes": 576638,
+      "deltaBytes": 349065,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "memoization",
+      "label": "zero",
+      "input": {
+        "triangle": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "sourceHash": "30726fa60c6c88b5d96574103d12ea80c8538b7088d7510a78321329ba3a2560",
+      "answer": "0",
+      "calls": "13",
+      "cacheHits": "3",
+      "states": "10",
+      "rootCount": 1,
+      "steps": 47,
+      "fullBytes": 60032,
+      "deltaBytes": 38013,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "memoization",
+      "label": "negative",
+      "input": {
+        "triangle": [
+          [
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            -1
+          ],
+          [
+            -1,
+            -1,
+            -1,
+            -1
+          ]
+        ]
+      },
+      "sourceHash": "30726fa60c6c88b5d96574103d12ea80c8538b7088d7510a78321329ba3a2560",
+      "answer": "-4",
+      "calls": "13",
+      "cacheHits": "3",
+      "states": "10",
+      "rootCount": 1,
+      "steps": 47,
+      "fullBytes": 60308,
+      "deltaBytes": 38224,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "memoization",
+      "label": "rectangular-tall",
+      "input": {
+        "triangle": [
+          [
+            2,
+            99
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            -100,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "30726fa60c6c88b5d96574103d12ea80c8538b7088d7510a78321329ba3a2560",
+      "answer": "5",
+      "calls": "3",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 12,
+      "fullBytes": 11242,
+      "deltaBytes": 7902,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "memoization",
+      "label": "rectangular-wide",
+      "input": {
+        "triangle": [
+          [
+            2,
+            -100,
+            -100
+          ],
+          [
+            3,
+            4,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "30726fa60c6c88b5d96574103d12ea80c8538b7088d7510a78321329ba3a2560",
+      "answer": "5",
+      "calls": "3",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 12,
+      "fullBytes": 11242,
+      "deltaBytes": 7902,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "triangle": [
+          [
+            2,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            4,
+            0,
+            0
+          ],
+          [
+            6,
+            5,
+            7,
+            0
+          ],
+          [
+            4,
+            1,
+            8,
+            3
+          ]
+        ]
+      },
+      "sourceHash": "394b13e9d79bdacaf6d91d30afa2a1d86ae99bc55a49f24335895c26079a1db4",
+      "answer": "11",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 12,
+      "fullBytes": 14417,
+      "deltaBytes": 12387,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "triangle": [
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ],
+          [
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "394b13e9d79bdacaf6d91d30afa2a1d86ae99bc55a49f24335895c26079a1db4",
+      "answer": "-800",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 38,
+      "fullBytes": 103603,
+      "deltaBytes": 96945,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "canonical",
+      "label": "rectangular-tall",
+      "input": {
+        "triangle": [
+          [
+            2,
+            99
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            -100,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "394b13e9d79bdacaf6d91d30afa2a1d86ae99bc55a49f24335895c26079a1db4",
+      "answer": "5",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 5,
+      "fullBytes": 4598,
+      "deltaBytes": 3814,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "triangle-min-path-sum",
+      "approachId": "canonical",
+      "label": "rectangular-wide",
+      "input": {
+        "triangle": [
+          [
+            2,
+            -100,
+            -100
+          ],
+          [
+            3,
+            4,
+            -100
+          ]
+        ]
+      },
+      "sourceHash": "394b13e9d79bdacaf6d91d30afa2a1d86ae99bc55a49f24335895c26079a1db4",
+      "answer": "5",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 5,
+      "fullBytes": 4598,
+      "deltaBytes": 3814,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    }
+  ]
+}

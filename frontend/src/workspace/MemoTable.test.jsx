@@ -6,6 +6,15 @@ import MemoTable from './MemoTable';
 
 const table = { rowLabels: ['col1=0'], colLabels: ['col2=0'], cells: [[{ value: '0', state: 'known' }]] };
 describe('3D memo slice identity', () => {
+  it('explains excluded padding only when the run supplies that domain', () => {
+    const memoDomain = '# marks excluded triangle padding; these cells are not unknown states.';
+    const step = { dpTable: table, variables: { memoDomain } };
+    const { rerender } = render(<MemoTable step={step} steps={[step]} dsType="RecursionTree" />);
+    fireEvent.click(screen.getByText('Memo table'));
+    expect(screen.getByText(memoDomain)).toBeVisible();
+    rerender(<MemoTable step={{ ...step, variables: {} }} steps={[step]} dsType="RecursionTree" />);
+    expect(screen.queryByText(memoDomain)).not.toBeInTheDocument();
+  });
   it('labels the current slice explicitly and changes it with the actual step', () => {
     const first = { dpTable: table, variables: { memoSlice: 'row 2' } };
     const { rerender } = render(<MemoTable step={first} steps={[first]} dsType="RecursionTree" />);
