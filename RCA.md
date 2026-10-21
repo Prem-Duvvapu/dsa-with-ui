@@ -2111,7 +2111,8 @@ that all340 structurally exposed endpoints were individually exercised.
 ## RCA-070 — A small memo table still exhausted the response-copy budget
 
 - **Discovered:**2026-10-18, subset-family pre-publication stress verification.
-- **Status:** Guard tightened locally; final verification/publication pending.
+- **Status:** Fixed and verified in the subset-family #231 batch; publication is gated
+  by exact-head CI. GitHub records the merge outcome.
 - **Symptom:** Subset Sum memoization on nums=[0,0,0,0,0,0,1,4,2,1], target=8
   has only99 allocated cells and139 calls, below the renderer's220-node cap, but
   stops at477 steps under the existing2000-KB estimated-response budget. The HTTP

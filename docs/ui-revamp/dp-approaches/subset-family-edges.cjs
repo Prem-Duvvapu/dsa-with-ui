@@ -33,7 +33,7 @@ const pace=require('../evidence/pace-executions.cjs')();
         if(form==='memoization')await page.getByText('Memo table',{exact:true}).click();
         const table=page.locator('table.dp-table');await table.waitFor();
         const cells=final.dpTable.cells.flat();
-        assert.deepEqual(await table.locator('td').allTextContents(),cells.map(c=>c.value));
+        assert.deepEqual(await table.locator('td .dp-value').allTextContents(),cells.map(c=>c.value));
         const labels=final.dpTable.cells.flatMap((row,r)=>row.map((cell,col)=>`row ${final.dpTable.rowLabels[r]}, column ${final.dpTable.colLabels[col]}: ${cell.value} (${cell.state==='void'&&cell.value==='·'?'unknown':cell.state})`));
         assert.deepEqual(await table.locator('td').evaluateAll(es=>es.map(e=>e.getAttribute('aria-label'))),labels);
         if(form==='memoization'&&c.id!=='count-subsets-with-sum-k')await page.getByText(final.variables.memoDomain,{exact:true}).waitFor();

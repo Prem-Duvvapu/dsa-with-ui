@@ -250,6 +250,21 @@ Implementation is authorized, but its publication and UI-verified status are not
 
 ## Baseline (P0, 2026-09-29)
 
+Subset-family publication snapshot (2026-10-21, #231): three more candidates pass
+backend/source/API and172 real-browser journeys with a same-package/source/assets audit.
+Only those three coverage rows advance (18/56 verified,15 in the preceding merged
+baseline,38 outside the verified set); Count Partitions receives only a classification
+note correction. Canonical objects/source/input specs/defaults/IDs remain unchanged.
+RCA-070 replaces the provisional100-cell memo allowance with an80-cell joint guard;
+no global budget is raised. Six edge rows prove real81-cell refusal continuity, four
+prove odd-total no-call honesty, and36 check actual table values/accessibility labels.
+Final local/CI backend8,266 cases/500 unchanged skips and CI frontend863 tests/build
+pass;432 regenerated goldens remain unchanged. Exact-head final CI still gates merge.
+The plan/log/verification report distinguish local browser assets from differing CI
+asset hashes and explicitly leave public/human/device/accessibility/performance/release
+gates open. This snapshot is approved publication of one medium package, not DP/project
+completion or authorization to start a further feature package during the handoff.
+
 | Item | Value |
 | --- | --- |
 | Base commit | `origin/main` = `82f2808` (PR #145); nothing newer upstream |

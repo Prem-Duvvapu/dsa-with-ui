@@ -2915,3 +2915,45 @@ The corrected42-scenario/84-execution API report survives; no completed browser 
 survived the interruption. Do not promote the three inventory rows from that partial
 sweep. Commit/push the implemented batch, finish the missing live verification on the
 same verified package, then land only after exact-head CI and the remaining gates pass.
+
+### 2026-10-21 — final subset-family verification and publication handoff
+
+Committed/pushed implementation head `a1a2a50` and opened #231 under the owner's explicit
+request. Push CI39650574550 and PR CI39650630258 both pass, including8,266 backend cases
+(500 unchanged skips), the normal863-test/83-file frontend suite, launcher smoke and
+build. Security/Vercel checks pass. The final evidence-only follow-up requires fresh
+exact-head CI before merge; the initial head's green checks cannot certify a later head.
+
+The same verified jar (`b18db40f7440a4242e5768c38b30850647a69a441f6ea266c6a7e1fd9b7512d2`,
+packaged2026-10-18T12:57:34Z) serves all final journeys; its classes match the compiled
+implementation. No Maven runs while it serves. All42 API scenarios/84 executions remain
+bound to the exact current sources. The browser audit passes18:41:19Z:102 standard/
+native-zoom/stress,12 comparisons,54 edges and4 previous-batch phone compatibility
+journeys,172 total. Six edge rows prove actual81-cell rejection preserves the old run,
+draft, step/link and error focus. Four odd-total rows prove zero calls/no fake memo/root;
+36 edge rows check actual values and exact accessible cell names. Only the three new
+coverage rows advance:18/56 verified,15 in the preceding merged baseline,38 others.
+Count Partitions' row changes only its inaccurate classification note. Canonical source
+digests and input specs stay unchanged, and431/431 canonical stats/no duplicates persist.
+
+The first edge attempt failed because raw cell text includes decorative glyphs. The
+corrected probe reads .dp-value while retaining every per-cell accessible-label check;
+all54 final edge journeys pass. The multiphase shell ended143 after writing the complete
+30-row Chromium manifest; remaining phases ran individually to terminal0. No incomplete
+or superseded sweep is counted, and all final manifests postdate the packaged backend.
+
+Browser evidence uses index-C9w1PyPL.js / index-DwejRBy7.css (389.53/98.74 kB). CI's
+build is index-B0ZzUD17.js / index-DVASteW4.css (389.37/98.46 kB). Do not claim these
+artifacts are byte-identical or that the public deployment was accepted. All204 tracked
+frontend files match HEAD after EOL normalization. A separate Git-export diagnostic
+build has identical CSS after scoped-name normalization, but is not substituted into
+the172-journey evidence. An initial auxiliary build from the wrong temporary directory
+failed; no source/dependency/manifest/lock change results or passing evidence is claimed
+from it. CI's fresh locked install still reports9 vulnerabilities (4 moderate,3 high,
+2 critical); this package adds no dependency and does not remediate them.
+
+Two representative final screenshots are inspected: Subset memo320/dark and Count
+memo1366/light. Large trees still need substantial local panning, especially on phones;
+automated reachability is not human/device/screen-reader/performance certification.
+The six role-based review gates remain bounded self-review, not an independent-agent
+or human acceptance claim. No next feature package starts during this approved handoff.
