@@ -101,6 +101,15 @@ test('another problem, duplicate axes and a different production build cannot be
     doc=>{doc.servedBuild.assets=['/assets/other.js','/assets/other.css'];}
   ]) {const docs=documents();mutate(docs['firefox-maximum-zoom1.json']);assert.equal(verified(docs),false);}
 });
+test('subset evidence requires actual roots and visible state coordinates',()=>{
+  const docs=documents();
+  for(const doc of Object.values(docs))for(const row of doc.rows){row.problemId='subset-sum-equal-target';row.rootCount=1;row.allStateCoordinatesVisible=true;}
+  const check=()=>verified(docs,'subset-family','subset-sum-equal-target');
+  assert.equal(check(),true);
+  docs['firefox-maximum-zoom1.json'].rows[0].rootCount=0;assert.equal(check(),false);
+  docs['firefox-maximum-zoom1.json'].rows[0].rootCount=1;
+  docs['firefox-maximum-zoom1.json'].rows[0].allStateCoordinatesVisible=false;assert.equal(check(),false);
+});
 test('incorrect zoom, missing proof and an incorrect engine are refused',()=>{
   for(const mutate of [
     doc=>{doc.rows[0].nativeZoom=1;},

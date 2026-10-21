@@ -239,6 +239,15 @@ The owner subsequently explicitly approved this batch's commit/push/CI-gated mer
 then the next implementation, on2026-10-18. Publication now proceeds; final GitHub
 checks/merge determine its outcome, not the preceding approval-pending snapshots.
 
+Publication outcome (2026-10-18): #230 merged as `e35dd35` at12:22:53Z. Exact head
+`da2e5be` passed push CI39126866722 and PR CI39126888304, plus security/Vercel checks;
+post-merge CI39127039341 passed. CI's normal `npx vitest run` passes all863 cases/83
+files, resolving the local one-worker-only verification limitation above. Backend CI
+passes8,246 cases with500 unchanged skips.15/56 DP candidates are now merged;41 remain.
+The subset-family branch starts only after this merge/fetch and passing main CI. Its
+initial17-case RED is confirmed (3 discovery failures,14 unavailable-approach errors).
+Implementation is authorized, but its publication and UI-verified status are not inferred.
+
 ## Baseline (P0, 2026-09-29)
 
 | Item | Value |

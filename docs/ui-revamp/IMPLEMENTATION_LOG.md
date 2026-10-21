@@ -2865,3 +2865,53 @@ require its checks to pass, merge/pull it, then cut the next implementation bran
 Historical approval-pending statements above are superseded by this explicit decision;
 GitHub records final publication checks/outcome. No future package's publishing approval
 is inferred beyond this approved batch.
+
+### 2026-10-18 — #230 landed; subset-family implementation begins
+
+Approved Falling Path/Triangle head `da2e5be` passed push CI39126866722 and PR
+CI39126888304, security and Vercel checks. Guarded squash merge produced `e35dd35`
+at12:22:53Z; post-merge CI39127039341 passes. Downloaded PR CI logs prove the normal
+`npx vitest run` command passes863/863 cases in83 files, in addition to the recorded
+local one-worker pass. Backend CI reports8,246 cases,500 unchanged skips, no failures
+or errors. This is merged-code proof, not proof of public backend deployment.
+
+Merged coverage is15/56 candidates,41 others remain. After fetching the merged main,
+`feat/dp-subset-approaches` starts the planned Subset Sum / Equal Partition / Count
+Subsets package. Its initial RED on the unchanged production baseline is17 cases:
+3 discovery assertion failures and14 unavailable-approach errors, no skips. The next
+package's implementation is authorized; publishing still requires its own approval.
+
+### 2026-10-18 — subset-family budget finding and publication request
+
+Six real recursive/memo executables and nine independently compiled exact displayed
+solutions pass the initial17-case suite. Index-set enumeration covers5,697 comparisons
+per tracer/compiled-source path, counting repeats across three forms rather than claiming
+5,697 unique inputs. Compiling wrong-result mutations fail3/3 for recursion and3/3 for
+memo; treating cached false/zero as unknown fails3/3. All mutations are restored.
+
+Full backend/frontend/goldens/build initially pass8,263 cases/500 skips,863 tests and
+432 unchanged goldens. Stronger memo stress then exposes RCA-070: the provisional
+100-cell table cap can still hit the existing byte budget (139 calls,477 steps).
+The preliminary42-scenario API pass and partial Chromium sweep are excluded from final
+sign-off. All three owned server/browser processes are stopped, ports verified free,
+and three RED assertions prove the old dense99-cell inputs are not rejected.
+
+The new joint cap is80, not a higher global budget; max length10 and canonical225-cell
+guard remain. Final tests also require HTTP400/no steps at81/99 cells, dense80-cell
+completion, and ten-item acceptance. Full verification is repeated; no provisional
+manifest certifies the new cap. Two classification notes are corrected to the actual
+positive-only counting domains, without changing canonical input specs.
+
+The owner now explicitly requests "commit, push and merge the changes done till now".
+This authorizes publishing THIS subset batch after verification and exact-head CI.
+Do not begin a further feature package after landing it.
+
+### 2026-10-21 — resume the approved subset publication
+
+The owner repeated the commit/push/merge request. Revalidation finds no live previous
+browser handle or owned server process and no open PR. The final8266-case backend XML
+reports remain on disk, and the packaged jar still matches the compiled implementation.
+The corrected42-scenario/84-execution API report survives; no completed browser matrix
+survived the interruption. Do not promote the three inventory rows from that partial
+sweep. Commit/push the implemented batch, finish the missing live verification on the
+same verified package, then land only after exact-head CI and the remaining gates pass.

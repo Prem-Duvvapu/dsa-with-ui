@@ -1,10 +1,13 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **13/56 candidates merged. House Robber II, Ninja's Training and Unique Paths II
+Status: **15/56 candidates merged. Falling Path/Triangle merged as #230 / `e35dd35`
+on2026-10-18 after approved publication and green exact-head push/PR checks; post-merge
+CI39127039341 passed. The next three-candidate subset family is in implementation;
+41 candidates remain outside the merged set. No next-package coverage gate is claimed.
+House Robber II, Ninja's Training and Unique Paths II
 merged as #229 / `da63085` on2026-10-16 after corrected-head push/PR checks; post-merge
 CI38942409698 passed. The preceding linear/grid batch merged as #228 / `a14bce5`.
-Two more candidates are verified locally, awaiting publishing approval;41 others remain
-outside this package. D6/D7 and broader release/rollback checks remain pending.**
+D6/D7 and broader release/rollback checks remain pending.**
 2026-10-18 follow-up: the current batch's screen-reader text conflated #/void excluded
 padding with unknown cells. Two summary RED guards and a cell-name RED guard prove the
 defect. The local correction passes24 targeted cases, all863 frontend tests (one worker,

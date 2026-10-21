@@ -2079,7 +2079,8 @@ that all340 structurally exposed endpoints were individually exercised.
 ## RCA-069 — Text alternative called permanently excluded DP cells unknown
 
 - **Discovered:**2026-10-18, current-batch review before publishing Falling Path/Triangle.
-- **Status:** Fixed and verified locally; separate publication approval outstanding.
+- **Status:** Fixed and merged as #230 / `e35dd35` on2026-10-18 after explicit approval;
+  exact-head and post-merge CI pass. CI normal frontend command passes863/863 tests.
 - **Symptom:** Triangle's actual table has #/void padding and its new memo caption correctly
   explains exclusion. StepStateSummary nevertheless calls every void cell unknown. A
   screen-reader user receives a contradictory account, in both recursive memo and existing
@@ -2106,3 +2107,24 @@ that all340 structurally exposed endpoints were individually exercised.
   rows prove both text alternatives. Source/package/assets audit passes2026-10-18.
   Default-worker timing/setup failures and fixture adjustments are explicitly recorded
   in the implementation log/verification.json, not counted as passing runs.
+
+## RCA-070 — A small memo table still exhausted the response-copy budget
+
+- **Discovered:**2026-10-18, subset-family pre-publication stress verification.
+- **Status:** Guard tightened locally; final verification/publication pending.
+- **Symptom:** Subset Sum memoization on nums=[0,0,0,0,0,0,1,4,2,1], target=8
+  has only99 allocated cells and139 calls, below the renderer's220-node cap, but
+  stops at477 steps under the existing2000-KB estimated-response budget. The HTTP
+  body is1,874,480 bytes and truncated=true, with no completed answer.
+- **Root cause:** the provisional100-cell cap was copied from another recurrence
+  without a sufficiently dense skip/take/cache-hit witness. Each event copies the
+  memo table; call count or table size alone does not establish response safety.
+- **Fix:** preserve max length10 and numeric domains, but refuse joint memo tables
+  above80 cells before allocating/emitting. No target clipping, input repair,
+  source substitution, global-budget increase, or relaxation of truncation honesty.
+  Six-item recursion and the canonical225-cell table guard remain unchanged.
+- **Guard (RED first):** three real-run assertions fail against the100-cell code
+  because the dense inputs return instead of being rejected. The final guards also
+  check HTTP400 with nums field errors and no steps at81 cells and on the99-cell
+  counterexample; dense80-cell and ten-item controls must complete. The preliminary
+  API/browser sweep is excluded and repeated against the final package.
