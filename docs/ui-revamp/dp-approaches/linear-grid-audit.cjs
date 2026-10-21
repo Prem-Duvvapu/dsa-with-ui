@@ -42,6 +42,22 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
   });
   const comparison=read('comparison-results.json');assert.equal(comparison.rows.length,cases.length*4);
   assert(Date.parse(comparison.generated)>=packaged);
+  const edges=family==='subset-family'?read('edge-results.json'):null;
+  if(edges){
+    assert(edges.realBackend&&edges.buildMode==='production-preview'&&Date.parse(edges.generated)>=packaged);
+    const axes=cases.flatMap(c=>['recursion','memoization','canonical'].flatMap(form=>[...Object.keys(c.extra),...(form==='canonical'?['maximum']:[])].flatMap(label=>
+      ['chromium','firefox'].map(engine=>`${c.id}/${label}/${engine}/${form}`))));
+    assert.deepEqual(edges.rows.map(r=>`${r.problemId}/${r.label}/${r.engine}/${r.approachId}`).sort(),axes.sort());
+    for(const row of edges.rows){
+      const c=cases.find(c=>c.id===row.problemId);assert(c);assert.deepEqual(row.input,row.label==='maximum'?maximum(c.id,row.approachId):c.extra[row.label]);
+      assert.equal(row.answer,String(oracle(row.problemId,row.input)));
+      assert.equal(row.sourceHash,hashes.get(`${row.problemId}/${row.approachId}`));
+      assert(row.passed&&row.sharedStepClampedAndRestored&&row.exactDraftRetained&&row.noUnsolicitedExecution&&row.noOverflowOrErrors);
+      if(row.label==='odd'&&row.approachId!=='canonical')assert(row.oddNoFabricatedCalls);
+      if(row.approachId!=='recursion'&&!(row.approachId==='memoization'&&row.label==='odd'))assert(row.actualTableValuesAndLabels);
+      if(row.approachId==='memoization'&&row.label==='false-cache')assert(row.falseOrZeroCacheReuse&&row.jointRefusalPreservesRunDraftStepAndLink);
+    }
+  }
   const recovery=family==='circular-activity-obstacles'?read('input-recovery-results.json'):null;
   if(recovery){
     assert.equal(recovery.rows.length,8);assert(Date.parse(recovery.generated)>=packaged);
@@ -68,8 +84,8 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
       if(row.approachId!=='recursion')assert(row.tableSummaryMatchesActualCells&&row.tableCellLabelsMatchActualCells);
     }
   }
-  const compatibilityFamily=family==='circular-activity-obstacles'?'linear-grid':family==='falling-triangle'?'circular-activity-obstacles':null;
-  const compatibility=compatibilityFamily?read(`${compatibilityFamily==='linear-grid'?'linear-grid':'circular'}-compatibility/chromium-standard-zoom1.json`):null;
+  const compatibilityFamily=family==='circular-activity-obstacles'?'linear-grid':family==='falling-triangle'?'circular-activity-obstacles':family==='subset-family'?'falling-triangle':null;
+  const compatibility=compatibilityFamily?read(`${compatibilityFamily==='linear-grid'?'linear-grid':compatibilityFamily==='falling-triangle'?'falling-triangle':'circular'}-compatibility/chromium-standard-zoom1.json`):null;
   if(compatibility){
     assert(compatibility.realBackend&&compatibility.buildMode==='production-preview'&&compatibility.engine==='chromium');
     assert(Date.parse(compatibility.generated)>=packaged);
@@ -83,7 +99,7 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
     }
   }
   const assets=documents[0].servedBuild.assets;
-  for(const doc of [...documents,comparison,...(recovery?[recovery]:[]),...(compatibility?[compatibility]:[]),...(shapes?[shapes]:[])])assert.deepEqual(doc.servedBuild.assets,assets);
+  for(const doc of [...documents,comparison,...(recovery?[recovery]:[]),...(compatibility?[compatibility]:[]),...(shapes?[shapes]:[]),...(edges?[edges]:[])])assert.deepEqual(doc.servedBuild.assets,assets);
   const html=fs.readFileSync(path.resolve(__dirname,'../../../frontend/dist/index.html'),'utf8');
   for(const asset of assets)assert(html.includes(asset));
   for(const doc of documents)for(const row of doc.rows) {
@@ -100,8 +116,9 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
     packagedBackendAt:new Date(packaged).toISOString(),assets,apiScenarios:scenarios,apiRequests:scenarios*2,
     browserJourneys:rows.length,comparisonJourneys:comparison.rows.length,inputRecoveryJourneys:recovery?.rows.length??0,
     shapeJourneys:shapes?.rows.length??0,
+    edgeJourneys:edges?.rows.length??0,
     legacyCompatibilityJourneys:compatibility?.rows.length??0,
-    totalJourneys:rows.length+comparison.rows.length+(recovery?.rows.length??0)+(compatibility?.rows.length??0)+(shapes?.rows.length??0),
+    totalJourneys:rows.length+comparison.rows.length+(recovery?.rows.length??0)+(compatibility?.rows.length??0)+(shapes?.rows.length??0)+(edges?.rows.length??0),
     perProblem:cases.map(c=>({problemId:c.id,browserRows:rows.filter(r=>r.problemId===c.id).length,
       comparisonRows:comparison.rows.filter(r=>r.problemId===c.id).length})),
     maxFullResponseBytes:Math.max(...transport.rows.map(r=>r.fullBytes)),

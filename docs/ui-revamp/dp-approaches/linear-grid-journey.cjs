@@ -82,7 +82,9 @@ async function edit(page,id,input) {
   while(await positions.count() < values.length) await page.getByRole('button',{name:'Add',exact:true}).click();
   while(await positions.count() > values.length) await page.getByRole('button',{name:`Remove position ${await positions.count()}`,exact:true}).click();
   for(let i=0;i<values.length;i++) await page.getByLabel(`Position ${i+1} value`,{exact:true}).fill(String(values[i]));
-  if(input.k !== undefined) await page.getByLabel('Max jump distance',{exact:true}).fill(String(input.k));
+  const labels=cases.find(c=>c.id===id)?.scalarLabels??{};
+  for(const [key,label] of Object.entries(labels))await page.getByLabel(label,{exact:true}).fill(String(input[key]));
+  if(id==='frog-jump-k-distance')await page.getByLabel('Max jump distance',{exact:true}).fill(String(input.k));
 }
 async function assertDraft(page,id,input) {
   const gridKey=['points','grid','matrix','triangle'].find(key=>Array.isArray(input[key]));
@@ -97,6 +99,8 @@ async function assertDraft(page,id,input) {
     assert.equal(await page.getByLabel('Columns',{exact:true}).inputValue(),String(input.cols));
   }
   else assert.deepEqual(await page.getByRole('spinbutton',{name:/^Position \d+ value$/}).evaluateAll(es=>es.map(e=>Number(e.value))),input.heights??input.nums);
+  for(const [key,label] of Object.entries(cases.find(c=>c.id===id)?.scalarLabels??{}))
+    assert.equal(await page.getByLabel(label,{exact:true}).inputValue(),String(input[key]));
 }
 function assertAnswer(run,input) {
   assert(!run.truncated);
@@ -202,7 +206,7 @@ function assertAnswer(run,input) {
             while(rejected[key].length<=c.recursionRows)rejected[key].push(Array(rejected[key][0].length).fill(c.minValue??0));
           }
           else if(c.id==='grid-unique-paths')rejected.rows++;
-          else(rejected.heights??rejected.nums).push(0);
+          else(rejected.heights??rejected.nums).push(c.minValue??0);
           await edit(page,c.id,rejected);
           if(c.fixedCols){
             assert(await page.getByRole('button',{name:'Remove a column',exact:true}).isDisabled());

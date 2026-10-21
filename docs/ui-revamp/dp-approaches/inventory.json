@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-18T12:11:53.037Z",
+  "generated": "2026-10-21T18:42:34.314Z",
   "stats": {
     "catalogued": 431,
     "traced": 431,
@@ -568,7 +568,7 @@
         "memoization",
         "tabulation"
       ],
-      "notes": "Canonical uses the larger subset target; input values are positive, unlike count-subsets-with-sum-k.",
+      "notes": "Canonical uses the larger subset target; input values are positive, as in count-subsets-with-sum-k.",
       "codeDigest": "da6cc78d25c20e6bf535e6f790a051ecb10a9f5b093de03037f1844f6238077d",
       "canonicalInputSpec": {
         "fields": [
@@ -775,7 +775,7 @@
         "memoization",
         "tabulation"
       ],
-      "notes": "Zero doubles choices; do not collapse equal reads into one branch.",
+      "notes": "Canonical accepts POSITIVE values; preserve indexed duplicate choices. Zero handling needs a separately reviewed input-domain extension.",
       "codeDigest": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
       "canonicalInputSpec": {
         "fields": [
@@ -813,17 +813,95 @@
         "maxBytes": 2000000
       },
       "canonicalComplexity": {
-        "timeComplexity": "O(N * Target)",
-        "timeExplanation": "Fills one cell per (item count, sum) pair, each from two predecessors.",
-        "timeWhy": "2D counting tabulation",
-        "spaceComplexity": "O(N * Target)",
-        "spaceExplanation": "Keeps the whole (N+1) by (Target+1) count table so both the skip and take contributions stay visible.",
+        "timeComplexity": "O(N * (S + 1))",
+        "timeExplanation": "Fill all prefix/sum cells in the unchanged canonical table.",
+        "timeWhy": "Bottom-up recurrence",
+        "spaceComplexity": "O(N * (S + 1))",
+        "spaceExplanation": "The actual full prefix/sum table, including column zero; no recursive stack.",
         "spaceWhy": "DP table",
-        "auxiliarySpace": "Auxiliary Space: O(N * Target)",
-        "dataStructureSpace": "DP table"
+        "auxiliarySpace": "O(N * (S + 1))",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 6,
+                  "maxValue": 15,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  1,
+                  2,
+                  2,
+                  3
+                ],
+                "help": "Positive values, matching tabulation's existing domain; equal values at different indices are distinct items. Up to 6 items keeps the complete recursive tree below 220 calls.",
+                "label": "Values",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 60,
+                  "min": 0
+                },
+                "defaultValue": 3,
+                "help": "",
+                "label": "Target sum K",
+                "name": "k",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 10,
+                  "maxValue": 15,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  1,
+                  2,
+                  2,
+                  3
+                ],
+                "help": "Positive values, matching tabulation's existing domain; equal values at different indices are distinct items. Memo needs (n+1) × (k+1) ≤ 80 cells.",
+                "label": "Values",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 60,
+                  "min": 0
+                },
+                "defaultValue": 3,
+                "help": "",
+                "label": "Target sum K",
+                "name": "k",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "distinct-subsequences",
@@ -3333,17 +3411,73 @@
         "maxBytes": 2000000
       },
       "canonicalComplexity": {
-        "timeComplexity": "O(N * Target)",
-        "timeExplanation": "An odd total sum short-circuits in O(N); otherwise reduces to subset-sum with Target = totalSum / 2.",
-        "timeWhy": "Odd-sum short-circuit, else 2D boolean reachability tabulation",
-        "spaceComplexity": "O(N * Target)",
-        "spaceExplanation": "Keeps the whole N by Target table so both the skip and take predecessors stay visible.",
+        "timeComplexity": "O(N * (S + 1))",
+        "timeExplanation": "Fill all prefix/sum cells in the unchanged canonical table. The parity preflight takes O(N); an odd total requires no subset states.",
+        "timeWhy": "Bottom-up recurrence",
+        "spaceComplexity": "O(N * (S + 1))",
+        "spaceExplanation": "The actual full prefix/sum table, including column zero; no recursive stack.",
         "spaceWhy": "DP table",
-        "auxiliarySpace": "Auxiliary Space: O(N * Target)",
-        "dataStructureSpace": "DP table"
+        "auxiliarySpace": "O(N * (S + 1))",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 6,
+                  "maxValue": 20,
+                  "minLength": 1,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  1,
+                  5,
+                  11,
+                  5
+                ],
+                "help": "Non-negative indexed values; zero is allowed. Up to 6 items keeps the full recursive tree below 220 calls.",
+                "label": "Values",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 10,
+                  "maxValue": 20,
+                  "minLength": 1,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  1,
+                  5,
+                  11,
+                  5
+                ],
+                "help": "Non-negative indexed values; zero is allowed. Memo needs (n+1) × (target+1) ≤ 80 cells; partition derives target=sum/2 after its parity check.",
+                "label": "Values",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "partition-set-min-abs-diff",
@@ -3875,17 +4009,95 @@
         "maxBytes": 2000000
       },
       "canonicalComplexity": {
-        "timeComplexity": "O(N * Target)",
-        "timeExplanation": "Fills one cell per (items considered, sum) pair, each from two predecessors.",
-        "timeWhy": "2D boolean reachability tabulation",
-        "spaceComplexity": "O(N * Target)",
-        "spaceExplanation": "Keeps the whole N by Target table so both the skip and take predecessors stay visible.",
+        "timeComplexity": "O(N * (S + 1))",
+        "timeExplanation": "Fill all prefix/sum cells in the unchanged canonical table.",
+        "timeWhy": "Bottom-up recurrence",
+        "spaceComplexity": "O(N * (S + 1))",
+        "spaceExplanation": "The actual full prefix/sum table, including column zero; no recursive stack.",
         "spaceWhy": "DP table",
-        "auxiliarySpace": "Auxiliary Space: O(N * Target)",
-        "dataStructureSpace": "DP table"
+        "auxiliarySpace": "O(N * (S + 1))",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 6,
+                  "maxValue": 20,
+                  "minLength": 1,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  1,
+                  2,
+                  3,
+                  7
+                ],
+                "help": "Non-negative indexed values; zero is allowed. Up to 6 items keeps the full recursive tree below 220 calls.",
+                "label": "Values",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 40,
+                  "min": 0
+                },
+                "defaultValue": 6,
+                "help": "",
+                "label": "Target sum K",
+                "name": "target",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 10,
+                  "maxValue": 20,
+                  "minLength": 1,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  1,
+                  2,
+                  3,
+                  7
+                ],
+                "help": "Non-negative indexed values; zero is allowed. Memo needs (n+1) × (target+1) ≤ 80 cells; partition derives target=sum/2 after its parity check.",
+                "label": "Values",
+                "name": "nums",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 40,
+                  "min": 0
+                },
+                "defaultValue": 6,
+                "help": "",
+                "label": "Target sum K",
+                "name": "target",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "target-sum-dp",

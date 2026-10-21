@@ -1,0 +1,1099 @@
+{
+  "generated": "2026-10-18T13:02:14.570Z",
+  "realBackend": true,
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "rows": [
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "target": 6
+      },
+      "sourceHash": "1f8d81aca2d4089d7743951559e160fc8c9a13a3a5bfc833421b560e58817692",
+      "answer": "true",
+      "calls": "16",
+      "cacheHits": "0",
+      "states": "15",
+      "rootCount": 1,
+      "steps": 58,
+      "fullBytes": 31023,
+      "deltaBytes": 18949,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "target": 0
+      },
+      "sourceHash": "1f8d81aca2d4089d7743951559e160fc8c9a13a3a5bfc833421b560e58817692",
+      "answer": "true",
+      "calls": "127",
+      "cacheHits": "0",
+      "states": "7",
+      "rootCount": 1,
+      "steps": 446,
+      "fullBytes": 254574,
+      "deltaBytes": 151663,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "recursion",
+      "label": "false-cache",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "target": 1
+      },
+      "sourceHash": "1f8d81aca2d4089d7743951559e160fc8c9a13a3a5bfc833421b560e58817692",
+      "answer": "false",
+      "calls": "31",
+      "cacheHits": "0",
+      "states": "5",
+      "rootCount": 1,
+      "steps": 110,
+      "fullBytes": 58415,
+      "deltaBytes": 35229,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "recursion",
+      "label": "zero-target",
+      "input": {
+        "nums": [
+          0,
+          0
+        ],
+        "target": 0
+      },
+      "sourceHash": "1f8d81aca2d4089d7743951559e160fc8c9a13a3a5bfc833421b560e58817692",
+      "answer": "true",
+      "calls": "7",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 26,
+      "fullBytes": 13482,
+      "deltaBytes": 8524,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "target": 6
+      },
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2",
+      "answer": "true",
+      "calls": "16",
+      "cacheHits": "1",
+      "states": "15",
+      "rootCount": 1,
+      "steps": 58,
+      "fullBytes": 108979,
+      "deltaBytes": 66480,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          2,
+          4
+        ],
+        "target": 7
+      },
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2",
+      "answer": "true",
+      "calls": "111",
+      "cacheHits": "48",
+      "states": "63",
+      "rootCount": 1,
+      "steps": 390,
+      "fullBytes": 1297322,
+      "deltaBytes": 783423,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "memoization",
+      "label": "false-cache",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "target": 1
+      },
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2",
+      "answer": "false",
+      "calls": "9",
+      "cacheHits": "4",
+      "states": "5",
+      "rootCount": 1,
+      "steps": 33,
+      "fullBytes": 36019,
+      "deltaBytes": 23327,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "memoization",
+      "label": "zero-target",
+      "input": {
+        "nums": [
+          0,
+          0
+        ],
+        "target": 0
+      },
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2",
+      "answer": "true",
+      "calls": "5",
+      "cacheHits": "2",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 19,
+      "fullBytes": 16457,
+      "deltaBytes": 11268,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "target": 6
+      },
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "answer": "true",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 31,
+      "fullBytes": 53817,
+      "deltaBytes": 48405,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "target": 19
+      },
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "answer": "false",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 203,
+      "fullBytes": 1519499,
+      "deltaBytes": 1483803,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "canonical",
+      "label": "false-cache",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "target": 1
+      },
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "answer": "false",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 11,
+      "fullBytes": 11553,
+      "deltaBytes": 9701,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "canonical",
+      "label": "zero-target",
+      "input": {
+        "nums": [
+          0,
+          0
+        ],
+        "target": 0
+      },
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "answer": "true",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 5,
+      "fullBytes": 4467,
+      "deltaBytes": 3683,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "nums": [
+          1,
+          5,
+          11,
+          5
+        ]
+      },
+      "sourceHash": "8428afaa39bb1cc6bc1f46913d30292c80515e794bf4d5cd652ac72fb449bbc1",
+      "answer": "true",
+      "calls": "20",
+      "cacheHits": "0",
+      "states": "16",
+      "rootCount": 1,
+      "steps": 73,
+      "fullBytes": 39166,
+      "deltaBytes": 23845,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "sourceHash": "8428afaa39bb1cc6bc1f46913d30292c80515e794bf4d5cd652ac72fb449bbc1",
+      "answer": "true",
+      "calls": "127",
+      "cacheHits": "0",
+      "states": "7",
+      "rootCount": 1,
+      "steps": 446,
+      "fullBytes": 254960,
+      "deltaBytes": 152049,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "recursion",
+      "label": "odd",
+      "input": {
+        "nums": [
+          1,
+          2
+        ]
+      },
+      "sourceHash": "8428afaa39bb1cc6bc1f46913d30292c80515e794bf4d5cd652ac72fb449bbc1",
+      "answer": "false",
+      "calls": "0",
+      "cacheHits": "0",
+      "states": "0",
+      "rootCount": 0,
+      "steps": 1,
+      "fullBytes": 1896,
+      "deltaBytes": 1824,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "recursion",
+      "label": "false-cache",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          2
+        ]
+      },
+      "sourceHash": "8428afaa39bb1cc6bc1f46913d30292c80515e794bf4d5cd652ac72fb449bbc1",
+      "answer": "false",
+      "calls": "16",
+      "cacheHits": "0",
+      "states": "5",
+      "rootCount": 1,
+      "steps": 58,
+      "fullBytes": 31307,
+      "deltaBytes": 19233,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "recursion",
+      "label": "zero-target",
+      "input": {
+        "nums": [
+          0,
+          0
+        ]
+      },
+      "sourceHash": "8428afaa39bb1cc6bc1f46913d30292c80515e794bf4d5cd652ac72fb449bbc1",
+      "answer": "true",
+      "calls": "7",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 26,
+      "fullBytes": 13748,
+      "deltaBytes": 8790,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "nums": [
+          1,
+          5,
+          11,
+          5
+        ]
+      },
+      "sourceHash": "146f0fd33ae39ddc54556b09c962778456f7682f84cf55896ea1c3a78464a565",
+      "answer": "true",
+      "calls": "18",
+      "cacheHits": "2",
+      "states": "16",
+      "rootCount": 1,
+      "steps": 66,
+      "fullBytes": 175602,
+      "deltaBytes": 105980,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          7,
+          1,
+          2,
+          4
+        ]
+      },
+      "sourceHash": "146f0fd33ae39ddc54556b09c962778456f7682f84cf55896ea1c3a78464a565",
+      "answer": "true",
+      "calls": "104",
+      "cacheHits": "41",
+      "states": "63",
+      "rootCount": 1,
+      "steps": 369,
+      "fullBytes": 1228745,
+      "deltaBytes": 729951,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "memoization",
+      "label": "odd",
+      "input": {
+        "nums": [
+          1,
+          2
+        ]
+      },
+      "sourceHash": "146f0fd33ae39ddc54556b09c962778456f7682f84cf55896ea1c3a78464a565",
+      "answer": "false",
+      "calls": "0",
+      "cacheHits": "0",
+      "states": "0",
+      "rootCount": 0,
+      "steps": 1,
+      "fullBytes": 2130,
+      "deltaBytes": 2058,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "memoization",
+      "label": "false-cache",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          2
+        ]
+      },
+      "sourceHash": "146f0fd33ae39ddc54556b09c962778456f7682f84cf55896ea1c3a78464a565",
+      "answer": "false",
+      "calls": "8",
+      "cacheHits": "3",
+      "states": "5",
+      "rootCount": 1,
+      "steps": 30,
+      "fullBytes": 33244,
+      "deltaBytes": 21556,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "memoization",
+      "label": "zero-target",
+      "input": {
+        "nums": [
+          0,
+          0
+        ]
+      },
+      "sourceHash": "146f0fd33ae39ddc54556b09c962778456f7682f84cf55896ea1c3a78464a565",
+      "answer": "true",
+      "calls": "5",
+      "cacheHits": "2",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 19,
+      "fullBytes": 16723,
+      "deltaBytes": 11534,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "nums": [
+          1,
+          5,
+          11,
+          5
+        ]
+      },
+      "sourceHash": "41a3ba0d28cfd52cd4f7e15df54b90d8acc2cfa99b6c058a916b7e26bb844ca9",
+      "answer": "true",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 51,
+      "fullBytes": 128810,
+      "deltaBytes": 119921,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          4,
+          2
+        ]
+      },
+      "sourceHash": "41a3ba0d28cfd52cd4f7e15df54b90d8acc2cfa99b6c058a916b7e26bb844ca9",
+      "answer": "false",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 203,
+      "fullBytes": 1518013,
+      "deltaBytes": 1482317,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "canonical",
+      "label": "odd",
+      "input": {
+        "nums": [
+          1,
+          2
+        ]
+      },
+      "sourceHash": "41a3ba0d28cfd52cd4f7e15df54b90d8acc2cfa99b6c058a916b7e26bb844ca9",
+      "answer": "false",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 1,
+      "fullBytes": 1964,
+      "deltaBytes": 1892,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "canonical",
+      "label": "false-cache",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          2
+        ]
+      },
+      "sourceHash": "41a3ba0d28cfd52cd4f7e15df54b90d8acc2cfa99b6c058a916b7e26bb844ca9",
+      "answer": "false",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 11,
+      "fullBytes": 11605,
+      "deltaBytes": 9753,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "canonical",
+      "label": "zero-target",
+      "input": {
+        "nums": [
+          0,
+          0
+        ]
+      },
+      "sourceHash": "41a3ba0d28cfd52cd4f7e15df54b90d8acc2cfa99b6c058a916b7e26bb844ca9",
+      "answer": "true",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 5,
+      "fullBytes": 4696,
+      "deltaBytes": 3912,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "nums": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "k": 3
+      },
+      "sourceHash": "9c8b1e7f68e4d60d4fe03082185489c2098f217518e99a08badfc5c0bf72b8a2",
+      "answer": "3",
+      "calls": "17",
+      "cacheHits": "0",
+      "states": "13",
+      "rootCount": 1,
+      "steps": 63,
+      "fullBytes": 32082,
+      "deltaBytes": 19382,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 6
+      },
+      "sourceHash": "9c8b1e7f68e4d60d4fe03082185489c2098f217518e99a08badfc5c0bf72b8a2",
+      "answer": "1",
+      "calls": "127",
+      "cacheHits": "0",
+      "states": "28",
+      "rootCount": 1,
+      "steps": 446,
+      "fullBytes": 243173,
+      "deltaBytes": 143493,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "recursion",
+      "label": "false-cache",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 5
+      },
+      "sourceHash": "9c8b1e7f68e4d60d4fe03082185489c2098f217518e99a08badfc5c0bf72b8a2",
+      "answer": "0",
+      "calls": "31",
+      "cacheHits": "0",
+      "states": "15",
+      "rootCount": 1,
+      "steps": 110,
+      "fullBytes": 56059,
+      "deltaBytes": 33407,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "recursion",
+      "label": "zero-target",
+      "input": {
+        "nums": [
+          1,
+          1
+        ],
+        "k": 0
+      },
+      "sourceHash": "9c8b1e7f68e4d60d4fe03082185489c2098f217518e99a08badfc5c0bf72b8a2",
+      "answer": "1",
+      "calls": "3",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 13,
+      "fullBytes": 7030,
+      "deltaBytes": 4665,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "recursion",
+      "label": "indexed-duplicates",
+      "input": {
+        "nums": [
+          1,
+          1
+        ],
+        "k": 1
+      },
+      "sourceHash": "9c8b1e7f68e4d60d4fe03082185489c2098f217518e99a08badfc5c0bf72b8a2",
+      "answer": "2",
+      "calls": "6",
+      "cacheHits": "0",
+      "states": "5",
+      "rootCount": 1,
+      "steps": 23,
+      "fullBytes": 11671,
+      "deltaBytes": 7360,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "nums": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "k": 3
+      },
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "answer": "3",
+      "calls": "15",
+      "cacheHits": "2",
+      "states": "13",
+      "rootCount": 1,
+      "steps": 56,
+      "fullBytes": 70870,
+      "deltaBytes": 40861,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          2,
+          4
+        ],
+        "k": 7
+      },
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "answer": "64",
+      "calls": "105",
+      "cacheHits": "42",
+      "states": "63",
+      "rootCount": 1,
+      "steps": 372,
+      "fullBytes": 1183387,
+      "deltaBytes": 684860,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "memoization",
+      "label": "false-cache",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 5
+      },
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "answer": "0",
+      "calls": "21",
+      "cacheHits": "6",
+      "states": "15",
+      "rootCount": 1,
+      "steps": 75,
+      "fullBytes": 118130,
+      "deltaBytes": 70027,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "memoization",
+      "label": "zero-target",
+      "input": {
+        "nums": [
+          1,
+          1
+        ],
+        "k": 0
+      },
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "answer": "1",
+      "calls": "3",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 13,
+      "fullBytes": 9976,
+      "deltaBytes": 6381,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "memoization",
+      "label": "indexed-duplicates",
+      "input": {
+        "nums": [
+          1,
+          1
+        ],
+        "k": 1
+      },
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "answer": "2",
+      "calls": "6",
+      "cacheHits": "1",
+      "states": "5",
+      "rootCount": 1,
+      "steps": 23,
+      "fullBytes": 18922,
+      "deltaBytes": 11601,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "nums": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "k": 3
+      },
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "answer": "3",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 19,
+      "fullBytes": 25575,
+      "deltaBytes": 22299,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 19
+      },
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "answer": "0",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 203,
+      "fullBytes": 1537908,
+      "deltaBytes": 1502212,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "canonical",
+      "label": "false-cache",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 5
+      },
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "answer": "0",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 27,
+      "fullBytes": 45005,
+      "deltaBytes": 40305,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "canonical",
+      "label": "zero-target",
+      "input": {
+        "nums": [
+          1,
+          1
+        ],
+        "k": 0
+      },
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "answer": "1",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 5,
+      "fullBytes": 4395,
+      "deltaBytes": 3611,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "canonical",
+      "label": "indexed-duplicates",
+      "input": {
+        "nums": [
+          1,
+          1
+        ],
+        "k": 1
+      },
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "answer": "2",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 7,
+      "fullBytes": 6616,
+      "deltaBytes": 5476,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    }
+  ]
+}

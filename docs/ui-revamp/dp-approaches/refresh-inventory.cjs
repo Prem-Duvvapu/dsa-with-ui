@@ -69,7 +69,7 @@ function requestedCandidateUiVerified(problemId) {
   });
 }
 function linearGridCandidateUiVerified(problemId, folder = 'linear-grid') {
-  const profile = ['circular-activity-obstacles','falling-triangle'].includes(folder) ? require(`./${folder}-cases.cjs`) : null;
+  const profile = ['circular-activity-obstacles','falling-triangle','subset-family'].includes(folder) ? require(`./${folder}-cases.cjs`) : null;
   const candidate = profile?.cases.find(c=>c.id===problemId);
   if (profile && !candidate) return false;
   const rootsFor = form => typeof candidate?.roots === 'function'
@@ -146,7 +146,7 @@ function linearGridCandidateUiVerified(problemId, folder = 'linear-grid') {
       canonicalInputSpec: detail.inputSpec, canonicalComplexity: detail.complexity,
       alternativeStatus: detail.approaches?.length > 1 ? (problem.id === 'climbing-stairs' && verifiedPilot
         ? verifiedTeachingComparison ? 'backend-and-UI-teaching-comparison-pilot-verified; family rollout pending'
-          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id) || requestedCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id, 'circular-activity-obstacles') || linearGridCandidateUiVerified(problem.id, 'falling-triangle')
+          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id) || requestedCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id, 'circular-activity-obstacles') || linearGridCandidateUiVerified(problem.id, 'falling-triangle') || linearGridCandidateUiVerified(problem.id, 'subset-family')
             ? 'backend-and-UI-candidate-verified; family rollout pending' : 'backend-pilot; UI pending')
         : reviewed.get(problem.id).plannedForms.length ? 'planned' : 'requires-different-formulation',
       alternativeSafetyBounds: detail.approaches?.length > 1

@@ -1,19 +1,23 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **13/56 candidates merged. House Robber II, Ninja's Training and Unique Paths II
+Status: **18/56 candidates implemented and verified:15 in the preceding merged baseline,
+plus the three-candidate subset package in approved PR #231.38 candidates remain outside
+the verified set. Publication follows exact-head CI; GitHub records the merge outcome.
+Falling Path/Triangle merged as #230 / `e35dd35`
+on2026-10-18 after approved publication and green exact-head push/PR checks; post-merge
+CI39127039341 passed. No whole-DP or broader release completion is claimed.
+House Robber II, Ninja's Training and Unique Paths II
 merged as #229 / `da63085` on2026-10-16 after corrected-head push/PR checks; post-merge
 CI38942409698 passed. The preceding linear/grid batch merged as #228 / `a14bce5`.
-Two more candidates are verified locally, awaiting publishing approval;41 others remain
-outside this package. D6/D7 and broader release/rollback checks remain pending.**
-2026-10-18 follow-up: the current batch's screen-reader text conflated #/void excluded
+D6/D7 and broader release/rollback checks remain pending.**
+Historical #230 follow-up (2026-10-18): the screen-reader text conflated #/void excluded
 padding with unknown cells. Two summary RED guards and a cell-name RED guard prove the
 defect. The local correction passes24 targeted cases, all863 frontend tests (one worker,
 unchanged assertion/time limits), repeated backend/goldens/build and all100 current-bundle
-browser journeys. Source/package/assets reconciliation passes (RCA-069). Publication
-approval is still outstanding; no next implementation is stacked on this package.
-The owner subsequently explicitly approved commit/push/CI-gated merge on2026-10-18,
-then continuation with the planned next package. Publishing is in progress; the earlier
-approval-pending wording records the pre-authorization snapshot, not current authority.
+browser journeys. Source/package/assets reconciliation passes (RCA-069). The owner
+approved publishing; #230 merged as recorded above. Both exact-head and post-merge CI
+pass, including the normal863-case frontend command. Earlier approval-pending paragraphs
+below are dated historical snapshots, not current authority or publication state.
 The earlier seven are
 Climbing Stairs, Frog Jump and the owner-requested five-problem batch (#223 / `b3a3497`).
 Their PR/post-merge CI passed; bounded public verification is recorded below.
@@ -238,6 +242,72 @@ listings, but independent compilation/execution remains a gate, not an inferred 
    An odd-total answer has no recursion frames: verify the honest no-calls state rather
    than manufacturing one to satisfy a renderer/probe. Advance only the three individually
    verified inventory rows; this preflight advances none and implements no next package.
+
+### D5 subset family — approved publication via #231, 2026-10-21
+
+Backend/source/API/browser gates and the evidence audit pass. Only these three coverage
+rows advance; a fourth row receives solely the documented classification-note correction.
+The owner explicitly approved commit/push/
+merge of this batch; no further feature package is included in this publication handoff.
+
+| Problem | Real prefix recurrence | Recursive cap | Memo cap | Existing tabulation |
+| --- | --- | --- | --- | --- |
+| Subset Sum Equal Target | possible(n,s): skip OR eligible take | 6 indexed items; nums0..20, target0..40 | 10 items AND (n+1)*(target+1)<=80 | Exact canonical object/source/spec/defaults/IDs;225-cell guard |
+| Equal Partition | odd total is impossible; otherwise possible(n,total/2) | 6 indexed items; nums0..20 | 10 items AND (n+1)*(total/2+1)<=80 after parity | Unchanged canonical object/source/spec/defaults/IDs;225-cell guard |
+| Count Subsets with Sum K | count(n,s): skip count + eligible take count | 6 indexed items; POSITIVE nums1..15, k0..60 | 10 items AND (n+1)*(k+1)<=80 | Unchanged canonical object/source/spec/defaults/IDs;225-cell guard |
+
+Boolean executions contain actual booleans, not numeric0/1 aliases. Null means unknown;
+F means a computed false. Count caches similarly reuse known zero. Indexed duplicates
+remain separate choices. Odd-total recursive/memo partition has one real parity step,
+zero calls, no memo table or fake root, and no half-integer target.
+
+Initial17-case RED reports3 discovery failures and14 unavailable-approach errors.
+Nine exact displayed Java listings (six complete standalone classes plus three unchanged
+canonical methods receiving only an outer class) independently compile and execute.
+Index-subset enumeration checks5,697 entries per tracer/compiled-source path, including
+repeats across forms, exhaustive small arrays, seeded actual-domain inputs, defaults,
+alternates and stress controls. Wrong-result source mutations fail3/3 per new form;
+false/zero-as-unknown mutations fail3/3. All are restored before final verification.
+
+RCA-070 rejects the provisional100-cell assumption: a dense99-cell Subset Sum input
+reaches139 calls but exhausts the existing byte budget at477 steps. No global cap is
+raised. Three RED guards detect the missing refusal; final guards assert HTTP400 with
+nums errors and no steps at81/99 cells, completion at80 cells, and valid ten-item runs.
+For the80-cell domain, at depth d at most min(2^d,S+1) different remaining sums exist.
+Thus calls <=1+2*sum(d=0..N-1,min(2^d,S+1)); over N<=10 and the joint cap its upper bound
+is113 calls. Six-item uncached recursion has at most127. These are call bounds, not
+claims that every possible input/payload/device was exhaustively benchmarked.
+
+Measured final API stress witnesses (9 items/target7 memo;6-item recursive controls):
+
+| Problem | Recursive calls / full bytes | Memo calls / states / full bytes | Canonical full bytes |
+| --- | --- | --- | --- |
+| Subset Sum | 127 /254,574 | 111 /63 /1,297,322 | 1,519,499 |
+| Equal Partition | 127 /254,960 | 104 /63 /1,228,745 | 1,518,013 |
+| Count Subsets | 127 /243,173 | 105 /63 /1,183,387 | 1,537,908 |
+
+All42 API scenarios/84 full-delta executions complete with independent answers,
+production-decoder equality and actual identity/source/input/type/complexity checks.
+These witnesses are not a claim of a globally worst payload. The final local suite
+passes8,266 cases/500 unchanged skips; fresh exact-head PR CI confirms that count and
+the normal863-case frontend suite/build.432 regenerated goldens remain unchanged.
+The final browser audit passes2026-10-21T18:41:19Z:102 standard/zoom/stress journeys,
+12 comparisons,54 edge journeys and4 preceding-batch phone compatibility journeys,
+172 total. Every new candidate has34 standard/stress rows and4 comparison rows. Six
+existing edge rows also prove a real81-cell refusal retains the prior run, rejected
+draft, step and share link; four odd-total rows prove no fabricated recursive calls.
+Thirty-six edge rows verify actual value spans AND exact table-cell accessible names.
+The audit reconciles all nine current source hashes, package identity and one consistent
+served JS/CSS bundle. `subset-family/verification.json` states precise provenance.
+The first edge attempt counted decorative glyphs as values; the corrected probe reads
+the dedicated value span and retains the exact accessible-label assertions. That failed
+attempt and all pre80-cell/interrupted partial sweeps are excluded, not counted twice.
+CI builds389.37-kB JS/98.46-kB CSS; the local172-journey bundle is389.53/98.74 kB with
+different asset hashes. These are identified separately, not claimed byte-identical or
+public-deployment acceptance. Source comparison confirms all204 tracked frontend files
+match the committed source (normalized EOL); the bounded local audit uses only its own
+consistent served assets. Human/device/screen-reader/learner/performance, deployment,
+rollback, all remaining candidates and broader P7/P8/P9 gates remain open.
 
 ### D5 linear/grid batch — verified locally, 2026-10-14
 

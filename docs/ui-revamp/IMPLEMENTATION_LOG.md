@@ -2865,3 +2865,95 @@ require its checks to pass, merge/pull it, then cut the next implementation bran
 Historical approval-pending statements above are superseded by this explicit decision;
 GitHub records final publication checks/outcome. No future package's publishing approval
 is inferred beyond this approved batch.
+
+### 2026-10-18 — #230 landed; subset-family implementation begins
+
+Approved Falling Path/Triangle head `da2e5be` passed push CI39126866722 and PR
+CI39126888304, security and Vercel checks. Guarded squash merge produced `e35dd35`
+at12:22:53Z; post-merge CI39127039341 passes. Downloaded PR CI logs prove the normal
+`npx vitest run` command passes863/863 cases in83 files, in addition to the recorded
+local one-worker pass. Backend CI reports8,246 cases,500 unchanged skips, no failures
+or errors. This is merged-code proof, not proof of public backend deployment.
+
+Merged coverage is15/56 candidates,41 others remain. After fetching the merged main,
+`feat/dp-subset-approaches` starts the planned Subset Sum / Equal Partition / Count
+Subsets package. Its initial RED on the unchanged production baseline is17 cases:
+3 discovery assertion failures and14 unavailable-approach errors, no skips. The next
+package's implementation is authorized; publishing still requires its own approval.
+
+### 2026-10-18 — subset-family budget finding and publication request
+
+Six real recursive/memo executables and nine independently compiled exact displayed
+solutions pass the initial17-case suite. Index-set enumeration covers5,697 comparisons
+per tracer/compiled-source path, counting repeats across three forms rather than claiming
+5,697 unique inputs. Compiling wrong-result mutations fail3/3 for recursion and3/3 for
+memo; treating cached false/zero as unknown fails3/3. All mutations are restored.
+
+Full backend/frontend/goldens/build initially pass8,263 cases/500 skips,863 tests and
+432 unchanged goldens. Stronger memo stress then exposes RCA-070: the provisional
+100-cell table cap can still hit the existing byte budget (139 calls,477 steps).
+The preliminary42-scenario API pass and partial Chromium sweep are excluded from final
+sign-off. All three owned server/browser processes are stopped, ports verified free,
+and three RED assertions prove the old dense99-cell inputs are not rejected.
+
+The new joint cap is80, not a higher global budget; max length10 and canonical225-cell
+guard remain. Final tests also require HTTP400/no steps at81/99 cells, dense80-cell
+completion, and ten-item acceptance. Full verification is repeated; no provisional
+manifest certifies the new cap. Two classification notes are corrected to the actual
+positive-only counting domains, without changing canonical input specs.
+
+The owner now explicitly requests "commit, push and merge the changes done till now".
+This authorizes publishing THIS subset batch after verification and exact-head CI.
+Do not begin a further feature package after landing it.
+
+### 2026-10-21 — resume the approved subset publication
+
+The owner repeated the commit/push/merge request. Revalidation finds no live previous
+browser handle or owned server process and no open PR. The final8266-case backend XML
+reports remain on disk, and the packaged jar still matches the compiled implementation.
+The corrected42-scenario/84-execution API report survives; no completed browser matrix
+survived the interruption. Do not promote the three inventory rows from that partial
+sweep. Commit/push the implemented batch, finish the missing live verification on the
+same verified package, then land only after exact-head CI and the remaining gates pass.
+
+### 2026-10-21 — final subset-family verification and publication handoff
+
+Committed/pushed implementation head `a1a2a50` and opened #231 under the owner's explicit
+request. Push CI39650574550 and PR CI39650630258 both pass, including8,266 backend cases
+(500 unchanged skips), the normal863-test/83-file frontend suite, launcher smoke and
+build. Security/Vercel checks pass. The final evidence-only follow-up requires fresh
+exact-head CI before merge; the initial head's green checks cannot certify a later head.
+
+The same verified jar (`b18db40f7440a4242e5768c38b30850647a69a441f6ea266c6a7e1fd9b7512d2`,
+packaged2026-10-18T12:57:34Z) serves all final journeys; its classes match the compiled
+implementation. No Maven runs while it serves. All42 API scenarios/84 executions remain
+bound to the exact current sources. The browser audit passes18:41:19Z:102 standard/
+native-zoom/stress,12 comparisons,54 edges and4 previous-batch phone compatibility
+journeys,172 total. Six edge rows prove actual81-cell rejection preserves the old run,
+draft, step/link and error focus. Four odd-total rows prove zero calls/no fake memo/root;
+36 edge rows check actual values and exact accessible cell names. Only the three new
+coverage rows advance:18/56 verified,15 in the preceding merged baseline,38 others.
+Count Partitions' row changes only its inaccurate classification note. Canonical source
+digests and input specs stay unchanged, and431/431 canonical stats/no duplicates persist.
+
+The first edge attempt failed because raw cell text includes decorative glyphs. The
+corrected probe reads .dp-value while retaining every per-cell accessible-label check;
+all54 final edge journeys pass. The multiphase shell ended143 after writing the complete
+30-row Chromium manifest; remaining phases ran individually to terminal0. No incomplete
+or superseded sweep is counted, and all final manifests postdate the packaged backend.
+
+Browser evidence uses index-C9w1PyPL.js / index-DwejRBy7.css (389.53/98.74 kB). CI's
+build is index-B0ZzUD17.js / index-DVASteW4.css (389.37/98.46 kB). Do not claim these
+artifacts are byte-identical or that the public deployment was accepted. All204 tracked
+frontend files match HEAD after EOL normalization. A separate Git-export diagnostic
+build has identical CSS after scoped-name normalization, but is not substituted into
+the172-journey evidence. An initial auxiliary build from the wrong temporary directory
+failed; no source/dependency/manifest/lock change results or passing evidence is claimed
+from it. CI's fresh locked install still reports9 vulnerabilities (4 moderate,3 high,
+2 critical); this package adds no dependency and does not remediate them.
+
+Two representative final screenshots are inspected: Subset memo320/dark and Count
+memo1366/light. Large trees still need substantial local panning, especially on phones;
+automated reachability is not human/device/screen-reader/performance certification.
+The six role-based review gates remain bounded self-review, not an independent-agent
+or human acceptance claim. No next feature package starts during this approved handoff.
