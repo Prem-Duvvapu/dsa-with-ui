@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-21T18:42:34.314Z",
+  "generated": "2026-10-21T20:03:46.658Z",
   "stats": {
     "catalogued": 431,
     "traced": 431,
@@ -1622,17 +1622,131 @@
         "maxBytes": 2000000
       },
       "canonicalComplexity": {
-        "timeComplexity": "O(N * W)",
-        "timeExplanation": "Time Complexity: N items x Capacity W table.",
-        "timeWhy": "2D/1D DP",
-        "spaceComplexity": "O(W)",
-        "spaceExplanation": "Space Complexity: 1D array space-optimized DP table.",
-        "spaceWhy": "DP Array",
-        "auxiliarySpace": "Auxiliary Space: O(W)",
-        "dataStructureSpace": "Memory"
+        "timeComplexity": "O(N * (C + 1))",
+        "timeExplanation": "Fill the full prefix/capacity table.",
+        "timeWhy": "Bottom-up recurrence",
+        "spaceComplexity": "O(N * (C + 1))",
+        "spaceExplanation": "The full table, with no recursive stack.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "O(N * (C + 1))",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "maxValue": 20,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  1,
+                  2,
+                  4,
+                  5
+                ],
+                "help": "Paired by index with values. Each indexed item can be taken once. The complete tree must fit 220 calls; weights and capacity affect its size. Reduce items/capacity or increase weights if refused.",
+                "label": "Weights",
+                "name": "weights",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "maxValue": 100,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  5,
+                  4,
+                  8,
+                  6
+                ],
+                "help": "",
+                "label": "Values",
+                "name": "values",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 30,
+                  "min": 1
+                },
+                "defaultValue": 5,
+                "help": "",
+                "label": "Capacity",
+                "name": "capacity",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "maxValue": 20,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  1,
+                  2,
+                  4,
+                  5
+                ],
+                "help": "Paired by index with values. Each indexed item can be taken once. Memo needs (n+1) × (capacity+1) ≤ 80 cells.",
+                "label": "Weights",
+                "name": "weights",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "maxValue": 100,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  5,
+                  4,
+                  8,
+                  6
+                ],
+                "help": "",
+                "label": "Values",
+                "name": "values",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 30,
+                  "min": 1
+                },
+                "defaultValue": 5,
+                "help": "",
+                "label": "Capacity",
+                "name": "capacity",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "largest-divisible-subset",
@@ -3658,7 +3772,7 @@
         "memoization",
         "tabulation"
       ],
-      "notes": "Rod must be sold under the existing positive-price domain.",
+      "notes": "Existing nonnegative prices include zero; within-length states and available length1 allow the final optimum to sell the whole rod.",
       "codeDigest": "19f8252cb2ff4eac28b4c0dd246f80f3a473c0b481f62404a5582f7355ee5403",
       "canonicalInputSpec": {
         "fields": [
@@ -3686,17 +3800,75 @@
         "maxBytes": 2000000
       },
       "canonicalComplexity": {
-        "timeComplexity": "O(N * K)",
-        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
-        "timeWhy": "Dynamic Programming",
-        "spaceComplexity": "O(N)",
-        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
-        "spaceWhy": "Memory",
-        "auxiliarySpace": "Auxiliary Space: O(N)",
-        "dataStructureSpace": "Memory"
+        "timeComplexity": "O(N^2)",
+        "timeExplanation": "Fill the full prefix/capacity table.",
+        "timeWhy": "Bottom-up recurrence",
+        "spaceComplexity": "O(N^2)",
+        "spaceExplanation": "The full table, with no recursive stack.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "O(N^2)",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 9,
+                  "maxValue": 100,
+                  "minLength": 1,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  2,
+                  5,
+                  7,
+                  8,
+                  10
+                ],
+                "help": "Position i gives the price of length i+1; rod length is the number of prices. Nonnegative prices, including zero. Up to 9 prices keeps the complete tree below 220 calls.",
+                "label": "Prices by piece length",
+                "name": "prices",
+                "type": "INT_ARRAY"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 10,
+                  "maxValue": 100,
+                  "minLength": 1,
+                  "minValue": 0
+                },
+                "defaultValue": [
+                  2,
+                  5,
+                  7,
+                  8,
+                  10
+                ],
+                "help": "Position i gives the price of length i+1; rod length is the number of prices. Nonnegative prices, including zero. Up to 10 prices bounds the copied memo table.",
+                "label": "Prices by piece length",
+                "name": "prices",
+                "type": "INT_ARRAY"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "shortest-common-supersequence",
@@ -4399,17 +4571,127 @@
         "maxBytes": 2000000
       },
       "canonicalComplexity": {
-        "timeComplexity": "O(N * K)",
-        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
-        "timeWhy": "Dynamic Programming",
-        "spaceComplexity": "O(N)",
-        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
-        "spaceWhy": "Memory",
-        "auxiliarySpace": "Auxiliary Space: O(N)",
-        "dataStructureSpace": "Memory"
+        "timeComplexity": "O(N * (C + 1))",
+        "timeExplanation": "Fill the full prefix/capacity table.",
+        "timeWhy": "Bottom-up recurrence",
+        "spaceComplexity": "O(N * (C + 1))",
+        "spaceExplanation": "The full table, with no recursive stack.",
+        "spaceWhy": "DP table",
+        "auxiliarySpace": "O(N * (C + 1))",
+        "dataStructureSpace": "Computed states"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "maxValue": 20,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  2,
+                  4,
+                  6
+                ],
+                "help": "Paired by index with values. Item types can repeat. The complete tree must fit 220 calls; weights and capacity affect its size. Reduce items/capacity or increase weights if refused.",
+                "label": "Weights",
+                "name": "weights",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "maxValue": 100,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  5,
+                  11,
+                  13
+                ],
+                "help": "",
+                "label": "Values",
+                "name": "values",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 30,
+                  "min": 1
+                },
+                "defaultValue": 10,
+                "help": "",
+                "label": "Capacity",
+                "name": "capacity",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "maxValue": 20,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  2,
+                  4,
+                  6
+                ],
+                "help": "Paired by index with values. Item types can repeat. Memo needs (n+1) × (capacity+1) ≤ 80 cells.",
+                "label": "Weights",
+                "name": "weights",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "maxValue": 100,
+                  "minLength": 1,
+                  "minValue": 1
+                },
+                "defaultValue": [
+                  5,
+                  11,
+                  13
+                ],
+                "help": "",
+                "label": "Values",
+                "name": "values",
+                "type": "INT_ARRAY"
+              },
+              {
+                "constraints": {
+                  "max": 30,
+                  "min": 1
+                },
+                "defaultValue": 10,
+                "help": "",
+                "label": "Capacity",
+                "name": "capacity",
+                "type": "INT"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "unique-paths-2",

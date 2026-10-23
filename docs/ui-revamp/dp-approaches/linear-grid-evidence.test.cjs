@@ -110,6 +110,17 @@ test('subset evidence requires actual roots and visible state coordinates',()=>{
   docs['firefox-maximum-zoom1.json'].rows[0].rootCount=1;
   docs['firefox-maximum-zoom1.json'].rows[0].allStateCoordinatesVisible=false;assert.equal(check(),false);
 });
+test('capacity evidence cannot certify absent roots or truncated state labels',()=>{
+  for(const id of ['knapsack-01','unbounded-knapsack','rod-cutting-problem']){
+    const docs=documents();
+    for(const doc of Object.values(docs))for(const row of doc.rows){row.problemId=id;row.rootCount=1;row.allStateCoordinatesVisible=true;}
+    const check=()=>verified(docs,'capacity-family',id);
+    assert.equal(check(),true);
+    docs['firefox-maximum-zoom1.json'].rows[0].rootCount=0;assert.equal(check(),false);
+    docs['firefox-maximum-zoom1.json'].rows[0].rootCount=1;
+    docs['firefox-maximum-zoom1.json'].rows[0].allStateCoordinatesVisible=false;assert.equal(check(),false);
+  }
+});
 test('incorrect zoom, missing proof and an incorrect engine are refused',()=>{
   for(const mutate of [
     doc=>{doc.rows[0].nativeZoom=1;},

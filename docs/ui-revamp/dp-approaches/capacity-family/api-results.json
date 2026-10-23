@@ -1,0 +1,1865 @@
+{
+  "generated": "2026-10-21T19:33:21.366Z",
+  "realBackend": true,
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "rows": [
+    {
+      "problemId": "knapsack-01",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "capacity": 5,
+        "weights": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "values": [
+          5,
+          4,
+          8,
+          6
+        ]
+      },
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "answer": "13",
+      "calls": "14",
+      "cacheHits": "0",
+      "states": "14",
+      "rootCount": 1,
+      "steps": 51,
+      "fullBytes": 26099,
+      "deltaBytes": 15938,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "capacity": 29,
+        "weights": [
+          3,
+          1,
+          15,
+          5,
+          3,
+          19,
+          7,
+          17
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "answer": "500",
+      "calls": "220",
+      "cacheHits": "0",
+      "states": "116",
+      "rootCount": 1,
+      "steps": 783,
+      "fullBytes": 458633,
+      "deltaBytes": 271642,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "recursion",
+      "label": "single-vs-reuse",
+      "input": {
+        "capacity": 4,
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ]
+      },
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "answer": "5",
+      "calls": "3",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 12,
+      "fullBytes": 6533,
+      "deltaBytes": 4417,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "recursion",
+      "label": "zero-cache",
+      "input": {
+        "capacity": 6,
+        "weights": [
+          5,
+          5,
+          5
+        ],
+        "values": [
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "answer": "1",
+      "calls": "10",
+      "cacheHits": "0",
+      "states": "7",
+      "rootCount": 1,
+      "steps": 38,
+      "fullBytes": 19199,
+      "deltaBytes": 11798,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "recursion",
+      "label": "paired-permutation",
+      "input": {
+        "capacity": 5,
+        "weights": [
+          5,
+          4,
+          2,
+          1
+        ],
+        "values": [
+          6,
+          8,
+          4,
+          5
+        ]
+      },
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "answer": "13",
+      "calls": "19",
+      "cacheHits": "0",
+      "states": "19",
+      "rootCount": 1,
+      "steps": 71,
+      "fullBytes": 36098,
+      "deltaBytes": 21732,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "capacity": 5,
+        "weights": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "values": [
+          5,
+          4,
+          8,
+          6
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "13",
+      "calls": "14",
+      "cacheHits": "0",
+      "states": "14",
+      "rootCount": 1,
+      "steps": 51,
+      "fullBytes": 80631,
+      "deltaBytes": 48188,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "capacity": 9,
+        "weights": [
+          1,
+          3,
+          1,
+          1,
+          5,
+          1,
+          2
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "600",
+      "calls": "83",
+      "cacheHits": "28",
+      "states": "55",
+      "rootCount": 1,
+      "steps": 293,
+      "fullBytes": 935433,
+      "deltaBytes": 540743,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "memo-shape-1",
+      "input": {
+        "capacity": 30,
+        "weights": [
+          1
+        ],
+        "values": [
+          100
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "100",
+      "calls": "3",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 12,
+      "fullBytes": 32817,
+      "deltaBytes": 19853,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "memo-shape-2",
+      "input": {
+        "capacity": 25,
+        "weights": [
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "200",
+      "calls": "7",
+      "cacheHits": "1",
+      "states": "6",
+      "rootCount": 1,
+      "steps": 26,
+      "fullBytes": 81739,
+      "deltaBytes": 48002,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "memo-shape-3",
+      "input": {
+        "capacity": 19,
+        "weights": [
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "300",
+      "calls": "13",
+      "cacheHits": "3",
+      "states": "10",
+      "rootCount": 1,
+      "steps": 47,
+      "fullBytes": 148755,
+      "deltaBytes": 86519,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "memo-shape-4",
+      "input": {
+        "capacity": 15,
+        "weights": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "400",
+      "calls": "21",
+      "cacheHits": "6",
+      "states": "15",
+      "rootCount": 1,
+      "steps": 75,
+      "fullBytes": 236553,
+      "deltaBytes": 139726,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "memo-shape-5",
+      "input": {
+        "capacity": 12,
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "500",
+      "calls": "31",
+      "cacheHits": "10",
+      "states": "21",
+      "rootCount": 1,
+      "steps": 110,
+      "fullBytes": 340365,
+      "deltaBytes": 199451,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "memo-shape-6",
+      "input": {
+        "capacity": 10,
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "600",
+      "calls": "43",
+      "cacheHits": "15",
+      "states": "28",
+      "rootCount": 1,
+      "steps": 152,
+      "fullBytes": 467058,
+      "deltaBytes": 269935,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "memo-shape-7",
+      "input": {
+        "capacity": 9,
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "700",
+      "calls": "57",
+      "cacheHits": "21",
+      "states": "36",
+      "rootCount": 1,
+      "steps": 201,
+      "fullBytes": 638967,
+      "deltaBytes": 374207,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "memo-shape-8",
+      "input": {
+        "capacity": 7,
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "700",
+      "calls": "71",
+      "cacheHits": "27",
+      "states": "44",
+      "rootCount": 1,
+      "steps": 250,
+      "fullBytes": 738087,
+      "deltaBytes": 426430,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "single-vs-reuse",
+      "input": {
+        "capacity": 4,
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "5",
+      "calls": "3",
+      "cacheHits": "0",
+      "states": "3",
+      "rootCount": 1,
+      "steps": 12,
+      "fullBytes": 11918,
+      "deltaBytes": 7647,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "zero-cache",
+      "input": {
+        "capacity": 6,
+        "weights": [
+          5,
+          5,
+          5
+        ],
+        "values": [
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "1",
+      "calls": "9",
+      "cacheHits": "2",
+      "states": "7",
+      "rootCount": 1,
+      "steps": 34,
+      "fullBytes": 51457,
+      "deltaBytes": 29909,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "memoization",
+      "label": "paired-permutation",
+      "input": {
+        "capacity": 5,
+        "weights": [
+          5,
+          4,
+          2,
+          1
+        ],
+        "values": [
+          6,
+          8,
+          4,
+          5
+        ]
+      },
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "answer": "13",
+      "calls": "19",
+      "cacheHits": "0",
+      "states": "19",
+      "rootCount": 1,
+      "steps": 71,
+      "fullBytes": 111927,
+      "deltaBytes": 64669,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "capacity": 5,
+        "weights": [
+          1,
+          2,
+          4,
+          5
+        ],
+        "values": [
+          5,
+          4,
+          8,
+          6
+        ]
+      },
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "answer": "13",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 25,
+      "fullBytes": 38914,
+      "deltaBytes": 34570,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "capacity": 24,
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "answer": "100",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 201,
+      "fullBytes": 1518004,
+      "deltaBytes": 1482664,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "canonical",
+      "label": "single-vs-reuse",
+      "input": {
+        "capacity": 4,
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ]
+      },
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "answer": "5",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 6,
+      "fullBytes": 6225,
+      "deltaBytes": 5263,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "canonical",
+      "label": "zero-cache",
+      "input": {
+        "capacity": 6,
+        "weights": [
+          5,
+          5,
+          5
+        ],
+        "values": [
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "answer": "1",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 22,
+      "fullBytes": 32870,
+      "deltaBytes": 29060,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "knapsack-01",
+      "approachId": "canonical",
+      "label": "paired-permutation",
+      "input": {
+        "capacity": 5,
+        "weights": [
+          5,
+          4,
+          2,
+          1
+        ],
+        "values": [
+          6,
+          8,
+          4,
+          5
+        ]
+      },
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "answer": "13",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 25,
+      "fullBytes": 38901,
+      "deltaBytes": 34557,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "capacity": 10,
+        "weights": [
+          2,
+          4,
+          6
+        ],
+        "values": [
+          5,
+          11,
+          13
+        ]
+      },
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "answer": "27",
+      "calls": "33",
+      "cacheHits": "0",
+      "states": "18",
+      "rootCount": 1,
+      "steps": 118,
+      "fullBytes": 61977,
+      "deltaBytes": 36917,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "capacity": 26,
+        "weights": [
+          17,
+          2,
+          4,
+          15
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "answer": "1300",
+      "calls": "220",
+      "cacheHits": "0",
+      "states": "70",
+      "rootCount": 1,
+      "steps": 805,
+      "fullBytes": 494991,
+      "deltaBytes": 288764,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "recursion",
+      "label": "single-vs-reuse",
+      "input": {
+        "capacity": 4,
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ]
+      },
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "answer": "10",
+      "calls": "5",
+      "cacheHits": "0",
+      "states": "5",
+      "rootCount": 1,
+      "steps": 19,
+      "fullBytes": 9892,
+      "deltaBytes": 6399,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "recursion",
+      "label": "zero-cache",
+      "input": {
+        "capacity": 6,
+        "weights": [
+          5,
+          5,
+          5
+        ],
+        "values": [
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "answer": "1",
+      "calls": "13",
+      "cacheHits": "0",
+      "states": "8",
+      "rootCount": 1,
+      "steps": 50,
+      "fullBytes": 25363,
+      "deltaBytes": 15322,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "recursion",
+      "label": "unused-capacity",
+      "input": {
+        "capacity": 8,
+        "weights": [
+          3
+        ],
+        "values": [
+          10
+        ]
+      },
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "answer": "20",
+      "calls": "6",
+      "cacheHits": "0",
+      "states": "6",
+      "rootCount": 1,
+      "steps": 23,
+      "fullBytes": 11867,
+      "deltaBytes": 7537,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "capacity": 10,
+        "weights": [
+          2,
+          4,
+          6
+        ],
+        "values": [
+          5,
+          11,
+          13
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "27",
+      "calls": "21",
+      "cacheHits": "3",
+      "states": "18",
+      "rootCount": 1,
+      "steps": 76,
+      "fullBytes": 154504,
+      "deltaBytes": 90507,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "capacity": 9,
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "900",
+      "calls": "127",
+      "cacheHits": "48",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 446,
+      "fullBytes": 1456622,
+      "deltaBytes": 853278,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "memo-shape-1",
+      "input": {
+        "capacity": 30,
+        "weights": [
+          1
+        ],
+        "values": [
+          100
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "3000",
+      "calls": "61",
+      "cacheHits": "0",
+      "states": "61",
+      "rootCount": 1,
+      "steps": 215,
+      "fullBytes": 632393,
+      "deltaBytes": 365788,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "memo-shape-2",
+      "input": {
+        "capacity": 25,
+        "weights": [
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "2500",
+      "calls": "101",
+      "cacheHits": "24",
+      "states": "77",
+      "rootCount": 1,
+      "steps": 355,
+      "fullBytes": 1202087,
+      "deltaBytes": 698634,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "memo-shape-3",
+      "input": {
+        "capacity": 19,
+        "weights": [
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "1900",
+      "calls": "115",
+      "cacheHits": "36",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 404,
+      "fullBytes": 1362536,
+      "deltaBytes": 791608,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "memo-shape-4",
+      "input": {
+        "capacity": 15,
+        "weights": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "1500",
+      "calls": "121",
+      "cacheHits": "42",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 425,
+      "fullBytes": 1413176,
+      "deltaBytes": 820607,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "memo-shape-5",
+      "input": {
+        "capacity": 12,
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "1200",
+      "calls": "121",
+      "cacheHits": "44",
+      "states": "77",
+      "rootCount": 1,
+      "steps": 425,
+      "fullBytes": 1372072,
+      "deltaBytes": 799360,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "memo-shape-6",
+      "input": {
+        "capacity": 10,
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "1000",
+      "calls": "121",
+      "cacheHits": "45",
+      "states": "76",
+      "rootCount": 1,
+      "steps": 425,
+      "fullBytes": 1350638,
+      "deltaBytes": 786778,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "memo-shape-7",
+      "input": {
+        "capacity": 9,
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "900",
+      "calls": "127",
+      "cacheHits": "48",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 446,
+      "fullBytes": 1456622,
+      "deltaBytes": 853278,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "memo-shape-8",
+      "input": {
+        "capacity": 7,
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "700",
+      "calls": "113",
+      "cacheHits": "42",
+      "states": "71",
+      "rootCount": 1,
+      "steps": 397,
+      "fullBytes": 1193092,
+      "deltaBytes": 693240,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "single-vs-reuse",
+      "input": {
+        "capacity": 4,
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "10",
+      "calls": "5",
+      "cacheHits": "0",
+      "states": "5",
+      "rootCount": 1,
+      "steps": 19,
+      "fullBytes": 18240,
+      "deltaBytes": 11298,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "zero-cache",
+      "input": {
+        "capacity": 6,
+        "weights": [
+          5,
+          5,
+          5
+        ],
+        "values": [
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "1",
+      "calls": "10",
+      "cacheHits": "2",
+      "states": "8",
+      "rootCount": 1,
+      "steps": 38,
+      "fullBytes": 57423,
+      "deltaBytes": 33001,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "memoization",
+      "label": "unused-capacity",
+      "input": {
+        "capacity": 8,
+        "weights": [
+          3
+        ],
+        "values": [
+          10
+        ]
+      },
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "answer": "20",
+      "calls": "6",
+      "cacheHits": "0",
+      "states": "6",
+      "rootCount": 1,
+      "steps": 23,
+      "fullBytes": 28033,
+      "deltaBytes": 16751,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "capacity": 10,
+        "weights": [
+          2,
+          4,
+          6
+        ],
+        "values": [
+          5,
+          11,
+          13
+        ]
+      },
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "answer": "27",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 34,
+      "fullBytes": 69833,
+      "deltaBytes": 63887,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "capacity": 24,
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "answer": "100",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 201,
+      "fullBytes": 1524893,
+      "deltaBytes": 1489553,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "canonical",
+      "label": "single-vs-reuse",
+      "input": {
+        "capacity": 4,
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ]
+      },
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "answer": "10",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 6,
+      "fullBytes": 6584,
+      "deltaBytes": 5622,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "canonical",
+      "label": "zero-cache",
+      "input": {
+        "capacity": 6,
+        "weights": [
+          5,
+          5,
+          5
+        ],
+        "values": [
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "answer": "1",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 22,
+      "fullBytes": 33764,
+      "deltaBytes": 29954,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "unbounded-knapsack",
+      "approachId": "canonical",
+      "label": "unused-capacity",
+      "input": {
+        "capacity": 8,
+        "weights": [
+          3
+        ],
+        "values": [
+          10
+        ]
+      },
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "answer": "20",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 10,
+      "fullBytes": 13024,
+      "deltaBytes": 11350,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "prices": [
+          2,
+          5,
+          7,
+          8,
+          10
+        ]
+      },
+      "sourceHash": "2ca511199e38266a64570db577ec8e0853899ab0336387305a9fe12fa54b605a",
+      "answer": "12",
+      "calls": "42",
+      "cacheHits": "0",
+      "states": "23",
+      "rootCount": 1,
+      "steps": 151,
+      "fullBytes": 82801,
+      "deltaBytes": 49235,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "prices": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "2ca511199e38266a64570db577ec8e0853899ab0336387305a9fe12fa54b605a",
+      "answer": "900",
+      "calls": "219",
+      "cacheHits": "0",
+      "states": "59",
+      "rootCount": 1,
+      "steps": 781,
+      "fullBytes": 506180,
+      "deltaBytes": 299221,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "recursion",
+      "label": "zero-cache",
+      "input": {
+        "prices": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "sourceHash": "2ca511199e38266a64570db577ec8e0853899ab0336387305a9fe12fa54b605a",
+      "answer": "0",
+      "calls": "42",
+      "cacheHits": "0",
+      "states": "23",
+      "rootCount": 1,
+      "steps": 151,
+      "fullBytes": 82777,
+      "deltaBytes": 49211,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "recursion",
+      "label": "repeat-unit",
+      "input": {
+        "prices": [
+          9,
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "2ca511199e38266a64570db577ec8e0853899ab0336387305a9fe12fa54b605a",
+      "answer": "36",
+      "calls": "25",
+      "cacheHits": "0",
+      "states": "17",
+      "rootCount": 1,
+      "steps": 90,
+      "fullBytes": 47506,
+      "deltaBytes": 28391,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "recursion",
+      "label": "long-piece",
+      "input": {
+        "prices": [
+          0,
+          0,
+          0,
+          99
+        ]
+      },
+      "sourceHash": "2ca511199e38266a64570db577ec8e0853899ab0336387305a9fe12fa54b605a",
+      "answer": "99",
+      "calls": "25",
+      "cacheHits": "0",
+      "states": "17",
+      "rootCount": 1,
+      "steps": 90,
+      "fullBytes": 47479,
+      "deltaBytes": 28364,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "prices": [
+          2,
+          5,
+          7,
+          8,
+          10
+        ]
+      },
+      "sourceHash": "75de6ada3a21e23458d5d1aa8055018267188539690cb71c8d8f28966b0c21ea",
+      "answer": "12",
+      "calls": "27",
+      "cacheHits": "4",
+      "states": "23",
+      "rootCount": 1,
+      "steps": 98,
+      "fullBytes": 175834,
+      "deltaBytes": 100879,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "prices": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "75de6ada3a21e23458d5d1aa8055018267188539690cb71c8d8f28966b0c21ea",
+      "answer": "1000",
+      "calls": "91",
+      "cacheHits": "20",
+      "states": "71",
+      "rootCount": 1,
+      "steps": 330,
+      "fullBytes": 1501236,
+      "deltaBytes": 849121,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "memoization",
+      "label": "zero-cache",
+      "input": {
+        "prices": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "sourceHash": "75de6ada3a21e23458d5d1aa8055018267188539690cb71c8d8f28966b0c21ea",
+      "answer": "0",
+      "calls": "27",
+      "cacheHits": "4",
+      "states": "23",
+      "rootCount": 1,
+      "steps": 98,
+      "fullBytes": 175688,
+      "deltaBytes": 100775,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "memoization",
+      "label": "repeat-unit",
+      "input": {
+        "prices": [
+          9,
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "75de6ada3a21e23458d5d1aa8055018267188539690cb71c8d8f28966b0c21ea",
+      "answer": "36",
+      "calls": "19",
+      "cacheHits": "2",
+      "states": "17",
+      "rootCount": 1,
+      "steps": 69,
+      "fullBytes": 99204,
+      "deltaBytes": 58530,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "memoization",
+      "label": "long-piece",
+      "input": {
+        "prices": [
+          0,
+          0,
+          0,
+          99
+        ]
+      },
+      "sourceHash": "75de6ada3a21e23458d5d1aa8055018267188539690cb71c8d8f28966b0c21ea",
+      "answer": "99",
+      "calls": "19",
+      "cacheHits": "2",
+      "states": "17",
+      "rootCount": 1,
+      "steps": 69,
+      "fullBytes": 99020,
+      "deltaBytes": 58390,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "prices": [
+          2,
+          5,
+          7,
+          8,
+          10
+        ]
+      },
+      "sourceHash": "19f8252cb2ff4eac28b4c0dd246f80f3a473c0b481f62404a5582f7355ee5403",
+      "answer": "12",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 27,
+      "fullBytes": 44732,
+      "deltaBytes": 40032,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "prices": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ]
+      },
+      "sourceHash": "19f8252cb2ff4eac28b4c0dd246f80f3a473c0b481f62404a5582f7355ee5403",
+      "answer": "1200",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 146,
+      "fullBytes": 857077,
+      "deltaBytes": 831361,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "canonical",
+      "label": "zero-cache",
+      "input": {
+        "prices": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "sourceHash": "19f8252cb2ff4eac28b4c0dd246f80f3a473c0b481f62404a5582f7355ee5403",
+      "answer": "0",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 27,
+      "fullBytes": 44581,
+      "deltaBytes": 39881,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "canonical",
+      "label": "repeat-unit",
+      "input": {
+        "prices": [
+          9,
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "19f8252cb2ff4eac28b4c0dd246f80f3a473c0b481f62404a5582f7355ee5403",
+      "answer": "36",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 18,
+      "fullBytes": 24122,
+      "deltaBytes": 21024,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "rod-cutting-problem",
+      "approachId": "canonical",
+      "label": "long-piece",
+      "input": {
+        "prices": [
+          0,
+          0,
+          0,
+          99
+        ]
+      },
+      "sourceHash": "19f8252cb2ff4eac28b4c0dd246f80f3a473c0b481f62404a5582f7355ee5403",
+      "answer": "99",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 18,
+      "fullBytes": 23974,
+      "deltaBytes": 20876,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    }
+  ]
+}

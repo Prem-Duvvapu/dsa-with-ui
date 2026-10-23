@@ -248,6 +248,47 @@ The subset-family branch starts only after this merge/fetch and passing main CI.
 initial17-case RED is confirmed (3 discovery failures,14 unavailable-approach errors).
 Implementation is authorized, but its publication and UI-verified status are not inferred.
 
+Publication outcome (2026-10-21): #231 merged as `435c362` at18:49:16Z. Final head
+`73758c1` passes push CI39655867947 and PR CI39655874968; post-merge main
+CI39656155506 passes. Coverage is18/56 merged/verified,38 other candidates. The later
+goal continuation starts `feat/dp-capacity-approaches` from this merged baseline:
+0/1 Knapsack, Unbounded Knapsack and Rod Cutting now have genuine recursion/memoization
+and their exact original tabulation. Final local gates pass:8,287 backend cases/500
+unchanged skips, normal863-test frontend suite/build,432 unchanged regenerated golden
+cases, startup cleanup and23 evidence helpers. Nine exact displayed Java listings
+compile independently and match separate answer references; source/cache/boundary and
+fabricated-cell mutation guards fail as intended and are fully restored.
+
+The61 API scenarios/122 executions and180 current-package browser journeys pass. The
+20:03:46Z final audit reconciles current source hashes, production assets and the
+unchanged jar; all607 compiled production classes match it after the test-only follow-up.
+The browser scope is102 standard/zoom/stress,12 comparisons,60 edges and6 preceding-
+subset phone compatibility rows. Fourteen edge refusals retain run/draft/step/link and
+error focus; six step4000 links return to step1 with notice and normalized URL. Forty-two
+edge rows check actual table values and accessible names. Local panning is still needed
+for large trees; human/device/screen-reader/learner/performance acceptance is not claimed.
+
+Only these three inventory rows advance:21/56 locally verified,18 merged,35 others.
+All56 canonical source digests/specs/defaults stay unchanged; stats remain431/431 with
+no duplicates/orphans. No dependency, endpoint, global budget or frontend production-code
+change. The pre-existing paired/joint-input Randomize gap (RCA-064 follow-up),9 locked
+dependency findings, D6/D7 and broader release gates remain open. This new batch is
+uncommitted/unpushed/unmerged; its publication needs separate approval and exact-head CI.
+
+Resumed verification (2026-10-23): current main is still `435c362`; publication approval
+has not been received. A bounded public check verifies only the already-merged subset
+API:9 default scenarios/18 full-delta executions,2 odd-partition scenarios/4 executions
+and3 expected81-cell memo refusals,25 requests total. All9 public source hashes match
+the verified baseline; source/spec/type/complexity/default/input identity, independent
+answers, decoder equality and odd no-call/no-memo behavior pass. Public stats remain
+431/431 with no duplicates/orphans. See capacity-family/merged-subset-public.json.
+The first stats attempt times out with0 bytes and is excluded; later independent health
+checks return200, followed by the full passing verifier. Cause is unproven. Three new
+profile-selection tests are RED before the probe extension; all26 evidence/profile
+helpers pass afterward. No application production code, coverage count or publication
+state changes. This is not public UI/device/all-input/rollback acceptance, exact public
+binary provenance, or proof that the capacity batch is deployed. Temporary servers stop.
+
 ## Baseline (P0, 2026-09-29)
 
 Subset-family publication snapshot (2026-10-21, #231): three more candidates pass

@@ -2957,3 +2957,142 @@ memo1366/light. Large trees still need substantial local panning, especially on 
 automated reachability is not human/device/screen-reader/performance certification.
 The six role-based review gates remain bounded self-review, not an independent-agent
 or human acceptance claim. No next feature package starts during this approved handoff.
+
+### 2026-10-21 — #231 merged; next capacity family in progress
+
+Final subset evidence head `73758c1` passes push CI39655867947 and PR CI39655874968.
+The approved guarded squash merge lands as `435c362` at18:49:16Z; post-merge main
+CI39656155506 passes. A fresh fetch and empty diff confirm the native worktree contains
+the merged batch. No additional changes existed at the owner's repeated publish request.
+Coverage is18/56 merged/verified; the broad goal remains active, not complete.
+
+The subsequent goal continuation authorizes implementing pending work, not publishing a
+new batch. Branch `feat/dp-capacity-approaches` starts from `435c362` and adds genuine
+recursion/memoization for 0/1 Knapsack, Unbounded Knapsack and Rod Cutting. Canonical
+tracers/source/spec/defaults remain untouched. Rod retains zero prices and long-valued
+source/cache/results. The Knapsack take edge removes the item only for 0/1; reusable
+types retain their prefix index. A safety-only shape calculation refuses uncached trees
+over220 real calls before emitting. Memo80-cell and Rod9/10-entry limits are measured
+individually, never justified by another candidate's cap or a raised global budget.
+
+Initial18 backend cases fail on baseline (3 discovery failures,15 unavailable errors),
+then pass. Six independently compiling wrong-result source mutations fail3/3 per new
+form; ignoring cached zero fails3/3. A220→221-call limit mutation fails the two Knapsack
+boundary guards, with Rod as a passing control. All mutations are restored before the
+final full backend/goldens/package sequence. Exact maximum witnesses reach220 calls
+for both Knapsacks and219 for Rod; explicit221-call inputs must be refused.
+
+All863 frontend tests/83 files pass with the normal command; the production build passes
+using index-C9w1PyPL.js / index-DwejRBy7.css (389.53/98.74 kB). Startup cleanup and22
+evidence/oracle helper cases pass. The new inventory root/label guard was RED against the
+preceding verifier (12 controls pass). The probe's initial missing oracle import was a
+test-authoring error, corrected before accepting the helper suite; it is not product RED
+evidence. Full backend/package, real API, browser, provenance and inventory gates are
+still in progress; no capacity row is promoted yet. Fresh npm ci reports9 unchanged
+locked-dependency findings; no dependency upgrade/remediation or release sign-off.
+
+Capacity verification follow-up: the full backend passes8,284 cases/500 unchanged
+skips,432 regenerated golden cases have no changed files, and packaging succeeds at
+19:28:58Z. All61 API scenarios/122 full-delta executions pass with actual identity,
+inputs, sources, types, complexity, independent answers and production-decoder equality;
+16 extra memo scenarios cover every Knapsack item count at its largest joint-safe
+capacity. Largest full response is1,524,893 bytes. All30 standard Chromium journeys
+pass; remaining browser phases are in progress. Three stronger per-cell memo-state
+regressions are added but not yet run: Maven will wait until owned browser/server
+processes stop. The production jar is unchanged during these journeys.
+
+Read-only preflight also records the pre-existing paired-array Randomize defect under
+RCA-064: a deterministic generator run yields2 weights and3 values, each field valid.
+The server correctly refuses mismatches. A future map-level input-contract/generator
+package is needed; no heuristic, domain shrink or silent draft repair is folded here.
+Current browser evidence does not certify Randomize as a server-accepted-input generator.
+
+### 2026-10-21 — final capacity-family verification; publication approval pending
+
+All180 browser journeys complete on the unchanged19:28:58Z package:102 standard/native-
+zoom/maximum,12 committed-input comparisons,60 edges and6 preceding-subset phone
+compatibility rows. Every new candidate has34 standard/stress and4 comparison rows.
+Fourteen edge rejected runs prove joint-budget, both-direction pairing and Rod's narrowed
+visualizer-length refusals preserve the old run, exact draft, step/link and error focus.
+Six real step4000 links return to step1 with the existing notice and normalized URL;
+42 memo/canonical edge rows check actual values and exact cell accessible names.
+Before running that probe, source inspection corrected the test author's last-step
+clamp assumption to the existing step1-with-notice contract. No production lifecycle
+behavior is changed and no failed/partial browser sweep is substituted for final evidence.
+
+After all owned browser phases finish, the backend/preview stop and both ports are free.
+Rendering computed memo cells as0 (while leaving the algorithm's answers correct) fails
+all3 stronger regressions at actual5/5/2-valued cells. Those mutations are restored;
+full Maven verification passes8,287 cases,0 failures/errors,500 unchanged skips at
+20:02:02Z. The package's21 tests additionally check every stored prefix value against
+independent mask/quantity references, and every unknown/known cell in every snapshot.
+Every one of607 compiled production class files matches the unchanged jar used for
+browser journeys; no mutated class is served. No Maven runs while serving journeys.
+
+The same jar restarts only for final read-only source/audit/inventory reconciliation.
+The20:03:46Z audit passes all9 current source hashes, package dates and consistent
+index-C9w1PyPL.js / index-DwejRBy7.css assets. Its SHA256 is
+`761db3601d56046ea3cbe03869d83245daceabda05dff161b4e2964ed03bd334`.
+Twelve maximum screenshots are saved; Knapsack memo320/dark and Rod memo1366/light
+are inspected. All calls/cells render and roots are locally reachable; large forests
+still pan, so this is not all-at-once visibility or human/device/real-screen-reader/
+learner/performance acceptance. No public deployment/rollback acceptance is claimed.
+
+Inventory refresh changes exactly Knapsack01, Unbounded and Rod:21 locally verified,
+18 merged and35 other candidates. All56 canonical source digests/specs/defaults remain
+identical;431/431 stats/no duplicates/orphans persist. The normal863-test frontend suite,
+production build,432 unchanged regenerated goldens, startup cleanup and23 evidence
+helpers pass. The source proof contains3,402 comparisons per tracer AND compiled-source
+path, including repeats across forms, not3,402 unique inputs. No new dependency/API/
+session owner/global budget/frontend production code; the9 existing dependency findings
+and pre-existing Randomize paired/joint-input gap stay open, together with all broader
+source/correctness/security/D6/D7/human/release gates. A fresh remote fetch still shows
+`origin/main=435c362` and no open PR. This medium batch is uncommitted/unpushed/unmerged;
+separate owner approval and exact-head CI are required before publication. No next
+feature package is started.
+
+### 2026-10-23 — resumed publication gate; bounded merged-subset deployment proof
+
+The owner reactivates the broad goal, but has not explicitly approved publishing the
+capacity batch. Fresh repository/GitHub checks still show main `435c362`, the same local
+uncommitted work and no newer/open PR. Existing XML reports retain8,287 cases/0 failures/
+errors/500 skips; the180-journey audit remains passed. Four new capacity production
+source timestamps predate that final suite, and the reference jar's SHA256 remains
+`761db3601d56046ea3cbe03869d83245daceabda05dff161b4e2964ed03bd334`.
+No production algorithm/frontend/dependency change or next implementation is made.
+
+Within the pending release-verification scope, extend the existing public-baseline
+probe with an explicit subset profile. Preserve #229/default selection and its historical
+output; reject unknown/prototype-like profiles before any network call. Three profile
+tests fail on the prior selector, then all26 evidence/profile cases pass. The probe now
+asserts HTTP status explicitly, including expected400s, and validates that its default
+inputs really equal the served specs' defaults.
+
+The first public stats attempt exits28 after30 seconds/no bytes; no passing report is
+written. Independent frontend, stats API and GitHub HTTPS diagnostics then return200.
+Cause is unproven, not labelled a proven cold start or a production defect. A subsequent
+unchanged full probe passes at17:47:40Z:9 default approach scenarios/18 full-delta runs,
+2 odd-partition scenarios/4 full-delta runs, and3 expected81-cell memo refusals with
+nums errors/no steps,25 execution requests total. All9 source hashes match the previously
+verified merged subset baseline; source/spec/type/complexity/default/input identity,
+independent answers and decoder equality pass. Odd totals have1 parity step,0 calls,
+no fabricated memo/root and no half-integer target. Public stats remain431/431, no
+untraced/duplicates/orphans. The new report is capacity-family/merged-subset-public.json;
+it does not overwrite prior evidence or prove the capacity batch is deployed.
+
+This is bounded API acceptance only, not all inputs, public browser/device/real-screen-
+reader/performance/rollback or exact public binary/commit provenance. Local coverage
+stays21 verified/18 merged/35 others. No commit/push/PR/merge is performed. The temporary
+backend stops and both8923/5180 are free. Publishing still needs owner approval; the
+next implementation cannot be stacked before this medium batch lands.
+
+### 2026-10-23 — explicit capacity publication approval
+
+The owner replies "approve publishing", then asks for the current done/pending status.
+This authorizes commit/push/PR/CI-gated merge of the verified capacity batch, including
+its evidence and bounded merged-subset public check. Earlier approval-pending entries
+are historical snapshots. No future feature batch's publishing approval is inferred.
+Fresh main is still `435c362`, with no open PR. All26 probe-helper cases and whitespace
+checks pass; the verified reference jar remains byte-identical. Publish this coherent
+batch first, require exact-head checks without bypass, and use GitHub for final head,
+checks and merge outcome. The broader project and35 other DP candidates remain open.

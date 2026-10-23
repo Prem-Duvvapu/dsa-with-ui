@@ -1943,6 +1943,26 @@ compilation and source/trace agreement are not catalogue-wide metadata certifica
   preconditions at the trust boundary, and make input-generating controls honor them.
   Exact displayed-source execution is a separate contract from a correct animation.
 
+### RCA-064 follow-up — 2026-10-21 Randomize ignores paired-array contracts (open)
+
+Read-only capacity-family preflight reproduces a pre-existing input UX defect on the
+unchanged frontend and canonical Knapsack spec. Calling randomizeInput with RNG sequence
+[0.125,0.1,0.1,0.25,0.3,0.4,0.5,0] produces weights=[3,3], values=[31,41,51], capacity=1.
+Every field satisfies its own bounds, but the paired lengths differ. Both Knapsack
+tracers correctly reject unequal lists; this is a generated-invalid-draft problem,
+not a false success or permission to ignore/drop extra values. Joint visualizer budgets
+can likewise be violated by independently generated field sizes.
+
+The generic generator consults only individual InputFields; the shared InputSpec does
+not declare these cross-field relationships in machine-readable form. Do not infer them
+from problem IDs, label/help prose, silently repair a user's submitted draft, or shrink
+the canonical input domain to make Randomize pass. A separately scoped fix should expose
+and validate declared map-level relationships/budgets, then have Randomize honor them.
+Prove the generated-input contract RED against the current generator, retain draft-only
+Randomize semantics, and test server acceptance, paired index order, deterministic RNG,
+joint budgets and real editor/run/error recovery. No fix/permanent RED guard is claimed
+here. D6 input-generation work remains open; the capacity batch preserves truthful400s.
+
 ### RCA-056 follow-up — 2026-10-14 Phone Combinations input budget (open)
 
 Read-only candidate preflight finds another accepted input that cannot finish:
@@ -2111,8 +2131,8 @@ that all340 structurally exposed endpoints were individually exercised.
 ## RCA-070 — A small memo table still exhausted the response-copy budget
 
 - **Discovered:**2026-10-18, subset-family pre-publication stress verification.
-- **Status:** Fixed and verified in the subset-family #231 batch; publication is gated
-  by exact-head CI. GitHub records the merge outcome.
+- **Status:** Fixed, verified and merged in subset-family #231 / `435c362` on2026-10-21;
+  final exact-head checks and post-merge main CI39656155506 pass.
 - **Symptom:** Subset Sum memoization on nums=[0,0,0,0,0,0,1,4,2,1], target=8
   has only99 allocated cells and139 calls, below the renderer's220-node cap, but
   stops at477 steps under the existing2000-KB estimated-response budget. The HTTP
