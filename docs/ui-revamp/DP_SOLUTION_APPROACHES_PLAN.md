@@ -1,8 +1,10 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **18/56 candidates implemented and verified:15 in the preceding merged baseline,
-plus the three-candidate subset package in approved PR #231.38 candidates remain outside
-the verified set. Publication follows exact-head CI; GitHub records the merge outcome.
+Status: **21/56 candidates implemented and verified locally:18 merged, plus the three
+capacity-family candidates approved for CI-gated publication.35 candidates remain outside
+the verified set. The merged subset baseline is #231 / `435c362` (2026-10-21), with
+passing exact-head checks and post-merge CI39656155506. The capacity package is NOT
+published at this approval checkpoint; GitHub records the final PR/checks/merge outcome.
 Falling Path/Triangle merged as #230 / `e35dd35`
 on2026-10-18 after approved publication and green exact-head push/PR checks; post-merge
 CI39127039341 passed. No whole-DP or broader release completion is claimed.
@@ -21,7 +23,7 @@ below are dated historical snapshots, not current authority or publication state
 The earlier seven are
 Climbing Stairs, Frog Jump and the owner-requested five-problem batch (#223 / `b3a3497`).
 Their PR/post-merge CI passed; bounded public verification is recorded below.
-Current continuation (2026-10-14): the owner reprioritized DP after numeric validation
+Historical continuation (2026-10-14): the owner reprioritized DP after numeric validation
 merged as #227 / `e65cc95`. A separate three-candidate batch adds Frog Jump K Distance,
 Maximum Sum of Non-Adjacent Elements and Grid Unique Paths. Its six new recursive/memo
 executables pass backend/source, API and114 browser/comparison journeys. Publication
@@ -38,7 +40,7 @@ journeys and a source/package/production-asset audit. The inventory advances ONL
 three rows to UI-verified. That local-only snapshot was subsequently published as #229;
 the current merged tally above supersedes earlier approval-pending paragraphs.
 
-Current new package (2026-10-16): Minimum Falling Path Sum and Triangle Minimum Path Sum
+Historical pre-publication snapshot (2026-10-16): Minimum Falling Path Sum and Triangle Minimum Path Sum
 are implemented locally. Initial12 backend cases were RED (3 failures,9 unavailable
 approach errors), then all12 passed. Four exact standalone Java17 sources and two
 canonical method listings compile against independent signed forward-path references.
@@ -48,7 +50,158 @@ canonical narration is corrected without changing its source/answers/defaults. A
 companion reads its exclusion explanation from actual run metadata; the new UI test is
 RED before that addition and all3 targeted cases pass afterward. Final full suites,
 transport budgets and100 browser journeys pass; only these two inventory rows advance.
-They are verified locally, NOT published. Their publication requires separate approval.
+This snapshot preceded #230; its approved merge outcome is recorded above.
+
+### D5 capacity family — verified locally; publication approved 2026-10-23
+
+Branch `feat/dp-capacity-approaches` starts from merged #231. This package adds genuine
+recursion and memoization for 0/1 Knapsack, Unbounded Knapsack and Rod Cutting. It preserves
+the exact canonical executable/source/spec/defaults, including Rod's nonnegative prices
+and long return type. No new dependency, endpoint, global budget or session owner.
+
+| Problem | Actual prefix state and take edge | Recursive visualizer limit | Memo limit | Preserved tabulation |
+| --- | --- | --- | --- | --- |
+| 0/1 Knapsack | best(n,w); take reads n-1, never reuses the indexed item | Existing1–8 paired items, weights1..20, values1..100, capacity1..30; actual complete tree<=220 calls | Same fields/domains AND (N+1)*(C+1)<=80 cells | Exact canonical object/source/spec/defaults/ID;225-cell guard |
+| Unbounded Knapsack | best(n,w); take keeps n, reusing its type | Same declared fields/domains; actual complete tree<=220 calls | Same fields/domains AND (N+1)*(C+1)<=80 cells | Exact canonical object/source/spec/defaults/ID;225-cell guard |
+| Rod Cutting | best(n,l); take keeps piece type n and reduces l by n | Prices0..100,1–9 prices;219 calls at maximum |1–10 prices,121 allocated cells;91 calls at maximum | Exact canonical object/source/spec/defaults/ID;1–12 prices, long return |
+
+Both Knapsacks validate paired lengths before any trace. Their safety-only shape DP
+counts calls, never solution values or fabricated recursive nodes. Exact220-call
+witnesses complete and exact221-call inputs return400 with no steps. Null means unknown;
+known zero is reusable. For memo, calls<=1+2*N*C<=127 under the80-cell joint cap;
+the seven-type/capacity9 unit-weight Unbounded witness realizes127. Sixteen additional
+API witnesses cover every item count1..8 at its largest joint-safe capacity. No global
+budget, input clipping, sorting, silent repair or substitute source/trace.
+
+Rod's preserved zero-initialized recurrence means best revenue within remaining length,
+not an infeasible exact-fill sentinel. With nonnegative prices and available length1,
+the final optimum can sell the whole rod; do not claim every no-type substate fills it.
+The displayed two-dimensional tabulation must remain the same recurrence, not be replaced
+with an easier-to-test one-dimensional formulation.
+
+All18 initial backend cases are RED (3 discovery failures,15 unavailable errors). The
+final21-case package suite adds per-step memo snapshots: every known cell agrees with
+independent prefix references, and uncomputed cells remain unknown. Exact displayed
+source execution covers3,402 comparisons per tracer AND compiled-source path (repeats
+across three forms, not3,402 unique inputs). All nine listings compile independently:
+six new standalone classes, two unchanged methods with only an outer class, and Rod's
+unchanged standalone class. References use index masks, quantity vectors and cut
+compositions, not a copied prefix DP. Wrong-result source mutations fail3/3 per new
+form; ignoring cached zero fails3/3; raising the call guard fails2 Knapsack cases with
+Rod as a passing control; rendering known cells as zero fails3/3 even though final
+answers remain correct. All mutations are restored before final full verification.
+
+Final backend:8,287 cases,0 failures/errors,500 unchanged skips at20:02:02Z. Frontend:
+normal863-test/83-file suite, locked install and production build pass.432 regenerated
+golden cases have no changed content. Startup cleanup and23 evidence/oracle helpers pass.
+API:61 scenarios/122 full-delta executions agree with independent answers and the
+production decoder, preserving input/source/type/complexity identity. Largest full
+response is1,524,893 bytes. All607 compiled production class files match the unchanged
+19:28:58Z jar, including after the stronger test-only follow-up. No Maven runs while it
+serves journeys; those mutations are never served. The final audit passes20:03:46Z.
+
+The180 real-browser journeys comprise30 standard Chromium,12 standard Firefox,12 native
+200% Chromium zoom,24 maximum per engine,12 committed-input comparisons,60 edges and6
+preceding-subset phone compatibility rows. Each new candidate has34 standard/stress
+rows and4 comparisons. Fourteen edge-case rejected runs preserve prior run/draft/step/link and
+focus the error summary; both mismatch directions are exercised in both engines. Six
+step4000 links explicitly return to step1 with a notice and normalized link. Forty-two
+edge rows check actual table values AND exact cell accessible names. All current source
+hashes/package/assets reconcile; screenshots are inspected at320/dark and1366/light.
+Large trees still require local panning; reachability is not all-at-once visibility or
+human/device/screen-reader/learner/performance acceptance.
+
+Only these three inventory rows advance:21 locally verified,18 merged,35 other candidates.
+All56 canonical source digests/input specs (including defaults) remain unchanged;
+live canonical stats remain431/431 with no duplicates/orphans. The new metadata identifies
+the actual full-table complexity and preserves the existing executable. Evidence is in
+`dp-approaches/capacity-family/{verification,manifest-audit}.json` and its manifests.
+Fresh npm ci still reports9 locked-dependency findings (4 moderate,3 high,2 critical);
+no dependency changes/remediation. RCA-064's pre-existing Randomize paired/joint-input
+gap remains open; these checks do not certify generated drafts as server-accepted.
+The owner explicitly approved publishing on2026-10-23; exact-head CI gates the merge.
+D6/D7, other candidates and
+broader source/correctness/security/human/performance/deployment/rollback gates stay open.
+
+### Resumed verification — merged subset public API, 2026-10-23
+
+The capacity batch remains uncommitted/unpushed/unmerged; resuming the broad goal does
+not replace the required publication approval. A fresh fetch still reports main at
+`435c362` and no newer/open PR. No next algorithm implementation starts.
+
+A bounded HTTPS check now verifies the already-merged #231 subset API against the
+unchanged local reference and its previously verified source hashes. All nine actual-
+default problem/approach scenarios pass in full and delta (18 executions), as do two
+odd-partition scenarios in both encodings (4 executions) and three expected81-cell
+memo refusals with nums errors/no steps. Total25 execution requests; all9 public
+sources/specs/types/complexities/defaults and independent answers match the reference.
+Odd inputs produce one parity step, zero calls, no memo/root and no half-integer target.
+Stats remain431/431,0 untraced, no duplicates/orphans. This is not public UI/device,
+all-input, exact deployed-binary/commit identity, rollback or capacity-deployment proof.
+
+The existing public verifier keeps #229/default behavior and its historical output path;
+`PUBLIC_BASELINE_FAMILY=subset-family` explicitly selects #231 and a separate report:
+`dp-approaches/capacity-family/merged-subset-public.json` (2026-10-23T17:47:40Z).
+Unknown/prototype-like names are refused. Three new profile guards are RED before this
+selector change; all26 evidence/profile helper cases pass afterward. No application
+production code, dependency, local candidate count or publication state changes.
+The first stats request terminates at curl's30-second timeout with0 bytes. Independent
+frontend/API/GitHub HTTPS health requests subsequently return200; the unchanged full
+verifier then passes. Cause is unproven, and the failed attempt is not counted as a
+deployment pass. The temporary local backend is stopped afterward, with ports free.
+
+### Next-package preflight — coin reuse, read-only, 2026-10-21
+
+This is preparation only. No next implementation is stacked on the unmerged capacity
+batch, no alternative is advertised and no coverage row advances. Publication approval
+for capacity is still required before landing it and cutting the next feature branch.
+
+The next coherent package is Minimum Coins and Coin Change II, preserving each existing
+canonical executable/source/spec/default. Their similar reuse edge does not make their
+result contracts interchangeable:
+
+| Existing problem | Preserved input contract | Actual state/base/combine | Required unknown/impossible distinction |
+| --- | --- | --- | --- |
+| `minimum-coins-dp` | coins1..25,1–8 entries; duplicates permitted; amount1..40; default[1,2,5]/11; alternate[2]/3 | fewest(n,a); a=0 returns0, n=0 with a>0 returns INFINITY; min(skip,1+eligible reuse) | Null is uncomputed; known INFINITY means unreachable; only the public final answer maps infinity to-1 |
+| `coin-change-2` | Same numeric/size ranges BUT distinct denominations; default[1,2,5]/5; alternate[3]/5 | ways(n,a); a=0 returns1, n=0 with a>0 returns0; skip+eligible same-type reuse | Null is uncomputed; known0 is a real zero count, not an unknown sentinel |
+
+Canonical source methods are complete on inspection. Their existing225-cell guard
+includes the zero row/column; per-field amount40 does NOT make eight coins/amount40
+an accepted canonical trace input. Neither source compilation nor new transport/UI
+acceptance has yet been performed for these alternatives.
+
+A separate recurrence-shape calculation, not a new tracer or renderer measurement,
+counts the proposed skip-first call tree (cache hits included as calls):
+
+| Probe | Uncached calls | Memo calls / hits / computed states | Allocated cells |
+| --- | --- | --- | --- |
+| Default Minimum Coins:[1,2,5],11 |122 |45 /9 /36 |48 |
+| Default Coin Change II:[1,2,5],5 |26 |18 /2 /16 |24 |
+| Minimum impossible reuse:[2,2,2],3 |13 |10 /2 /8 |16 |
+| Count impossible reuse:[2,4,6],7 |19 |15 /2 /13 |32 |
+| Distinct denominations:[1,2,3,4],12 |315 |68 /17 /51 |65 |
+
+The315-call witness defeats an item-count-only recursive cap while fitting a small
+memo table. Preserve the declared domains and preflight actual tree shape before any
+step; both defaults fit the existing220-call renderer cap. Do not borrow an80-cell
+memo allowance without measuring infinity formatting, copied-table bytes and deep
+single-type traces. A one-coin/amount39 shape allocates80 cells with79 calls and no
+cache hits; unit-coin seven-type/amount9 gives127 calls/48 hits/79 states, but repeated
+unit denominations are valid ONLY for Minimum Coins, not Coin Change II. Count needs
+its own distinct-denomination stress witnesses. Keep amount0 as an internal base case;
+do not widen the currently positive public amount contract.
+
+Required RED-first proof before that implementation: compile all six exact displayed
+sources (four new standalone classes and two preserved methods with outer class only);
+use independent breadth-first minimum-coin and quantity-vector combination references;
+exercise unknown versus known infinity/zero, impossible returns, no children after hits,
+both distinct/permuted inputs, duplicate refusal ONLY for Count, actual source anchors,
+full/delta identity and budget boundaries. Quantity-vector enumeration gives919 for
+distinct[1..8]/amount24 (225 canonical cells);9749 at amount40 is reference-only, beyond
+that canonical joint cap, not accepted-trace evidence. Check both broad trees and deep
+unit-coin chains, phone/themes/native zoom/second engine, shared-link and failed-run
+continuity, and committed-input comparison. Null must never be overloaded as infinity,
+and cached final-API-1 must not be added as though it were a real subproblem cost.
 
 ### D5 Falling Path/Triangle — verified locally, revalidated 2026-10-18
 
@@ -729,6 +882,12 @@ correct and tested. A hidden backend implementation or static source is not comp
 
 ### D6 — Accessibility, responsiveness and performance
 
+Input-generation prerequisite (RCA-064 follow-up,2026-10-21): generic Randomize can
+produce unequal weights/values lengths and violate joint trace budgets despite valid
+individual fields. Preserve the canonical domain and draft-only semantics; add explicit
+map-level contracts rather than problem-ID/prose guesses or silent input repair. This
+pre-existing input UX gap is not closed by capacity-family execution/refusal verification.
+
 Run five standard widths, short landscape and 200% real browser zoom in both themes;
 second engine and real device where available. Include maximum bounded recursion trees,
 memo tables, long titles/values and all input editors used by approaches.
@@ -799,7 +958,7 @@ main/live inventory, create a new feature branch, and execute D0 → D1 → D2 �
 reviewable packages. Complete the pilot before expanding to D4/D5. Preserve the canonical
 API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 
-## 11. Implementation progress — reconciled 2026-10-18
+## 11. Implementation progress — reconciled 2026-10-21
 
 | Package | Current status | Evidence / boundary |
 | --- | --- | --- |
@@ -808,7 +967,7 @@ API, catalogue IDs, existing defaults and all successful-run honesty invariants.
 | D2 | Verified | Genuine recursion/memoization/tabulation, independently compiled source, oracle and boundary tests; `dp-approaches/d2-results.json` |
 | D3 | Verified pilot | Explicit selector, committed metadata, approach-aware links/presets/input comparison, truthful memo/recursive views; `dp-approaches/d3-results.json` |
 | D4 | Merged #215 / `2709d8b` | Audited teaching metadata, isolated two-approach comparison, passing PR/post-merge CI; dated D4 evidence below |
-| D5 | 13 candidates merged;2 more verified locally, approval pending | #229 / `da63085` is green post-merge. Falling/Triangle pass full suites,50 API executions and100 browser journeys; only those two inventory rows advance.41 other candidates and broader family/release gates remain open |
+| D5 |21 candidates locally verified;18 in preceding merged baseline, capacity publication approved | #231 / `435c362` is green post-merge. The three capacity candidates pass8,287 backend cases,122 API executions and180 browser journeys. Exact-head CI gates this approved publication;35 other candidates and broader family/release gates remain open |
 | D6/D7 | Pending | Broad accessibility/performance, coverage reconciliation and release gates |
 
 Inventory correction: this LIS's canonical solution is two-dimensional take/skip tabulation,
@@ -816,7 +975,7 @@ not binary-search tails. Ninja-and-friends
 uses rolling row slices; rectangle-all-ones uses histogram stacks rather than a DP table;
 count-square-submatrices is real in-place DP rendered as Matrix; palindromic-subsequence
 counting lives under Strings. Alternative safety limits are measured only for the
-seven verified candidates; neither canonical caps nor another problem's evidence
+21 verified candidates; neither canonical caps nor another problem's evidence
 authorize unimplemented alternatives.
 
 Print LIS's undefined `collect()`/`answer()` helpers were repaired in the

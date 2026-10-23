@@ -1,0 +1,283 @@
+{
+  "generated": "2026-10-23T17:47:40.534Z",
+  "site": "https://dsa-with-ui.vercel.app",
+  "mergedBaseline": "435c362 (#231)",
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "rows": [
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "recursion",
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "target": 6
+      },
+      "answer": "true",
+      "sourceHash": "1f8d81aca2d4089d7743951559e160fc8c9a13a3a5bfc833421b560e58817692",
+      "detailAndIdentityMatch": true,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "complete": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "memoization",
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "target": 6
+      },
+      "answer": "true",
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2",
+      "detailAndIdentityMatch": true,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "complete": true
+    },
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "canonical",
+      "input": {
+        "nums": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "target": 6
+      },
+      "answer": "true",
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "detailAndIdentityMatch": true,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "complete": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "recursion",
+      "input": {
+        "nums": [
+          1,
+          5,
+          11,
+          5
+        ]
+      },
+      "answer": "true",
+      "sourceHash": "8428afaa39bb1cc6bc1f46913d30292c80515e794bf4d5cd652ac72fb449bbc1",
+      "detailAndIdentityMatch": true,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "complete": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "memoization",
+      "input": {
+        "nums": [
+          1,
+          5,
+          11,
+          5
+        ]
+      },
+      "answer": "true",
+      "sourceHash": "146f0fd33ae39ddc54556b09c962778456f7682f84cf55896ea1c3a78464a565",
+      "detailAndIdentityMatch": true,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "complete": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "canonical",
+      "input": {
+        "nums": [
+          1,
+          5,
+          11,
+          5
+        ]
+      },
+      "answer": "true",
+      "sourceHash": "41a3ba0d28cfd52cd4f7e15df54b90d8acc2cfa99b6c058a916b7e26bb844ca9",
+      "detailAndIdentityMatch": true,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "complete": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "recursion",
+      "input": {
+        "nums": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "k": 3
+      },
+      "answer": "3",
+      "sourceHash": "9c8b1e7f68e4d60d4fe03082185489c2098f217518e99a08badfc5c0bf72b8a2",
+      "detailAndIdentityMatch": true,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "complete": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "memoization",
+      "input": {
+        "nums": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "k": 3
+      },
+      "answer": "3",
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "detailAndIdentityMatch": true,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "complete": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "canonical",
+      "input": {
+        "nums": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "k": 3
+      },
+      "answer": "3",
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "detailAndIdentityMatch": true,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "complete": true
+    }
+  ],
+  "refusals": [
+    {
+      "problemId": "subset-sum-equal-target",
+      "approachId": "memoization",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "target": 8
+      },
+      "jointCells": 81,
+      "status": 400,
+      "field": "nums",
+      "noSteps": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "memoization",
+      "input": {
+        "nums": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          16
+        ]
+      },
+      "jointCells": 81,
+      "status": 400,
+      "field": "nums",
+      "noSteps": true
+    },
+    {
+      "problemId": "count-subsets-with-sum-k",
+      "approachId": "memoization",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 8
+      },
+      "jointCells": 81,
+      "status": 400,
+      "field": "nums",
+      "noSteps": true
+    }
+  ],
+  "oddRows": [
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "recursion",
+      "input": {
+        "nums": [
+          1,
+          2
+        ]
+      },
+      "answer": "false",
+      "calls": 0,
+      "steps": 1,
+      "noFabricatedRootOrMemo": true,
+      "fullDeltaEqual": true
+    },
+    {
+      "problemId": "partition-equal-subset-sum",
+      "approachId": "memoization",
+      "input": {
+        "nums": [
+          1,
+          2
+        ]
+      },
+      "answer": "false",
+      "calls": 0,
+      "steps": 1,
+      "noFabricatedRootOrMemo": true,
+      "fullDeltaEqual": true
+    }
+  ],
+  "defaultExecutions": 18,
+  "executions": 22,
+  "totalExecutionRequests": 25,
+  "transport": "curl over HTTPS with explicit status checks; no substitute or fallback responses",
+  "limits": "Nine actual-default approach scenarios for the three selected already merged candidates, plus any explicitly listed refusals/parity cases. Not all inputs, browser/device acceptance, rollback, exact public binary/commit identity, or deployment of the local capacity package."
+}

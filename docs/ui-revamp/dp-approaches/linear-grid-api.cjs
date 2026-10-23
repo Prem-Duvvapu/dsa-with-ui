@@ -25,7 +25,8 @@ async function request(route, input) {
     const {id}=c;
     const detail = (await request(`/api/problems/${id}?approach=${form}`)).body;
     for (const [label, input] of [['default', undefined], ['maximum', maximum(id, form)],
-      ...(c.zero&&form==='memoization'?[['zero',c.zero]]:[]),...(c.negative&&form==='memoization'?[['negative',c.negative]]:[]),...Object.entries(c.extra??{})]) {
+      ...(c.zero&&form==='memoization'?[['zero',c.zero]]:[]),...(c.negative&&form==='memoization'?[['negative',c.negative]]:[]),
+      ...(form==='memoization'?Object.entries(c.memoExtra??{}):[]),...Object.entries(c.extra??{})]) {
       const route = `/api/problems/${id}/execute?approach=${form}`;
       const full = await request(`${route}&encoding=full`, input);
       const delta = await request(`${route}&encoding=delta`, input);

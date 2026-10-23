@@ -9,17 +9,18 @@ const api=process.env.BACKEND_URL||'http://127.0.0.1:8923';
 const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
 (async()=>{
   const transport=read('api-results.json');
-  const scenarios=cases.reduce((sum,c)=>sum+6+(c.zero?1:0)+(c.negative?1:0)+3*Object.keys(c.extra??{}).length,0);
+  const scenarios=cases.reduce((sum,c)=>sum+6+(c.zero?1:0)+(c.negative?1:0)+Object.keys(c.memoExtra??{}).length+3*Object.keys(c.extra??{}).length,0);
   assert.equal(transport.rows.length,scenarios);
   const expectedKeys=cases.flatMap(c=>['recursion','memoization','canonical'].flatMap(form=>
-    ['default','maximum',...(c.zero&&form==='memoization'?['zero']:[]),...(c.negative&&form==='memoization'?['negative']:[]),...Object.keys(c.extra??{})].map(label=>`${c.id}/${form}/${label}`)));
+    ['default','maximum',...(c.zero&&form==='memoization'?['zero']:[]),...(c.negative&&form==='memoization'?['negative']:[]),
+      ...(form==='memoization'?Object.keys(c.memoExtra??{}):[]),...Object.keys(c.extra??{})].map(label=>`${c.id}/${form}/${label}`)));
   assert.deepEqual(transport.rows.map(row=>`${row.problemId}/${row.approachId}/${row.label}`).sort(),expectedKeys.sort());
   const packaged=fs.statSync(path.resolve(__dirname,'../../../backend/target/dsa-backend-1.0.0.jar')).mtimeMs;
   assert(Date.parse(transport.generated)>=packaged);
   const hashes=new Map();
   for(const row of transport.rows) {
     const candidate=cases.find(c=>c.id===row.problemId);assert(candidate);
-    const expectedInput=row.label==='maximum'?maximum(row.problemId,row.approachId):row.label==='zero'?candidate.zero:row.label==='negative'?candidate.negative:candidate.extra?.[row.label]??candidate.input;
+    const expectedInput=row.label==='maximum'?maximum(row.problemId,row.approachId):row.label==='zero'?candidate.zero:row.label==='negative'?candidate.negative:candidate.memoExtra?.[row.label]??candidate.extra?.[row.label]??candidate.input;
     assert.deepEqual(row.input,expectedInput);
     assert.equal(row.answer,String(oracle(row.problemId,row.input)));
     if(row.calls!==null)assert.equal(row.rootCount,typeof candidate.roots==='function'?candidate.roots(row.input):candidate.roots??1);
@@ -42,7 +43,7 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
   });
   const comparison=read('comparison-results.json');assert.equal(comparison.rows.length,cases.length*4);
   assert(Date.parse(comparison.generated)>=packaged);
-  const edges=family==='subset-family'?read('edge-results.json'):null;
+  const edges=['subset-family','capacity-family'].includes(family)?read('edge-results.json'):null;
   if(edges){
     assert(edges.realBackend&&edges.buildMode==='production-preview'&&Date.parse(edges.generated)>=packaged);
     const axes=cases.flatMap(c=>['recursion','memoization','canonical'].flatMap(form=>[...Object.keys(c.extra),...(form==='canonical'?['maximum']:[])].flatMap(label=>
@@ -52,10 +53,23 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
       const c=cases.find(c=>c.id===row.problemId);assert(c);assert.deepEqual(row.input,row.label==='maximum'?maximum(c.id,row.approachId):c.extra[row.label]);
       assert.equal(row.answer,String(oracle(row.problemId,row.input)));
       assert.equal(row.sourceHash,hashes.get(`${row.problemId}/${row.approachId}`));
-      assert(row.passed&&row.sharedStepClampedAndRestored&&row.exactDraftRetained&&row.noUnsolicitedExecution&&row.noOverflowOrErrors);
+      assert(row.passed&&(family==='capacity-family'?row.sharedStepHandledAndRestored:row.sharedStepClampedAndRestored)
+        &&row.exactDraftRetained&&row.noUnsolicitedExecution&&row.noOverflowOrErrors);
       if(row.label==='odd'&&row.approachId!=='canonical')assert(row.oddNoFabricatedCalls);
       if(row.approachId!=='recursion'&&!(row.approachId==='memoization'&&row.label==='odd'))assert(row.actualTableValuesAndLabels);
       if(row.approachId==='memoization'&&row.label==='false-cache')assert(row.falseOrZeroCacheReuse&&row.jointRefusalPreservesRunDraftStepAndLink);
+      if(family==='capacity-family'&&row.approachId==='memoization'&&row.label==='zero-cache'){
+        assert(row.zeroCacheReuse&&row.jointRefusalPreservesRunDraftStepAndLink);
+        assert.equal(row.refusedRuns,c.input.weights?3:1);
+        if(c.input.weights)assert(row.mismatchedPairsBothDirections);
+      }
+      if(family==='capacity-family'){
+        const executed=transport.rows.find(r=>r.problemId===row.problemId&&r.approachId===row.approachId&&r.label===row.label);assert(executed);
+        assert.equal(row.requestedStep,row.label==='maximum'?4000:3);
+        const outOfRange=row.requestedStep>executed.steps;
+        assert.equal(row.restoredStep,outOfRange?1:row.requestedStep);
+        assert.equal(row.stepWasOutOfRange,outOfRange);assert.equal(row.outOfRangeNoticeAndLinkReset,outOfRange);
+      }
     }
   }
   const recovery=family==='circular-activity-obstacles'?read('input-recovery-results.json'):null;
@@ -84,8 +98,8 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
       if(row.approachId!=='recursion')assert(row.tableSummaryMatchesActualCells&&row.tableCellLabelsMatchActualCells);
     }
   }
-  const compatibilityFamily=family==='circular-activity-obstacles'?'linear-grid':family==='falling-triangle'?'circular-activity-obstacles':family==='subset-family'?'falling-triangle':null;
-  const compatibility=compatibilityFamily?read(`${compatibilityFamily==='linear-grid'?'linear-grid':compatibilityFamily==='falling-triangle'?'falling-triangle':'circular'}-compatibility/chromium-standard-zoom1.json`):null;
+  const compatibilityFamily=family==='circular-activity-obstacles'?'linear-grid':family==='falling-triangle'?'circular-activity-obstacles':family==='subset-family'?'falling-triangle':family==='capacity-family'?'subset-family':null;
+  const compatibility=compatibilityFamily?read(`${compatibilityFamily==='circular-activity-obstacles'?'circular':compatibilityFamily}-compatibility/chromium-standard-zoom1.json`):null;
   if(compatibility){
     assert(compatibility.realBackend&&compatibility.buildMode==='production-preview'&&compatibility.engine==='chromium');
     assert(Date.parse(compatibility.generated)>=packaged);

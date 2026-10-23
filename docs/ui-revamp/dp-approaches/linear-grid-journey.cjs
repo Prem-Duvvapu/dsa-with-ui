@@ -53,6 +53,18 @@ async function safe(page,errors) {
 async function edit(page,id,input) {
   const open = page.getByRole('button',{name:'Edit input',exact:true});
   if(await open.isVisible()) await open.click();
+  const authored=cases.find(c=>c.id===id);
+  if(authored?.arrayLabels){
+    for(const [key,label] of Object.entries(authored.arrayLabels)){
+      const group=page.getByRole('group',{name:label,exact:true}),values=input[key];
+      const positions=group.getByRole('spinbutton',{name:/^Position \d+ value$/});
+      while(await positions.count()<values.length)await group.getByRole('button',{name:'Add',exact:true}).click();
+      while(await positions.count()>values.length)await group.getByRole('button',{name:`Remove position ${await positions.count()}`,exact:true}).click();
+      for(let i=0;i<values.length;i++)await group.getByLabel(`Position ${i+1} value`,{exact:true}).fill(String(values[i]));
+    }
+    for(const [key,label] of Object.entries(authored.scalarLabels??{}))await page.getByLabel(label,{exact:true}).fill(String(input[key]));
+    return;
+  }
   const gridKey=['points','grid','matrix','triangle'].find(key=>Array.isArray(input[key]));
   if(gridKey){
     const values=input[gridKey];
@@ -87,6 +99,13 @@ async function edit(page,id,input) {
   if(id==='frog-jump-k-distance')await page.getByLabel('Max jump distance',{exact:true}).fill(String(input.k));
 }
 async function assertDraft(page,id,input) {
+  const authored=cases.find(c=>c.id===id);
+  if(authored?.arrayLabels){
+    for(const [key,label] of Object.entries(authored.arrayLabels))
+      assert.deepEqual(await page.getByRole('group',{name:label,exact:true}).getByRole('spinbutton',{name:/^Position \d+ value$/}).evaluateAll(es=>es.map(e=>Number(e.value))),input[key]);
+    for(const [key,label] of Object.entries(authored.scalarLabels??{}))assert.equal(await page.getByLabel(label,{exact:true}).inputValue(),String(input[key]));
+    return;
+  }
   const gridKey=['points','grid','matrix','triangle'].find(key=>Array.isArray(input[key]));
   if(gridKey){
     const actual=await page.getByRole('button',{name:/^Cell row/}).evaluateAll(es=>{
@@ -199,9 +218,10 @@ function assertAnswer(run,input) {
           await page.waitForFunction(()=>new URL(location.href).searchParams.get('step')==='3');
           const committed=page.url();
           // Build an over-recursion draft under the wider memo limits, then prepare recursion.
-          const rejected=maximum(c.id,'recursion');
+          const rejected=c.rejected?structuredClone(c.rejected):maximum(c.id,'recursion');
           const key=['points','grid','matrix','triangle'].find(key=>Array.isArray(c.input[key]));
-          if(key){
+          if(c.rejected){ /* Authored paired/capacity input; never invent or desynchronize arrays. */ }
+          else if(key){
             rejected[key]=c.input[key].map(row=>row.slice());
             while(rejected[key].length<=c.recursionRows)rejected[key].push(Array(rejected[key][0].length).fill(c.minValue??0));
           }

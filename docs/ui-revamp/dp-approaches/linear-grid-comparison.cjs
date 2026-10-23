@@ -27,12 +27,14 @@ const pace=require('../evidence/pace-executions.cjs')();
         const gridKey=['points','grid','matrix','triangle'].find(key=>Array.isArray(c.input[key]));
         const matrix=Boolean(gridKey);
         const [draftRow,draftCol]=c.draftCell??[0,0];
-        const draft=matrix?page.getByRole('button',{name:new RegExp(`^Cell row ${draftRow+1}, column ${draftCol+1}, value `)})
+        const draft=c.draftField?page.getByRole('group',{name:c.arrayLabels[c.draftField],exact:true}).getByLabel('Position 1 value',{exact:true})
+          :matrix?page.getByRole('button',{name:new RegExp(`^Cell row ${draftRow+1}, column ${draftCol+1}, value `)})
           :c.id==='grid-unique-paths'?page.getByLabel('Rows',{exact:true}):page.getByLabel('Position 1 value',{exact:true});
         if(matrix)await draft.click();else await draft.fill(c.id==='grid-unique-paths'?'2':'9');
         const draftValue=matrix?await draft.getAttribute('aria-label'):await draft.inputValue();
         const edited=structuredClone(c.input);
-        if(matrix)edited[gridKey][draftRow][draftCol]=Number(draftValue.match(/value (-?\d+)$/)[1]);
+        if(c.draftField)edited[c.draftField][0]=Number(draftValue);
+        else if(matrix)edited[gridKey][draftRow][draftCol]=Number(draftValue.match(/value (-?\d+)$/)[1]);
         else if(c.id==='grid-unique-paths')edited.rows=Number(draftValue);
         else(edited.heights??edited.nums)[0]=Number(draftValue);
         assert.notEqual(String(oracle(c.id,edited)),c.answer,'Dirty draft must change the independent answer to detect a comparison snapshot leak');
