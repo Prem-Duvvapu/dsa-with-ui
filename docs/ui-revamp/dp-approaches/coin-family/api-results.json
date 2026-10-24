@@ -1,0 +1,1337 @@
+{
+  "generated": "2026-10-23T18:42:56.170Z",
+  "realBackend": true,
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "rows": [
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "amount": 11,
+        "coins": [
+          1,
+          2,
+          5
+        ]
+      },
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "answer": "3",
+      "calls": "122",
+      "cacheHits": "0",
+      "states": "36",
+      "rootCount": 1,
+      "steps": 430,
+      "fullBytes": 263818,
+      "deltaBytes": 159510,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "amount": 23,
+        "coins": [
+          23,
+          6,
+          7,
+          15,
+          3,
+          11
+        ]
+      },
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "answer": "1",
+      "calls": "220",
+      "cacheHits": "0",
+      "states": "105",
+      "rootCount": 1,
+      "steps": 825,
+      "fullBytes": 530799,
+      "deltaBytes": 318635,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "recursion",
+      "label": "impossible-cache",
+      "input": {
+        "amount": 3,
+        "coins": [
+          2,
+          2,
+          2
+        ]
+      },
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "answer": "-1",
+      "calls": "13",
+      "cacheHits": "0",
+      "states": "8",
+      "rootCount": 1,
+      "steps": 50,
+      "fullBytes": 27526,
+      "deltaBytes": 17343,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "recursion",
+      "label": "reuse",
+      "input": {
+        "amount": 4,
+        "coins": [
+          2
+        ]
+      },
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "answer": "2",
+      "calls": "5",
+      "cacheHits": "0",
+      "states": "5",
+      "rootCount": 1,
+      "steps": 19,
+      "fullBytes": 10436,
+      "deltaBytes": 6915,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "recursion",
+      "label": "permuted",
+      "input": {
+        "amount": 11,
+        "coins": [
+          5,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "answer": "3",
+      "calls": "156",
+      "cacheHits": "0",
+      "states": "47",
+      "rootCount": 1,
+      "steps": 566,
+      "fullBytes": 353006,
+      "deltaBytes": 213249,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "recursion",
+      "label": "deep-chain",
+      "input": {
+        "amount": 39,
+        "coins": [
+          1
+        ]
+      },
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "answer": "39",
+      "calls": "79",
+      "cacheHits": "0",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 278,
+      "fullBytes": 254531,
+      "deltaBytes": 151430,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "amount": 11,
+        "coins": [
+          1,
+          2,
+          5
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "3",
+      "calls": "45",
+      "cacheHits": "9",
+      "states": "36",
+      "rootCount": 1,
+      "steps": 160,
+      "fullBytes": 374154,
+      "deltaBytes": 228296,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "amount": 9,
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "9",
+      "calls": "127",
+      "cacheHits": "48",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 446,
+      "fullBytes": 1495325,
+      "deltaBytes": 895235,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "memo-shape-1",
+      "input": {
+        "amount": 39,
+        "coins": [
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "39",
+      "calls": "79",
+      "cacheHits": "0",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 278,
+      "fullBytes": 1068039,
+      "deltaBytes": 630557,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "memo-shape-2",
+      "input": {
+        "amount": 25,
+        "coins": [
+          1,
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "25",
+      "calls": "101",
+      "cacheHits": "24",
+      "states": "77",
+      "rootCount": 1,
+      "steps": 355,
+      "fullBytes": 1255315,
+      "deltaBytes": 745870,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "memo-shape-3",
+      "input": {
+        "amount": 19,
+        "coins": [
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "19",
+      "calls": "115",
+      "cacheHits": "36",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 404,
+      "fullBytes": 1412612,
+      "deltaBytes": 838926,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "memo-shape-4",
+      "input": {
+        "amount": 15,
+        "coins": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "15",
+      "calls": "121",
+      "cacheHits": "42",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 425,
+      "fullBytes": 1459086,
+      "deltaBytes": 866197,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "memo-shape-5",
+      "input": {
+        "amount": 12,
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "12",
+      "calls": "121",
+      "cacheHits": "44",
+      "states": "77",
+      "rootCount": 1,
+      "steps": 425,
+      "fullBytes": 1413894,
+      "deltaBytes": 842468,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "memo-shape-6",
+      "input": {
+        "amount": 10,
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "10",
+      "calls": "121",
+      "cacheHits": "45",
+      "states": "76",
+      "rootCount": 1,
+      "steps": 425,
+      "fullBytes": 1389860,
+      "deltaBytes": 828250,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "memo-shape-7",
+      "input": {
+        "amount": 9,
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "9",
+      "calls": "127",
+      "cacheHits": "48",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 446,
+      "fullBytes": 1495325,
+      "deltaBytes": 895235,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "memo-shape-8",
+      "input": {
+        "amount": 7,
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "7",
+      "calls": "113",
+      "cacheHits": "42",
+      "states": "71",
+      "rootCount": 1,
+      "steps": 397,
+      "fullBytes": 1227955,
+      "deltaBytes": 730883,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "impossible-cache",
+      "input": {
+        "amount": 3,
+        "coins": [
+          2,
+          2,
+          2
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "-1",
+      "calls": "10",
+      "cacheHits": "2",
+      "states": "8",
+      "rootCount": 1,
+      "steps": 38,
+      "fullBytes": 48711,
+      "deltaBytes": 30541,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "reuse",
+      "input": {
+        "amount": 4,
+        "coins": [
+          2
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "2",
+      "calls": "5",
+      "cacheHits": "0",
+      "states": "5",
+      "rootCount": 1,
+      "steps": 19,
+      "fullBytes": 20801,
+      "deltaBytes": 13818,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "permuted",
+      "input": {
+        "amount": 11,
+        "coins": [
+          5,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "3",
+      "calls": "62",
+      "cacheHits": "15",
+      "states": "47",
+      "rootCount": 1,
+      "steps": 221,
+      "fullBytes": 518054,
+      "deltaBytes": 313488,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "memoization",
+      "label": "deep-chain",
+      "input": {
+        "amount": 39,
+        "coins": [
+          1
+        ]
+      },
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "answer": "39",
+      "calls": "79",
+      "cacheHits": "0",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 278,
+      "fullBytes": 1068039,
+      "deltaBytes": 630557,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "amount": 11,
+        "coins": [
+          1,
+          2,
+          5
+        ]
+      },
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "answer": "3",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 37,
+      "fullBytes": 84659,
+      "deltaBytes": 78179,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "amount": 24,
+        "coins": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "answer": "3",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 196,
+      "fullBytes": 1524769,
+      "deltaBytes": 1490236,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "canonical",
+      "label": "impossible-cache",
+      "input": {
+        "amount": 3,
+        "coins": [
+          2,
+          2,
+          2
+        ]
+      },
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "answer": "-1",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 13,
+      "fullBytes": 16681,
+      "deltaBytes": 14473,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "canonical",
+      "label": "reuse",
+      "input": {
+        "amount": 4,
+        "coins": [
+          2
+        ]
+      },
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "answer": "2",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 8,
+      "fullBytes": 8981,
+      "deltaBytes": 7663,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "canonical",
+      "label": "permuted",
+      "input": {
+        "amount": 11,
+        "coins": [
+          5,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "answer": "3",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 37,
+      "fullBytes": 85259,
+      "deltaBytes": 78779,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "minimum-coins-dp",
+      "approachId": "canonical",
+      "label": "deep-chain",
+      "input": {
+        "amount": 39,
+        "coins": [
+          1
+        ]
+      },
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "answer": "39",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 43,
+      "fullBytes": 151353,
+      "deltaBytes": 143805,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "recursion",
+      "label": "default",
+      "input": {
+        "amount": 5,
+        "coins": [
+          1,
+          2,
+          5
+        ]
+      },
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "answer": "4",
+      "calls": "26",
+      "cacheHits": "0",
+      "states": "16",
+      "rootCount": 1,
+      "steps": 93,
+      "fullBytes": 49319,
+      "deltaBytes": 29596,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "recursion",
+      "label": "maximum",
+      "input": {
+        "amount": 23,
+        "coins": [
+          23,
+          6,
+          7,
+          15,
+          3,
+          11
+        ]
+      },
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "answer": "6",
+      "calls": "220",
+      "cacheHits": "0",
+      "states": "105",
+      "rootCount": 1,
+      "steps": 825,
+      "fullBytes": 498608,
+      "deltaBytes": 292470,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "recursion",
+      "label": "impossible-cache",
+      "input": {
+        "amount": 7,
+        "coins": [
+          2,
+          4,
+          6
+        ]
+      },
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "answer": "0",
+      "calls": "19",
+      "cacheHits": "0",
+      "states": "13",
+      "rootCount": 1,
+      "steps": 71,
+      "fullBytes": 36896,
+      "deltaBytes": 22265,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "recursion",
+      "label": "reuse",
+      "input": {
+        "amount": 3,
+        "coins": [
+          1,
+          2
+        ]
+      },
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "answer": "2",
+      "calls": "12",
+      "cacheHits": "0",
+      "states": "9",
+      "rootCount": 1,
+      "steps": 44,
+      "fullBytes": 22317,
+      "deltaBytes": 13660,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "recursion",
+      "label": "permuted",
+      "input": {
+        "amount": 5,
+        "coins": [
+          5,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "answer": "4",
+      "calls": "36",
+      "cacheHits": "0",
+      "states": "23",
+      "rootCount": 1,
+      "steps": 133,
+      "fullBytes": 70072,
+      "deltaBytes": 41759,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "recursion",
+      "label": "deep-chain",
+      "input": {
+        "amount": 39,
+        "coins": [
+          1
+        ]
+      },
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "answer": "1",
+      "calls": "79",
+      "cacheHits": "0",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 278,
+      "fullBytes": 237623,
+      "deltaBytes": 139360,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "default",
+      "input": {
+        "amount": 5,
+        "coins": [
+          1,
+          2,
+          5
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "4",
+      "calls": "18",
+      "cacheHits": "2",
+      "states": "16",
+      "rootCount": 1,
+      "steps": 65,
+      "fullBytes": 91480,
+      "deltaBytes": 54422,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "maximum",
+      "input": {
+        "amount": 15,
+        "coins": [
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "54",
+      "calls": "115",
+      "cacheHits": "36",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 407,
+      "fullBytes": 1305702,
+      "deltaBytes": 759059,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "memo-shape-1",
+      "input": {
+        "amount": 39,
+        "coins": [
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "1",
+      "calls": "79",
+      "cacheHits": "0",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 278,
+      "fullBytes": 1009690,
+      "deltaBytes": 581678,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "memo-shape-2",
+      "input": {
+        "amount": 25,
+        "coins": [
+          2,
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "13",
+      "calls": "100",
+      "cacheHits": "23",
+      "states": "77",
+      "rootCount": 1,
+      "steps": 352,
+      "fullBytes": 1158324,
+      "deltaBytes": 674695,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "memo-shape-3",
+      "input": {
+        "amount": 19,
+        "coins": [
+          3,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "40",
+      "calls": "112",
+      "cacheHits": "33",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 395,
+      "fullBytes": 1286189,
+      "deltaBytes": 749923,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "memo-shape-4",
+      "input": {
+        "amount": 15,
+        "coins": [
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "54",
+      "calls": "115",
+      "cacheHits": "36",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 407,
+      "fullBytes": 1305702,
+      "deltaBytes": 759059,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "memo-shape-5",
+      "input": {
+        "amount": 12,
+        "coins": [
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "47",
+      "calls": "111",
+      "cacheHits": "34",
+      "states": "77",
+      "rootCount": 1,
+      "steps": 395,
+      "fullBytes": 1232868,
+      "deltaBytes": 713683,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "memo-shape-6",
+      "input": {
+        "amount": 10,
+        "coins": [
+          6,
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "35",
+      "calls": "106",
+      "cacheHits": "30",
+      "states": "76",
+      "rootCount": 1,
+      "steps": 380,
+      "fullBytes": 1170269,
+      "deltaBytes": 668643,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "memo-shape-7",
+      "input": {
+        "amount": 9,
+        "coins": [
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "28",
+      "calls": "106",
+      "cacheHits": "27",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 383,
+      "fullBytes": 1214273,
+      "deltaBytes": 691677,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "memo-shape-8",
+      "input": {
+        "amount": 7,
+        "coins": [
+          8,
+          7,
+          6,
+          5,
+          4,
+          3,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "15",
+      "calls": "85",
+      "cacheHits": "15",
+      "states": "70",
+      "rootCount": 1,
+      "steps": 313,
+      "fullBytes": 915560,
+      "deltaBytes": 516023,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "impossible-cache",
+      "input": {
+        "amount": 7,
+        "coins": [
+          2,
+          4,
+          6
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "0",
+      "calls": "15",
+      "cacheHits": "2",
+      "states": "13",
+      "rootCount": 1,
+      "steps": 56,
+      "fullBytes": 92429,
+      "deltaBytes": 52974,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "reuse",
+      "input": {
+        "amount": 3,
+        "coins": [
+          1,
+          2
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "2",
+      "calls": "10",
+      "cacheHits": "1",
+      "states": "9",
+      "rootCount": 1,
+      "steps": 37,
+      "fullBytes": 37469,
+      "deltaBytes": 22363,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "permuted",
+      "input": {
+        "amount": 5,
+        "coins": [
+          5,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "4",
+      "calls": "26",
+      "cacheHits": "3",
+      "states": "23",
+      "rootCount": 1,
+      "steps": 95,
+      "fullBytes": 132588,
+      "deltaBytes": 77204,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "memoization",
+      "label": "deep-chain",
+      "input": {
+        "amount": 39,
+        "coins": [
+          1
+        ]
+      },
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "answer": "1",
+      "calls": "79",
+      "cacheHits": "0",
+      "states": "79",
+      "rootCount": 1,
+      "steps": 278,
+      "fullBytes": 1009690,
+      "deltaBytes": 581678,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "canonical",
+      "label": "default",
+      "input": {
+        "amount": 5,
+        "coins": [
+          1,
+          2,
+          5
+        ]
+      },
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "answer": "4",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 19,
+      "fullBytes": 29146,
+      "deltaBytes": 25870,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "canonical",
+      "label": "maximum",
+      "input": {
+        "amount": 24,
+        "coins": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      },
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "answer": "919",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 196,
+      "fullBytes": 1535463,
+      "deltaBytes": 1500930,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "canonical",
+      "label": "impossible-cache",
+      "input": {
+        "amount": 7,
+        "coins": [
+          2,
+          4,
+          6
+        ]
+      },
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "answer": "0",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 25,
+      "fullBytes": 43942,
+      "deltaBytes": 39598,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "canonical",
+      "label": "reuse",
+      "input": {
+        "amount": 3,
+        "coins": [
+          1,
+          2
+        ]
+      },
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "answer": "2",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 10,
+      "fullBytes": 12011,
+      "deltaBytes": 10337,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "canonical",
+      "label": "permuted",
+      "input": {
+        "amount": 5,
+        "coins": [
+          5,
+          2,
+          1
+        ]
+      },
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "answer": "4",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 19,
+      "fullBytes": 29146,
+      "deltaBytes": 25870,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    },
+    {
+      "problemId": "coin-change-2",
+      "approachId": "canonical",
+      "label": "deep-chain",
+      "input": {
+        "amount": 39,
+        "coins": [
+          1
+        ]
+      },
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "answer": "1",
+      "calls": null,
+      "cacheHits": null,
+      "states": null,
+      "rootCount": null,
+      "steps": 43,
+      "fullBytes": 149734,
+      "deltaBytes": 142186,
+      "independentAnswerMatches": true,
+      "fullDeltaEqual": true,
+      "sourceAndIdentityMatch": true
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "baseline": "f1937b64136a7465c34387f262657c9c56094dd9",
+  "branch": "feat/dp-coin-approaches",
+  "status": "Implemented and locally verified through full suites, exact-source/oracle/mutation proof,104 API executions,134 browser journeys and the final source/package/assets audit. Both candidates are locally UI-verified. Publication explicitly approved2026-10-24; exact-head CI gates merge. GitHub records the final publication outcome.",
+  "publication": "The owner explicitly replied approve, then instructed commit, push and merge the changes done till now and stop making new changes. This authorizes publication of this verified coin batch after green CI. No next implementation or future batch publication is inferred. The counts below retain the pre-publication verification snapshot; the PR records final checks and merge outcome.",
+  "problems": ["minimum-coins-dp", "coin-change-2"],
+  "scope": "Four genuine recursive/memo executables, complete standalone Java17 code, actual unlimited-reuse calls, exact-amount teaching and nullable caches. Minimum Coins distinguishes null/zero/INFINITY and maps only the final answer to -1. Coin Change II counts combinations and reuses known zeroes. Exact canonical executable/source/spec/default/ID contracts preserved. No frontend production code, dependency, endpoint or global-budget change.",
+  "bounds": {
+    "originalFields": "coins length1..8, values1..25; amount1..40. Duplicates allowed for Minimum Coins and refused for Coin Change II. Order is preserved.",
+    "recursion": "Actual complete tree <=220 calls, counted before any trace event by a safety-only bounded DP; numeric domains and max8 denominations retained.",
+    "memoization": "Joint (N+1)*(A+1)<=80 allocated cells before any trace event; null alone means unknown.",
+    "tabulation": "Unchanged225-cell guard, source, input spec and defaults. No public amount0 widening.",
+    "witnesses": "Exactly220-call accepted and221-call refused arrays; dense memo127 calls/48 hits for Minimum Coins and115 calls/36 hits for Coin Change II; all8 memo dimension maxima, long unit-coin chains, full-domain cheap8-denomination trees. Numeric domains are not clipped to the visual budget."
+  },
+  "backend": {"cases":8301,"failures":0,"errors":0,"unchangedSkips":500,"newCases":14,"fullSuiteFinishedAt":"2026-10-23T18:39:24Z","goldenRegenerationCases":432,"changedGoldenFiles":0,"goldenFinishedAt":"2026-10-23T18:39:59Z","launcherCleanupPassed":true},
+  "sourceAndAlgorithmProof": {
+    "initialRed": {"cases":14,"discoveryFailures":2,"unavailableApproachErrors":12},
+    "exactSourcesCompiled":6,"newStandaloneClasses":4,"canonicalMethodsWithOuterClassOnly":2,
+    "entriesPerTracerAndCompiledSourcePath":6084,
+    "comparisonScope":"2265 Minimum Coins and3819 Coin Change II entries, including repeats across three forms,712/1230 accepted exhaustive small cases,40 seeded actual-domain cases per problem, defaults, alternates and each form maximum. Not6084 unique inputs.",
+    "independentReferences":"Breadth-first shortest reachable amount for minimum cost; denomination-quantity vectors for combination counts. Neither copies the traced prefix recurrence.",
+    "mutationFailures":{"recursiveSourceAnswerPlusOne":2,"memoSourceAnswerPlusOne":2,"infinityOrZeroTreatedAsUnknown":2,"fabricatedKnownZeroMemoCells":2,"allowing221Calls":2},
+    "allMutationsRestoredBeforeFullSuiteAndPackage":true,
+    "existingSharedIntegerHelperUnchanged":true
+  },
+  "package": {"packagedAt":"2026-10-23T18:40:20.919574Z","sha256":"3ee5620efda5e2b8aa2b49f0832e269057080a806f628ba6089d1f4b34491e82","allCompiledProductionClassFilesCompared":613,"newSourceResourcesCompared":4,"allComparedBytesMatch":true,"noMavenWhileServingJourneys":true},
+  "frontend": {"lockedInstallPassed":true,"normalFullCommandPassed":true,"tests":863,"files":83,"durationSeconds":100.51,"productionBuildPassed":true,"assets":["/assets/index-C9w1PyPL.js","/assets/index-DwejRBy7.css"],"jsKB":389.53,"jsGzipKB":124.10,"cssKB":98.74,"cssGzipKB":17.92,"dependencyFindings":"9 existing locked-dependency vulnerabilities:4 moderate,3 high,2 critical. No remediation or lock change claimed."},
+  "api": {"report":"api-results.json","generated":"2026-10-23T18:42:56.170Z","scenarios":52,"fullDeltaExecutions":104,"additionalMemoDimensionScenarios":16,"productionDecoderEquality":true,"independentAnswers":true,"sourceInputTypeAndComplexityIdentity":true,"allCompleteWithinExistingBudgets":true,"maximumFullBytes":1535463,"maximumDeltaBytes":1500930},
+  "browser": {"status":"Passed within recorded automated scope","audit":"manifest-audit.json","auditedAt":"2026-10-23T18:59:23.006Z","standardChromiumRows":20,"standardFirefoxRows":8,"nativeChromium200PercentRows":8,"maximumChromiumRows":16,"maximumFirefoxRows":16,"committedInputComparisons":8,"edgeJourneys":52,"precedingCapacityPhoneCompatibilityRows":6,"totalJourneys":134,"edgeRejectedRuns":6,"outOfRangeNoticeAndStep1Rows":4,"actualTableValueAndAccessibleNameRows":36,"sourcePackageAndAssetsMatch":true,"screenshotsInspected":["minimum-coins-dp-memoization-320-dark.png","coin-change-2-memoization-1366-light.png"],"limits":"Large trees require local panning. DOM/ARIA and headless tasks do not certify human, real-device, screen-reader, learner or performance acceptance. Out-of-range links reset to step1, not the last step."},
+  "evidenceGuards": {"passingNodeCases":31,"coinProfileInitialRedCases":4,"inventoryRootAndStateCoordinateGuardRed":true},
+  "excludedAttempts": [
+    "Initial full frontend run overlapping other compilation has6 existing sharing/Frog failures (two5-second timeouts and four restoration waits). Affected files pass11/11 unchanged; a subsequent normal full command passes863/863. Assertions, worker settings and timeouts are unchanged. Contention is possible, not a proven root cause.",
+    "Initial Firefox maximum phase is interrupted when the local backend exits143. Vite logs ECONNREFUSED and answers500; there is no Java application exception. Termination cause is unproven. The same hash-identical jar and assets restart; the entire replacement phase passes16/16. No partial phase is accepted.",
+    "The long shell chain subsequently exits143 partway through capacity compatibility, while backend and preview remain healthy. Its partial rows are excluded; a separate complete6/6 rerun passes before the final audit. No source, package, asset or budget change is used to obtain the pass."
+  ],
+  "inventory": {"candidates":56,"precedingMergedAndVerified":21,"newVerifiedThisPackage":2,"totalLocallyVerified":23,"currentlyMerged":21,"outsideVerifiedSet":33,"changedRows":["coin-change-2","minimum-coins-dp"],"canonicalSourceDigestsAndInputSpecsUnchangedAcrossAll56Rows":true,"liveCanonicalStats":{"catalogued":431,"traced":431,"untraced":0,"duplicates":0,"orphans":0}},
+  "review": "Six bounded role-based self-review gates: actual served contracts and response caps; unchanged frontend/tokens and honest missing data; real theme/zoom/keyboard/focus/state-label checks; scope and live stats; immutable request-local tracing with unchanged canonical identity and no fallback; RED/mutations/full suites/goldens/skips/browser/source/package/assets reconciliation. No existing tests weakened, no independent human/agent acceptance claimed.",
+  "remaining": "Approved publication is gated on exact-head CI;33 other DP candidates, D6/D7 and broader correctness/source/context/complexity/security/human/device/screen-reader/learner/performance/deployment/rollback/release work remain open. Randomize can still violate joint budgets (RCA-064 follow-up). Stop after this publication; no next implementation or whole-project completion claim."
+}

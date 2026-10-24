@@ -289,6 +289,34 @@ helpers pass afterward. No application production code, coverage count or public
 state changes. This is not public UI/device/all-input/rollback acceptance, exact public
 binary provenance, or proof that the capacity batch is deployed. Temporary servers stop.
 
+Publication outcome (2026-10-23): capacity #232 merged as `f1937b6` at18:04:56Z.
+Exact head `c6e4dd5` passes push CI39999783662 and PR CI40000017490; post-merge
+CI40000372715 passes. Coverage is21/56 verified AND merged,35 outside verification.
+A subsequent bounded public check passes9 default scenarios/18 full-delta executions,
+matching all9 source hashes and independent answers. This is not all-input/public-browser
+or exact deployed-binary proof. The earlier18-merged/approval-pending entries are historical.
+The next coin package starts from this merge; its2 rows remain planned while tests run.
+
+Coin verification outcome (2026-10-23): Minimum Coins and Coin Change II pass all local
+gates on `feat/dp-coin-approaches` from #232.14 RED-first cases,8,301-case backend suite
+(500 unchanged skips),432 unchanged regenerated goldens, normal863-case frontend suite/
+build,6 compiled exact Java sources and independent references, mutation proof,104 API
+executions and134 browser journeys pass. The18:59:23Z source/package/assets audit passes;
+all613 compiled production classes match the unchanged jar. Only these2 inventory rows
+advance; all56 canonical source digests/specs/defaults stay unchanged. Coverage is23/56
+locally verified,21 merged,33 outside verification. Six refused runs retain run/draft/
+step/link/focus;4 out-of-range links reset to step1;36 edge table/ARIA checks pass.
+Earlier failed/interrupted harness runs are excluded and recorded in the implementation
+log; replacement phases pass in full. Neither timeout/assertion/worker limits nor global
+trace budgets change. This batch is uncommitted/unpushed/unmerged and needs publication
+approval. Randomize joint caps,9 dependency findings, D6/D7 and broader release gates
+remain open; large trees still require local panning. No whole-project completion claim.
+
+Publication approval (2026-10-24): the owner explicitly approves this coin batch, then
+instructs commit/push/merge of completed work and no new changes. Publish the verified
+batch after exact-head CI, and stop. The preceding approval-pending entries and21-merged
+counts are the pre-publication snapshot; GitHub records the final PR/checks/merge outcome.
+
 ## Baseline (P0, 2026-09-29)
 
 Subset-family publication snapshot (2026-10-21, #231): three more candidates pass

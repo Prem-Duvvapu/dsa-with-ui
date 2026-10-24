@@ -43,7 +43,7 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
   });
   const comparison=read('comparison-results.json');assert.equal(comparison.rows.length,cases.length*4);
   assert(Date.parse(comparison.generated)>=packaged);
-  const edges=['subset-family','capacity-family'].includes(family)?read('edge-results.json'):null;
+  const edges=['subset-family','capacity-family','coin-family'].includes(family)?read('edge-results.json'):null;
   if(edges){
     assert(edges.realBackend&&edges.buildMode==='production-preview'&&Date.parse(edges.generated)>=packaged);
     const axes=cases.flatMap(c=>['recursion','memoization','canonical'].flatMap(form=>[...Object.keys(c.extra),...(form==='canonical'?['maximum']:[])].flatMap(label=>
@@ -53,7 +53,7 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
       const c=cases.find(c=>c.id===row.problemId);assert(c);assert.deepEqual(row.input,row.label==='maximum'?maximum(c.id,row.approachId):c.extra[row.label]);
       assert.equal(row.answer,String(oracle(row.problemId,row.input)));
       assert.equal(row.sourceHash,hashes.get(`${row.problemId}/${row.approachId}`));
-      assert(row.passed&&(family==='capacity-family'?row.sharedStepHandledAndRestored:row.sharedStepClampedAndRestored)
+      assert(row.passed&&(['capacity-family','coin-family'].includes(family)?row.sharedStepHandledAndRestored:row.sharedStepClampedAndRestored)
         &&row.exactDraftRetained&&row.noUnsolicitedExecution&&row.noOverflowOrErrors);
       if(row.label==='odd'&&row.approachId!=='canonical')assert(row.oddNoFabricatedCalls);
       if(row.approachId!=='recursion'&&!(row.approachId==='memoization'&&row.label==='odd'))assert(row.actualTableValuesAndLabels);
@@ -63,7 +63,11 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
         assert.equal(row.refusedRuns,c.input.weights?3:1);
         if(c.input.weights)assert(row.mismatchedPairsBothDirections);
       }
-      if(family==='capacity-family'){
+      if(family==='coin-family'&&row.approachId==='memoization'&&row.label==='impossible-cache'){
+        assert(row.impossibleCacheReuse&&row.jointRefusalPreservesRunDraftStepAndLink&&row.duplicatePolicyPreserved);
+        assert.equal(row.refusedRuns,c.id==='minimum-coins-dp'?1:2);
+      }
+      if(['capacity-family','coin-family'].includes(family)){
         const executed=transport.rows.find(r=>r.problemId===row.problemId&&r.approachId===row.approachId&&r.label===row.label);assert(executed);
         assert.equal(row.requestedStep,row.label==='maximum'?4000:3);
         const outOfRange=row.requestedStep>executed.steps;
@@ -98,7 +102,7 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
       if(row.approachId!=='recursion')assert(row.tableSummaryMatchesActualCells&&row.tableCellLabelsMatchActualCells);
     }
   }
-  const compatibilityFamily=family==='circular-activity-obstacles'?'linear-grid':family==='falling-triangle'?'circular-activity-obstacles':family==='subset-family'?'falling-triangle':family==='capacity-family'?'subset-family':null;
+  const compatibilityFamily=family==='circular-activity-obstacles'?'linear-grid':family==='falling-triangle'?'circular-activity-obstacles':family==='subset-family'?'falling-triangle':family==='capacity-family'?'subset-family':family==='coin-family'?'capacity-family':null;
   const compatibility=compatibilityFamily?read(`${compatibilityFamily==='circular-activity-obstacles'?'circular':compatibilityFamily}-compatibility/chromium-standard-zoom1.json`):null;
   if(compatibility){
     assert(compatibility.realBackend&&compatibility.buildMode==='production-preview'&&compatibility.engine==='chromium');
