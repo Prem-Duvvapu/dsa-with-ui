@@ -128,6 +128,17 @@ test('incorrect zoom, missing proof and an incorrect engine are refused',()=>{
     doc=>{doc.engine='firefox';}
   ]) {const docs=documents();mutate(docs['chromium-standard-zoom2.json']);assert.equal(verified(docs),false);}
 });
+test('coin evidence cannot certify absent roots or clipped state coordinates',()=>{
+  for(const id of ['minimum-coins-dp','coin-change-2']){
+    const docs=documents();
+    for(const doc of Object.values(docs))for(const row of doc.rows){row.problemId=id;row.rootCount=1;row.allStateCoordinatesVisible=true;}
+    const check=()=>verified(docs,'coin-family',id);
+    assert.equal(check(),true);
+    docs['firefox-maximum-zoom1.json'].rows[0].rootCount=0;assert.equal(check(),false);
+    docs['firefox-maximum-zoom1.json'].rows[0].rootCount=1;
+    docs['firefox-maximum-zoom1.json'].rows[0].allStateCoordinatesVisible=false;assert.equal(check(),false);
+  }
+});
 test('independent references match authored examples and zero/base/boundary controls',()=>{
   const {cases,oracle}=require('./linear-grid-cases.cjs');
   for(const c of cases)assert.equal(String(oracle(c.id,c.input)),c.answer);

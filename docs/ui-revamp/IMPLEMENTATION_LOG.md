@@ -3096,3 +3096,88 @@ Fresh main is still `435c362`, with no open PR. All26 probe-helper cases and whi
 checks pass; the verified reference jar remains byte-identical. Publish this coherent
 batch first, require exact-head checks without bypass, and use GitHub for final head,
 checks and merge outcome. The broader project and35 other DP candidates remain open.
+
+### 2026-10-23 — capacity published; coin implementation begins
+
+Capacity #232 merges as `f1937b64136a7465c34387f262657c9c56094dd9` at18:04:56Z.
+Head `c6e4dd5` passes push CI39999783662 and PR CI40000017490; post-merge
+CI40000372715 passes. All9 public default scenarios subsequently pass in both encodings
+(18 executions), with matching source hashes/input/type/complexity and independent answers.
+This is bounded API evidence, not full public UI/device/rollback or binary provenance.
+The public verification outcome is recorded in #232's description.21/56 are now merged.
+
+The owner asks why the broad objective stopped; it has not been achieved. Resume with
+Minimum Coins and Coin Change II on `feat/dp-coin-approaches` from merged #232. Initial
+14-case RED fails on the missing alternatives (2 discovery failures,12 lookup errors).
+No candidate is newly called verified and no future publication approval is inferred.
+
+Coin backend verification:14 new cases now pass; the full suite passes8,301 cases,
+0 failures/errors and500 unchanged skips at18:39:24Z. All432 regenerated golden cases
+pass with no fixture changes. Six exact displayed Java17 listings compile in isolated
+platform-parent loaders (4 complete new classes and2 preserved canonical methods with
+an outer class only). Independent BFS/quantity-vector references check6,084 entries on
+each tracer and compiled-source path:2,265 Minimum Coins and3,819 Coin Change II, including
+repeats across forms,712/1,230 accepted exhaustive small cases,40 seeded cases per problem,
+defaults/alternates and each form's stress witness. These are not6,084 unique inputs.
+
+Mutation proof: both recursive source answers+1 fail2/2; both memo source answers+1
+fail2/2. Treating cached INFINITY/zero as uncomputed fails2/2 real-call guards. Showing
+fake known-zero memo cells fails2/2 cell-value guards while the real answers remain
+correct; allowing221 calls fails2/2 boundary guards. All mutations are restored before
+the passing full suite and package. The original shared integer helper is byte-for-byte
+unchanged in the final diff. New coin-profile guards fail4/4 before implementation, and
+the inventory root/state-label guard fails before wiring the profile;31 helper cases pass.
+
+The locked frontend install still reports9 vulnerabilities (4 moderate,3 high,2 critical).
+The first full frontend run, overlapping other compilation, has6 existing sharing/Frog
+failures (two5-second timeouts and four step-restoration waits); it is excluded as a pass.
+The unchanged affected files pass11/11 on rerun. A subsequent normal full command passes
+all863 cases/83 files in100.51 seconds; assertions, timeouts and worker settings remain
+unchanged. The build passes with the same C9w1PyPL.js/DwejRBy7.css assets. Contention is
+a possible cause of the first failure, not a proven root cause.
+
+The verified package is built at18:40:20Z (SHA256
+`3ee5620efda5e2b8aa2b49f0832e269057080a806f628ba6089d1f4b34491e82`).
+All613 compiled production classes and4 new source resources match the jar. Maven stops
+before serving it. The live API sweep passes52 scenarios/104 full-delta executions,
+including all8 memo dimensions per problem, deep reuse, impossible/cache and permutation
+controls. Independent answers, decoder equality and committed source/input/type/complexity
+identity pass; maximum full body is1,535,463 bytes. Browser verification is still running;
+the2 inventory rows stay planned until its final source/package/assets audit passes.
+
+Final coin browser outcome:134 journeys pass (68 standard/zoom/stress,8 comparisons,
+52 edges,6 preceding-capacity phone compatibility). All5 Chromium widths and both themes,
+Firefox, native Chromium200%, real220-call/dense80-cell maxima, committed-input dirty-
+draft comparisons and deep chains pass. Six edge refusals keep prior run/draft/step/link
+and error focus. Four step4000 links reset to step1 with notice/normalized URL;36 edge
+rows check actual table values and exact accessible names. Inspect the320-dark Minimum
+Coins and1366-light Coin Change II memo screenshots: roots are visible and large trees
+require local panning; all-at-once readability is not claimed.
+
+Excluded local-harness attempts: the initial Firefox maximum phase gets a proxy500
+after the backend exits143. Vite logs ECONNREFUSED; no Java application exception is
+logged. Termination cause is unproven. Restart the identical jar/assets and rerun the
+entire affected phase16/16. Later, the long shell chain exits143 midway through capacity
+compatibility while both servers stay healthy. Exclude its partial rows; a separate
+complete6/6 compatibility rerun passes. No product/source/package/budget change is used
+for either rerun. These partial attempts are not included in the134 accepted journeys.
+
+The18:59:23Z final audit passes, reconciling all6 current source hashes with every relevant
+manifest, the packaged backend and production assets. All613 production class files
+still match the unchanged jar; no Maven runs while serving. Only the2 coin inventory
+rows change; all56 canonical source digests/input specs/defaults are preserved. Coverage
+is now23/56 locally verified,21 merged,33 others. Stats stay431/431 without duplicates/
+orphans. Stop owned servers after the final audit; publication awaits approval. No commit,
+push, PR or merge is performed. D6/D7, Randomize joint caps, dependency/source/context/
+complexity/correctness and human/device/screen-reader/learner/performance/deployment/
+rollback/release gates remain open. The broad project goal is not achieved.
+
+### 2026-10-24 — coin publication approved; stop after merging
+
+The owner explicitly replies "approve", then instructs commit/push/merge of the work
+done so far and no new changes. This authorizes the verified coin batch's publication,
+not another implementation. Fresh origin/main remains `f1937b6`; no open PR exists.
+All31 evidence helpers and whitespace checks pass again, and the reference jar remains
+hash-identical. Publish this coherent batch, require exact-head CI without bypass, and
+stop after merge. GitHub records final head/checks/merge; earlier approval-pending text
+and21-merged counts are historical pre-publication snapshots. No future approval inferred.

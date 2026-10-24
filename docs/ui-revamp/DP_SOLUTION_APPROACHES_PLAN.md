@@ -1,10 +1,15 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **21/56 candidates implemented and verified locally:18 merged, plus the three
-capacity-family candidates approved for CI-gated publication.35 candidates remain outside
-the verified set. The merged subset baseline is #231 / `435c362` (2026-10-21), with
-passing exact-head checks and post-merge CI39656155506. The capacity package is NOT
-published at this approval checkpoint; GitHub records the final PR/checks/merge outcome.
+Status: **23/56 candidates locally verified:21 merged and2 coin candidates ready for
+publication;33 candidates remain outside the verified set. Capacity-family #232 merged
+as `f1937b6` on2026-10-23 after exact-head push
+CI39999783662 and PR CI40000017490; post-merge CI40000372715 passes. A bounded public
+API check passes18 default full/delta executions with all9 source hashes matching the
+verified reference; this does not establish all-input/public-browser acceptance.
+Minimum Coins and Coin Change II pass full suites, exact-source/oracle/mutation checks,
+104 API executions and134 browser journeys on a new branch from #232. Their2 rows are
+now UI-verified. The owner explicitly approved publication on2026-10-24; exact-head CI
+gates merge. GitHub records the final PR/checks/merge outcome; no deployment is claimed.
 Falling Path/Triangle merged as #230 / `e35dd35`
 on2026-10-18 after approved publication and green exact-head push/PR checks; post-merge
 CI39127039341 passed. No whole-DP or broader release completion is claimed.
@@ -52,7 +57,7 @@ RED before that addition and all3 targeted cases pass afterward. Final full suit
 transport budgets and100 browser journeys pass; only these two inventory rows advance.
 This snapshot preceded #230; its approved merge outcome is recorded above.
 
-### D5 capacity family — verified locally; publication approved 2026-10-23
+### D5 capacity family — verified and merged #232, 2026-10-23
 
 Branch `feat/dp-capacity-approaches` starts from merged #231. This package adds genuine
 recursion and memoization for 0/1 Knapsack, Unbounded Knapsack and Rod Cutting. It preserves
@@ -123,7 +128,7 @@ The owner explicitly approved publishing on2026-10-23; exact-head CI gates the m
 D6/D7, other candidates and
 broader source/correctness/security/human/performance/deployment/rollback gates stay open.
 
-### Resumed verification — merged subset public API, 2026-10-23
+### Historical pre-publication verification — merged subset public API, 2026-10-23
 
 The capacity batch remains uncommitted/unpushed/unmerged; resuming the broad goal does
 not replace the required publication approval. A fresh fetch still reports main at
@@ -150,11 +155,64 @@ frontend/API/GitHub HTTPS health requests subsequently return200; the unchanged 
 verifier then passes. Cause is unproven, and the failed attempt is not counted as a
 deployment pass. The temporary local backend is stopped afterward, with ports free.
 
-### Next-package preflight — coin reuse, read-only, 2026-10-21
+### D5 coin family — implemented and locally verified, 2026-10-23
 
-This is preparation only. No next implementation is stacked on the unmerged capacity
-batch, no alternative is advertised and no coverage row advances. Publication approval
-for capacity is still required before landing it and cutting the next feature branch.
+`feat/dp-coin-approaches` starts from merged #232 / `f1937b6`. Minimum Coins and Coin
+Change II now have genuine recursion and memoization, preserving their exact original
+canonical executables/source/spec/defaults/IDs and225-cell tabulation guard. Canonical
+approaches are truthfully labelled Tabulation. No frontend production code, dependency,
+endpoint or global-budget change.
+
+Both retain coins1..25, length1..8 and amount1..40. Minimum Coins continues to allow
+duplicates; Coin Change II continues to reject them. Input order is never sorted or
+deduplicated. Recursion refuses actual complete trees above220 calls before emitting;
+memo refuses joint (N+1)*(A+1)>80 cells. Cheap8-denomination/amount40 recursion remains
+valid, as does a single unit coin's40-deep reuse chain. The public amount0 contract is
+not widened. Null means uncomputed; Minimum Coins caches known zero and INFINITY,
+renders unreachable cells as∞ and explains the sentinel. Only the final public answer
+maps unreachable to-1. Coin Change II caches real zero combination counts.
+
+Evidence in `dp-approaches/coin-family/verification.json` and its manifests:
+
+-14 new cases start RED (2 discovery failures,12 unavailable-approach errors), then pass.
+  The full backend suite passes8,301 cases,0 failures/errors and500 unchanged skips;
+  all432 regenerated golden cases pass with no fixture changes.
+-6 exact displayed Java17 listings compile independently:4 new standalone classes and
+  the2 unchanged canonical methods with an outer class only. Independent BFS and quantity-
+  vector references check6,084 entries on each tracer/compiled-source path, including
+  repeats across forms, accepted exhaustive small cases, seeded cases, defaults/alternates
+  and each form maximum. This is not6,084 distinct inputs.
+- Wrong source answers, infinity/zero treated as unknown, fabricated known-zero memo
+  cells, and allowing221 calls all fail their corresponding guards. All mutations are
+  restored before the passing full suite/package.31 evidence helper cases pass.
+- Normal frontend863/83-file suite and build pass without timeout/assertion/worker changes.
+  The initial overlapping run's6 existing sharing/Frog failures are excluded; unchanged
+  targeted11/11 and normal full reruns pass.9 locked-dependency vulnerabilities remain.
+-52 API scenarios/104 full-delta executions pass independent answers, decoder equality,
+  committed identity, all8 memo dimensions per problem, deep reuse, impossible and
+  permutation controls. The maximum full body is1,535,463 bytes under existing limits.
+-134 browser journeys pass:68 standard/zoom/stress,8 committed-input comparisons,
+  52 edge cases and6 preceding-capacity phone compatibility rows. Six refusals preserve
+  prior run/draft/step/link and error focus;4 out-of-range links reset to step1 with
+  notice/normalized URL.36 edge rows verify actual table values and accessible names.
+- The18:59:23Z audit reconciles all6 current source hashes, packaged backend and unchanged
+  production assets. All613 compiled production classes and4 new source resources match
+  the jar. No Maven runs while it serves journeys. An interrupted Firefox phase and an
+  interrupted compatibility phase are excluded and rerun completely; see the log.
+
+Only the2 coin rows advance. All56 canonical source digests/input specs/defaults remain
+unchanged; stats remain431/431,0 untraced/duplicates/orphans. Large trees still require
+local panning; human/device/screen-reader/learner/performance/public-deployment acceptance
+is not claimed. Randomize can still violate joint budgets (RCA-064 follow-up). The batch
+has explicit owner publication approval on2026-10-24; exact-head CI gates its merge.
+GitHub records the final publication outcome.33 other DP
+candidates, D6/D7 and broader project gates remain open. The broad goal is not complete.
+
+### Historical preflight — coin reuse, read-only, 2026-10-21
+
+The following is the original read-only preflight. Capacity subsequently landed as #232;
+implementation starts on2026-10-23 in `feat/dp-coin-approaches`, based on that merge.
+No coin coverage row advances before independent source/API/browser verification.
 
 The next coherent package is Minimum Coins and Coin Change II, preserving each existing
 canonical executable/source/spec/default. Their similar reuse edge does not make their
