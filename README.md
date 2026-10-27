@@ -56,6 +56,12 @@ Learning Hub have independent analytics. A plain local server or Docker deployme
 does not supply Vercel's analytics endpoint; blocked/unavailable analytics must not
 prevent learning or navigation. Live visitor totals require dashboard verification.
 
+The SPA fallback excludes Vercel's reserved `/_vercel` routes so analytics requests
+cannot be rewritten to the app's HTML. Check that the tracking script returns
+JavaScript and that page-view requests succeed; HTTP200 with `text/html` is not a
+working tracking script. If the project was enabled after its last deployment,
+redeploy it as described in [Vercel's troubleshooting guide](https://vercel.com/docs/analytics/troubleshooting).
+
 ## Architecture
 
 | Tier | Technology | Notes |

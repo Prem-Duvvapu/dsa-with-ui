@@ -2149,3 +2149,26 @@ that all340 structurally exposed endpoints were individually exercised.
   check HTTP400 with nums field errors and no steps at81 cells and on the99-cell
   counterexample; dense80-cell and ten-item controls must complete. The preliminary
   API/browser sweep is excluded and repeated against the final package.
+
+## RCA-071 — SPA fallback masked an unavailable analytics script as successful HTML
+
+- **Discovered:**2026-10-27, during the owner's Vercel Analytics setup request.
+- **Status:** Reserved-route repair in progress on `fix/vercel-analytics-routing`;
+  production script/collection and dashboard activation remain unverified.
+- **Symptom:** the existing Analytics React component requests
+  `/_vercel/insights/script.js`, which returns HTTP200 with `text/html` and the app's
+  index page. A real Chromium visit throws `Unexpected token '<'`. The Speed Insights
+  script returns JavaScript, so routing alone does not prove why Analytics is unavailable.
+- **Cause established:** the broad SPA fallback matches Vercel's reserved paths and
+  converts an absent platform endpoint into a misleading HTML success. Project-level
+  Web Analytics enablement/generated-route availability is a separate unverified seam.
+- **Repair:** keep the existing pinned SDK, production-only React mount and URL redaction;
+  exclude the exact `/_vercel` segment and descendants from the SPA fallback. Preserve
+  API proxy routing, ordinary problem deep links and similarly named normal routes.
+- **Guard:** six reserved-endpoint cases fail before the rewrite change, while seven
+  SPA/API controls pass; all13 routing cases plus3 existing redaction cases pass after.
+  A deployment check must verify JavaScript content and actual collection requests,
+  not merely HTTP200 or the component's presence. Dashboard totals need authenticated
+  confirmation. Evidence: `docs/ui-revamp/evidence/analytics/before.json`.
+- **Lesson:** SPA fallbacks must not impersonate platform endpoints; SDK installation,
+  feature activation, script delivery and event collection are distinct requirements.

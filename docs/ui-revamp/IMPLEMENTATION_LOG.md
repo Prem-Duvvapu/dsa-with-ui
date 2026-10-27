@@ -3181,3 +3181,34 @@ All31 evidence helpers and whitespace checks pass again, and the reference jar r
 hash-identical. Publish this coherent batch, require exact-head CI without bypass, and
 stop after merge. GitHub records final head/checks/merge; earlier approval-pending text
 and21-merged counts are historical pre-publication snapshots. No future approval inferred.
+
+### 2026-10-27 — completion resumed; repair analytics platform routing
+
+The owner resumes the broad completion goal and permits parallel agents, then requests
+Vercel Analytics setup including deployment/visiting the site. Start from merged #233 /
+`49a6bf6` (23 verified/merged DP candidates,33 outside verification), with clean native
+worktree and no open PR. Three independent read-only agents audit Gas precision,
+runtime/source/continuous-range seams, Phone budgeting, Count Squares and dependencies.
+Those findings remain pending; no next algorithm implementation is stacked here.
+
+Analytics is already pinned at2.0.1 and mounted production-only in main.jsx using the
+React entry and redactAnalyticsUrl. A real production Chromium visit finds the Analytics
+script returning200 HTML/index.html and throwing Unexpected token '<'; Speed Insights
+returns JavaScript. Do not mistake SDK installation or HTTP200 for collection. The SPA
+fallback masks absent platform routes; project enablement/generated-route availability
+is a separate unverified requirement. Preserve the existing integration, exclude exact
+/_vercel and descendants from SPA fallback, and retain API/normal/deceptively similar
+SPA paths. Six reserved-path guards start RED; seven controls pass. All13 routing and
+3 existing URL-redaction cases then pass. See RCA-071 and evidence/analytics/.
+
+Earlier test processes/handles disappear across the environment interruption and their
+temporary logs are lost; these attempts are excluded. Persistent replacements complete:
+backend8,301 cases/0 failures/errors/500 unchanged skips,432 regenerated golden cases
+with no fixture changes, normal876-test/84-file frontend suite in154.90 seconds, build
+and startup cleanup. No assertion/timeout/worker/trace-budget change or new dependency.
+The same C9w1PyPL.js/DwejRBy7.css production assets remain. Fresh audits retain9 affected
+entries (4moderate/3high/2critical); production-only has2moderate Router entries. No
+dependency remediation is included. Exact-head CI gates this deployment request, and
+production JS delivery plus actual collection must be checked after deployment. A
+dashboard-enablement question is pending; no answer or authenticated totals are inferred.
+No overall project, algorithm, accessibility, performance or release completion is claimed.

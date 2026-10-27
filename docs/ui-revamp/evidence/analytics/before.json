@@ -1,0 +1,25 @@
+{
+  "generated": "2026-10-27T18:40:45.647Z",
+  "site": "https://dsa-with-ui.vercel.app/",
+  "analyticsScript": {
+    "url": "https://dsa-with-ui.vercel.app/_vercel/insights/script.js",
+    "status": 200,
+    "contentType": "text/html; charset=utf-8",
+    "body": "Application index.html, not JavaScript",
+    "browserError": "Unexpected token '<'"
+  },
+  "speedInsightsControl": {
+    "url": "https://dsa-with-ui.vercel.app/_vercel/speed-insights/script.js",
+    "status": 200,
+    "contentType": "application/javascript; charset=utf-8"
+  },
+  "integrationAlreadyPresent": {
+    "package": "@vercel/analytics@2.0.1",
+    "entry": "frontend/src/main.jsx",
+    "import": "@vercel/analytics/react",
+    "productionOnly": true,
+    "beforeSend": "redactAnalyticsUrl removes query strings and fragments"
+  },
+  "routingRegression": "The SPA fallback matches /_vercel/insights/* and hides missing platform routes behind HTTP200 HTML. Six reserved-route regressions fail before repair; seven SPA/API controls pass.",
+  "limits": "This does not establish why the Analytics platform route is absent. Speed Insights succeeds under the old routing too. Dashboard enablement and generated Analytics routes require independent verification after deployment; no visitor collection or dashboard totals are certified here."
+}
