@@ -1,0 +1,18 @@
+{
+  "baseline": "49a6bf6d2909a6ce901f54670fb0612e7a471f7c",
+  "branch": "fix/vercel-analytics-routing",
+  "date": "2026-10-27",
+  "scope": "Preserve the existing Analytics React integration and URL redaction. Keep platform endpoints out of the SPA HTML fallback; preserve API proxy and normal SPA deep links. No new dependency, event type, custom collection, SDK duplication, backend or algorithm change.",
+  "before": "before.json records an actual production Chromium script request returning HTTP200 HTML and Unexpected token '<'; Speed Insights returns JavaScript. Project activation is a separate unverified requirement.",
+  "red": {"reservedPathFailures":6,"passingSpaAndApiControls":7},
+  "focused": {"routingCases":13,"existingRedactionCases":3,"passed":16},
+  "backend": {"cases":8301,"failures":0,"errors":0,"unchangedSkips":500,"finishedAt":"2026-10-27T19:06:07Z"},
+  "goldens": {"cases":432,"failures":0,"changedFixtures":0,"finishedAt":"2026-10-27T19:08:49Z"},
+  "frontend": {"files":84,"tests":876,"failures":0,"normalCommand":true,"durationSeconds":154.90,"productionBuildPassed":true,"assets":["/assets/index-C9w1PyPL.js","/assets/index-DwejRBy7.css"]},
+  "startupCleanupPassed":true,
+  "publication": "The owner requested analytics setup including deployment and a visit to verify page views. Publish this bounded repair through exact-head CI before checking the production endpoint and actual collection. This does not authorize an unrelated package's publication.",
+  "productionAfterRepair": "Pending deployment and verification. A script presence/HTTP200/regex guard cannot prove visitor collection or Vercel dashboard totals. Feature enablement may still require the project owner's authenticated Vercel dashboard.",
+  "excludedAttempts": "Earlier full test handles disappeared, no processes remained, and temporary logs were lost across the environment interruption. Those attempts are not counted as passing. Persistent-log replacements ran to completion, with backend/goldens followed by the normal frontend suite; no test timeout, assertion, worker or trace budget was changed.",
+  "review": "Actual production failure and RED-first boundary guards; API/SPA compatibility; no UI, CSS token, dependency or source/runtime contract changes; existing production-only privacy hook retained; full suites/build/goldens/startup checks passed. Deployment/platform activation and event acceptance must still be tested independently.",
+  "goal": "The broad completion goal remains active. Gas Stations, Phone Combinations, Count Squares, the33 other DP candidates and broader source/security/human/performance/release gates are not closed by this repair."
+}
