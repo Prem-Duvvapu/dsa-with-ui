@@ -26,14 +26,12 @@ final class CapacityRecursiveTracer implements AlgorithmTracer {
                                 +(memo?"Memo needs (n+1) × (capacity+1) ≤ 80 cells.":"The complete tree must fit 220 calls; weights and capacity affect its size. Reduce items/capacity or increase weights if refused.")).build(),
                 InputField.of("values",FieldType.INT_ARRAY).label("Values").length(1,8).values(1,100)
                         .defaultValue(kind.reuse?List.of(5,11,13):List.of(5,4,8,6)).build(),
-                InputField.of("capacity",FieldType.INT).label("Capacity").range(1,30).defaultValue(kind.reuse?10:5).build());
+                InputField.of("capacity",FieldType.INT).label("Capacity").range(1,30).defaultValue(kind.reuse?10:5).build())
+                .withEqualLengthGroup("weights","values");
     }
     public Map<String,Object> alternateInput(){return kind.reuse?Map.of("weights",List.of(3),"values",List.of(10),"capacity",8):Map.of("weights",List.of(2,3),"values",List.of(4,5),"capacity",4);}
     public void run(Inputs in,StepEmitter emit){
         int[] weights=in.getIntArray("weights"),values=in.getIntArray("values");int capacity=in.getInt("capacity");
-        if(weights.length!=values.length)throw new InputValidationException(Map.of("values",
-                "Needs exactly one value per weight: "+weights.length+" weight"+(weights.length==1?"":"s")
-                        +" but "+values.length+" value"+(values.length==1?"":"s")+"."));
         if(memo){
             if((long)(weights.length+1)*(capacity+1)>80)throw new InputValidationException(Map.of("weights",
                     "Memo tracing needs (n+1) × (capacity+1) ≤ 80 cells; use fewer paired items or a smaller capacity."));

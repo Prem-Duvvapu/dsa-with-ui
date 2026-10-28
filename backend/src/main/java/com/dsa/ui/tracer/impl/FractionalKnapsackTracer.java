@@ -48,7 +48,7 @@ public class FractionalKnapsackTracer implements AlgorithmTracer {
                         .help("Total weight the bag can carry.")
                         .range(1, 1000)
                         .defaultValue(50)
-                        .build());
+                        .build()).withEqualLengthGroup("values", "weights");
     }
 
     /** Ratios rank in a different order and the bag empties two items earlier — a very different run. */
@@ -105,11 +105,6 @@ public class FractionalKnapsackTracer implements AlgorithmTracer {
         int[] values = in.getIntArray("values");
         int[] weights = in.getIntArray("weights");
         int capacity = in.getInt("capacity");
-
-        if (values.length != weights.length) {
-            throw new InputValidationException(Map.of("weights",
-                    "You gave " + values.length + " values but " + weights.length + " weights — one per item."));
-        }
 
         int n = values.length;
         List<Integer> order = new ArrayList<>();

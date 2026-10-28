@@ -75,5 +75,7 @@
 /* Workspace size: essential text at reading size (IMPLEMENTATION_HANDOFF.md §5), not microtype. */
 .comfortable { padding-inline: 0; gap: var(--space-md); }
 .comfortable .label { font-size: var(--type-meta); letter-spacing: 0; text-transform: none; color: var(--ink-secondary); font-weight: 600; }
+.comfortable .values { flex-wrap: wrap; overflow: visible; }
+.comfortable .entry { max-width: 100%; }
 .comfortable .name { font-size: var(--type-meta); color: var(--ink-secondary); }
 .comfortable .value { font-size: var(--type-control); color: var(--ink-strong); max-width: 60ch; }

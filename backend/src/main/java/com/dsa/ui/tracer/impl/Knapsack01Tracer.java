@@ -52,7 +52,7 @@ public class Knapsack01Tracer implements AlgorithmTracer {
                         .label("Capacity")
                         .range(1, 30)
                         .defaultValue(5)
-                        .build());
+                        .build()).withEqualLengthGroup("weights", "values");
     }
 
     /** Two items instead of four, and neither combination fills the capacity exactly. */
@@ -120,13 +120,6 @@ public class Knapsack01Tracer implements AlgorithmTracer {
     public void run(Inputs in, StepEmitter emit) {
         int[] wt = in.getIntArray("weights");
         int[] val = in.getIntArray("values");
-        if (wt.length != val.length) {
-            // One value per weight: unequal lists used to fail with a 500 (more weights) or
-            // silently ignore the extra values (more values).
-            throw new InputValidationException(Map.of("values",
-                    "Needs exactly one value per weight: " + wt.length + " weight" + (wt.length == 1 ? "" : "s")
-                            + " but " + val.length + " value" + (val.length == 1 ? "" : "s") + "."));
-        }
         int n = wt.length;
         int W = in.getInt("capacity");
         DpTraceSupport.requireTableFits(n + 1, W + 1, "capacity", "Use a smaller capacity or fewer items.");
