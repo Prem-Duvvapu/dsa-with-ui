@@ -19,7 +19,9 @@ function bounds(vars = {}) {
     const high = num(vars?.[highName]);
     if (low !== null && high !== null) {
       // m means students or exponent in real tracers; it is not a midpoint alias.
-      return { low, high, mid: num(vars?.mid) };
+      const domain = Object.prototype.hasOwnProperty.call(vars ?? {}, 'searchDomain')
+        ? vars.searchDomain : 'discrete';
+      return { low, high, mid: num(vars?.mid), domain };
     }
   }
   return { low: null, high: null, mid: null };
@@ -82,7 +84,7 @@ function lastBounds(steps, index, fallback) {
 export default function SearchSpaceCanvas({ currentStep, step, steps, currentStepIndex }) {
   const activeStep = currentStep || step;
   const here = lastBounds(steps, currentStepIndex ?? 0, activeStep);
-  const { low, high, mid } = here;
+  const { low, high, mid, domain } = here;
   const cells = activeStep?.arrayState ?? here.cells ?? [];
   // Only an explicit answer on this step is a result. The last visible step may be
   // budget-truncated, and ans is only the best candidate found so far.
@@ -92,18 +94,29 @@ export default function SearchSpaceCanvas({ currentStep, step, steps, currentSte
     return <div className={styles.empty} role="status">No search range for this step.</div>;
   }
 
-  const remaining = Math.max(0, high - low + 1);
-  const full = originalRange(steps, { low, high, cells });
-  const indexed = isIndexSpace(full.cells ?? cells, full.low, full.high);
-  const span = Math.max(1, full.high - full.low + 1);
-  const shareLeft = ((low - full.low) / span) * 100;
-  const shareWidth = (remaining / span) * 100;
+  if (domain !== 'discrete' && domain !== 'continuous') {
+    return <div className={styles.empty} role="status">Unsupported search domain for this step.</div>;
+  }
+  const continuous = domain === 'continuous';
+  if (continuous && high < low) {
+    return <div className={styles.empty} role="status">Invalid continuous search interval for this step.</div>;
+  }
+
+  // A continuous interval has a width, not an inclusive number of integer candidates.
+  // Its domain travels with the complete pair selected by lastBounds, never commentary.
+  const remaining = continuous ? high - low : Math.max(0, high - low + 1);
+  const full = originalRange(steps, { ...here, cells });
+  const indexed = !continuous && isIndexSpace(full.cells ?? cells, full.low, full.high);
+  const span = continuous ? Math.max(0, full.high - full.low) : Math.max(1, full.high - full.low + 1);
+  const shareLeft = span > 0 ? ((low - full.low) / span) * 100 : 0;
+  const shareWidth = span > 0 ? (remaining / span) * 100 : 0;
 
   return (
     <div className={styles.container} data-testid="search-space-canvas">
       <div className={styles.summary}>
         <span className={styles.rangeBadge} data-testid="search-range">
-          {indexed ? 'indices' : 'answers'} [{low}, {high}] · {remaining} left of {span}
+          {continuous ? 'continuous' : indexed ? 'indices' : 'answers'} [{low}, {high}] ·{' '}
+          {continuous ? `width ${remaining} of ${span}` : `${remaining} left of ${span}`}
         </span>
         {mid !== null && (
           <span className={styles.midBadge} data-testid="search-mid">probing {mid}</span>
@@ -118,7 +131,7 @@ export default function SearchSpaceCanvas({ currentStep, step, steps, currentSte
       <div className={styles.ruler} data-testid="search-ruler">
         <span className={styles.rulerEnd}>{full.low}</span>
         <div className={styles.rulerTrack}>
-          {remaining > 0 && <div
+          {(continuous || remaining > 0) && <div
             className={styles.rulerLive}
             data-testid="search-live"
             style={{ left: `${shareLeft}%`, width: `${shareWidth}%` }}

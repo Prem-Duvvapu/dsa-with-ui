@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -20,7 +21,10 @@ import java.util.Map;
 @Component
 public class MinimizeMaxDistanceGasStationTracer implements AlgorithmTracer {
 
-    private static final int ITERATIONS = 15;
+    // Initial gap <=1000;40 halvings leave a bracket narrower than1e-9.
+    private static final int ITERATIONS = 40;
+    private static final String SOURCE = SolutionSource.read(
+            "/solutions/core/minimize-max-distance-gas-station.java");
 
     @Override
     public String id() {
@@ -56,32 +60,7 @@ public class MinimizeMaxDistanceGasStationTracer implements AlgorithmTracer {
 
     @Override
     public String annotatedCode() {
-        return """
-               public double minimizeMaxDistance(int[] stations, int k) {
-                   int n = stations.length;
-                   double[] gaps = new double[n - 1];
-                   for (int i = 0; i < n - 1; i++) gaps[i] = stations[i + 1] - stations[i];
-                   // @a init
-                   double low = 0, high = max(gaps);
-                   for (int iter = 0; iter < 15; iter++) {
-                       // @a mid
-                       double mid = (low + high) / 2;
-                       int needed = 0;
-                       for (double gap : gaps) {
-                           // @a gapTally
-                           needed += (int) Math.ceil(gap / mid) - 1;
-                       }
-                       if (needed <= k) {
-                           // @a feasible
-                           high = mid;
-                       } else {
-                           // @a infeasible
-                           low = mid;
-                       }
-                   }
-                   // @a done
-                   return high;
-               }""";
+        return SOURCE;
     }
 
     private List<ArrayElement> gapState(double[] gaps, int highlight) {
@@ -90,6 +69,14 @@ public class MinimizeMaxDistanceGasStationTracer implements AlgorithmTracer {
             state.add(new ArrayElement(i, (int) gaps[i], i == highlight ? "current" : "target"));
         }
         return state;
+    }
+
+    /** A continuous domain and its raw bounds always belong to one actual snapshot. */
+    private StepEmitter.Step snapshot(StepEmitter emit, String anchor, double low, double high,
+                                      double[] gaps, int highlight) {
+        return emit.at(anchor).var("searchDomain", "continuous")
+                .var("low", low).var("high", high).var("intervalWidth", high - low)
+                .arrayState(gapState(gaps, highlight));
     }
 
     @Override
@@ -105,50 +92,46 @@ public class MinimizeMaxDistanceGasStationTracer implements AlgorithmTracer {
         }
 
         double low = 0, high = maxGap;
-        emit.at("init")
+        snapshot(emit, "init", low, high, gaps, -1)
                 .say("Binary search the max distance between adjacent stations after adding %d more. "
-                        + "%d gaps, largest is %.2f — that is the worst case with zero additions.",
-                        k, gaps.length, maxGap)
-                .var("low", low).var("high", high).var("k", k)
-                .arrayState(gapState(gaps, -1)).step();
+                        + "%d gaps, largest is %s — that is the worst case with zero additions.",
+                        k, gaps.length, Double.toString(maxGap))
+                .var("k", k).var("iterations", ITERATIONS).step();
 
         for (int iter = 0; iter < ITERATIONS; iter++) {
             double mid = (low + high) / 2;
-            emit.at("mid")
-                    .say("Iteration %d: test max distance %.5f.", iter + 1, mid)
-                    .var("low", low).var("high", high).var("mid", String.format("%.5f", mid))
-                    .arrayState(gapState(gaps, -1)).step();
+            snapshot(emit, "mid", low, high, gaps, -1)
+                    .say("Iteration %d of %d: test max distance %s.", iter + 1, ITERATIONS, Double.toString(mid))
+                    .var("iteration", iter + 1).var("mid", mid).step();
 
             int needed = 0;
             for (int i = 0; i < gaps.length; i++) {
                 double gap = gaps[i];
                 int extra = (int) Math.ceil(gap / mid) - 1;
                 needed += extra;
-                emit.at("gapTally")
-                        .say("Gap %d = %.2f needs %d extra station%s at this distance. Running total = %d.",
-                                i, gap, extra, Narration.s(extra), needed)
-                        .var("needed", needed)
-                        .arrayState(gapState(gaps, i)).step();
+                snapshot(emit, "gapTally", low, high, gaps, i)
+                        .say("Gap %d = %s needs %d extra station%s at this distance. Running total = %d.",
+                                i, Double.toString(gap), extra, Narration.s(extra), needed)
+                        .var("iteration", iter + 1).var("mid", mid).var("needed", needed).step();
             }
 
             if (needed <= k) {
-                emit.at("feasible")
-                        .say("%d <= %d — %.5f is achievable. Try a smaller max distance.", needed, k, mid)
-                        .var("high", String.format("%.5f", mid))
-                        .arrayState(gapState(gaps, -1)).step();
                 high = mid;
+                snapshot(emit, "feasible", low, high, gaps, -1)
+                        .say("%d <= %d — %s is achievable. Try a smaller max distance.", needed, k, Double.toString(mid))
+                        .var("iteration", iter + 1).var("needed", needed).var("k", k).step();
             } else {
-                emit.at("infeasible")
-                        .say("%d > %d — %.5f is too tight. Try a larger max distance.", needed, k, mid)
-                        .var("low", String.format("%.5f", mid))
-                        .arrayState(gapState(gaps, -1)).step();
                 low = mid;
+                snapshot(emit, "infeasible", low, high, gaps, -1)
+                        .say("%d > %d — %s is too tight. Try a larger max distance.", needed, k, Double.toString(mid))
+                        .var("iteration", iter + 1).var("needed", needed).var("k", k).step();
             }
         }
 
-        emit.at("done")
-                .say("After %d halvings, the minimum achievable max distance converges to %.5f.", ITERATIONS, high)
-                .var("answer", String.format("%.5f", high))
-                .arrayState(gapState(gaps, -1)).step();
+        String answer = String.format(Locale.ROOT, "%.5f", high);
+        snapshot(emit, "done", low, high, gaps, -1)
+                .say("After %d halvings, interval width is %s (below 1e-9). Rounded to five decimals: %s.",
+                        ITERATIONS, Double.toString(high - low), answer)
+                .var("iteration", ITERATIONS).var("answer", answer).step();
     }
 }

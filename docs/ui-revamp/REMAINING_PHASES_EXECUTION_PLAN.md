@@ -2,7 +2,31 @@
 
 Prepared: 2026-10-05. Inspected main: `dad2640`, merged PR #191.
 
-### Current execution order — owner directed, 2026-10-09
+### Current execution checkpoint — 2026-10-28
+
+Main is `3399213` (#234); no PR is open. DP has23/56 verified and merged candidates,
+with33 outside verification (32 planned,1 requiring a different formulation). The coin
+batch #233 merged as `49a6bf6`, with successful exact-head and post-merge CI. These
+counts are checked against GitHub and the current56-row inventory; dated counts below
+are historical. The current [tracker](REVAMP_TRACKER.md) and
+[DP plan](DP_SOLUTION_APPROACHES_PLAN.md) record the reconciled publication state.
+
+The next coherent package is the locally verified Gas Stations correction. Its
+[verification record](evidence/gas-precision/VERIFICATION.md) identifies full suites,
+source/oracle/mutation checks, actual API/browser evidence and limits. It is not on
+main; the owner has now authorized publication. Land it with exact-head CI before starting the
+next implementation. Subsequent correctness work includes Phone Combinations, Count
+Squares narration and random-input joint contracts, followed by the remaining source,
+metadata, dependency and DP work in separately verified packages. Do not treat source
+compilation,431 traced owners or a green package as whole-catalogue certification.
+
+Analytics #234 is deployed and its script loads correctly. Normal visitor collection
+and authenticated dashboard totals remain unverified; the SDK excludes automated visits.
+DP D6/D7 and broader P7/P8/P9 device, screen-reader, learner, performance, acceptance,
+release and rollback gates remain open. Existing bounded evidence is retained; this
+checkpoint neither reopens completed implementations nor waives an outstanding gate.
+
+### Historical execution order — owner directed, 2026-10-09
 
 The original sequence below is historical planning. P5/P6 implementations have merged;
 P7 acceptance, P8 and P9 remain open. The owner requested the following easy-to-hard

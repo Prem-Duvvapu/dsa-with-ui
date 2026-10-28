@@ -1,31 +1,34 @@
 {
   "anchors" : {
-    "done" : 18,
-    "feasible" : 13,
-    "gapTally" : 10,
-    "infeasible" : 15,
-    "init" : 5,
-    "mid" : 7
+    "done" : 26,
+    "feasible" : 21,
+    "gapTally" : 18,
+    "infeasible" : 23,
+    "init" : 13,
+    "mid" : 15
   },
-  "code" : "public double minimizeMaxDistance(int[] stations, int k) {\n    int n = stations.length;\n    double[] gaps = new double[n - 1];\n    for (int i = 0; i < n - 1; i++) gaps[i] = stations[i + 1] - stations[i];\n    double low = 0, high = max(gaps);\n    for (int iter = 0; iter < 15; iter++) {\n        double mid = (low + high) / 2;\n        int needed = 0;\n        for (double gap : gaps) {\n            needed += (int) Math.ceil(gap / mid) - 1;\n        }\n        if (needed <= k) {\n            high = mid;\n        } else {\n            low = mid;\n        }\n    }\n    return high;\n}",
+  "code" : "public class Solution {\n    // For the visualizer's initial gap <=1000,40 halvings reduce width below1e-9.\n    private static final int ITERATIONS = 40;\n\n    public double minimizeMaxDistance(int[] stations, int k) {\n        int n = stations.length;\n        double[] gaps = new double[n - 1];\n        double maxGap = 0;\n        for (int i = 0; i < n - 1; i++) {\n            gaps[i] = stations[i + 1] - stations[i];\n            maxGap = Math.max(maxGap, gaps[i]);\n        }\n        double low = 0, high = maxGap;\n        for (int iter = 0; iter < ITERATIONS; iter++) {\n            double mid = (low + high) / 2;\n            int needed = 0;\n            for (double gap : gaps) {\n                needed += (int) Math.ceil(gap / mid) - 1;\n            }\n            if (needed <= k) {\n                high = mid;\n            } else {\n                low = mid;\n            }\n        }\n        return high;\n    }\n}\n",
   "problemId" : "minimize-max-distance-gas-station",
   "resolvedInput" : {
     "k" : 4,
     "stations" : [ 1, 13, 17, 23 ]
   },
-  "stepCount" : 77,
+  "stepCount" : 202,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 5,
-    "description" : "Binary search the max distance between adjacent stations after adding 4 more. 3 gaps, largest is 12.00 — that is the worst case with zero additions.",
+    "activeLine" : 13,
+    "description" : "Binary search the max distance between adjacent stations after adding 4 more. 3 gaps, largest is 12.0 — that is the worst case with zero additions.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "12.0",
+      "intervalWidth" : "12.0",
+      "iterations" : "40",
       "k" : "4",
-      "low" : "0.0"
+      "low" : "0.0",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -47,16 +50,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 7,
-    "description" : "Iteration 1: test max distance 6.00000.",
+    "activeLine" : 15,
+    "description" : "Iteration 1 of 40: test max distance 6.0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "12.0",
+      "intervalWidth" : "12.0",
+      "iteration" : "1",
       "low" : "0.0",
-      "mid" : "6.00000"
+      "mid" : "6.0",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -78,14 +84,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 1 extra station at this distance. Running total = 1.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 1 extra station at this distance. Running total = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "1"
+      "high" : "12.0",
+      "intervalWidth" : "12.0",
+      "iteration" : "1",
+      "low" : "0.0",
+      "mid" : "6.0",
+      "needed" : "1",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -107,14 +119,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 0 extra stations at this distance. Running total = 1.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "1"
+      "high" : "12.0",
+      "intervalWidth" : "12.0",
+      "iteration" : "1",
+      "low" : "0.0",
+      "mid" : "6.0",
+      "needed" : "1",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -136,14 +154,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 0 extra stations at this distance. Running total = 1.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 0 extra stations at this distance. Running total = 1.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "1"
+      "high" : "12.0",
+      "intervalWidth" : "12.0",
+      "iteration" : "1",
+      "low" : "0.0",
+      "mid" : "6.0",
+      "needed" : "1",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -165,14 +189,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 13,
-    "description" : "1 <= 4 — 6.00000 is achievable. Try a smaller max distance.",
+    "activeLine" : 21,
+    "description" : "1 <= 4 — 6.0 is achievable. Try a smaller max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "high" : "6.00000"
+      "high" : "6.0",
+      "intervalWidth" : "6.0",
+      "iteration" : "1",
+      "k" : "4",
+      "low" : "0.0",
+      "needed" : "1",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -194,16 +224,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 7,
-    "description" : "Iteration 2: test max distance 3.00000.",
+    "activeLine" : 15,
+    "description" : "Iteration 2 of 40: test max distance 3.0.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "6.0",
+      "intervalWidth" : "6.0",
+      "iteration" : "2",
       "low" : "0.0",
-      "mid" : "3.00000"
+      "mid" : "3.0",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -225,14 +258,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 3 extra stations at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "6.0",
+      "intervalWidth" : "6.0",
+      "iteration" : "2",
+      "low" : "0.0",
+      "mid" : "3.0",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -254,14 +293,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 1 extra station at this distance. Running total = 4.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "4"
+      "high" : "6.0",
+      "intervalWidth" : "6.0",
+      "iteration" : "2",
+      "low" : "0.0",
+      "mid" : "3.0",
+      "needed" : "4",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -283,14 +328,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 5.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "5"
+      "high" : "6.0",
+      "intervalWidth" : "6.0",
+      "iteration" : "2",
+      "low" : "0.0",
+      "mid" : "3.0",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -312,14 +363,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 15,
-    "description" : "5 > 4 — 3.00000 is too tight. Try a larger max distance.",
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.0 is too tight. Try a larger max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "low" : "3.00000"
+      "high" : "6.0",
+      "intervalWidth" : "3.0",
+      "iteration" : "2",
+      "k" : "4",
+      "low" : "3.0",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -341,16 +398,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 7,
-    "description" : "Iteration 3: test max distance 4.50000.",
+    "activeLine" : 15,
+    "description" : "Iteration 3 of 40: test max distance 4.5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "6.0",
+      "intervalWidth" : "3.0",
+      "iteration" : "3",
       "low" : "3.0",
-      "mid" : "4.50000"
+      "mid" : "4.5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -372,14 +432,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 2 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "6.0",
+      "intervalWidth" : "3.0",
+      "iteration" : "3",
+      "low" : "3.0",
+      "mid" : "4.5",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -401,14 +467,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 0 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "6.0",
+      "intervalWidth" : "3.0",
+      "iteration" : "3",
+      "low" : "3.0",
+      "mid" : "4.5",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -430,14 +502,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "6.0",
+      "intervalWidth" : "3.0",
+      "iteration" : "3",
+      "low" : "3.0",
+      "mid" : "4.5",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -459,14 +537,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 13,
-    "description" : "3 <= 4 — 4.50000 is achievable. Try a smaller max distance.",
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.5 is achievable. Try a smaller max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "high" : "4.50000"
+      "high" : "4.5",
+      "intervalWidth" : "1.5",
+      "iteration" : "3",
+      "k" : "4",
+      "low" : "3.0",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -488,16 +572,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 7,
-    "description" : "Iteration 4: test max distance 3.75000.",
+    "activeLine" : 15,
+    "description" : "Iteration 4 of 40: test max distance 3.75.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.5",
+      "intervalWidth" : "1.5",
+      "iteration" : "4",
       "low" : "3.0",
-      "mid" : "3.75000"
+      "mid" : "3.75",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -519,14 +606,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 3 extra stations at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.5",
+      "intervalWidth" : "1.5",
+      "iteration" : "4",
+      "low" : "3.0",
+      "mid" : "3.75",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -548,14 +641,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 1 extra station at this distance. Running total = 4.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "4"
+      "high" : "4.5",
+      "intervalWidth" : "1.5",
+      "iteration" : "4",
+      "low" : "3.0",
+      "mid" : "3.75",
+      "needed" : "4",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -577,14 +676,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 5.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "5"
+      "high" : "4.5",
+      "intervalWidth" : "1.5",
+      "iteration" : "4",
+      "low" : "3.0",
+      "mid" : "3.75",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -606,14 +711,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 21,
-    "activeLine" : 15,
-    "description" : "5 > 4 — 3.75000 is too tight. Try a larger max distance.",
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.75 is too tight. Try a larger max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "low" : "3.75000"
+      "high" : "4.5",
+      "intervalWidth" : "0.75",
+      "iteration" : "4",
+      "k" : "4",
+      "low" : "3.75",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -635,16 +746,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 22,
-    "activeLine" : 7,
-    "description" : "Iteration 5: test max distance 4.12500.",
+    "activeLine" : 15,
+    "description" : "Iteration 5 of 40: test max distance 4.125.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.5",
+      "intervalWidth" : "0.75",
+      "iteration" : "5",
       "low" : "3.75",
-      "mid" : "4.12500"
+      "mid" : "4.125",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -666,14 +780,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 23,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 2 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.5",
+      "intervalWidth" : "0.75",
+      "iteration" : "5",
+      "low" : "3.75",
+      "mid" : "4.125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -695,14 +815,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 24,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 0 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.5",
+      "intervalWidth" : "0.75",
+      "iteration" : "5",
+      "low" : "3.75",
+      "mid" : "4.125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -724,14 +850,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 25,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.5",
+      "intervalWidth" : "0.75",
+      "iteration" : "5",
+      "low" : "3.75",
+      "mid" : "4.125",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -753,14 +885,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 26,
-    "activeLine" : 13,
-    "description" : "3 <= 4 — 4.12500 is achievable. Try a smaller max distance.",
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.125 is achievable. Try a smaller max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "high" : "4.12500"
+      "high" : "4.125",
+      "intervalWidth" : "0.375",
+      "iteration" : "5",
+      "k" : "4",
+      "low" : "3.75",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -782,16 +920,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 27,
-    "activeLine" : 7,
-    "description" : "Iteration 6: test max distance 3.93750.",
+    "activeLine" : 15,
+    "description" : "Iteration 6 of 40: test max distance 3.9375.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.125",
+      "intervalWidth" : "0.375",
+      "iteration" : "6",
       "low" : "3.75",
-      "mid" : "3.93750"
+      "mid" : "3.9375",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -813,14 +954,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 28,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 3 extra stations at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.125",
+      "intervalWidth" : "0.375",
+      "iteration" : "6",
+      "low" : "3.75",
+      "mid" : "3.9375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -842,14 +989,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 29,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 1 extra station at this distance. Running total = 4.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "4"
+      "high" : "4.125",
+      "intervalWidth" : "0.375",
+      "iteration" : "6",
+      "low" : "3.75",
+      "mid" : "3.9375",
+      "needed" : "4",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -871,14 +1024,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 30,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 5.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "5"
+      "high" : "4.125",
+      "intervalWidth" : "0.375",
+      "iteration" : "6",
+      "low" : "3.75",
+      "mid" : "3.9375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -900,14 +1059,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 31,
-    "activeLine" : 15,
-    "description" : "5 > 4 — 3.93750 is too tight. Try a larger max distance.",
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.9375 is too tight. Try a larger max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "low" : "3.93750"
+      "high" : "4.125",
+      "intervalWidth" : "0.1875",
+      "iteration" : "6",
+      "k" : "4",
+      "low" : "3.9375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -929,16 +1094,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 32,
-    "activeLine" : 7,
-    "description" : "Iteration 7: test max distance 4.03125.",
+    "activeLine" : 15,
+    "description" : "Iteration 7 of 40: test max distance 4.03125.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.125",
+      "intervalWidth" : "0.1875",
+      "iteration" : "7",
       "low" : "3.9375",
-      "mid" : "4.03125"
+      "mid" : "4.03125",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -960,14 +1128,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 33,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 2 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.125",
+      "intervalWidth" : "0.1875",
+      "iteration" : "7",
+      "low" : "3.9375",
+      "mid" : "4.03125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -989,14 +1163,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 34,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 0 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.125",
+      "intervalWidth" : "0.1875",
+      "iteration" : "7",
+      "low" : "3.9375",
+      "mid" : "4.03125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1018,14 +1198,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 35,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.125",
+      "intervalWidth" : "0.1875",
+      "iteration" : "7",
+      "low" : "3.9375",
+      "mid" : "4.03125",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1047,14 +1233,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 36,
-    "activeLine" : 13,
+    "activeLine" : 21,
     "description" : "3 <= 4 — 4.03125 is achievable. Try a smaller max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "high" : "4.03125"
+      "high" : "4.03125",
+      "intervalWidth" : "0.09375",
+      "iteration" : "7",
+      "k" : "4",
+      "low" : "3.9375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1076,16 +1268,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 37,
-    "activeLine" : 7,
-    "description" : "Iteration 8: test max distance 3.98438.",
+    "activeLine" : 15,
+    "description" : "Iteration 8 of 40: test max distance 3.984375.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.03125",
+      "intervalWidth" : "0.09375",
+      "iteration" : "8",
       "low" : "3.9375",
-      "mid" : "3.98438"
+      "mid" : "3.984375",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1107,14 +1302,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 38,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 3 extra stations at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.03125",
+      "intervalWidth" : "0.09375",
+      "iteration" : "8",
+      "low" : "3.9375",
+      "mid" : "3.984375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1136,14 +1337,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 39,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 1 extra station at this distance. Running total = 4.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "4"
+      "high" : "4.03125",
+      "intervalWidth" : "0.09375",
+      "iteration" : "8",
+      "low" : "3.9375",
+      "mid" : "3.984375",
+      "needed" : "4",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1165,14 +1372,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 40,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 5.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "5"
+      "high" : "4.03125",
+      "intervalWidth" : "0.09375",
+      "iteration" : "8",
+      "low" : "3.9375",
+      "mid" : "3.984375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1194,14 +1407,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 41,
-    "activeLine" : 15,
-    "description" : "5 > 4 — 3.98438 is too tight. Try a larger max distance.",
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.984375 is too tight. Try a larger max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "low" : "3.98438"
+      "high" : "4.03125",
+      "intervalWidth" : "0.046875",
+      "iteration" : "8",
+      "k" : "4",
+      "low" : "3.984375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1223,16 +1442,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 42,
-    "activeLine" : 7,
-    "description" : "Iteration 9: test max distance 4.00781.",
+    "activeLine" : 15,
+    "description" : "Iteration 9 of 40: test max distance 4.0078125.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.03125",
+      "intervalWidth" : "0.046875",
+      "iteration" : "9",
       "low" : "3.984375",
-      "mid" : "4.00781"
+      "mid" : "4.0078125",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1254,14 +1476,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 43,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 2 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.03125",
+      "intervalWidth" : "0.046875",
+      "iteration" : "9",
+      "low" : "3.984375",
+      "mid" : "4.0078125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1283,14 +1511,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 44,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 0 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.03125",
+      "intervalWidth" : "0.046875",
+      "iteration" : "9",
+      "low" : "3.984375",
+      "mid" : "4.0078125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1312,14 +1546,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 45,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.03125",
+      "intervalWidth" : "0.046875",
+      "iteration" : "9",
+      "low" : "3.984375",
+      "mid" : "4.0078125",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1341,14 +1581,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 46,
-    "activeLine" : 13,
-    "description" : "3 <= 4 — 4.00781 is achievable. Try a smaller max distance.",
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.0078125 is achievable. Try a smaller max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "high" : "4.00781"
+      "high" : "4.0078125",
+      "intervalWidth" : "0.0234375",
+      "iteration" : "9",
+      "k" : "4",
+      "low" : "3.984375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1370,16 +1616,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 47,
-    "activeLine" : 7,
-    "description" : "Iteration 10: test max distance 3.99609.",
+    "activeLine" : 15,
+    "description" : "Iteration 10 of 40: test max distance 3.99609375.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.0078125",
+      "intervalWidth" : "0.0234375",
+      "iteration" : "10",
       "low" : "3.984375",
-      "mid" : "3.99609"
+      "mid" : "3.99609375",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1401,14 +1650,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 48,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 3 extra stations at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.0078125",
+      "intervalWidth" : "0.0234375",
+      "iteration" : "10",
+      "low" : "3.984375",
+      "mid" : "3.99609375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1430,14 +1685,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 49,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 1 extra station at this distance. Running total = 4.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "4"
+      "high" : "4.0078125",
+      "intervalWidth" : "0.0234375",
+      "iteration" : "10",
+      "low" : "3.984375",
+      "mid" : "3.99609375",
+      "needed" : "4",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1459,14 +1720,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 50,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 5.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "5"
+      "high" : "4.0078125",
+      "intervalWidth" : "0.0234375",
+      "iteration" : "10",
+      "low" : "3.984375",
+      "mid" : "3.99609375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1488,14 +1755,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 51,
-    "activeLine" : 15,
-    "description" : "5 > 4 — 3.99609 is too tight. Try a larger max distance.",
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.99609375 is too tight. Try a larger max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "low" : "3.99609"
+      "high" : "4.0078125",
+      "intervalWidth" : "0.01171875",
+      "iteration" : "10",
+      "k" : "4",
+      "low" : "3.99609375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1517,16 +1790,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 52,
-    "activeLine" : 7,
-    "description" : "Iteration 11: test max distance 4.00195.",
+    "activeLine" : 15,
+    "description" : "Iteration 11 of 40: test max distance 4.001953125.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.0078125",
+      "intervalWidth" : "0.01171875",
+      "iteration" : "11",
       "low" : "3.99609375",
-      "mid" : "4.00195"
+      "mid" : "4.001953125",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1548,14 +1824,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 53,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 2 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.0078125",
+      "intervalWidth" : "0.01171875",
+      "iteration" : "11",
+      "low" : "3.99609375",
+      "mid" : "4.001953125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1577,14 +1859,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 54,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 0 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.0078125",
+      "intervalWidth" : "0.01171875",
+      "iteration" : "11",
+      "low" : "3.99609375",
+      "mid" : "4.001953125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1606,14 +1894,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 55,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.0078125",
+      "intervalWidth" : "0.01171875",
+      "iteration" : "11",
+      "low" : "3.99609375",
+      "mid" : "4.001953125",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1635,14 +1929,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 56,
-    "activeLine" : 13,
-    "description" : "3 <= 4 — 4.00195 is achievable. Try a smaller max distance.",
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.001953125 is achievable. Try a smaller max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "high" : "4.00195"
+      "high" : "4.001953125",
+      "intervalWidth" : "0.005859375",
+      "iteration" : "11",
+      "k" : "4",
+      "low" : "3.99609375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1664,16 +1964,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 57,
-    "activeLine" : 7,
-    "description" : "Iteration 12: test max distance 3.99902.",
+    "activeLine" : 15,
+    "description" : "Iteration 12 of 40: test max distance 3.9990234375.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.001953125",
+      "intervalWidth" : "0.005859375",
+      "iteration" : "12",
       "low" : "3.99609375",
-      "mid" : "3.99902"
+      "mid" : "3.9990234375",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1695,14 +1998,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 58,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 3 extra stations at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.001953125",
+      "intervalWidth" : "0.005859375",
+      "iteration" : "12",
+      "low" : "3.99609375",
+      "mid" : "3.9990234375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1724,14 +2033,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 59,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 1 extra station at this distance. Running total = 4.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "4"
+      "high" : "4.001953125",
+      "intervalWidth" : "0.005859375",
+      "iteration" : "12",
+      "low" : "3.99609375",
+      "mid" : "3.9990234375",
+      "needed" : "4",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1753,14 +2068,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 60,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 5.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "5"
+      "high" : "4.001953125",
+      "intervalWidth" : "0.005859375",
+      "iteration" : "12",
+      "low" : "3.99609375",
+      "mid" : "3.9990234375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1782,14 +2103,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 61,
-    "activeLine" : 15,
-    "description" : "5 > 4 — 3.99902 is too tight. Try a larger max distance.",
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.9990234375 is too tight. Try a larger max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "low" : "3.99902"
+      "high" : "4.001953125",
+      "intervalWidth" : "0.0029296875",
+      "iteration" : "12",
+      "k" : "4",
+      "low" : "3.9990234375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1811,16 +2138,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 62,
-    "activeLine" : 7,
-    "description" : "Iteration 13: test max distance 4.00049.",
+    "activeLine" : 15,
+    "description" : "Iteration 13 of 40: test max distance 4.00048828125.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.001953125",
+      "intervalWidth" : "0.0029296875",
+      "iteration" : "13",
       "low" : "3.9990234375",
-      "mid" : "4.00049"
+      "mid" : "4.00048828125",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1842,14 +2172,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 63,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 2 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.001953125",
+      "intervalWidth" : "0.0029296875",
+      "iteration" : "13",
+      "low" : "3.9990234375",
+      "mid" : "4.00048828125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1871,14 +2207,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 64,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 0 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.001953125",
+      "intervalWidth" : "0.0029296875",
+      "iteration" : "13",
+      "low" : "3.9990234375",
+      "mid" : "4.00048828125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1900,14 +2242,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 65,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.001953125",
+      "intervalWidth" : "0.0029296875",
+      "iteration" : "13",
+      "low" : "3.9990234375",
+      "mid" : "4.00048828125",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1929,14 +2277,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 66,
-    "activeLine" : 13,
-    "description" : "3 <= 4 — 4.00049 is achievable. Try a smaller max distance.",
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.00048828125 is achievable. Try a smaller max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "high" : "4.00049"
+      "high" : "4.00048828125",
+      "intervalWidth" : "0.00146484375",
+      "iteration" : "13",
+      "k" : "4",
+      "low" : "3.9990234375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1958,16 +2312,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 67,
-    "activeLine" : 7,
-    "description" : "Iteration 14: test max distance 3.99976.",
+    "activeLine" : 15,
+    "description" : "Iteration 14 of 40: test max distance 3.999755859375.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.00048828125",
+      "intervalWidth" : "0.00146484375",
+      "iteration" : "14",
       "low" : "3.9990234375",
-      "mid" : "3.99976"
+      "mid" : "3.999755859375",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -1989,14 +2346,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 68,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 3 extra stations at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.00048828125",
+      "intervalWidth" : "0.00146484375",
+      "iteration" : "14",
+      "low" : "3.9990234375",
+      "mid" : "3.999755859375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -2018,14 +2381,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 69,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 1 extra station at this distance. Running total = 4.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "4"
+      "high" : "4.00048828125",
+      "intervalWidth" : "0.00146484375",
+      "iteration" : "14",
+      "low" : "3.9990234375",
+      "mid" : "3.999755859375",
+      "needed" : "4",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -2047,14 +2416,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 70,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 5.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "5"
+      "high" : "4.00048828125",
+      "intervalWidth" : "0.00146484375",
+      "iteration" : "14",
+      "low" : "3.9990234375",
+      "mid" : "3.999755859375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -2076,14 +2451,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 71,
-    "activeLine" : 15,
-    "description" : "5 > 4 — 3.99976 is too tight. Try a larger max distance.",
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.999755859375 is too tight. Try a larger max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "low" : "3.99976"
+      "high" : "4.00048828125",
+      "intervalWidth" : "7.32421875E-4",
+      "iteration" : "14",
+      "k" : "4",
+      "low" : "3.999755859375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -2105,16 +2486,19 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 72,
-    "activeLine" : 7,
-    "description" : "Iteration 15: test max distance 4.00012.",
+    "activeLine" : 15,
+    "description" : "Iteration 15 of 40: test max distance 4.0001220703125.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
       "high" : "4.00048828125",
+      "intervalWidth" : "7.32421875E-4",
+      "iteration" : "15",
       "low" : "3.999755859375",
-      "mid" : "4.00012"
+      "mid" : "4.0001220703125",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -2136,14 +2520,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 73,
-    "activeLine" : 10,
-    "description" : "Gap 0 = 12.00 needs 2 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.00048828125",
+      "intervalWidth" : "7.32421875E-4",
+      "iteration" : "15",
+      "low" : "3.999755859375",
+      "mid" : "4.0001220703125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -2165,14 +2555,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 74,
-    "activeLine" : 10,
-    "description" : "Gap 1 = 4.00 needs 0 extra stations at this distance. Running total = 2.",
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "2"
+      "high" : "4.00048828125",
+      "intervalWidth" : "7.32421875E-4",
+      "iteration" : "15",
+      "low" : "3.999755859375",
+      "mid" : "4.0001220703125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -2194,14 +2590,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 75,
-    "activeLine" : 10,
-    "description" : "Gap 2 = 6.00 needs 1 extra station at this distance. Running total = 3.",
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "needed" : "3"
+      "high" : "4.00048828125",
+      "intervalWidth" : "7.32421875E-4",
+      "iteration" : "15",
+      "low" : "3.999755859375",
+      "mid" : "4.0001220703125",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -2223,14 +2625,20 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 76,
-    "activeLine" : 13,
-    "description" : "3 <= 4 — 4.00012 is achievable. Try a smaller max distance.",
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.0001220703125 is achievable. Try a smaller max distance.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "high" : "4.00012"
+      "high" : "4.0001220703125",
+      "intervalWidth" : "3.662109375E-4",
+      "iteration" : "15",
+      "k" : "4",
+      "low" : "3.999755859375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,
@@ -2252,14 +2660,4369 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 77,
-    "activeLine" : 18,
-    "description" : "After 15 halvings, the minimum achievable max distance converges to 4.00012.",
+    "activeLine" : 15,
+    "description" : "Iteration 16 of 40: test max distance 3.99993896484375.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "answer" : "4.00012"
+      "high" : "4.0001220703125",
+      "intervalWidth" : "3.662109375E-4",
+      "iteration" : "16",
+      "low" : "3.999755859375",
+      "mid" : "3.99993896484375",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 78,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0001220703125",
+      "intervalWidth" : "3.662109375E-4",
+      "iteration" : "16",
+      "low" : "3.999755859375",
+      "mid" : "3.99993896484375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 79,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0001220703125",
+      "intervalWidth" : "3.662109375E-4",
+      "iteration" : "16",
+      "low" : "3.999755859375",
+      "mid" : "3.99993896484375",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 80,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0001220703125",
+      "intervalWidth" : "3.662109375E-4",
+      "iteration" : "16",
+      "low" : "3.999755859375",
+      "mid" : "3.99993896484375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 81,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.99993896484375 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0001220703125",
+      "intervalWidth" : "1.8310546875E-4",
+      "iteration" : "16",
+      "k" : "4",
+      "low" : "3.99993896484375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 82,
+    "activeLine" : 15,
+    "description" : "Iteration 17 of 40: test max distance 4.000030517578125.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0001220703125",
+      "intervalWidth" : "1.8310546875E-4",
+      "iteration" : "17",
+      "low" : "3.99993896484375",
+      "mid" : "4.000030517578125",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 83,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0001220703125",
+      "intervalWidth" : "1.8310546875E-4",
+      "iteration" : "17",
+      "low" : "3.99993896484375",
+      "mid" : "4.000030517578125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 84,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0001220703125",
+      "intervalWidth" : "1.8310546875E-4",
+      "iteration" : "17",
+      "low" : "3.99993896484375",
+      "mid" : "4.000030517578125",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 85,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0001220703125",
+      "intervalWidth" : "1.8310546875E-4",
+      "iteration" : "17",
+      "low" : "3.99993896484375",
+      "mid" : "4.000030517578125",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 86,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000030517578125 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000030517578125",
+      "intervalWidth" : "9.1552734375E-5",
+      "iteration" : "17",
+      "k" : "4",
+      "low" : "3.99993896484375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 87,
+    "activeLine" : 15,
+    "description" : "Iteration 18 of 40: test max distance 3.9999847412109375.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000030517578125",
+      "intervalWidth" : "9.1552734375E-5",
+      "iteration" : "18",
+      "low" : "3.99993896484375",
+      "mid" : "3.9999847412109375",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 88,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000030517578125",
+      "intervalWidth" : "9.1552734375E-5",
+      "iteration" : "18",
+      "low" : "3.99993896484375",
+      "mid" : "3.9999847412109375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 89,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000030517578125",
+      "intervalWidth" : "9.1552734375E-5",
+      "iteration" : "18",
+      "low" : "3.99993896484375",
+      "mid" : "3.9999847412109375",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 90,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000030517578125",
+      "intervalWidth" : "9.1552734375E-5",
+      "iteration" : "18",
+      "low" : "3.99993896484375",
+      "mid" : "3.9999847412109375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 91,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.9999847412109375 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000030517578125",
+      "intervalWidth" : "4.57763671875E-5",
+      "iteration" : "18",
+      "k" : "4",
+      "low" : "3.9999847412109375",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 92,
+    "activeLine" : 15,
+    "description" : "Iteration 19 of 40: test max distance 4.000007629394531.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000030517578125",
+      "intervalWidth" : "4.57763671875E-5",
+      "iteration" : "19",
+      "low" : "3.9999847412109375",
+      "mid" : "4.000007629394531",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 93,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000030517578125",
+      "intervalWidth" : "4.57763671875E-5",
+      "iteration" : "19",
+      "low" : "3.9999847412109375",
+      "mid" : "4.000007629394531",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 94,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000030517578125",
+      "intervalWidth" : "4.57763671875E-5",
+      "iteration" : "19",
+      "low" : "3.9999847412109375",
+      "mid" : "4.000007629394531",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 95,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000030517578125",
+      "intervalWidth" : "4.57763671875E-5",
+      "iteration" : "19",
+      "low" : "3.9999847412109375",
+      "mid" : "4.000007629394531",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 96,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000007629394531 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000007629394531",
+      "intervalWidth" : "2.288818359375E-5",
+      "iteration" : "19",
+      "k" : "4",
+      "low" : "3.9999847412109375",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 97,
+    "activeLine" : 15,
+    "description" : "Iteration 20 of 40: test max distance 3.9999961853027344.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000007629394531",
+      "intervalWidth" : "2.288818359375E-5",
+      "iteration" : "20",
+      "low" : "3.9999847412109375",
+      "mid" : "3.9999961853027344",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 98,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000007629394531",
+      "intervalWidth" : "2.288818359375E-5",
+      "iteration" : "20",
+      "low" : "3.9999847412109375",
+      "mid" : "3.9999961853027344",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 99,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000007629394531",
+      "intervalWidth" : "2.288818359375E-5",
+      "iteration" : "20",
+      "low" : "3.9999847412109375",
+      "mid" : "3.9999961853027344",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 100,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000007629394531",
+      "intervalWidth" : "2.288818359375E-5",
+      "iteration" : "20",
+      "low" : "3.9999847412109375",
+      "mid" : "3.9999961853027344",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 101,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.9999961853027344 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000007629394531",
+      "intervalWidth" : "1.1444091796875E-5",
+      "iteration" : "20",
+      "k" : "4",
+      "low" : "3.9999961853027344",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 102,
+    "activeLine" : 15,
+    "description" : "Iteration 21 of 40: test max distance 4.000001907348633.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000007629394531",
+      "intervalWidth" : "1.1444091796875E-5",
+      "iteration" : "21",
+      "low" : "3.9999961853027344",
+      "mid" : "4.000001907348633",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 103,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000007629394531",
+      "intervalWidth" : "1.1444091796875E-5",
+      "iteration" : "21",
+      "low" : "3.9999961853027344",
+      "mid" : "4.000001907348633",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 104,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000007629394531",
+      "intervalWidth" : "1.1444091796875E-5",
+      "iteration" : "21",
+      "low" : "3.9999961853027344",
+      "mid" : "4.000001907348633",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 105,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000007629394531",
+      "intervalWidth" : "1.1444091796875E-5",
+      "iteration" : "21",
+      "low" : "3.9999961853027344",
+      "mid" : "4.000001907348633",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 106,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000001907348633 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000001907348633",
+      "intervalWidth" : "5.7220458984375E-6",
+      "iteration" : "21",
+      "k" : "4",
+      "low" : "3.9999961853027344",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 107,
+    "activeLine" : 15,
+    "description" : "Iteration 22 of 40: test max distance 3.9999990463256836.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000001907348633",
+      "intervalWidth" : "5.7220458984375E-6",
+      "iteration" : "22",
+      "low" : "3.9999961853027344",
+      "mid" : "3.9999990463256836",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 108,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000001907348633",
+      "intervalWidth" : "5.7220458984375E-6",
+      "iteration" : "22",
+      "low" : "3.9999961853027344",
+      "mid" : "3.9999990463256836",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 109,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000001907348633",
+      "intervalWidth" : "5.7220458984375E-6",
+      "iteration" : "22",
+      "low" : "3.9999961853027344",
+      "mid" : "3.9999990463256836",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 110,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000001907348633",
+      "intervalWidth" : "5.7220458984375E-6",
+      "iteration" : "22",
+      "low" : "3.9999961853027344",
+      "mid" : "3.9999990463256836",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 111,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.9999990463256836 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000001907348633",
+      "intervalWidth" : "2.86102294921875E-6",
+      "iteration" : "22",
+      "k" : "4",
+      "low" : "3.9999990463256836",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 112,
+    "activeLine" : 15,
+    "description" : "Iteration 23 of 40: test max distance 4.000000476837158.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000001907348633",
+      "intervalWidth" : "2.86102294921875E-6",
+      "iteration" : "23",
+      "low" : "3.9999990463256836",
+      "mid" : "4.000000476837158",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 113,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000001907348633",
+      "intervalWidth" : "2.86102294921875E-6",
+      "iteration" : "23",
+      "low" : "3.9999990463256836",
+      "mid" : "4.000000476837158",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 114,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000001907348633",
+      "intervalWidth" : "2.86102294921875E-6",
+      "iteration" : "23",
+      "low" : "3.9999990463256836",
+      "mid" : "4.000000476837158",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 115,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000001907348633",
+      "intervalWidth" : "2.86102294921875E-6",
+      "iteration" : "23",
+      "low" : "3.9999990463256836",
+      "mid" : "4.000000476837158",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 116,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000000476837158 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000476837158",
+      "intervalWidth" : "1.430511474609375E-6",
+      "iteration" : "23",
+      "k" : "4",
+      "low" : "3.9999990463256836",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 117,
+    "activeLine" : 15,
+    "description" : "Iteration 24 of 40: test max distance 3.999999761581421.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000476837158",
+      "intervalWidth" : "1.430511474609375E-6",
+      "iteration" : "24",
+      "low" : "3.9999990463256836",
+      "mid" : "3.999999761581421",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 118,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000476837158",
+      "intervalWidth" : "1.430511474609375E-6",
+      "iteration" : "24",
+      "low" : "3.9999990463256836",
+      "mid" : "3.999999761581421",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 119,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000476837158",
+      "intervalWidth" : "1.430511474609375E-6",
+      "iteration" : "24",
+      "low" : "3.9999990463256836",
+      "mid" : "3.999999761581421",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 120,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000476837158",
+      "intervalWidth" : "1.430511474609375E-6",
+      "iteration" : "24",
+      "low" : "3.9999990463256836",
+      "mid" : "3.999999761581421",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 121,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.999999761581421 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000476837158",
+      "intervalWidth" : "7.152557373046875E-7",
+      "iteration" : "24",
+      "k" : "4",
+      "low" : "3.999999761581421",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 122,
+    "activeLine" : 15,
+    "description" : "Iteration 25 of 40: test max distance 4.0000001192092896.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000476837158",
+      "intervalWidth" : "7.152557373046875E-7",
+      "iteration" : "25",
+      "low" : "3.999999761581421",
+      "mid" : "4.0000001192092896",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 123,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000476837158",
+      "intervalWidth" : "7.152557373046875E-7",
+      "iteration" : "25",
+      "low" : "3.999999761581421",
+      "mid" : "4.0000001192092896",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 124,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000476837158",
+      "intervalWidth" : "7.152557373046875E-7",
+      "iteration" : "25",
+      "low" : "3.999999761581421",
+      "mid" : "4.0000001192092896",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 125,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000476837158",
+      "intervalWidth" : "7.152557373046875E-7",
+      "iteration" : "25",
+      "low" : "3.999999761581421",
+      "mid" : "4.0000001192092896",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 126,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.0000001192092896 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0000001192092896",
+      "intervalWidth" : "3.5762786865234375E-7",
+      "iteration" : "25",
+      "k" : "4",
+      "low" : "3.999999761581421",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 127,
+    "activeLine" : 15,
+    "description" : "Iteration 26 of 40: test max distance 3.9999999403953552.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0000001192092896",
+      "intervalWidth" : "3.5762786865234375E-7",
+      "iteration" : "26",
+      "low" : "3.999999761581421",
+      "mid" : "3.9999999403953552",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 128,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0000001192092896",
+      "intervalWidth" : "3.5762786865234375E-7",
+      "iteration" : "26",
+      "low" : "3.999999761581421",
+      "mid" : "3.9999999403953552",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 129,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0000001192092896",
+      "intervalWidth" : "3.5762786865234375E-7",
+      "iteration" : "26",
+      "low" : "3.999999761581421",
+      "mid" : "3.9999999403953552",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 130,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0000001192092896",
+      "intervalWidth" : "3.5762786865234375E-7",
+      "iteration" : "26",
+      "low" : "3.999999761581421",
+      "mid" : "3.9999999403953552",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 131,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.9999999403953552 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0000001192092896",
+      "intervalWidth" : "1.7881393432617188E-7",
+      "iteration" : "26",
+      "k" : "4",
+      "low" : "3.9999999403953552",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 132,
+    "activeLine" : 15,
+    "description" : "Iteration 27 of 40: test max distance 4.000000029802322.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0000001192092896",
+      "intervalWidth" : "1.7881393432617188E-7",
+      "iteration" : "27",
+      "low" : "3.9999999403953552",
+      "mid" : "4.000000029802322",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 133,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0000001192092896",
+      "intervalWidth" : "1.7881393432617188E-7",
+      "iteration" : "27",
+      "low" : "3.9999999403953552",
+      "mid" : "4.000000029802322",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 134,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0000001192092896",
+      "intervalWidth" : "1.7881393432617188E-7",
+      "iteration" : "27",
+      "low" : "3.9999999403953552",
+      "mid" : "4.000000029802322",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 135,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.0000001192092896",
+      "intervalWidth" : "1.7881393432617188E-7",
+      "iteration" : "27",
+      "low" : "3.9999999403953552",
+      "mid" : "4.000000029802322",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 136,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000000029802322 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000029802322",
+      "intervalWidth" : "8.940696716308594E-8",
+      "iteration" : "27",
+      "k" : "4",
+      "low" : "3.9999999403953552",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 137,
+    "activeLine" : 15,
+    "description" : "Iteration 28 of 40: test max distance 3.999999985098839.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000029802322",
+      "intervalWidth" : "8.940696716308594E-8",
+      "iteration" : "28",
+      "low" : "3.9999999403953552",
+      "mid" : "3.999999985098839",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 138,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000029802322",
+      "intervalWidth" : "8.940696716308594E-8",
+      "iteration" : "28",
+      "low" : "3.9999999403953552",
+      "mid" : "3.999999985098839",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 139,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000029802322",
+      "intervalWidth" : "8.940696716308594E-8",
+      "iteration" : "28",
+      "low" : "3.9999999403953552",
+      "mid" : "3.999999985098839",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 140,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000029802322",
+      "intervalWidth" : "8.940696716308594E-8",
+      "iteration" : "28",
+      "low" : "3.9999999403953552",
+      "mid" : "3.999999985098839",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 141,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.999999985098839 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000029802322",
+      "intervalWidth" : "4.470348358154297E-8",
+      "iteration" : "28",
+      "k" : "4",
+      "low" : "3.999999985098839",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 142,
+    "activeLine" : 15,
+    "description" : "Iteration 29 of 40: test max distance 4.000000007450581.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000029802322",
+      "intervalWidth" : "4.470348358154297E-8",
+      "iteration" : "29",
+      "low" : "3.999999985098839",
+      "mid" : "4.000000007450581",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 143,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000029802322",
+      "intervalWidth" : "4.470348358154297E-8",
+      "iteration" : "29",
+      "low" : "3.999999985098839",
+      "mid" : "4.000000007450581",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 144,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000029802322",
+      "intervalWidth" : "4.470348358154297E-8",
+      "iteration" : "29",
+      "low" : "3.999999985098839",
+      "mid" : "4.000000007450581",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 145,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000029802322",
+      "intervalWidth" : "4.470348358154297E-8",
+      "iteration" : "29",
+      "low" : "3.999999985098839",
+      "mid" : "4.000000007450581",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 146,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000000007450581 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000007450581",
+      "intervalWidth" : "2.2351741790771484E-8",
+      "iteration" : "29",
+      "k" : "4",
+      "low" : "3.999999985098839",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 147,
+    "activeLine" : 15,
+    "description" : "Iteration 30 of 40: test max distance 3.9999999962747097.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000007450581",
+      "intervalWidth" : "2.2351741790771484E-8",
+      "iteration" : "30",
+      "low" : "3.999999985098839",
+      "mid" : "3.9999999962747097",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 148,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000007450581",
+      "intervalWidth" : "2.2351741790771484E-8",
+      "iteration" : "30",
+      "low" : "3.999999985098839",
+      "mid" : "3.9999999962747097",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 149,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000007450581",
+      "intervalWidth" : "2.2351741790771484E-8",
+      "iteration" : "30",
+      "low" : "3.999999985098839",
+      "mid" : "3.9999999962747097",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 150,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000007450581",
+      "intervalWidth" : "2.2351741790771484E-8",
+      "iteration" : "30",
+      "low" : "3.999999985098839",
+      "mid" : "3.9999999962747097",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 151,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.9999999962747097 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000007450581",
+      "intervalWidth" : "1.1175870895385742E-8",
+      "iteration" : "30",
+      "k" : "4",
+      "low" : "3.9999999962747097",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 152,
+    "activeLine" : 15,
+    "description" : "Iteration 31 of 40: test max distance 4.000000001862645.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000007450581",
+      "intervalWidth" : "1.1175870895385742E-8",
+      "iteration" : "31",
+      "low" : "3.9999999962747097",
+      "mid" : "4.000000001862645",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 153,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000007450581",
+      "intervalWidth" : "1.1175870895385742E-8",
+      "iteration" : "31",
+      "low" : "3.9999999962747097",
+      "mid" : "4.000000001862645",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 154,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000007450581",
+      "intervalWidth" : "1.1175870895385742E-8",
+      "iteration" : "31",
+      "low" : "3.9999999962747097",
+      "mid" : "4.000000001862645",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 155,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000007450581",
+      "intervalWidth" : "1.1175870895385742E-8",
+      "iteration" : "31",
+      "low" : "3.9999999962747097",
+      "mid" : "4.000000001862645",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 156,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000000001862645 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000001862645",
+      "intervalWidth" : "5.587935447692871E-9",
+      "iteration" : "31",
+      "k" : "4",
+      "low" : "3.9999999962747097",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 157,
+    "activeLine" : 15,
+    "description" : "Iteration 32 of 40: test max distance 3.9999999990686774.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000001862645",
+      "intervalWidth" : "5.587935447692871E-9",
+      "iteration" : "32",
+      "low" : "3.9999999962747097",
+      "mid" : "3.9999999990686774",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 158,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000001862645",
+      "intervalWidth" : "5.587935447692871E-9",
+      "iteration" : "32",
+      "low" : "3.9999999962747097",
+      "mid" : "3.9999999990686774",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 159,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000001862645",
+      "intervalWidth" : "5.587935447692871E-9",
+      "iteration" : "32",
+      "low" : "3.9999999962747097",
+      "mid" : "3.9999999990686774",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 160,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000001862645",
+      "intervalWidth" : "5.587935447692871E-9",
+      "iteration" : "32",
+      "low" : "3.9999999962747097",
+      "mid" : "3.9999999990686774",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 161,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.9999999990686774 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000001862645",
+      "intervalWidth" : "2.7939677238464355E-9",
+      "iteration" : "32",
+      "k" : "4",
+      "low" : "3.9999999990686774",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 162,
+    "activeLine" : 15,
+    "description" : "Iteration 33 of 40: test max distance 4.000000000465661.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000001862645",
+      "intervalWidth" : "2.7939677238464355E-9",
+      "iteration" : "33",
+      "low" : "3.9999999990686774",
+      "mid" : "4.000000000465661",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 163,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000001862645",
+      "intervalWidth" : "2.7939677238464355E-9",
+      "iteration" : "33",
+      "low" : "3.9999999990686774",
+      "mid" : "4.000000000465661",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 164,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000001862645",
+      "intervalWidth" : "2.7939677238464355E-9",
+      "iteration" : "33",
+      "low" : "3.9999999990686774",
+      "mid" : "4.000000000465661",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 165,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000001862645",
+      "intervalWidth" : "2.7939677238464355E-9",
+      "iteration" : "33",
+      "low" : "3.9999999990686774",
+      "mid" : "4.000000000465661",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 166,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000000000465661 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000465661",
+      "intervalWidth" : "1.3969838619232178E-9",
+      "iteration" : "33",
+      "k" : "4",
+      "low" : "3.9999999990686774",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 167,
+    "activeLine" : 15,
+    "description" : "Iteration 34 of 40: test max distance 3.9999999997671694.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000465661",
+      "intervalWidth" : "1.3969838619232178E-9",
+      "iteration" : "34",
+      "low" : "3.9999999990686774",
+      "mid" : "3.9999999997671694",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 168,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000465661",
+      "intervalWidth" : "1.3969838619232178E-9",
+      "iteration" : "34",
+      "low" : "3.9999999990686774",
+      "mid" : "3.9999999997671694",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 169,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000465661",
+      "intervalWidth" : "1.3969838619232178E-9",
+      "iteration" : "34",
+      "low" : "3.9999999990686774",
+      "mid" : "3.9999999997671694",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 170,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000465661",
+      "intervalWidth" : "1.3969838619232178E-9",
+      "iteration" : "34",
+      "low" : "3.9999999990686774",
+      "mid" : "3.9999999997671694",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 171,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.9999999997671694 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000465661",
+      "intervalWidth" : "6.984919309616089E-10",
+      "iteration" : "34",
+      "k" : "4",
+      "low" : "3.9999999997671694",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 172,
+    "activeLine" : 15,
+    "description" : "Iteration 35 of 40: test max distance 4.000000000116415.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000465661",
+      "intervalWidth" : "6.984919309616089E-10",
+      "iteration" : "35",
+      "low" : "3.9999999997671694",
+      "mid" : "4.000000000116415",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 173,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000465661",
+      "intervalWidth" : "6.984919309616089E-10",
+      "iteration" : "35",
+      "low" : "3.9999999997671694",
+      "mid" : "4.000000000116415",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 174,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000465661",
+      "intervalWidth" : "6.984919309616089E-10",
+      "iteration" : "35",
+      "low" : "3.9999999997671694",
+      "mid" : "4.000000000116415",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 175,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000465661",
+      "intervalWidth" : "6.984919309616089E-10",
+      "iteration" : "35",
+      "low" : "3.9999999997671694",
+      "mid" : "4.000000000116415",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 176,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000000000116415 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000116415",
+      "intervalWidth" : "3.4924596548080444E-10",
+      "iteration" : "35",
+      "k" : "4",
+      "low" : "3.9999999997671694",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 177,
+    "activeLine" : 15,
+    "description" : "Iteration 36 of 40: test max distance 3.9999999999417923.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000116415",
+      "intervalWidth" : "3.4924596548080444E-10",
+      "iteration" : "36",
+      "low" : "3.9999999997671694",
+      "mid" : "3.9999999999417923",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 178,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000116415",
+      "intervalWidth" : "3.4924596548080444E-10",
+      "iteration" : "36",
+      "low" : "3.9999999997671694",
+      "mid" : "3.9999999999417923",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 179,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000116415",
+      "intervalWidth" : "3.4924596548080444E-10",
+      "iteration" : "36",
+      "low" : "3.9999999997671694",
+      "mid" : "3.9999999999417923",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 180,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000116415",
+      "intervalWidth" : "3.4924596548080444E-10",
+      "iteration" : "36",
+      "low" : "3.9999999997671694",
+      "mid" : "3.9999999999417923",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 181,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.9999999999417923 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000116415",
+      "intervalWidth" : "1.7462298274040222E-10",
+      "iteration" : "36",
+      "k" : "4",
+      "low" : "3.9999999999417923",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 182,
+    "activeLine" : 15,
+    "description" : "Iteration 37 of 40: test max distance 4.000000000029104.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000116415",
+      "intervalWidth" : "1.7462298274040222E-10",
+      "iteration" : "37",
+      "low" : "3.9999999999417923",
+      "mid" : "4.000000000029104",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 183,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000116415",
+      "intervalWidth" : "1.7462298274040222E-10",
+      "iteration" : "37",
+      "low" : "3.9999999999417923",
+      "mid" : "4.000000000029104",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 184,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000116415",
+      "intervalWidth" : "1.7462298274040222E-10",
+      "iteration" : "37",
+      "low" : "3.9999999999417923",
+      "mid" : "4.000000000029104",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 185,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000116415",
+      "intervalWidth" : "1.7462298274040222E-10",
+      "iteration" : "37",
+      "low" : "3.9999999999417923",
+      "mid" : "4.000000000029104",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 186,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000000000029104 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000029104",
+      "intervalWidth" : "8.731149137020111E-11",
+      "iteration" : "37",
+      "k" : "4",
+      "low" : "3.9999999999417923",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 187,
+    "activeLine" : 15,
+    "description" : "Iteration 38 of 40: test max distance 3.999999999985448.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000029104",
+      "intervalWidth" : "8.731149137020111E-11",
+      "iteration" : "38",
+      "low" : "3.9999999999417923",
+      "mid" : "3.999999999985448",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 188,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000029104",
+      "intervalWidth" : "8.731149137020111E-11",
+      "iteration" : "38",
+      "low" : "3.9999999999417923",
+      "mid" : "3.999999999985448",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 189,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000029104",
+      "intervalWidth" : "8.731149137020111E-11",
+      "iteration" : "38",
+      "low" : "3.9999999999417923",
+      "mid" : "3.999999999985448",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 190,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000029104",
+      "intervalWidth" : "8.731149137020111E-11",
+      "iteration" : "38",
+      "low" : "3.9999999999417923",
+      "mid" : "3.999999999985448",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 191,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.999999999985448 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000029104",
+      "intervalWidth" : "4.3655745685100555E-11",
+      "iteration" : "38",
+      "k" : "4",
+      "low" : "3.999999999985448",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 192,
+    "activeLine" : 15,
+    "description" : "Iteration 39 of 40: test max distance 4.000000000007276.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000029104",
+      "intervalWidth" : "4.3655745685100555E-11",
+      "iteration" : "39",
+      "low" : "3.999999999985448",
+      "mid" : "4.000000000007276",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 193,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 2 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000029104",
+      "intervalWidth" : "4.3655745685100555E-11",
+      "iteration" : "39",
+      "low" : "3.999999999985448",
+      "mid" : "4.000000000007276",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 194,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 0 extra stations at this distance. Running total = 2.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000029104",
+      "intervalWidth" : "4.3655745685100555E-11",
+      "iteration" : "39",
+      "low" : "3.999999999985448",
+      "mid" : "4.000000000007276",
+      "needed" : "2",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 195,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000029104",
+      "intervalWidth" : "4.3655745685100555E-11",
+      "iteration" : "39",
+      "low" : "3.999999999985448",
+      "mid" : "4.000000000007276",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 196,
+    "activeLine" : 21,
+    "description" : "3 <= 4 — 4.000000000007276 is achievable. Try a smaller max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000007276",
+      "intervalWidth" : "2.1827872842550278E-11",
+      "iteration" : "39",
+      "k" : "4",
+      "low" : "3.999999999985448",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 197,
+    "activeLine" : 15,
+    "description" : "Iteration 40 of 40: test max distance 3.999999999996362.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000007276",
+      "intervalWidth" : "2.1827872842550278E-11",
+      "iteration" : "40",
+      "low" : "3.999999999985448",
+      "mid" : "3.999999999996362",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 198,
+    "activeLine" : 18,
+    "description" : "Gap 0 = 12.0 needs 3 extra stations at this distance. Running total = 3.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000007276",
+      "intervalWidth" : "2.1827872842550278E-11",
+      "iteration" : "40",
+      "low" : "3.999999999985448",
+      "mid" : "3.999999999996362",
+      "needed" : "3",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "current"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 199,
+    "activeLine" : 18,
+    "description" : "Gap 1 = 4.0 needs 1 extra station at this distance. Running total = 4.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000007276",
+      "intervalWidth" : "2.1827872842550278E-11",
+      "iteration" : "40",
+      "low" : "3.999999999985448",
+      "mid" : "3.999999999996362",
+      "needed" : "4",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "current"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 200,
+    "activeLine" : 18,
+    "description" : "Gap 2 = 6.0 needs 1 extra station at this distance. Running total = 5.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000007276",
+      "intervalWidth" : "2.1827872842550278E-11",
+      "iteration" : "40",
+      "low" : "3.999999999985448",
+      "mid" : "3.999999999996362",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "current"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 201,
+    "activeLine" : 23,
+    "description" : "5 > 4 — 3.999999999996362 is too tight. Try a larger max distance.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "high" : "4.000000000007276",
+      "intervalWidth" : "1.0913936421275139E-11",
+      "iteration" : "40",
+      "k" : "4",
+      "low" : "3.999999999996362",
+      "needed" : "5",
+      "searchDomain" : "continuous"
+    },
+    "dsType" : "SearchSpace",
+    "gridState" : null,
+    "arrayState" : [ {
+      "index" : 0,
+      "value" : 12,
+      "state" : "target"
+    }, {
+      "index" : 1,
+      "value" : 4,
+      "state" : "target"
+    }, {
+      "index" : 2,
+      "value" : 6,
+      "state" : "target"
+    } ],
+    "listState" : null,
+    "trieState" : null,
+    "treeNodes" : null
+  }, {
+    "stepNumber" : 202,
+    "activeLine" : 26,
+    "description" : "After 40 halvings, interval width is 1.0913936421275139E-11 (below 1e-9). Rounded to five decimals: 4.00000.",
+    "queueOrStackState" : null,
+    "callStack" : [ ],
+    "nodeStates" : { },
+    "activeEdges" : [ ],
+    "variables" : {
+      "answer" : "4.00000",
+      "high" : "4.000000000007276",
+      "intervalWidth" : "1.0913936421275139E-11",
+      "iteration" : "40",
+      "low" : "3.999999999996362",
+      "searchDomain" : "continuous"
     },
     "dsType" : "SearchSpace",
     "gridState" : null,

@@ -3212,3 +3212,72 @@ dependency remediation is included. Exact-head CI gates this deployment request,
 production JS delivery plus actual collection must be checked after deployment. A
 dashboard-enablement question is pending; no answer or authenticated totals are inferred.
 No overall project, algorithm, accessibility, performance or release completion is claimed.
+
+### 2026-10-27 — analytics published; production script delivered
+
+PR #234 merged as `3399213` at19:18:48Z after exact-head push/PR CI passed.
+Post-merge CI40568269370 also passes at that merge SHA. The production observation
+at19:27:50Z confirms /_vercel/insights/script.js returns200 JavaScript, no page errors,
+and library-to-problem client navigation works. The served SDK deliberately exits for
+webdriver/headless visitors; the automated visit therefore sends no pageview event.
+Do not treat this as accepted events, live-payload redaction proof, or dashboard totals.
+A normal visitor and authenticated Vercel dashboard confirmation remain pending. No bot
+filter bypass or synthetic visitor events were used. Existing redaction unit tests pass
+separately. The owner has not answered the dashboard questions, and no answer is inferred.
+
+### 2026-10-27 — Gas precision, displayed source and continuous-range seam
+
+Continue from merged analytics #234 / `3399213` on `fix/gas-station-precision`.
+RCA-065 is implemented locally: runtime and standalone source use40 justified halvings,
+raw paired continuous snapshots, locale-independent five-decimal output, accurate examples
+and O(N*I)/O(N) metadata before catalogue/approach snapshots are built. Input limits,
+defaults and global budgets remain unchanged. SearchSpaceCanvas measures real interval
+width while preserving legacy integer searches and explicitly refusing unknown domains.
+Raw values wrap on phones. No dependency, endpoint or unrelated algorithm changes.
+
+Permanent backend guards start8/10 RED, continuous guards13/15 RED; controls pass.
+Three source/snapshot/iteration mutations fail and are restored. The first complete
+suite catches a core-resource ownership guard limited to one base class; it now checks
+actual registered source identity while retaining reverse resource coverage. Final normal
+backend8,311 cases/0 failures/errors/500 unchanged skips, frontend891/85 in161.81s, build,
+launcher cleanup and432 regenerated golden cases pass. Only the expected Gas golden
+changes:77→202 default steps,4.00012→4.00000, complete source/anchors/raw snapshots.
+
+Package at20:08:30Z matches all613 compiled production classes and its exact source
+resource. Real API verifies8 full/delta scenarios plus4 refusals; maximum examples finish
+in642 steps, largest measured full664,165 bytes, delta529,661, unchanged2MB cap. Live stats
+431/431, no untraced/duplicates/orphans. API and all40 complete production-preview browser
+rows share the same frozen JAR/source/assets:24 Gas journeys plus16 discrete regression
+rows, both engines,320/1366 widths, both themes. Four screenshots are inspected. Early
+probe-only CSSOM precision failures are excluded and corrected with normalized CSS checks;
+both complete matrices pass. Temporary owned services stop and ports are free.
+
+See [Gas verification](evidence/gas-precision/VERIFICATION.md) for exact hashes, scope,
+commands, manifests and limits. Publication is pending owner approval; no Git write or
+new PR was performed for this package. DP remains23/56 verified/merged,33 outside.
+Phone budgeting, Count Squares narration, random-input contracts, remaining source and
+metadata repairs, dependency remediation and P7–P9 human/device/release gates remain open.
+
+### 2026-10-28 — resumed status reconciliation
+
+Fresh GitHub reads confirm main remains `3399213`, no PR is open, coin #233 is merged
+as `49a6bf6`, its exact head `75d196d` passes push CI40057369898/PR CI40057376910,
+and post-merge CI40057529626 passes at that merge. The56-row inventory contains23
+verified rows,32 planned and1 requiring a different formulation. Correct the stale
+current DP header that still said21 merged/two awaiting publication; add explicit current
+checkpoints to the tracker and execution plan while retaining dated historical evidence.
+
+The Gas implementation/test/evidence package remains locally verified and unmerged;
+its publication approval is still pending. Only documentation changes in this continuation.
+Product code, input limits, dependencies, inventory digests, goldens and verification
+artifacts are unchanged. Markdown/link/coverage consistency checks apply to this update;
+the previous product suites/browser evidence are not represented as newly rerun today.
+Analytics collection and broader human/device/performance/release gates remain open.
+
+### 2026-10-28 — Gas publication authorized; continue afterward
+
+After the completion status and explicit Gas publication gate are explained, the owner
+says "then continue". Publish the concrete verified Gas package: commit/push, open its PR,
+require passing exact-head CI, merge without bypasses, then continue Phone implementation
+from merged main. Main is freshly rechecked at `3399213`, no PR is open, the tested source
+is unchanged and the ports are free. Earlier approval-pending entries are historical.

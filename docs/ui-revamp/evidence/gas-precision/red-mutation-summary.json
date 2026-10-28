@@ -1,0 +1,51 @@
+{
+  "base": "33992133f3d4daa44f555fa46b761dc943559c99",
+  "scope": "Observed RED and restored-mutation runs; full raw logs retained in the local validation directory. This is not a fresh mutation run.",
+  "backend": [
+    {
+      "log": "backend-red.log",
+      "sha256": "7f3fbb9b1e3f842aaf506b6770885be017f8086cebd734343691e00a3d64a30c",
+      "tests": 10,
+      "failures": 8,
+      "errors": 0,
+      "failureSummaries": [
+        "GasStationsPrecisionTest.actualDetailDefaultCustomAndNestedApproachesServeTheOwnerSpecificComplexity:123 expected: <O(N * I)> but was: <O(log N)>",
+        "GasStationsPrecisionTest.authoredStatementAndServedExamplesDescribeTheMeasuredApproximation:150 expected: <4.00000> but was: <4.00012>",
+        "GasStationsPrecisionTest.bothEncodingsAtTheFullDeclaredSizeCompleteWithinTheExistingResponseBudgetAndDecodeEqually:167->assertAnswer:286 {stations=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1000], k=50} ==> expected: <19.35294> but was: <19.36771>",
+        "GasStationsPrecisionTest.boundedSmallExhaustiveAndSeededRealDomainTracesAgreeWithAnIndependentOracle:67->assertAnswer:286 {stations=[0, 1], k=2} ==> expected: <0.33333> but was: <0.33334>",
+        "GasStationsPrecisionTest.displayedAnswersMatchExactRationalsIncludingTheOriginalCounterexamplesAndRoundingTies:55->assertAnswer:286 {stations=[1, 13, 17, 23], k=4} ==> expected: <4.00000> but was: <4.00012>",
+        "GasStationsPrecisionTest.everyEventCarriesTheActualContinuousBracketAndOnlyAnActiveProbeCarriesMid:100->checkSnapshots:233->assertAnswer:286 {stations=[1, 13, 17, 23], k=4} ==> expected: <4.00000> but was: <4.00012>",
+        "GasStationsPrecisionTest.exactDisplayedJavaCompilesInIsolationAndMatchesAllTwoStationInputsAndSeededMultiGapCases:81 /tmp/junit6943788722984612547/gas-source3782674387023589129/Solution.java:6: error: cannot find symbol",
+        "GasStationsPrecisionTest.numericSnapshotsAndFiveDecimalAnswerAreIndependentOfTheServerLocale:110->assertAnswer:286 {stations=[0, 1000], k=2} ==> expected: <333.33333> but was: <333,34351>"
+      ]
+    },
+    {
+      "log": "mutation-source-and-snapshot.log",
+      "sha256": "4883a0a3f6f47fa2d1c20ba2b3b403e0818f1cb9181e44628b0146d0124359a5",
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "failureSummaries": [
+        "GasStationsPrecisionTest.everyEventCarriesTheActualContinuousBracketAndOnlyAnActiveProbeCarriesMid:100->checkSnapshots:268->number:292 Missing numeric snapshot high ==> expected: not <null>",
+        "GasStationsPrecisionTest.exactDisplayedJavaCompilesInIsolationAndMatchesAllTwoStationInputsAndSeededMultiGapCases:90->checkSource:335 {k=4, stations=[1, 13, 17, 23]} ==> expected: <4.00000> but was: <5.00000>"
+      ]
+    },
+    {
+      "log": "mutation-fifteen-halvings.log",
+      "sha256": "b79396b8c1ed7c1f362dfeb49d1dc53f289817eab314a0a6fd5521435d08113c",
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "failureSummaries": [
+        "GasStationsPrecisionTest.displayedAnswersMatchExactRationalsIncludingTheOriginalCounterexamplesAndRoundingTies:55->assertAnswer:286 {k=4, stations=[1, 13, 17, 23]} ==> expected: <4.00000> but was: <4.00012>"
+      ]
+    }
+  ],
+  "frontend": {
+    "continuousTests": 15,
+    "priorCodeFailures": 13,
+    "controlsPassed": 2,
+    "withExistingDiscreteTestsGreen": 41
+  },
+  "allMutationsRestoredBeforeFinalValidation": true
+}

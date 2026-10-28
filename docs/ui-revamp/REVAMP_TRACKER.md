@@ -6,6 +6,24 @@ P0 design decisions: [REFERENCE_DESIGN.md](REFERENCE_DESIGN.md). Evidence narrat
 Status vocabulary: planned → in progress → review → done. A package is done only after
 its gate and evidence are complete.
 
+## Current completion checkpoint — 2026-10-28
+
+This checkpoint supersedes the older dated coverage/publication counts below. Historical
+test counts remain measurements of their named packages, not today's complete suite.
+
+| Area | Current state | Evidence / remaining gate |
+| --- | --- | --- |
+| DP D5 rollout |23/56 verified and merged;33 outside verification | Inventory:23 verified,32 planned,1 requiring a different formulation. Coin #233 merged as `49a6bf6` on2026-10-24; exact-head push/PR CI40057369898/40057376910 and post-merge CI40057529626 passed |
+| Analytics | Merged/deployed #234 / `3399213` | Production script returns JavaScript and navigation works. Automated browsers are deliberately excluded; normal visitor collection and authenticated dashboard totals remain unconfirmed |
+| Gas Stations correctness | Verified locally; publication approved | `fix/gas-station-precision`;8,311 backend cases/500 unchanged skips,891 frontend tests/build,20 API requests and40 browser scenarios. [Verification](evidence/gas-precision/VERIFICATION.md). CI-gated publication in progress |
+| Next correctness work | Pending | Phone Combinations budget/source/results/metadata, Count Squares narration, random-input joint contracts, remaining source/metadata and dependency repairs |
+| DP D6/D7 and P7/P8/P9 | Open | Human/device/screen-reader/learner, broad performance, acceptance and release/rollback gates are not closed by the above packages |
+
+GitHub main was rechecked at `33992133f3d4daa44f555fa46b761dc943559c99`, with no open PR.
+The owner's subsequent "then continue", after the explicit publication gate was explained,
+authorizes publishing the verified Gas package and continuing with Phone. Exact-head CI
+must pass before merge; GitHub records the final publication outcome.
+
 ## Package ledger
 
 | Package | Status | PR / commit | Gate evidence / remaining work |

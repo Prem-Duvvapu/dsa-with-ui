@@ -3,14 +3,14 @@
   "statement": [
     "Gas stations stand on a straight road at the positions in stations, given in increasing order. You may build k more stations, and a new station can go anywhere, not just at a whole-number position.",
     "After building them, look at the distance between each pair of neighbouring stations. Place the k new stations so that the largest of those distances is as small as possible, and return that smallest possible largest distance.",
-    "The answer is a real number, so binary search on the distance itself. For a candidate distance d, a gap of length g needs ⌈g / d⌉ − 1 new stations; d is achievable if those counts add up to at most k. The search stops after a fixed number of halvings, so the value it returns is an approximation of the true answer, close enough to be exact to two decimal places."
+    "The answer is a real number, so binary search on the distance itself. For a candidate distance d, a gap of length g needs ⌈g / d⌉ − 1 new stations; d is achievable if those counts add up to at most k. Under the visualizer's input bounds the largest initial gap is at most 1000. The search uses 40 halvings, reducing the interval width below 0.000000001, and displays the approximation rounded to five decimal places."
   ],
   "examples": [
     {
       "input": { "stations": [1, 13, 17, 23], "k": 4 },
-      "output": "4.00012",
+      "output": "4.00000",
       "answerVariable": "answer",
-      "explanation": "The gaps are 12, 4 and 6. Two stations cut the 12 into three pieces of 4 and one cuts the 6 into two pieces of 3, using 3 of the 4 stations, so a largest gap of 4 is reachable. Going below 4 would need 5 stations. The search converges to 4.00012, which is 4.00 to two decimal places."
+      "explanation": "The gaps are 12, 4 and 6. Two stations cut the 12 into three pieces of 4 and one cuts the 6 into two pieces of 3, using 3 of the 4 stations, so a largest gap of 4 is reachable; the remaining station can be added without increasing it. Going below 4 would need 5 stations. The refined approximation is displayed as 4.00000."
     },
     {
       "input": { "stations": [1, 2, 3, 4, 5], "k": 1 },

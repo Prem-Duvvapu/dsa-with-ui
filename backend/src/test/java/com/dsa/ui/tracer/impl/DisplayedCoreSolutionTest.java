@@ -53,7 +53,13 @@ class DisplayedCoreSolutionTest {
                 .map(r -> r.getFilename().replaceFirst("\\.java$", "")).collect(Collectors.toSet());
         List<CompleteSourceTracer> tracers = family().toList();
         assertFalse(tracers.isEmpty());
-        assertEquals(tracers.stream().map(AlgorithmTracer::id).collect(Collectors.toSet()), resources);
+        for (String id : resources) {
+            String source = SolutionSource.read("/solutions/core/" + id + ".java");
+            var owners = registry.all().stream()
+                    .filter(tracer -> source.equals(tracer.annotatedCode())).toList();
+            assertEquals(1, owners.size(), "Exactly one tracer must serve resource " + id);
+            assertEquals(id, owners.get(0).id(), "Resource filename must match its owner");
+        }
         for (var tracer : tracers) {
             assertEquals(SolutionSource.read(tracer.sourceResourcePath()), tracer.annotatedCode());
         }
