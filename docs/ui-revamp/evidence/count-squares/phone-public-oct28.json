@@ -1,0 +1,48 @@
+{
+  "generated": "2026-10-28T18:42:56.375309+00:00",
+  "base": "https://dsa-backend-wozp.onrender.com/api/problems/letter-combinations-phone",
+  "scope": "Bounded deployed API observation; not public-browser or exact deployed binary proof.",
+  "sourceHasKeypad": true,
+  "complexity": {
+    "timeComplexity": "O(N * P)",
+    "timeExplanation": "N is the number of digits and P is the product of their letter counts. Copying P strings of length N costs O(N * P); the worst case is O(N * 4^N).",
+    "timeWhy": "Copy each completed keypad word",
+    "spaceComplexity": "O(N)",
+    "spaceExplanation": "O(N) auxiliary space for the shared mutable path and recursive stack, plus O(N * P) returned output storage. Animation snapshots are excluded.",
+    "spaceWhy": "Path and call stack",
+    "auxiliarySpace": "Auxiliary Space: O(N)",
+    "dataStructureSpace": "O(N * P) output characters"
+  },
+  "default": {
+    "status": 200,
+    "stepCount": 22,
+    "truncated": false,
+    "resolvedInput": {
+      "digits": "23"
+    },
+    "lastStep": {
+      "stepNumber": 22,
+      "activeLine": 12,
+      "description": "Every digit's letters tried at every depth. 9 combinations generated.",
+      "callStack": [],
+      "variables": {
+        "combinations": "9",
+        "results": "[ad, ae, af, bd, be, bf, cd, ce, cf]"
+      },
+      "arrayState": []
+    },
+    "error": null,
+    "fieldErrors": null
+  },
+  "unsafe": {
+    "status": 400,
+    "stepCount": null,
+    "truncated": null,
+    "resolvedInput": null,
+    "lastStep": null,
+    "error": "invalid_input",
+    "fieldErrors": {
+      "digits": "This input creates too much animation data for one run. Try fewer digits, especially 7 or 9."
+    }
+  }
+}

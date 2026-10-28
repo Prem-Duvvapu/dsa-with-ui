@@ -1,0 +1,458 @@
+{
+  "generated": "2026-10-28T18:45:39.493Z",
+  "realBackend": true,
+  "complete": true,
+  "problemId": "count-square-submatrices",
+  "localPackage": {
+    "packagedAt": "2026-10-28T18:45:11.630Z",
+    "sha256": "f1f490c98fcb166bc8a41c664b18715034cec2db25887b5e5d51ac8e9a7e3acc"
+  },
+  "complexity": {
+    "timeComplexity": "O(R * C)",
+    "timeExplanation": "Visits each of R rows and C columns once, inspecting at most three neighbours per cell.",
+    "timeWhy": "In-place square-ending tabulation",
+    "spaceComplexity": "O(1)",
+    "spaceExplanation": "Rewrites the matrix in place with constant auxiliary space. Input conversion uses O(R * C) storage; the scalar output uses O(1). Animation snapshots are excluded.",
+    "spaceWhy": "In-place matrix update",
+    "auxiliarySpace": "Auxiliary Space: O(1)",
+    "dataStructureSpace": "Input matrix reused; scalar output"
+  },
+  "sourceHash": "3db87861fe20c386835908d0e7af853810099718d6823c9e6fe0f8ac9e925f7c",
+  "scenarios": 6,
+  "executionRequests": 14,
+  "rows": [
+    {
+      "label": "default",
+      "input": {
+        "grid": [
+          [
+            0,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            0,
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "answer": 15,
+      "steps": 18,
+      "countSteps": 10,
+      "computeSteps": 6,
+      "finalGrid": [
+        [
+          0,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          2,
+          2
+        ],
+        [
+          0,
+          1,
+          2,
+          3
+        ]
+      ],
+      "fullBytes": 8298,
+      "deltaBytes": 4951,
+      "sourceHash": "3db87861fe20c386835908d0e7af853810099718d6823c9e6fe0f8ac9e925f7c",
+      "fullDeltaDecodedEqual": true,
+      "independentSquareEnumeration": true,
+      "everyNewSquareNarrationAndSnapshotChecked": true,
+      "identityAndMetadataMatch": true
+    },
+    {
+      "label": "alternate",
+      "input": {
+        "grid": [
+          [
+            1,
+            0,
+            1
+          ],
+          [
+            0,
+            1,
+            0
+          ],
+          [
+            1,
+            0,
+            1
+          ]
+        ]
+      },
+      "answer": 5,
+      "steps": 9,
+      "countSteps": 5,
+      "computeSteps": 2,
+      "finalGrid": [
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      "fullBytes": 4746,
+      "deltaBytes": 3107,
+      "sourceHash": "3db87861fe20c386835908d0e7af853810099718d6823c9e6fe0f8ac9e925f7c",
+      "fullDeltaDecodedEqual": true,
+      "independentSquareEnumeration": true,
+      "everyNewSquareNarrationAndSnapshotChecked": true,
+      "identityAndMetadataMatch": true
+    },
+    {
+      "label": "two-by-two-ones",
+      "input": {
+        "grid": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "answer": 5,
+      "steps": 7,
+      "countSteps": 4,
+      "computeSteps": 1,
+      "finalGrid": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "fullBytes": 3895,
+      "deltaBytes": 2750,
+      "sourceHash": "3db87861fe20c386835908d0e7af853810099718d6823c9e6fe0f8ac9e925f7c",
+      "fullDeltaDecodedEqual": true,
+      "independentSquareEnumeration": true,
+      "everyNewSquareNarrationAndSnapshotChecked": true,
+      "identityAndMetadataMatch": true
+    },
+    {
+      "label": "mixed",
+      "input": {
+        "grid": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      "answer": 3,
+      "steps": 6,
+      "countSteps": 3,
+      "computeSteps": 1,
+      "finalGrid": [
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "fullBytes": 3514,
+      "deltaBytes": 2529,
+      "sourceHash": "3db87861fe20c386835908d0e7af853810099718d6823c9e6fe0f8ac9e925f7c",
+      "fullDeltaDecodedEqual": true,
+      "independentSquareEnumeration": true,
+      "everyNewSquareNarrationAndSnapshotChecked": true,
+      "identityAndMetadataMatch": true
+    },
+    {
+      "label": "zero",
+      "input": {
+        "grid": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "answer": 0,
+      "steps": 2,
+      "countSteps": 0,
+      "computeSteps": 0,
+      "finalGrid": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "fullBytes": 2022,
+      "deltaBytes": 1755,
+      "sourceHash": "3db87861fe20c386835908d0e7af853810099718d6823c9e6fe0f8ac9e925f7c",
+      "fullDeltaDecodedEqual": true,
+      "independentSquareEnumeration": true,
+      "everyNewSquareNarrationAndSnapshotChecked": true,
+      "identityAndMetadataMatch": true
+    },
+    {
+      "label": "maximum-ones",
+      "input": {
+        "grid": [
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "answer": 204,
+      "steps": 115,
+      "countSteps": 64,
+      "computeSteps": 49,
+      "finalGrid": [
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          1,
+          2,
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          5,
+          5,
+          5
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          6,
+          6
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          7
+        ],
+        [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ]
+      ],
+      "fullBytes": 59239,
+      "deltaBytes": 31154,
+      "sourceHash": "3db87861fe20c386835908d0e7af853810099718d6823c9e6fe0f8ac9e925f7c",
+      "fullDeltaDecodedEqual": true,
+      "independentSquareEnumeration": true,
+      "everyNewSquareNarrationAndSnapshotChecked": true,
+      "identityAndMetadataMatch": true
+    }
+  ],
+  "refusals": [
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "encoding": "full",
+      "field": "grid",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "input": {
+        "grid": [
+          [
+            1,
+            2
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "encoding": "delta",
+      "field": "grid",
+      "expected400": true,
+      "noSteps": true
+    }
+  ],
+  "limits": "Six authored inputs, independent top-left/side enumeration and original budgets. Not all-input, source compilation, device, screen-reader, performance, public deployment or whole-project certification."
+}

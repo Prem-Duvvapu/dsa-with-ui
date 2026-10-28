@@ -3334,3 +3334,39 @@ source and actual served index-BfO8d-Ww.js/index-D4rQyCzb.css assets.
 See evidence/phone-contract/VERIFICATION.md for commands, exclusions and scope. DP stays
 23/56 verified/merged,33 outside verification; this is one owner correctness/source/UX
 package, not broad device/screen-reader/learner/performance/public/release acceptance.
+
+### 2026-10-28 — Phone merged; Count Squares narration and owner metadata
+
+Phone #236 head `6ca0d74` passes push CI40745695300 and PR CI40745711138; squash merge
+`eae15a4` completes at18:33:15Z and post-merge CI40746203161 passes. A bounded public
+API observation confirms KEYPAD source, corrected metadata, default nine actual results
+and an unsafe722222 digits400. This does not certify exact deployed binaries or broad
+public/browser/analytics behavior. Count Squares starts from fetched merged main on
+`fix/count-squares-explanation`, without stacked production work.
+
+Count Squares' count sentence falsely says smaller ending squares were counted earlier;
+on2×2 ones, the last cell adds a new1×1 and2×2. Generic O(N*K)/O(N) metadata also does
+not describe this owner. Corrected RED has3 intended failures/5 controls; an earlier
+Jackson numeric-node representation mismatch is excluded after wire normalization.
+Minimal copy and owner metadata fixes pass9 focused cases including inventory. Source,
+spec, bounds, anchors, recurrence, events and answers remain unchanged. Inventory changes
+only this owner's canonical complexity; its alternative status remains planned.
+
+Full backend8,332 cases/0 failures/errors/500 unchanged skips,432 regenerated golden cases,
+production build and startup cleanup pass. Only10 Count Squares descriptions differ;
+all other golden data is structurally identical. Frontend source is unchanged from the
+previous915/86 local pass; fresh exact-head CI remains a publication requirement.
+
+All615 compiled classes byte-match one frozen JAR. No Maven runs during real API/browser
+proof:14 requests check six cases in both encodings and binary-field400s. Independent
+top-left/side enumeration checks each actual contribution and snapshot; largest full
+response59,239 bytes. Eight final Chromium/Firefox journeys at320/1366 and both themes
+verify step6/7, rewritten grid, corrected narration, exact source/highlight, Analysis
+metadata/caveats and preserved step/no reexecution across views. No page overflow/errors.
+
+Initial full-page screenshots misleadingly stitch fixed controls into content at nonzero
+scroll positions. A normal-viewport probe confirms the unfocused skip link is offscreen;
+no product CSS changes. Both complete phases repeat with true viewport captures of actual
+narration/space text. All8 final screenshots are inspected; original stitched artifacts
+are archived outside the repo and excluded. Evidence: `evidence/count-squares/VERIFICATION.md`.
+DP remains23/56 verified and merged; broader human/device/performance/release gates stay open.

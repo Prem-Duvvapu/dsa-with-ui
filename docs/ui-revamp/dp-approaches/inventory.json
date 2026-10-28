@@ -828,14 +828,14 @@
         "maxBytes": 2000000
       },
       "canonicalComplexity": {
-        "timeComplexity": "O(N * K)",
-        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
-        "timeWhy": "Dynamic Programming",
-        "spaceComplexity": "O(N)",
-        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
-        "spaceWhy": "Memory",
-        "auxiliarySpace": "Auxiliary Space: O(N)",
-        "dataStructureSpace": "Memory"
+        "timeComplexity": "O(R * C)",
+        "timeExplanation": "Visits each of R rows and C columns once, inspecting at most three neighbours per cell.",
+        "timeWhy": "In-place square-ending tabulation",
+        "spaceComplexity": "O(1)",
+        "spaceExplanation": "Rewrites the matrix in place with constant auxiliary space. Input conversion uses O(R * C) storage; the scalar output uses O(1). Animation snapshots are excluded.",
+        "spaceWhy": "In-place matrix update",
+        "auxiliarySpace": "Auxiliary Space: O(1)",
+        "dataStructureSpace": "Input matrix reused; scalar output"
       },
       "alternativeStatus": "planned",
       "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
