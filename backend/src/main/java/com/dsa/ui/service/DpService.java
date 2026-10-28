@@ -215,6 +215,16 @@ public class DpService implements ProblemProvider {
 
     private static ComplexityDetail bulkComplexity(String id) {
         return switch (id) {
+            case "count-square-submatrices" -> new ComplexityDetail(
+                    "O(R * C)",
+                    "Visits each of R rows and C columns once, inspecting at most three neighbours per cell.",
+                    "In-place square-ending tabulation",
+                    "O(1)",
+                    "Rewrites the matrix in place with constant auxiliary space. Input conversion uses O(R * C) "
+                            + "storage; the scalar output uses O(1). Animation snapshots are excluded.",
+                    "In-place matrix update",
+                    "Auxiliary Space: O(1)",
+                    "Input matrix reused; scalar output");
             case "longest-increasing-subsequence" -> new ComplexityDetail(
                     "O(N^2)",
                     "Fills one reachable state for each (index, previous-index) pair.",

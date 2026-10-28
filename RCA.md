@@ -1995,7 +1995,10 @@ Only the Phone golden changes: source/line anchors and actual final results; all
 events, path/capture data and descriptions are preserved. Real API18 requests pass, with
 largest measured full1,797,480 bytes under the unchanged2MB budget. Final26 Chromium/
 Firefox journeys,4 visual rows/eight inspected screenshots and4 computed-contrast rows
-pass against one frozen JAR/source/assets set. Publication is in progress; no broad
+pass against one frozen JAR/source/assets set. Merged in #236 / `eae15a4` at18:33:15Z;
+exact-head push/PR CI40745695300/40745711138 and post-merge CI40746203161 pass. Bounded
+public API checks confirm complete source, default nine results and an unsafe-input400.
+No broad
 project, real-device, screen-reader, performance or public rollout closure is claimed.
 
 ## RCA-065 — Fixed real-number search iterations overstated answer precision
@@ -2231,3 +2234,27 @@ that all340 structurally exposed endpoints were individually exercised.
   earlier artifacts are excluded, not counted as final evidence.
 - **Scope:** path-strip text, not a whole-canvas palette or screen-reader certification.
   `evidence/phone-contract/` records source, artifact, screenshot and contrast identities.
+
+## RCA-073 — Counting a square-ending state was explained as reusing an earlier count
+
+- **Discovered:**2026-10-28, following the read-only DP narration audit.
+- **Symptom:** on a 2×2 all-ones matrix, the final cell contributes two squares, but its
+  explanation says every smaller one was counted earlier. The 1×1 at this cell is new,
+  as is the 2×2 ending here. Generic complexity also reports undefined N/K and O(N)
+  storage for an algorithm that rewrites its matrix in place.
+- **Cause:** the copy confuses squares contained in the largest ending square with
+  squares sharing its bottom-right corner. Generic catalogue metadata was inherited
+  without checking the actual implementation or input adapter.
+- **Fix:** describe one new ending square of every side length 1 through k. Declare
+  O(R*C) time and O(1) algorithm auxiliary space, separately disclosing O(R*C)
+  input-conversion storage, O(1) output and excluded animation snapshots. Reconcile
+  the inventory's canonical metadata without changing its DP rollout status.
+- **Guards:** corrected pre-fix run has3 intended failures/5 controls;9 focused tests
+  pass after the fix. Independent top-left/side enumeration checks all16 binary2×2
+  matrices and larger cases, actual before/after snapshots, source compilation,
+  metadata at HTTP seams, full/delta equivalence and honest tiny-budget truncation.
+  All432 goldens regenerate; only10 count descriptions change. Source, input, anchors,
+  recurrence, grids, event count and answers are identical.
+- **Scope:** one owner's narration and canonical metadata. No alternative DP forms,
+  input limits, dependencies, session behavior or global budgets change. Final gate
+  evidence and exclusions are in `evidence/count-squares/VERIFICATION.md`.

@@ -96,8 +96,8 @@ public class CountSquareSubmatricesTracer implements AlgorithmTracer {
                 total += grid[r][c];
                 if (grid[r][c] > 0) {
                     emit.at("count")
-                            .say("(%d,%d) contributes %d - a %dx%d square ends here, and every smaller one inside it was counted earlier. total=%d.",
-                                    r, c, grid[r][c], grid[r][c], grid[r][c], total)
+                            .say("(%d,%d) contributes %d new all-ones square%s ending here: one of each side length from 1 through %d. total=%d.",
+                                    r, c, grid[r][c], Narration.s(grid[r][c]), grid[r][c], total)
                             .var("r", r).var("c", c).var("total", total)
                             .grid(grid).step();
                 }
