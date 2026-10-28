@@ -1975,11 +1975,40 @@ independent metadata-bound RED. Removing group handling also breaks the actual e
 test; the generator is restored byte-for-byte afterward. Final evidence is recorded in
 `evidence/paired-input/VERIFICATION.md`.
 
+Pairing/echo fixes merge in #238 / `6548b87` at19:27:57Z after push/PR CI40754015496/
+40754229303; post-merge CI40754541772 passes. At that merge checkpoint table/call-budget
+generation remained open for the next separate package from fetched merged main.
+
 This closes only unequal-length generation for those owners. Canonical225-cell, memo80-cell
 and recursion220-call refusals remain unchanged; some paired samples can still exceed
 them. Meeting end/start ordering, platform pairs, graph relations and other catalogue
 constraints are not inferred or certified. Do not claim Randomize always produces a
 runnable input, or D6 completion, from this package.
+
+### RCA-064 follow-up — 2026-10-28 Knapsack work-limit generation
+
+The subsequent package declares and centrally validates the unchanged225-cell canonical,
+80-cell memo and220-call recursion guards for both Knapsack DP owners. A bounded iterative
+counter measures the uncached tree, including base calls, without computing answers or
+emitting events. For fixed positive weights the count is monotone in capacity; the generic
+generator samples ordered pairs first, then a feasible capacity within the original1–30
+domain. Cheap8-weight20/capacity30 recursion remains accepted (45/53 calls), instead of
+being incorrectly restricted by memo/table dimensions. Other owners keep their existing guards.
+
+Backend RED7/8 and generator RED37/112 are recorded; the final101 focused backend cases
+pass. Independent review adds and proves a missing-declared-minLength regression. Full
+backend8,351 cases/500 unchanged skips, frontend992 tests/89 files,432 unchanged goldens,
+build/startup,60 real API executions and24 engine journeys pass. A mislabeled seeded test
+matrix is corrected to actual80/220 policies after the full frontend run; corrected112
+targeted cases pass and fresh exact-head full CI is required before merge. No production
+change is needed for that fixture correction. All8 screenshots are inspected; source,
+accepted trace data, defaults/domains and budgets are preserved.
+
+This resolves generated Knapsack table/tree overflow for the current six declarations;
+it does not certify coins/subsets/parity-derived targets, meeting semantics or every future
+work-limit schema. `evidence/knapsack-work-limits/VERIFICATION.md` records artifact identities,
+measurements, preserved failure keys and scope. The owner requests current publication and
+then a stop to new changes; broader D6 and release gates remain open.
 
 ### RCA-056 follow-up — Phone Combinations budget/source/result contract
 
@@ -2281,6 +2310,7 @@ that all340 structurally exposed endpoints were individually exercised.
 
 ## RCA-074 — A phone input echo had labels but no readable values
 
+- **Status:** fixed and merged in #238 / `6548b87`; exact-head and post-merge CI pass.
 - **Discovered:**2026-10-28 during actual paired-input screenshot review.
 - **Symptom:** at320px, a complete Knapsack input with capacity1, weights[1], values[1]
   appears as crowded labels and brackets. Measured capacity value width is0px for9px

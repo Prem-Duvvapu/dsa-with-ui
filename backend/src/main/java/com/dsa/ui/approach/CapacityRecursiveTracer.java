@@ -27,16 +27,17 @@ final class CapacityRecursiveTracer implements AlgorithmTracer {
                 InputField.of("values",FieldType.INT_ARRAY).label("Values").length(1,8).values(1,100)
                         .defaultValue(kind.reuse?List.of(5,11,13):List.of(5,4,8,6)).build(),
                 InputField.of("capacity",FieldType.INT).label("Capacity").range(1,30).defaultValue(kind.reuse?10:5).build())
-                .withEqualLengthGroup("weights","values");
+                .withEqualLengthGroup("weights","values")
+                .withWorkLimit(memo ? new InputWorkLimit(InputWorkLimit.Kind.CAPACITY_TABLE_CELLS,
+                        "weights","capacity",80,false,"weights",
+                        "Memo tracing needs (n+1) × (capacity+1) ≤ 80 cells; use fewer paired items or a smaller capacity.")
+                        : new InputWorkLimit(InputWorkLimit.Kind.SKIP_TAKE_CALLS,
+                        "weights","capacity",220,kind.reuse,"weights",
+                        "This input needs more than 220 recursive calls. Use fewer paired items, a smaller capacity or larger weights, or select Memoization."));
     }
     public Map<String,Object> alternateInput(){return kind.reuse?Map.of("weights",List.of(3),"values",List.of(10),"capacity",8):Map.of("weights",List.of(2,3),"values",List.of(4,5),"capacity",4);}
     public void run(Inputs in,StepEmitter emit){
         int[] weights=in.getIntArray("weights"),values=in.getIntArray("values");int capacity=in.getInt("capacity");
-        if(memo){
-            if((long)(weights.length+1)*(capacity+1)>80)throw new InputValidationException(Map.of("weights",
-                    "Memo tracing needs (n+1) × (capacity+1) ≤ 80 cells; use fewer paired items or a smaller capacity."));
-        }else if(treeCalls(weights,capacity,kind.reuse)>220)throw new InputValidationException(Map.of("weights",
-                "This input needs more than 220 recursive calls. Use fewer paired items, a smaller capacity or larger weights, or select Memoization."));
         var execution=new RecursiveDpExecution(emit,memo,1,RecursiveDpExecution.labels("n=",weights.length+1),RecursiveDpExecution.labels("w=",capacity+1),null,"best");
         var root=state(weights.length,capacity);
         execution.start(root,"Maximize value within capacity "+capacity+"; "+(kind.reuse?"each type may repeat.":"each indexed item may be taken once."));
@@ -51,14 +52,4 @@ final class CapacityRecursiveTracer implements AlgorithmTracer {
         });
     }
     private static RecursiveDpExecution.State state(int n,int w){return new RecursiveDpExecution.State(0,n,w,"n="+n+",w="+w);}
-    /** Safety-only DP counts the uncached tree without executing or inventing trace calls. */
-    private static int treeCalls(int[] weights,int capacity,boolean reuse){
-        int[][] calls=new int[weights.length+1][capacity+1];Arrays.fill(calls[0],1);
-        for(int n=1;n<=weights.length;n++){
-            calls[n][0]=1;
-            for(int w=1;w<=capacity;w++)calls[n][w]=Math.min(221,1+calls[n-1][w]
-                    +(weights[n-1]<=w?calls[reuse?n:n-1][w-weights[n-1]]:0));
-        }
-        return calls[weights.length][capacity];
-    }
 }

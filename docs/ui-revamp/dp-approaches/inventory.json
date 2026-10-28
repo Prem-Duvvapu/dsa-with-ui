@@ -1703,6 +1703,17 @@
             "weights",
             "values"
           ]
+        ],
+        "workLimits": [
+          {
+            "kind": "CAPACITY_TABLE_CELLS",
+            "arrayField": "weights",
+            "scalarField": "capacity",
+            "limit": 225,
+            "reuse": false,
+            "errorField": "capacity",
+            "message": "Use a smaller capacity or fewer items."
+          }
         ]
       },
       "canonicalComplexity": {
@@ -1777,6 +1788,17 @@
                 "weights",
                 "values"
               ]
+            ],
+            "workLimits": [
+              {
+                "kind": "SKIP_TAKE_CALLS",
+                "arrayField": "weights",
+                "scalarField": "capacity",
+                "limit": 220,
+                "reuse": false,
+                "errorField": "weights",
+                "message": "This input needs more than 220 recursive calls. Use fewer paired items, a smaller capacity or larger weights, or select Memoization."
+              }
             ]
           }
         },
@@ -1839,6 +1861,17 @@
                 "weights",
                 "values"
               ]
+            ],
+            "workLimits": [
+              {
+                "kind": "CAPACITY_TABLE_CELLS",
+                "arrayField": "weights",
+                "scalarField": "capacity",
+                "limit": 80,
+                "reuse": false,
+                "errorField": "weights",
+                "message": "Memo tracing needs (n+1) × (capacity+1) ≤ 80 cells; use fewer paired items or a smaller capacity."
+              }
             ]
           }
         }
@@ -4746,6 +4779,17 @@
             "weights",
             "values"
           ]
+        ],
+        "workLimits": [
+          {
+            "kind": "CAPACITY_TABLE_CELLS",
+            "arrayField": "weights",
+            "scalarField": "capacity",
+            "limit": 225,
+            "reuse": false,
+            "errorField": "capacity",
+            "message": "Use a smaller capacity or fewer items."
+          }
         ]
       },
       "canonicalComplexity": {
@@ -4818,6 +4862,17 @@
                 "weights",
                 "values"
               ]
+            ],
+            "workLimits": [
+              {
+                "kind": "SKIP_TAKE_CALLS",
+                "arrayField": "weights",
+                "scalarField": "capacity",
+                "limit": 220,
+                "reuse": true,
+                "errorField": "weights",
+                "message": "This input needs more than 220 recursive calls. Use fewer paired items, a smaller capacity or larger weights, or select Memoization."
+              }
             ]
           }
         },
@@ -4878,6 +4933,17 @@
                 "weights",
                 "values"
               ]
+            ],
+            "workLimits": [
+              {
+                "kind": "CAPACITY_TABLE_CELLS",
+                "arrayField": "weights",
+                "scalarField": "capacity",
+                "limit": 80,
+                "reuse": false,
+                "errorField": "weights",
+                "message": "Memo tracing needs (n+1) × (capacity+1) ≤ 80 cells; use fewer paired items or a smaller capacity."
+              }
             ]
           }
         }

@@ -18,14 +18,19 @@ test counts remain measurements of their named packages, not today's complete su
 | Gas Stations correctness | Verified and merged #235 / `00ffc24` |8,311 backend cases/500 unchanged skips,891 frontend tests/build,20 API requests and40 browser scenarios. Exact-head push/PR and post-merge CI40735187978 pass. Bounded public source/default/custom checks pass. [Verification](evidence/gas-precision/VERIFICATION.md) |
 | Phone Combinations correctness | Verified and merged #236 / `eae15a4` |8,324 backend cases/500 unchanged skips,915 frontend tests/build,18 API requests,26 final journeys,4 visual rows and4 contrast rows. Exact-head push/PR CI40745695300/40745711138 and post-merge CI40746203161 pass. Bounded public default/unsafe-input checks pass. [Verification](evidence/phone-contract/VERIFICATION.md). Paired-array Randomize remains separate |
 | Count Squares correctness | Verified and merged #237 / `03abc79` |8,332 backend cases/500 unchanged skips,432 goldens,build/startup,14 API requests and8 engine journeys. Exact-head push/PR CI40748751024/40748764960 and post-merge CI40749101387 pass. Source, inputs, algorithm and answers unchanged. [Verification](evidence/count-squares/VERIFICATION.md) |
-| Paired-array Randomize | Verified locally; publication in progress |3 canonical owners +4 approaches declare equal-length groups;8,343 backend cases/500 unchanged skips,948 frontend tests/build,48 API requests,8 final engine journeys and8 inspected screenshots. Phone input echo clipping also fixed. [Verification](evidence/paired-input/VERIFICATION.md) |
-| Next correctness work | Pending | Random-input table/call budgets and other joint contracts, remaining source/metadata and dependency repairs |
+| Paired-array Randomize | Verified and merged #238 / `6548b87` |3 canonical owners +4 approaches declare equal-length groups;8,343 backend cases/500 unchanged skips,948 frontend tests/build,48 API requests,8 final engine journeys and8 inspected screenshots. Push/PR CI40754015496/40754229303 and post-merge CI40754541772 pass. Phone input echo clipping also fixed. [Verification](evidence/paired-input/VERIFICATION.md) |
+| Knapsack work-limit Randomize | Implementation and verification complete in this package |6 forms declare their unchanged225/80-cell and220-call guards.8,351 backend cases/500 skips,992 frontend tests plus corrected112-case matrix,432 unchanged goldens,60 API executions and24 engine journeys. [Verification](evidence/knapsack-work-limits/VERIFICATION.md); publication follows exact-head CI |
+| Remaining correctness work | Paused after publication at the owner's request |Other DP table/derived-target budgets and joint contracts, remaining source/metadata and dependency repairs |
 | DP D6/D7 and P7/P8/P9 | Open | Human/device/screen-reader/learner, broad performance, acceptance and release/rollback gates are not closed by the above packages |
 
-GitHub main was rechecked at `03abc797c5cec4f0bee1aaf7dfc1830a1133f416`, with no open PR.
+GitHub main at the start of this package was `6548b87a396b072688e061f3e9ef581346d54c0a`, with no open PR.
 The owner's subsequent "then continue", after the explicit publication gate was explained,
 authorizes publishing the verified packages and continuing the pending work. Exact-head CI
 must pass before merge; GitHub records the final publication outcome.
+
+The owner's later instruction is to commit, push and merge the current changes, then
+stop making new changes. Finish this package's checks/publication and pause development;
+the remaining project gates are not marked complete.
 
 ## Package ledger
 

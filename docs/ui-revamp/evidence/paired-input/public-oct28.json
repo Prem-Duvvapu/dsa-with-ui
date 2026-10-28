@@ -1,0 +1,55 @@
+{
+  "generated": "2026-10-28T19:39:19.302760+00:00",
+  "mergeCommit": "6548b87a396b072688e061f3e9ef581346d54c0a",
+  "scope": "Bounded public API pairing observation; not public-browser or exact deployed-binary proof.",
+  "rows": [
+    {
+      "id": "knapsack-01",
+      "groups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "expectedGroupVisible": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "groups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "expectedGroupVisible": true
+    },
+    {
+      "id": "fractional-knapsack",
+      "groups": [
+        [
+          "values",
+          "weights"
+        ]
+      ],
+      "expectedGroupVisible": true
+    }
+  ],
+  "refusal": {
+    "status": 400,
+    "fieldErrors": {
+      "values": "Needs the same number of entries as weights (2); received 1."
+    },
+    "hasSteps": false,
+    "submitted": {
+      "weights": [
+        1,
+        1
+      ],
+      "values": [
+        1
+      ],
+      "capacity": 1
+    }
+  },
+  "expectedPairingVisible": true
+}

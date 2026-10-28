@@ -235,7 +235,10 @@ class EqualLengthInputContractTest {
             var memo = approaches.resolve(id, "memoization").tracer();
             var recursion = approaches.resolve(id, "recursion").tracer();
             var heavy = input(Collections.nCopies(8, 20), Collections.nCopies(8, 100), 30);
-            assertDoesNotThrow(() -> InputValidator.validate(canonical.inputSpec(), heavy));
+            // Work limits now reject this same invalid table at the shared boundary.
+            assertTrue(assertThrows(InputValidationException.class,
+                    () -> InputValidator.validate(canonical.inputSpec(), heavy))
+                    .getFieldErrors().containsKey("capacity"));
             assertThrows(InputValidationException.class, () -> runner.run(canonical, heavy));
             assertFalse(runner.run(recursion, heavy).isTruncated(), "Cheap full-domain trees remain legal");
             var memoOver = input(Collections.nCopies(8, 1), Collections.nCopies(8, 1), 8);

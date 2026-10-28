@@ -1,0 +1,1572 @@
+{
+  "generated": "2026-10-28T19:50:41.056Z",
+  "realBackend": true,
+  "complete": true,
+  "localPackage": {
+    "packagedAt": "2026-10-28T19:48:07.077Z",
+    "sha256": "046641c3f2cddf8f4b2e805fa4da8929ba87f1924cada332b30e015d002934b3"
+  },
+  "samplerHash": "1a6207fb7ae4ac4bebb41544d8330535e6aeb261af24dbfe73e97a482f137f84",
+  "specifications": [
+    {
+      "id": "knapsack-01",
+      "form": "canonical",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "weights",
+          "scalarField": "capacity",
+          "limit": 225,
+          "reuse": false,
+          "errorField": "capacity",
+          "message": "Use a smaller capacity or fewer items."
+        }
+      ],
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3"
+    },
+    {
+      "id": "knapsack-01",
+      "form": "memoization",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "weights",
+          "scalarField": "capacity",
+          "limit": 80,
+          "reuse": false,
+          "errorField": "weights",
+          "message": "Memo tracing needs (n+1) × (capacity+1) ≤ 80 cells; use fewer paired items or a smaller capacity."
+        }
+      ],
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109"
+    },
+    {
+      "id": "knapsack-01",
+      "form": "recursion",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "workLimits": [
+        {
+          "kind": "SKIP_TAKE_CALLS",
+          "arrayField": "weights",
+          "scalarField": "capacity",
+          "limit": 220,
+          "reuse": false,
+          "errorField": "weights",
+          "message": "This input needs more than 220 recursive calls. Use fewer paired items, a smaller capacity or larger weights, or select Memoization."
+        }
+      ],
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f"
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "canonical",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "weights",
+          "scalarField": "capacity",
+          "limit": 225,
+          "reuse": false,
+          "errorField": "capacity",
+          "message": "Use a smaller capacity or fewer items."
+        }
+      ],
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9"
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "memoization",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "weights",
+          "scalarField": "capacity",
+          "limit": 80,
+          "reuse": false,
+          "errorField": "weights",
+          "message": "Memo tracing needs (n+1) × (capacity+1) ≤ 80 cells; use fewer paired items or a smaller capacity."
+        }
+      ],
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b"
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "recursion",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "workLimits": [
+        {
+          "kind": "SKIP_TAKE_CALLS",
+          "arrayField": "weights",
+          "scalarField": "capacity",
+          "limit": 220,
+          "reuse": true,
+          "errorField": "weights",
+          "message": "This input needs more than 220 recursive calls. Use fewer paired items, a smaller capacity or larger weights, or select Memoization."
+        }
+      ],
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3"
+    }
+  ],
+  "executionRequests": 60,
+  "rows": [
+    {
+      "id": "knapsack-01",
+      "form": "canonical",
+      "label": "actual-generator-seed",
+      "input": {
+        "weights": [
+          5,
+          6,
+          11,
+          12
+        ],
+        "values": [
+          96,
+          30,
+          91,
+          39
+        ],
+        "capacity": 1
+      },
+      "work": 10,
+      "limit": 225,
+      "expected": 0,
+      "actual": 0,
+      "steps": 9,
+      "fullBytes": 9070,
+      "deltaBytes": 7574,
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "canonical",
+      "label": "actual-generator-high",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": 100,
+      "actual": 100,
+      "steps": 201,
+      "fullBytes": 1518004,
+      "deltaBytes": 1482664,
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "canonical",
+      "label": "actual-generator-low-weights",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": 800,
+      "actual": 800,
+      "steps": 201,
+      "fullBytes": 1552122,
+      "deltaBytes": 1516782,
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "canonical",
+      "label": "accepted-boundary",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": 100,
+      "actual": 100,
+      "steps": 201,
+      "fullBytes": 1518004,
+      "deltaBytes": 1482664,
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "memoization",
+      "label": "actual-generator-seed",
+      "input": {
+        "weights": [
+          5,
+          6,
+          11,
+          12
+        ],
+        "values": [
+          96,
+          30,
+          91,
+          39
+        ],
+        "capacity": 1
+      },
+      "work": 10,
+      "limit": 80,
+      "expected": 0,
+      "actual": 0,
+      "steps": 21,
+      "fullBytes": 20614,
+      "deltaBytes": 12176,
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "memoization",
+      "label": "actual-generator-high",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 7
+      },
+      "work": 72,
+      "limit": 80,
+      "expected": 0,
+      "actual": 0,
+      "steps": 37,
+      "fullBytes": 108072,
+      "deltaBytes": 57554,
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "memoization",
+      "label": "actual-generator-low-weights",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 7
+      },
+      "work": 72,
+      "limit": 80,
+      "expected": 700,
+      "actual": 700,
+      "steps": 250,
+      "fullBytes": 738087,
+      "deltaBytes": 426430,
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "memoization",
+      "label": "accepted-boundary",
+      "input": {
+        "weights": [
+          1,
+          3,
+          1,
+          1,
+          5,
+          1,
+          2
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 9
+      },
+      "work": 80,
+      "limit": 80,
+      "expected": 600,
+      "actual": 600,
+      "steps": 293,
+      "fullBytes": 935433,
+      "deltaBytes": 540743,
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "recursion",
+      "label": "actual-generator-seed",
+      "input": {
+        "weights": [
+          5,
+          6,
+          11,
+          12
+        ],
+        "values": [
+          96,
+          30,
+          91,
+          39
+        ],
+        "capacity": 1
+      },
+      "work": 5,
+      "limit": 220,
+      "expected": 0,
+      "actual": 0,
+      "steps": 21,
+      "fullBytes": 11192,
+      "deltaBytes": 7124,
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "recursion",
+      "label": "actual-generator-high",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 30
+      },
+      "work": 45,
+      "limit": 220,
+      "expected": 100,
+      "actual": 100,
+      "steps": 173,
+      "fullBytes": 97051,
+      "deltaBytes": 57474,
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "recursion",
+      "label": "actual-generator-low-weights",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 3
+      },
+      "work": 185,
+      "limit": 220,
+      "expected": 300,
+      "actual": 300,
+      "steps": 649,
+      "fullBytes": 369530,
+      "deltaBytes": 219037,
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "recursion",
+      "label": "accepted-boundary",
+      "input": {
+        "weights": [
+          3,
+          1,
+          15,
+          5,
+          3,
+          19,
+          7,
+          17
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 29
+      },
+      "work": 220,
+      "limit": 220,
+      "expected": 500,
+      "actual": 500,
+      "steps": 783,
+      "fullBytes": 458633,
+      "deltaBytes": 271642,
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "canonical",
+      "label": "actual-generator-seed",
+      "input": {
+        "weights": [
+          5,
+          6,
+          11,
+          12
+        ],
+        "values": [
+          96,
+          30,
+          91,
+          39
+        ],
+        "capacity": 1
+      },
+      "work": 10,
+      "limit": 225,
+      "expected": 0,
+      "actual": 0,
+      "steps": 9,
+      "fullBytes": 9277,
+      "deltaBytes": 7781,
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "canonical",
+      "label": "actual-generator-high",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": 100,
+      "actual": 100,
+      "steps": 201,
+      "fullBytes": 1524893,
+      "deltaBytes": 1489553,
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "canonical",
+      "label": "actual-generator-low-weights",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": 2400,
+      "actual": 2400,
+      "steps": 201,
+      "fullBytes": 1580966,
+      "deltaBytes": 1545626,
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "canonical",
+      "label": "accepted-boundary",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": 100,
+      "actual": 100,
+      "steps": 201,
+      "fullBytes": 1524893,
+      "deltaBytes": 1489553,
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "memoization",
+      "label": "actual-generator-seed",
+      "input": {
+        "weights": [
+          5,
+          6,
+          11,
+          12
+        ],
+        "values": [
+          96,
+          30,
+          91,
+          39
+        ],
+        "capacity": 1
+      },
+      "work": 10,
+      "limit": 80,
+      "expected": 0,
+      "actual": 0,
+      "steps": 21,
+      "fullBytes": 20527,
+      "deltaBytes": 12089,
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "memoization",
+      "label": "actual-generator-high",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 7
+      },
+      "work": 72,
+      "limit": 80,
+      "expected": 0,
+      "actual": 0,
+      "steps": 37,
+      "fullBytes": 107901,
+      "deltaBytes": 57383,
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "memoization",
+      "label": "actual-generator-low-weights",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 7
+      },
+      "work": 72,
+      "limit": 80,
+      "expected": 700,
+      "actual": 700,
+      "steps": 397,
+      "fullBytes": 1193092,
+      "deltaBytes": 693240,
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "memoization",
+      "label": "accepted-boundary",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 9
+      },
+      "work": 80,
+      "limit": 80,
+      "expected": 900,
+      "actual": 900,
+      "steps": 446,
+      "fullBytes": 1456622,
+      "deltaBytes": 853278,
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "recursion",
+      "label": "actual-generator-seed",
+      "input": {
+        "weights": [
+          5,
+          6,
+          11,
+          12
+        ],
+        "values": [
+          96,
+          30,
+          91,
+          39
+        ],
+        "capacity": 1
+      },
+      "work": 5,
+      "limit": 220,
+      "expected": 0,
+      "actual": 0,
+      "steps": 21,
+      "fullBytes": 11198,
+      "deltaBytes": 7130,
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "recursion",
+      "label": "actual-generator-high",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 30
+      },
+      "work": 53,
+      "limit": 220,
+      "expected": 100,
+      "actual": 100,
+      "steps": 205,
+      "fullBytes": 116478,
+      "deltaBytes": 67804,
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "recursion",
+      "label": "actual-generator-low-weights",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 2
+      },
+      "work": 89,
+      "limit": 220,
+      "expected": 200,
+      "actual": 200,
+      "steps": 313,
+      "fullBytes": 175760,
+      "deltaBytes": 103756,
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "recursion",
+      "label": "accepted-boundary",
+      "input": {
+        "weights": [
+          17,
+          2,
+          4,
+          15
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 26
+      },
+      "work": 220,
+      "limit": 220,
+      "expected": 1300,
+      "actual": 1300,
+      "steps": 805,
+      "fullBytes": 494991,
+      "deltaBytes": 288764,
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "pairAndIndexOrderPreserved": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    }
+  ],
+  "refusals": [
+    {
+      "id": "knapsack-01",
+      "form": "canonical",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 25
+      },
+      "encoding": "full",
+      "work": 234,
+      "limit": 225,
+      "field": "capacity",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "canonical",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 25
+      },
+      "encoding": "delta",
+      "work": 234,
+      "limit": 225,
+      "field": "capacity",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "memoization",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 8
+      },
+      "encoding": "full",
+      "work": 81,
+      "limit": 80,
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "memoization",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 8
+      },
+      "encoding": "delta",
+      "work": 81,
+      "limit": 80,
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "recursion",
+      "input": {
+        "weights": [
+          17,
+          10,
+          5,
+          5,
+          11,
+          17,
+          12,
+          2
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 30
+      },
+      "encoding": "full",
+      "work": 221,
+      "limit": 220,
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "recursion",
+      "input": {
+        "weights": [
+          17,
+          10,
+          5,
+          5,
+          11,
+          17,
+          12,
+          2
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 30
+      },
+      "encoding": "delta",
+      "work": 221,
+      "limit": 220,
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "canonical",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 25
+      },
+      "encoding": "full",
+      "work": 234,
+      "limit": 225,
+      "field": "capacity",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "canonical",
+      "input": {
+        "weights": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 25
+      },
+      "encoding": "delta",
+      "work": 234,
+      "limit": 225,
+      "field": "capacity",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "memoization",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 8
+      },
+      "encoding": "full",
+      "work": 81,
+      "limit": 80,
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "memoization",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 8
+      },
+      "encoding": "delta",
+      "work": 81,
+      "limit": 80,
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "recursion",
+      "input": {
+        "weights": [
+          3,
+          6,
+          11,
+          13,
+          1,
+          5
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 12
+      },
+      "encoding": "full",
+      "work": 221,
+      "limit": 220,
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "recursion",
+      "input": {
+        "weights": [
+          3,
+          6,
+          11,
+          13,
+          1,
+          5
+        ],
+        "values": [
+          100,
+          100,
+          100,
+          100,
+          100,
+          100
+        ],
+        "capacity": 12
+      },
+      "encoding": "delta",
+      "work": 221,
+      "limit": 220,
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    }
+  ],
+  "frontendMetadataControls": [
+    {
+      "id": "knapsack-01",
+      "form": "canonical",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "canonical",
+      "label": "duplicate-scalar-reference",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "canonical",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "memoization",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "memoization",
+      "label": "duplicate-scalar-reference",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "memoization",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "recursion",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "recursion",
+      "label": "duplicate-scalar-reference",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "knapsack-01",
+      "form": "recursion",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "canonical",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "canonical",
+      "label": "duplicate-scalar-reference",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "canonical",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "memoization",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "memoization",
+      "label": "duplicate-scalar-reference",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "memoization",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "recursion",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "recursion",
+      "label": "duplicate-scalar-reference",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "form": "recursion",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    }
+  ],
+  "limits": "Six declared knapsack specifications, three actual sampler profiles and exact boundaries. Source compilation is a separate gate. Not all-input, other joint budgets, device, screen-reader, performance, public rollout or whole-project acceptance."
+}

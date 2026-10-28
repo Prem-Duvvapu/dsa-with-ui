@@ -4,7 +4,7 @@ Prepared: 2026-10-05. Inspected main: `dad2640`, merged PR #191.
 
 ### Current execution checkpoint — 2026-10-28
 
-Main is `03abc79` (#237); no PR is open at this checkpoint. DP has23/56 verified and merged candidates,
+Main is `6548b87` (#238); no PR is open at this checkpoint. DP has23/56 verified and merged candidates,
 with33 outside verification (32 planned,1 requiring a different formulation). The coin
 batch #233 merged as `49a6bf6`, with successful exact-head and post-merge CI. These
 counts are checked against GitHub and the current56-row inventory; dated counts below
@@ -20,10 +20,14 @@ as #236 / `eae15a4` with successful exact-head and post-merge CI40746203161; its
 [verification record](evidence/phone-contract/VERIFICATION.md) records the source, budget,
 generator, results and contrast checks. Count Squares narration/metadata merged in #237
 with exact-head and post-merge CI40749101387 passing. Subsequent correctness work includes
-random-input table/call budgets and other joint contracts. Equal-length pairing for three
-Knapsack owners/four capacity approaches is separately verified locally, with phone echo
-readability corrected; it does not certify all generated inputs. Continue with remaining source,
-metadata, dependency and DP work in separately verified packages. Do not treat source
+other DP table/derived-target budgets and joint contracts. Equal-length pairing for three
+Knapsack owners/four capacity approaches merged in #238, with phone echo readability
+corrected and successful post-merge CI40754541772; it does not certify all generated inputs.
+The current Knapsack work-limit package separately verifies all6 forms with unchanged
+225/80-cell and220-call policies. The owner now requests publication of current work and
+then a stop to new changes; further development is paused after that publication.
+Remaining source, metadata, dependency and DP work still needs separately verified
+packages. Do not treat source
 compilation,431 traced owners or a green package as whole-catalogue certification.
 
 Analytics #234 is deployed and its script loads correctly. Normal visitor collection
