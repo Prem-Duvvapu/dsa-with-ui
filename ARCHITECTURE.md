@@ -98,6 +98,18 @@ their complete trace fits. Generic editor code consumes those hints without prob
 routing. Recursive path strips honor an emitted character label and otherwise retain
 the genuine numeric value.
 
+`InputSpec.withEqualLengthGroup(...)` declares disjoint groups of indexed INT_ARRAY
+fields. Immutable `equalLengthGroups` metadata is omitted when empty; it survives both
+budget-copy methods. Construction rejects unknown/ambiguous names, unsupported types,
+overlap and invalid or incompatible length bounds before serving the contract.
+`InputValidator` compares normalized list sizes after field validation/default resolution,
+attaching mismatches to later members relative to the first. It never resizes inputs.
+Knapsack, Unbounded Knapsack and Fractional Knapsack (including capacity approaches)
+declare this existing relationship. Randomize samples one shared length from the group's
+actual bounds, then each array's own values; it changes only the draft. Table-area,
+recursive-call and other cross-field semantics remain separately enforced owner guards
+and are not yet all represented by generator metadata.
+
 ## The tracer contract
 
 The load-bearing idea. A tracer cannot be written without declaring how it is to be checked.

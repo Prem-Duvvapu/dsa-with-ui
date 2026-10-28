@@ -3370,3 +3370,51 @@ no product CSS changes. Both complete phases repeat with true viewport captures 
 narration/space text. All8 final screenshots are inspected; original stitched artifacts
 are archived outside the repo and excluded. Evidence: `evidence/count-squares/VERIFICATION.md`.
 DP remains23/56 verified and merged; broader human/device/performance/release gates stay open.
+
+### 2026-10-28 — Count Squares merged; declared pairing and readable phone echoes
+
+Count Squares #237 head `ab06f24` passes push CI40748751024 and PR CI40748764960;
+squash merge `03abc79` completes at18:52:08Z and post-merge CI40749101387 passes.
+The actual public API2×2 input returns7 complete steps, answer5, new ending-square copy
+and corrected owner metadata. This bounded observation is recorded in
+`evidence/count-squares/public-oct28.json`, not exact deployed-binary/public-browser proof.
+
+`fix/paired-input-contract` starts from fetched merged main. Read-only seam analysis
+separates equal-length pairing from table-area/recursive-call budgets and other owners'
+semantics. Three canonical Knapsack owners and four capacity approaches now declare
+immutable equalLengthGroups. Shared InputValidator checks normalized lists before the
+tracer; duplicate run-local pairing guards are removed. Existing field paths/domains,
+defaults, pair index order, algorithms, source and all budget guards remain unchanged.
+Only two canonical/four alternative inventory specs gain the relation; DP stays23/56.
+
+Backend RED7 failures/3 controls exercises actual wire and validator seams; generator
+RED29 failures/39 controls includes the previous37 cases unchanged. Group-aware generation
+samples a common length before own-field values. The actual controlled editor preserves
+manual unequal drafts and submits the visible map; ignoring groups breaks its intended
+test, and the generator is restored byte-for-byte. Focused192 backend cases pass.
+Independent review then finds malformed length metadata can narrow/ignore raw numbers;
+an extra RED fails before exact nonnegative32-bit conversion is added. Final backend
+8,343 cases/0 failures/errors/500 unchanged skips and432 unchanged goldens pass.
+
+The first full948 frontend tests/build and8 engine journeys pass, but screenshot review
+exposes a real320px echo problem: short values have0/5.19/7.16px instead of9/27/27px.
+No-page-overflow/title checks miss it. Two comfortable-only CSS rules wrap field entries
+and bound their width (RCA-074). Initial frontend/browser artifacts are excluded and
+archived outside the repo. Final normal948 tests/88 files passes in146.95s; build uses
+index-DGacmtMX.js/index-DL2roZqZ.css. All8 final engine journeys and8 inspected screenshots
+repeat on that bundle with actual text-range/ancestor-clipping guards. Four independent
+visibility rows confirm full text width in both phone themes and desktop controls.
+
+The frozen JAR byte-matches all615 production classes;48 actual API executions check
+7 specs, independent capacity oracles, full/delta parity, pair refusals and unchanged
+budget controls. Largest full/delta87,098/50,770 bytes. The later layout correction is
+frontend-only; the API/JAR proof remains unchanged. No Maven runs during live phases.
+Browser20 executions include phone manual400/recovery per engine: error-summary focus,
+unmodified rejected draft and preserved prior source/input/step/URL, draft-only Randomize,
+then successful execution/focus/sharing. No page overflow/errors in final journeys.
+
+A first post-restart visibility probe starts before backend readiness, records connection
+refusal then times out; it is excluded. A readiness check precedes the successful repeat;
+no product/timeout/worker changes conceal it. Owned service groups are stopped and ports
+are free. Evidence: `evidence/paired-input/VERIFICATION.md`. This closes only paired lengths
+for these owners, not all Randomize budgets, D6, source/DP or broader release acceptance.

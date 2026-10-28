@@ -1,0 +1,44 @@
+{
+  "generated": "2026-10-28T18:57:08.781337+00:00",
+  "mergedCommit": "03abc797c5cec4f0bee1aaf7dfc1830a1133f416",
+  "scope": "Bounded public API observation; not exact deployed binary, public-browser or all-input proof.",
+  "complexity": {
+    "timeComplexity": "O(R * C)",
+    "timeExplanation": "Visits each of R rows and C columns once, inspecting at most three neighbours per cell.",
+    "timeWhy": "In-place square-ending tabulation",
+    "spaceComplexity": "O(1)",
+    "spaceExplanation": "Rewrites the matrix in place with constant auxiliary space. Input conversion uses O(R * C) storage; the scalar output uses O(1). Animation snapshots are excluded.",
+    "spaceWhy": "In-place matrix update",
+    "auxiliarySpace": "Auxiliary Space: O(1)",
+    "dataStructureSpace": "Input matrix reused; scalar output"
+  },
+  "stepCount": 7,
+  "truncated": false,
+  "resolvedInput": {
+    "grid": [
+      [
+        1,
+        1
+      ],
+      [
+        1,
+        1
+      ]
+    ]
+  },
+  "countSentences": [
+    "(0,0) contributes 1 new all-ones square ending here: one of each side length from 1 through 1. total=1.",
+    "(0,1) contributes 1 new all-ones square ending here: one of each side length from 1 through 1. total=2.",
+    "(1,0) contributes 1 new all-ones square ending here: one of each side length from 1 through 1. total=3.",
+    "(1,1) contributes 2 new all-ones squares ending here: one of each side length from 1 through 2. total=5."
+  ],
+  "lastStep": {
+    "stepNumber": 7,
+    "activeLine": 12,
+    "description": "The rewritten values sum to 5 square submatrices of all 1s.",
+    "variables": {
+      "total": "5"
+    }
+  },
+  "expectedCorrectionVisible": true
+}

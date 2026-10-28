@@ -1,5 +1,9 @@
 package com.dsa.ui.tracer;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -30,30 +34,82 @@ public final class InputSpec {
     private final List<InputField> fields;
     private final int maxSteps;
     private final long maxBytes;
+    private final List<List<String>> equalLengthGroups;
 
-    private InputSpec(List<InputField> fields, int maxSteps, long maxBytes) {
+    private InputSpec(List<InputField> fields, int maxSteps, long maxBytes, List<List<String>> equalLengthGroups) {
         this.fields = List.copyOf(fields);
         this.maxSteps = maxSteps;
         this.maxBytes = maxBytes;
+        this.equalLengthGroups = equalLengthGroups.stream().map(List::copyOf).toList();
     }
 
     public static InputSpec of(InputField... fields) {
-        return new InputSpec(List.of(fields), DEFAULT_MAX_STEPS, DEFAULT_MAX_BYTES);
+        return new InputSpec(List.of(fields), DEFAULT_MAX_STEPS, DEFAULT_MAX_BYTES, List.of());
     }
 
     /** For problems whose traces are inherently large (or dangerously so). */
     public InputSpec withMaxSteps(int maxSteps) {
-        return new InputSpec(fields, maxSteps, maxBytes);
+        return new InputSpec(fields, maxSteps, maxBytes, equalLengthGroups);
     }
 
     /** For problems whose individual steps carry an unusually large payload. */
     public InputSpec withMaxBytes(long maxBytes) {
-        return new InputSpec(fields, maxSteps, maxBytes);
+        return new InputSpec(fields, maxSteps, maxBytes, equalLengthGroups);
+    }
+
+    /** Indexed arrays describing the same items; later members are checked against the first. */
+    public InputSpec withEqualLengthGroup(String... names) {
+        if (names == null || names.length < 2) {
+            throw new IllegalArgumentException("An equal-length group needs at least two INT_ARRAY fields.");
+        }
+        var used = new HashSet<String>();
+        equalLengthGroups.forEach(used::addAll);
+        var group = new ArrayList<String>();
+        int minimum = 0;
+        int maximum = Integer.MAX_VALUE;
+        for (String name : names) {
+            if (name == null || name.isBlank() || !used.add(name)) {
+                throw new IllegalArgumentException("Equal-length groups need disjoint, unique field names.");
+            }
+            if (fields.stream().filter(candidate -> candidate.getName().equals(name)).count() != 1) {
+                throw new IllegalArgumentException("Equal-length fields must be declared exactly once: " + name);
+            }
+            InputField member = field(name);
+            if (member.getType() != FieldType.INT_ARRAY) {
+                throw new IllegalArgumentException("Equal-length groups support INT_ARRAY fields only: " + name);
+            }
+            minimum = Math.max(minimum, lengthBound(member, "minLength", 0));
+            maximum = Math.min(maximum, lengthBound(member, "maxLength", Integer.MAX_VALUE));
+            group.add(name);
+        }
+        if (minimum > maximum) {
+            throw new IllegalArgumentException("Equal-length fields have no common permitted length.");
+        }
+        var groups = new ArrayList<>(equalLengthGroups);
+        groups.add(group);
+        return new InputSpec(fields, maxSteps, maxBytes, groups);
+    }
+
+    private static int lengthBound(InputField member, String key, int fallback) {
+        if (!member.getConstraints().containsKey(key)) return fallback;
+        Object raw = member.getConstraints().get(key);
+        String message = member.getName() + "." + key + " must be a nonnegative 32-bit integer.";
+        if (!(raw instanceof Number)) throw new IllegalArgumentException(message);
+        final int bound;
+        try {
+            bound = new BigDecimal(raw.toString()).intValueExact();
+        } catch (NumberFormatException | ArithmeticException invalid) {
+            throw new IllegalArgumentException(message, invalid);
+        }
+        if (bound < 0) throw new IllegalArgumentException(message);
+        return bound;
     }
 
     public List<InputField> getFields() { return fields; }
     public int getMaxSteps() { return maxSteps; }
     public long getMaxBytes() { return maxBytes; }
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    public List<List<String>> getEqualLengthGroups() { return equalLengthGroups; }
 
     public InputField field(String name) {
         return fields.stream()

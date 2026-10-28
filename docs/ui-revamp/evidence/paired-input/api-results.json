@@ -1,0 +1,912 @@
+{
+  "generated": "2026-10-28T19:09:01.661Z",
+  "realBackend": true,
+  "complete": true,
+  "localPackage": {
+    "packagedAt": "2026-10-28T19:07:34.663Z",
+    "sha256": "d3f2d98ca2e688ecb5db312c902978174d000f5acdfc8d35b6639851101afe22"
+  },
+  "specifications": [
+    {
+      "id": "knapsack-01",
+      "approach": "canonical",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3"
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "recursion",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f"
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "memoization",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109"
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "canonical",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9"
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "recursion",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3"
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "memoization",
+      "equalLengthGroups": [
+        [
+          "weights",
+          "values"
+        ]
+      ],
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b"
+    },
+    {
+      "id": "fractional-knapsack",
+      "approach": "canonical",
+      "equalLengthGroups": [
+        [
+          "values",
+          "weights"
+        ]
+      ],
+      "sourceHash": "bd6a77b45f87113235f13747ae17a8d1e43be80f8097aa0ebb3dad4c4bf7d1e3"
+    }
+  ],
+  "executionRequests": 48,
+  "rows": [
+    {
+      "id": "knapsack-01",
+      "approach": "canonical",
+      "label": "distinct-index-order",
+      "input": {
+        "weights": [
+          3,
+          1,
+          2
+        ],
+        "values": [
+          4,
+          2,
+          7
+        ],
+        "capacity": 4
+      },
+      "expected": 9,
+      "actual": 9,
+      "steps": 16,
+      "fullBytes": 20187,
+      "deltaBytes": 17445,
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "canonical",
+      "label": "reuse-distinction",
+      "input": {
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ],
+        "capacity": 4
+      },
+      "expected": 5,
+      "actual": 5,
+      "steps": 6,
+      "fullBytes": 6225,
+      "deltaBytes": 5263,
+      "sourceHash": "fe8c3c1ba3eaa3dd4ab247066e3ba68742cb3f44aded00232aed7524f90d2ae3",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "recursion",
+      "label": "distinct-index-order",
+      "input": {
+        "weights": [
+          3,
+          1,
+          2
+        ],
+        "values": [
+          4,
+          2,
+          7
+        ],
+        "capacity": 4
+      },
+      "expected": 9,
+      "actual": 9,
+      "steps": 48,
+      "fullBytes": 24078,
+      "deltaBytes": 14658,
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "recursion",
+      "label": "reuse-distinction",
+      "input": {
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ],
+        "capacity": 4
+      },
+      "expected": 5,
+      "actual": 5,
+      "steps": 12,
+      "fullBytes": 6533,
+      "deltaBytes": 4417,
+      "sourceHash": "13d32cdb3c2d865d0df01e4b58c5ebd78ea3864d322b783e3140937574b0e68f",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "memoization",
+      "label": "distinct-index-order",
+      "input": {
+        "weights": [
+          3,
+          1,
+          2
+        ],
+        "values": [
+          4,
+          2,
+          7
+        ],
+        "capacity": 4
+      },
+      "expected": 9,
+      "actual": 9,
+      "steps": 48,
+      "fullBytes": 60315,
+      "deltaBytes": 35208,
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "memoization",
+      "label": "reuse-distinction",
+      "input": {
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ],
+        "capacity": 4
+      },
+      "expected": 5,
+      "actual": 5,
+      "steps": 12,
+      "fullBytes": 11918,
+      "deltaBytes": 7647,
+      "sourceHash": "db868c5dcdf00f2e09d7770ed500b837b54faa1a46b3207fc186582b87ebc109",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "canonical",
+      "label": "distinct-index-order",
+      "input": {
+        "weights": [
+          3,
+          1,
+          2
+        ],
+        "values": [
+          4,
+          2,
+          7
+        ],
+        "capacity": 4
+      },
+      "expected": 14,
+      "actual": 14,
+      "steps": 16,
+      "fullBytes": 21170,
+      "deltaBytes": 18428,
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "canonical",
+      "label": "reuse-distinction",
+      "input": {
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ],
+        "capacity": 4
+      },
+      "expected": 10,
+      "actual": 10,
+      "steps": 6,
+      "fullBytes": 6584,
+      "deltaBytes": 5622,
+      "sourceHash": "2dcfecb5dff312fac24623b60345400fcf52f0236518ca0dc2cbeacf0037aec9",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "recursion",
+      "label": "distinct-index-order",
+      "input": {
+        "weights": [
+          3,
+          1,
+          2
+        ],
+        "values": [
+          4,
+          2,
+          7
+        ],
+        "capacity": 4
+      },
+      "expected": 14,
+      "actual": 14,
+      "steps": 95,
+      "fullBytes": 48697,
+      "deltaBytes": 29114,
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "recursion",
+      "label": "reuse-distinction",
+      "input": {
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ],
+        "capacity": 4
+      },
+      "expected": 10,
+      "actual": 10,
+      "steps": 19,
+      "fullBytes": 9892,
+      "deltaBytes": 6399,
+      "sourceHash": "7a5f3131c07ac00b48761e9a7a71c48287e6e0b6f4d82d39bac8788d761e86c3",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "memoization",
+      "label": "distinct-index-order",
+      "input": {
+        "weights": [
+          3,
+          1,
+          2
+        ],
+        "values": [
+          4,
+          2,
+          7
+        ],
+        "capacity": 4
+      },
+      "expected": 14,
+      "actual": 14,
+      "steps": 69,
+      "fullBytes": 87098,
+      "deltaBytes": 50770,
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "memoization",
+      "label": "reuse-distinction",
+      "input": {
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ],
+        "capacity": 4
+      },
+      "expected": 10,
+      "actual": 10,
+      "steps": 19,
+      "fullBytes": 18240,
+      "deltaBytes": 11298,
+      "sourceHash": "94a73e323ebf62896119f72ec7cf9c0c988e9aac1ea336cf9cbe15c785779d9b",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "fractional-knapsack",
+      "approach": "canonical",
+      "label": "distinct-index-order",
+      "input": {
+        "weights": [
+          3,
+          1,
+          2
+        ],
+        "values": [
+          4,
+          2,
+          7
+        ],
+        "capacity": 4
+      },
+      "expected": 10.333333333333334,
+      "actual": 10.33,
+      "steps": 8,
+      "fullBytes": 4901,
+      "deltaBytes": 3248,
+      "sourceHash": "bd6a77b45f87113235f13747ae17a8d1e43be80f8097aa0ebb3dad4c4bf7d1e3",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    },
+    {
+      "id": "fractional-knapsack",
+      "approach": "canonical",
+      "label": "reuse-distinction",
+      "input": {
+        "weights": [
+          2
+        ],
+        "values": [
+          5
+        ],
+        "capacity": 4
+      },
+      "expected": 5,
+      "actual": 5,
+      "steps": 4,
+      "fullBytes": 2714,
+      "deltaBytes": 2131,
+      "sourceHash": "bd6a77b45f87113235f13747ae17a8d1e43be80f8097aa0ebb3dad4c4bf7d1e3",
+      "declaredPairing": true,
+      "indexOrderPreserved": true,
+      "independentCapacityOracle": true,
+      "fullDeltaDecodedEqual": true
+    }
+  ],
+  "refusals": [
+    {
+      "id": "knapsack-01",
+      "approach": "canonical",
+      "label": "short-values",
+      "input": {
+        "weights": [
+          1,
+          2
+        ],
+        "values": [
+          3
+        ],
+        "capacity": 4
+      },
+      "encoding": "full",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "canonical",
+      "label": "long-values",
+      "input": {
+        "weights": [
+          1
+        ],
+        "values": [
+          3,
+          4
+        ],
+        "capacity": 4
+      },
+      "encoding": "delta",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "canonical",
+      "label": "existing-joint-budget-control",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "capacity": 25
+      },
+      "encoding": "full",
+      "field": "capacity",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "recursion",
+      "label": "short-values",
+      "input": {
+        "weights": [
+          1,
+          2
+        ],
+        "values": [
+          3
+        ],
+        "capacity": 4
+      },
+      "encoding": "full",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "recursion",
+      "label": "long-values",
+      "input": {
+        "weights": [
+          1
+        ],
+        "values": [
+          3,
+          4
+        ],
+        "capacity": 4
+      },
+      "encoding": "delta",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "recursion",
+      "label": "existing-joint-budget-control",
+      "input": {
+        "weights": [
+          17,
+          10,
+          5,
+          5,
+          11,
+          17,
+          12,
+          2
+        ],
+        "values": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "capacity": 30
+      },
+      "encoding": "full",
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "memoization",
+      "label": "short-values",
+      "input": {
+        "weights": [
+          1,
+          2
+        ],
+        "values": [
+          3
+        ],
+        "capacity": 4
+      },
+      "encoding": "full",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "memoization",
+      "label": "long-values",
+      "input": {
+        "weights": [
+          1
+        ],
+        "values": [
+          3,
+          4
+        ],
+        "capacity": 4
+      },
+      "encoding": "delta",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "knapsack-01",
+      "approach": "memoization",
+      "label": "existing-joint-budget-control",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "capacity": 8
+      },
+      "encoding": "full",
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "canonical",
+      "label": "short-values",
+      "input": {
+        "weights": [
+          1,
+          2
+        ],
+        "values": [
+          3
+        ],
+        "capacity": 4
+      },
+      "encoding": "full",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "canonical",
+      "label": "long-values",
+      "input": {
+        "weights": [
+          1
+        ],
+        "values": [
+          3,
+          4
+        ],
+        "capacity": 4
+      },
+      "encoding": "delta",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "canonical",
+      "label": "existing-joint-budget-control",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "capacity": 25
+      },
+      "encoding": "full",
+      "field": "capacity",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "recursion",
+      "label": "short-values",
+      "input": {
+        "weights": [
+          1,
+          2
+        ],
+        "values": [
+          3
+        ],
+        "capacity": 4
+      },
+      "encoding": "full",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "recursion",
+      "label": "long-values",
+      "input": {
+        "weights": [
+          1
+        ],
+        "values": [
+          3,
+          4
+        ],
+        "capacity": 4
+      },
+      "encoding": "delta",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "recursion",
+      "label": "existing-joint-budget-control",
+      "input": {
+        "weights": [
+          3,
+          6,
+          11,
+          13,
+          1,
+          5
+        ],
+        "values": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "capacity": 12
+      },
+      "encoding": "full",
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "memoization",
+      "label": "short-values",
+      "input": {
+        "weights": [
+          1,
+          2
+        ],
+        "values": [
+          3
+        ],
+        "capacity": 4
+      },
+      "encoding": "full",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "memoization",
+      "label": "long-values",
+      "input": {
+        "weights": [
+          1
+        ],
+        "values": [
+          3,
+          4
+        ],
+        "capacity": 4
+      },
+      "encoding": "delta",
+      "field": "values",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "unbounded-knapsack",
+      "approach": "memoization",
+      "label": "existing-joint-budget-control",
+      "input": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "values": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "capacity": 8
+      },
+      "encoding": "full",
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "fractional-knapsack",
+      "approach": "canonical",
+      "label": "short-values",
+      "input": {
+        "weights": [
+          1,
+          2
+        ],
+        "values": [
+          3
+        ],
+        "capacity": 4
+      },
+      "encoding": "full",
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "fractional-knapsack",
+      "approach": "canonical",
+      "label": "long-values",
+      "input": {
+        "weights": [
+          1
+        ],
+        "values": [
+          3,
+          4
+        ],
+        "capacity": 4
+      },
+      "encoding": "delta",
+      "field": "weights",
+      "expected400": true,
+      "noSteps": true
+    }
+  ],
+  "limits": "Seven paired specifications and two small inputs each. Existing joint-budget refusals are controls, not a new budget generator. Not all-input, source compilation, public rollout, device, screen-reader, performance or whole-project certification."
+}

@@ -54,6 +54,20 @@ public final class InputValidator {
         if (!errors.isEmpty()) {
             throw new InputValidationException(errors);
         }
+        for (List<String> group : spec.getEqualLengthGroups()) {
+            String reference = group.get(0);
+            int length = ((List<?>) resolved.get(reference)).size();
+            for (String member : group.subList(1, group.size())) {
+                int actual = ((List<?>) resolved.get(member)).size();
+                if (actual != length) {
+                    errors.put(member, "Needs the same number of entries as " + reference
+                            + " (" + length + "); received " + actual + ".");
+                }
+            }
+        }
+        if (!errors.isEmpty()) {
+            throw new InputValidationException(errors);
+        }
         return new Inputs(resolved);
     }
 

@@ -1943,7 +1943,7 @@ compilation and source/trace agreement are not catalogue-wide metadata certifica
   preconditions at the trust boundary, and make input-generating controls honor them.
   Exact displayed-source execution is a separate contract from a correct animation.
 
-### RCA-064 follow-up — 2026-10-21 Randomize ignores paired-array contracts (open)
+### RCA-064 follow-up — 2026-10-21 Randomize ignores paired-array contracts (partially fixed)
 
 Read-only capacity-family preflight reproduces a pre-existing input UX defect on the
 unchanged frontend and canonical Knapsack spec. Calling randomizeInput with RNG sequence
@@ -1953,15 +1953,33 @@ tracers correctly reject unequal lists; this is a generated-invalid-draft proble
 not a false success or permission to ignore/drop extra values. Joint visualizer budgets
 can likewise be violated by independently generated field sizes.
 
-The generic generator consults only individual InputFields; the shared InputSpec does
-not declare these cross-field relationships in machine-readable form. Do not infer them
+At that preflight the generic generator consulted only individual InputFields; the shared
+InputSpec did not declare these cross-field relationships in machine-readable form. Do not infer them
 from problem IDs, label/help prose, silently repair a user's submitted draft, or shrink
 the canonical input domain to make Randomize pass. A separately scoped fix should expose
 and validate declared map-level relationships/budgets, then have Randomize honor them.
 Prove the generated-input contract RED against the current generator, retain draft-only
 Randomize semantics, and test server acceptance, paired index order, deterministic RNG,
-joint budgets and real editor/run/error recovery. No fix/permanent RED guard is claimed
-here. D6 input-generation work remains open; the capacity batch preserves truthful400s.
+joint budgets and real editor/run/error recovery. No fix/permanent RED guard was claimed
+at that preflight. D6 input-generation work remains open; the capacity batch preserves truthful400s.
+
+The2026-10-28 pairing package declares immutable equalLengthGroups for three canonical
+Knapsack owners and four capacity approaches. Shared validation rejects unequal normalized
+lists before execution; the generator chooses one length from their intersected bounds,
+then each field's own values in order. Manual drafts are never truncated/padded/sorted
+to satisfy the relation. Existing values/weights error paths and per-field domains remain.
+Empty metadata is omitted for other owners; budget copies preserve the relation. Raw
+length metadata is validated exactly before numeric narrowing so Java and JSON cannot
+disagree about malformed bounds. RED:7/10 backend cases,29/68 generator cases, plus an
+independent metadata-bound RED. Removing group handling also breaks the actual editor
+test; the generator is restored byte-for-byte afterward. Final evidence is recorded in
+`evidence/paired-input/VERIFICATION.md`.
+
+This closes only unequal-length generation for those owners. Canonical225-cell, memo80-cell
+and recursion220-call refusals remain unchanged; some paired samples can still exceed
+them. Meeting end/start ordering, platform pairs, graph relations and other catalogue
+constraints are not inferred or certified. Do not claim Randomize always produces a
+runnable input, or D6 completion, from this package.
 
 ### RCA-056 follow-up — Phone Combinations budget/source/result contract
 
@@ -2237,6 +2255,8 @@ that all340 structurally exposed endpoints were individually exercised.
 
 ## RCA-073 — Counting a square-ending state was explained as reusing an earlier count
 
+- **Status:** merged in #237 / `03abc79`; push/PR CI40748751024/40748764960 and post-merge
+  CI40749101387 pass. Bounded public2×2 input returns the corrected sentence/metadata and5.
 - **Discovered:**2026-10-28, following the read-only DP narration audit.
 - **Symptom:** on a 2×2 all-ones matrix, the final cell contributes two squares, but its
   explanation says every smaller one was counted earlier. The 1×1 at this cell is new,
@@ -2258,3 +2278,23 @@ that all340 structurally exposed endpoints were individually exercised.
 - **Scope:** one owner's narration and canonical metadata. No alternative DP forms,
   input limits, dependencies, session behavior or global budgets change. Final gate
   evidence and exclusions are in `evidence/count-squares/VERIFICATION.md`.
+
+## RCA-074 — A phone input echo had labels but no readable values
+
+- **Discovered:**2026-10-28 during actual paired-input screenshot review.
+- **Symptom:** at320px, a complete Knapsack input with capacity1, weights[1], values[1]
+  appears as crowded labels and brackets. Measured capacity value width is0px for9px
+  text; weights/value boxes are5.19/7.16px for27px text. The page itself does not overflow,
+  and DOM/title assertions pass, masking the missing visible numbers in both themes.
+- **Cause:** the comfortable InputSummary keeps all field entries in one shrinking flex
+  line. Each field name refuses to shrink, so values lose their space. Parent clipping
+  and per-value ellipses cannot make that remaining space readable.
+- **Fix:** wrap comfortable field entries and bound each entry to the container width.
+  Long individual values retain their own ellipsis/title and the legacy compact variant
+  stays unchanged. No input data, editor, sharing or trace semantics change.
+- **Guard:** a real shared-input measurement is RED on both phone themes and passes
+  desktop controls. The final browser journey checks actual short text ranges and all
+  clipping ancestors rather than trusting title attributes or page-width checks alone.
+  `evidence/paired-input/` records the before/after measurements and bounded screenshots.
+- **Scope:** readable short input echoes, not full long-value disclosure, every device,
+  native zoom, screen-reader or whole-layout certification.

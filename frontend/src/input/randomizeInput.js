@@ -26,13 +26,13 @@ function randomInt(rng, field) {
   return intBetween(rng, min, max);
 }
 
-function randomIntList(rng, field, { allowNulls = false } = {}) {
+function randomIntList(rng, field, { allowNulls = false, length: sharedLength } = {}) {
   const c = field.constraints || {};
   const minLen = c.minLength ?? (allowNulls ? 1 : 1);
   // Cap the generated length well under maxLength so a "randomize" click stays readable,
   // even when the spec permits up to 40+ elements.
   const maxLen = Math.min(c.maxLength ?? 10, Math.max(minLen, 10));
-  const length = intBetween(rng, minLen, maxLen);
+  const length = sharedLength ?? intBetween(rng, minLen, maxLen);
   const minVal = c.minValue ?? -50;
   const maxVal = c.maxValue ?? 50;
 
@@ -207,11 +207,58 @@ export function randomizeValue(field, rng = Math.random) {
   }
 }
 
+// Validate the whole declaration before drawing anything. The shared length is chosen
+// from actual validation bounds; ten is only a readability preference, never a limit
+// that can override a member's minimum. No generated list is trimmed or padded.
+function equalLengthRanges(inputSpec) {
+  if (!Object.prototype.hasOwnProperty.call(inputSpec ?? {}, 'equalLengthGroups')) return [];
+  const groups = inputSpec.equalLengthGroups;
+  if (!Array.isArray(groups)) throw new RangeError('equalLengthGroups must be an array of groups.');
+  const fields = inputSpec.fields ?? [];
+  const used = new Set();
+  return groups.map(names => {
+    if (!Array.isArray(names) || names.length < 2) {
+      throw new RangeError('Each equalLengthGroups group must name at least two INT_ARRAY fields.');
+    }
+    let min = 0;
+    let max = Infinity;
+    for (const name of names) {
+      const matches = fields.filter(field => field.name === name);
+      if (typeof name !== 'string' || !name.trim() || used.has(name) ||
+          matches.length !== 1 || matches[0].type !== 'INT_ARRAY') {
+        throw new RangeError('equalLengthGroups requires disjoint, unique, known INT_ARRAY field names.');
+      }
+      used.add(name);
+      const constraints = matches[0].constraints ?? {};
+      for (const key of ['minLength', 'maxLength']) {
+        if (Object.prototype.hasOwnProperty.call(constraints, key) &&
+            (!Number.isSafeInteger(constraints[key]) || constraints[key] < 0)) {
+          throw new RangeError('equalLengthGroups length bounds must be nonnegative integers.');
+        }
+      }
+      min = Math.max(min, constraints.minLength ?? 0);
+      max = Math.min(max, constraints.maxLength ?? Infinity);
+    }
+    if (min > max) throw new RangeError('equalLengthGroups length bounds have no common intersection.');
+    // Unspecified minima permit empty arrays on the server. Prefer the existing
+    // nonempty sample style when possible, while allowing an empty-only contract.
+    const sampleMin = Math.min(max, Math.max(1, min));
+    return { names, min: sampleMin, max: Math.min(max, Math.max(10, sampleMin)) };
+  });
+}
+
 /** A full { fieldName: value } map for every field in an InputSpec. */
 export function randomizeInput(inputSpec, rng = Math.random) {
+  const lengths = new Map();
+  for (const group of equalLengthRanges(inputSpec)) {
+    const length = intBetween(rng, group.min, group.max);
+    for (const name of group.names) lengths.set(name, length);
+  }
   const values = {};
   for (const field of inputSpec?.fields || []) {
-    values[field.name] = randomizeValue(field, rng);
+    values[field.name] = lengths.has(field.name)
+      ? randomIntList(rng, field, { length: lengths.get(field.name) })
+      : randomizeValue(field, rng);
   }
   return values;
 }
