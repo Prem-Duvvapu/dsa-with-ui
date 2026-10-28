@@ -51,7 +51,9 @@ public class UnboundedKnapsackTracer implements AlgorithmTracer {
                         .label("Capacity")
                         .range(1, 30)
                         .defaultValue(10)
-                        .build()).withEqualLengthGroup("weights", "values");
+                        .build()).withEqualLengthGroup("weights", "values")
+                .withWorkLimit(new InputWorkLimit(InputWorkLimit.Kind.CAPACITY_TABLE_CELLS,
+                        "weights", "capacity", 225, false, "capacity", "Use a smaller capacity or fewer items."));
     }
 
     /** One item type only: the trace becomes pure repetition, taking the same item as many times as fits. */
@@ -120,7 +122,6 @@ public class UnboundedKnapsackTracer implements AlgorithmTracer {
         int[] val = in.getIntArray("values");
         int n = wt.length;
         int W = in.getInt("capacity");
-        DpTraceSupport.requireTableFits(n + 1, W + 1, "capacity", "Use a smaller capacity or fewer items.");
         int[][] dp = new int[n + 1][W + 1];
 
         for (int i = 1; i <= n; i++) {

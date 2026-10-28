@@ -247,18 +247,119 @@ function equalLengthRanges(inputSpec) {
   });
 }
 
+// Count calls, including base calls, without executing the result algorithm or
+// recursively using the JS call stack. Stop as soon as the declared limit is exceeded.
+function skipTakeCalls(length, capacity, weightAt, reuse, limit) {
+  const stack = [[length, capacity]];
+  let count = 0;
+  while (stack.length) {
+    const [n, remaining] = stack.pop();
+    if (++count > limit) return limit + 1;
+    if (n === 0 || remaining === 0) continue;
+    stack.push([n - 1, remaining]);
+    const weight = weightAt(n - 1);
+    if (weight <= remaining) stack.push([reuse ? n : n - 1, remaining - weight]);
+  }
+  return count;
+}
+
+function workLimitRules(inputSpec, lengthRanges) {
+  if (!Object.prototype.hasOwnProperty.call(inputSpec ?? {}, 'workLimits')) return [];
+  if (!Array.isArray(inputSpec.workLimits)) throw new RangeError('workLimits must be an array.');
+  const fields = inputSpec.fields ?? [];
+  const scalarNames = new Set();
+  const integer = value => Number.isInteger(value) && value >= 0 && value <= 2147483647;
+  const fieldNamed = name => {
+    const matches = fields.filter(field => field.name === name);
+    return typeof name === 'string' && name.trim() && matches.length === 1 ? matches[0] : null;
+  };
+  return inputSpec.workLimits.map(rule => {
+    if (!rule || typeof rule !== 'object' || Array.isArray(rule) ||
+        !['CAPACITY_TABLE_CELLS', 'SKIP_TAKE_CALLS'].includes(rule.kind) ||
+        !integer(rule.limit) || rule.limit === 0 || typeof rule.reuse !== 'boolean' ||
+        (rule.kind === 'CAPACITY_TABLE_CELLS' && rule.reuse) ||
+        typeof rule.message !== 'string' || !rule.message.trim() || !fieldNamed(rule.errorField)) {
+      throw new RangeError('Invalid workLimits declaration.');
+    }
+    const array = fieldNamed(rule.arrayField), scalar = fieldNamed(rule.scalarField);
+    if (array?.type !== 'INT_ARRAY' || scalar?.type !== 'INT' || scalarNames.has(rule.scalarField)) {
+      throw new RangeError('workLimits requires known INT_ARRAY/INT fields and a unique scalar target.');
+    }
+    scalarNames.add(rule.scalarField);
+    const a = array.constraints ?? {}, s = scalar.constraints ?? {};
+    if (![a.minLength, a.maxLength, s.min, s.max].every(integer) ||
+        a.minLength > a.maxLength || s.min > s.max ||
+        (rule.kind === 'SKIP_TAKE_CALLS' &&
+          (!integer(a.minValue) || a.minValue === 0 ||
+            (Object.prototype.hasOwnProperty.call(a, 'maxValue') &&
+              (!integer(a.maxValue) || a.maxValue < a.minValue))))) {
+      throw new RangeError('workLimits requires declared length/capacity bounds and positive recursive weights.');
+    }
+    let range = lengthRanges.find(candidate => candidate.names.includes(array.name));
+    const declaredMin = range
+      ? Math.max(...range.names.map(name => fieldNamed(name).constraints?.minLength ?? 0))
+      : a.minLength;
+    if (rule.kind === 'CAPACITY_TABLE_CELLS') {
+      const feasibleLength = Math.floor(rule.limit / (s.min + 1)) - 1;
+      if (feasibleLength < declaredMin) throw new RangeError('workLimits has no feasible array length.');
+      if (!range) {
+        range = { names: [array.name], min: a.minLength, max: Math.min(a.maxLength, Math.max(10, a.minLength)) };
+        lengthRanges.push(range);
+      }
+      range.max = Math.min(range.max, feasibleLength);
+      range.min = Math.min(range.min, range.max);
+    } else {
+      const heaviest = Math.max(a.minValue, a.maxValue ?? 50);
+      if (skipTakeCalls(declaredMin, s.min, () => heaviest, rule.reuse, rule.limit) > rule.limit) {
+        throw new RangeError('workLimits has no feasible recursive input.');
+      }
+    }
+    return { ...rule, scalar };
+  });
+}
+
+function feasibleCapacity(rule, values) {
+  const weights = values[rule.arrayField];
+  const { min, max } = rule.scalar.constraints;
+  if (rule.kind === 'CAPACITY_TABLE_CELLS') {
+    const ceiling = Math.min(max, Math.floor(rule.limit / (weights.length + 1)) - 1);
+    if (ceiling < min) throw new RangeError('Generated arrays have no feasible work-limited capacity.');
+    return ceiling;
+  }
+  if (!weights.every(weight => Number.isInteger(weight) && weight > 0)) {
+    throw new RangeError('Work-limited recursive weights must be positive integers.');
+  }
+  const fits = capacity => skipTakeCalls(weights.length, capacity,
+    index => weights[index], rule.reuse, rule.limit) <= rule.limit;
+  if (!fits(min)) throw new RangeError('Generated arrays have no feasible work-limited capacity.');
+  let low = min, high = max;
+  while (low < high) {
+    const mid = low + Math.ceil((high - low) / 2);
+    if (fits(mid)) low = mid;
+    else high = mid - 1;
+  }
+  return low;
+}
+
 /** A full { fieldName: value } map for every field in an InputSpec. */
 export function randomizeInput(inputSpec, rng = Math.random) {
+  const lengthRanges = equalLengthRanges(inputSpec);
+  const rules = workLimitRules(inputSpec, lengthRanges);
+  const deferred = new Set(rules.map(rule => rule.scalarField));
   const lengths = new Map();
-  for (const group of equalLengthRanges(inputSpec)) {
+  for (const group of lengthRanges) {
     const length = intBetween(rng, group.min, group.max);
     for (const name of group.names) lengths.set(name, length);
   }
   const values = {};
   for (const field of inputSpec?.fields || []) {
+    if (deferred.has(field.name)) continue;
     values[field.name] = lengths.has(field.name)
       ? randomIntList(rng, field, { length: lengths.get(field.name) })
       : randomizeValue(field, rng);
+  }
+  for (const rule of rules) {
+    values[rule.scalarField] = intBetween(rng, rule.scalar.constraints.min, feasibleCapacity(rule, values));
   }
   return values;
 }

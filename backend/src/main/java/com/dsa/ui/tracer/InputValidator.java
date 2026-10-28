@@ -68,6 +68,17 @@ public final class InputValidator {
         if (!errors.isEmpty()) {
             throw new InputValidationException(errors);
         }
+        for (InputWorkLimit rule : spec.getWorkLimits()) {
+            @SuppressWarnings("unchecked")
+            List<Number> entries = (List<Number>) resolved.get(rule.arrayField());
+            int capacity = (Integer) resolved.get(rule.scalarField());
+            if (rule.measure(entries, capacity) > rule.limit()) {
+                errors.put(rule.errorField(), rule.refusalMessage(entries, capacity));
+            }
+        }
+        if (!errors.isEmpty()) {
+            throw new InputValidationException(errors);
+        }
         return new Inputs(resolved);
     }
 

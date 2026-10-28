@@ -3418,3 +3418,54 @@ refusal then times out; it is excluded. A readiness check precedes the successfu
 no product/timeout/worker changes conceal it. Owned service groups are stopped and ports
 are free. Evidence: `evidence/paired-input/VERIFICATION.md`. This closes only paired lengths
 for these owners, not all Randomize budgets, D6, source/DP or broader release acceptance.
+
+### 2026-10-28 — Pairing merged; Knapsack work limits verified; owner requests stop
+
+Pairing #238 head `cac634e` passes push CI40754015496 and PR CI40754229303; squash merge
+`6548b87` completes at19:27:57Z, post-merge CI40754541772 passes. Bounded public API checks
+confirm the three declared groups and a no-step values400 on unequal Knapsack input.
+`evidence/paired-input/public-oct28.json` records this limited observation, not exact binary
+or public-browser proof. The next package starts on `fix/knapsack-work-limits` from that
+fetched merge, with no stacked implementation.
+
+Both Knapsack DP owners' canonical/memo/recursion specs expose their existing225/80-cell
+or220-call limits. Shared validation follows fields and pairing; duplicate owner guards
+and their private tree counter are removed. Other families' guards remain. A saturated
+iterative counter counts real uncached shape without O(capacity) allocation or emitted
+work. The generator defers capacity until ordered weights exist, then samples directly
+within the table formula or monotone-call feasible interval. Field ranges/defaults,
+accepted data/source and all limits remain unchanged; cheap full-domain recursion stays legal.
+
+Initial backend8 cases has7 failures/1 control; generator112 has37 failures/75 controls.
+Independent review catches missing explicit minLength metadata; its regression fails1/1,
+the narrow alignment is applied, and101 focused cases pass. Final full backend8,351
+cases/0 failures/errors/500 unchanged skips,432 byte-identical regenerated goldens and
+startup cleanup pass. One prior pairing assertion is strengthened to require the same
+invalid table's capacity error at the earlier shared boundary; its run refusal, cheap
+recursion acceptance and other checks remain.
+
+The normal frontend992 tests/89 files passes in137.67s and build passes. Final review
+then catches mislabeled seeded fixtures using225 for memo and80 for single-use recursion.
+They are corrected to actual80/220 policies; corrected112 generator cases pass. Production
+code/build is unchanged by this test-only correction; fresh exact-head CI remains the merge
+gate. This chronology is explicit in the verification record rather than claiming that
+the earlier full run included those corrected fixture values.
+
+All618 compiled production classes byte-match one frozen JAR. No Maven runs during live
+proof. Actual specs and the actual frontend generator drive60 paced API executions:
+generated low/high/seeded maps and accepted/refused boundaries in full/delta, independent
+answer/work oracles, plus18 pre-RNG malformed frontend metadata controls. Largest full /
+delta responses1,580,966/1,545,626 bytes. All accepted samples complete. Six inventory
+specs match the actual API; only their workLimits metadata changes, not source/status.
+
+Chromium/Firefox complete24 journeys/72 executions:6 forms ×320dark/1366light per engine.
+High RNG yields8 weights20/values100 and capacity24canonical/7memo/30recursion. Randomize
+is draft-only; real Run/focus/echo/share/source/step/view continuity and readable capacity
+are verified without overflow/runtime errors. All8 selected viewport screenshots are
+inspected. Actual served index-DnePTFKv.js/index-DL2roZqZ.css and JAR identities agree.
+Owned groups stop; both ports are free. Evidence: `evidence/knapsack-work-limits/VERIFICATION.md`.
+
+During verification the owner says to commit, push and merge current changes, then stop
+making new changes. Complete only this concrete package's verification/publication;
+development pauses afterward. No further feature package is started. DP remains23/56
+verified/merged,33 outside verification; broader source/dependency/human/release work remains.
