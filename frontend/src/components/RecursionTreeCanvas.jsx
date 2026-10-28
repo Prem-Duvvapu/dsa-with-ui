@@ -245,7 +245,7 @@ export default function RecursionTreeCanvas({ problem, currentStep, step, steps,
           {arrayState.map((el, idx) => (
             <div key={idx} className={styles.stripCell}>
               <span className={`${styles.stripValue}${el.state === 'sorted' || el.state === 'visited' ? ` ${styles.stripValueDone}` : ''}`}>
-                {el.value}
+                {el.label ?? el.value}
               </span>
               <div
                 className={[

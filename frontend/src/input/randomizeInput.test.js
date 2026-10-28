@@ -86,6 +86,90 @@ describe('randomizeValue', () => {
     });
   });
 
+  it('STRING uses the declared alphabet and sample cap for phone digits across seeded draws', () => {
+    const spec = { fields: [{ name: 'digits', type: 'STRING', defaultValue: '23', constraints: {
+      minLength: 1, maxLength: 6, alphabet: '23456789', randomMaxLength: 5
+    } }] };
+    const values = new Set();
+    forManySeeds((rng) => {
+      for (let draw = 0; draw < 20; draw++) {
+        const { digits } = randomizeInput(spec, rng);
+        expect(digits).toMatch(/^[2-9]{1,5}$/);
+        values.add(digits);
+      }
+    });
+    expect(values.size).toBeGreaterThan(100);
+    expect([...values].some(value => value.length === 5)).toBe(true);
+  });
+
+  it('STRING includes both declared sample boundaries without exceeding the phone cap', () => {
+    const field = { type: 'STRING', constraints: {
+      minLength: 1, maxLength: 6, alphabet: '23456789', randomMaxLength: 5
+    } };
+    expect(randomizeValue(field, () => 0)).toBe('2');
+    expect(randomizeValue(field, () => 1 - Number.EPSILON)).toBe('99999');
+  });
+
+  it('STRING hints change sampling without changing defaults or the validation maximum', () => {
+    const spec = { fields: [{ name: 'digits', type: 'STRING', defaultValue: '999999', constraints: {
+      minLength: 1, maxLength: 6, alphabet: '23456789', randomMaxLength: 5
+    } }] };
+    expect(defaultInput(spec)).toEqual({ digits: '999999' });
+    expect(randomizeInput(spec, () => 1 - Number.EPSILON)).toEqual({ digits: '99999' });
+    expect(spec.fields[0].constraints.maxLength).toBe(6);
+  });
+
+  it('STRING sample cap stays inside validation bounds and honors the declared minimum', () => {
+    const field = { type: 'STRING', constraints: {
+      minLength: 4, maxLength: 6, alphabet: 'XY', randomMaxLength: 20
+    } };
+    expect(randomizeValue(field, () => 0)).toBe('XXXX');
+    expect(randomizeValue(field, () => 1 - Number.EPSILON)).toBe('YYYYYY');
+    expect(randomizeValue({ type: 'STRING', constraints: {
+      minLength: 12, maxLength: 15, alphabet: 'Q', randomMaxLength: 14
+    } }, () => 1 - Number.EPSILON)).toBe('Q'.repeat(14));
+  });
+
+  it('STRING supports either generation hint independently', () => {
+    expect(randomizeValue({ type: 'STRING', constraints: {
+      minLength: 1, maxLength: 6, alphabet: '01'
+    } }, () => 1 - Number.EPSILON)).toBe('111111');
+    expect(randomizeValue({ type: 'STRING', constraints: {
+      minLength: 1, maxLength: 6, randomMaxLength: 2
+    } }, () => 1 - Number.EPSILON)).toBe('zz');
+  });
+
+  it.each(['', null, 23456789, ['2', '3'], undefined])(
+    'STRING rejects the explicit invalid alphabet %j rather than substituting letters', (alphabet) => {
+      expect(() => randomizeValue({ type: 'STRING', constraints: {
+        minLength: 1, maxLength: 6, alphabet, randomMaxLength: 5
+      } }, seeded(1))).toThrow(/alphabet/i);
+    }
+  );
+
+  it.each([0, -1, 1.5, Infinity, NaN, '5', null, undefined])(
+    'STRING rejects an invalid or impossible sample cap %j', (randomMaxLength) => {
+      expect(() => randomizeValue({ type: 'STRING', constraints: {
+        minLength: 1, maxLength: 6, alphabet: '23456789', randomMaxLength
+      } }, seeded(1))).toThrow(/randomMaxLength/i);
+    }
+  );
+
+  it('STRING accepts an explicitly empty sample only when validation permits it', () => {
+    expect(randomizeValue({ type: 'STRING', constraints: {
+      minLength: 0, maxLength: 6, alphabet: '23456789', randomMaxLength: 0
+    } }, () => 0.5)).toBe('');
+  });
+
+  it('STRING without generation hints keeps its legacy lowercase length policy', () => {
+    expect(randomizeValue({ type: 'STRING', constraints: {} }, () => 0)).toBe('aaa');
+    expect(randomizeValue({ type: 'STRING', constraints: {} }, () => 1 - Number.EPSILON))
+      .toBe('zzzzzzzzzz');
+    expect(randomizeValue({ type: 'STRING', constraints: {
+      minLength: 1, maxLength: 6
+    } }, () => 1 - Number.EPSILON)).toBe('zzzzzz');
+  });
+
   it('declared binary infix strings satisfy an independent recursive grammar and length bounds', () => {
     // Recursive groups/atoms, not the generator's iterative construction.
     function accepts(text) {

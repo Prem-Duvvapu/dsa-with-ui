@@ -1,0 +1,54 @@
+{
+  "generated": "2026-10-28T17:54:14.670169+00:00",
+  "site": "https://dsa-with-ui.vercel.app",
+  "mergedCommit": "00ffc247bdc66858f72cb518c39554ecfa110b35",
+  "sourceSha256": "1dd4987c9e6c87d4f709f87ff68ad96a9925a5bca719572debf46bd16d448b9e",
+  "detailAndExecutionSourceMatchReference": true,
+  "rows": [
+    {
+      "input": {
+        "stations": [
+          1,
+          13,
+          17,
+          23
+        ],
+        "k": 4
+      },
+      "steps": 202,
+      "answer": "4.00000",
+      "truncated": false,
+      "sourceAndComplexityMatch": true,
+      "finalVariables": {
+        "searchDomain": "continuous",
+        "low": "3.999999999996362",
+        "high": "4.000000000007276",
+        "intervalWidth": "1.0913936421275139E-11",
+        "iteration": "40",
+        "answer": "4.00000"
+      }
+    },
+    {
+      "input": {
+        "stations": [
+          0,
+          1000
+        ],
+        "k": 2
+      },
+      "steps": 122,
+      "answer": "333.33333",
+      "truncated": false,
+      "sourceAndComplexityMatch": true,
+      "finalVariables": {
+        "searchDomain": "continuous",
+        "low": "333.33333333303017",
+        "high": "333.33333333393966",
+        "intervalWidth": "9.094947017729282E-10",
+        "iteration": "40",
+        "answer": "333.33333"
+      }
+    }
+  ],
+  "limits": "Two actual public executions plus detail/source check. Not all-input, public-browser, rollback or exact deployed-binary certification."
+}

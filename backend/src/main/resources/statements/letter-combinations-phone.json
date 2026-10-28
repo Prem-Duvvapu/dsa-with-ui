@@ -1,0 +1,25 @@
+{
+  "id": "letter-combinations-phone",
+  "statement": [
+    "Given digits from 2 to 9, return every string formed by choosing one keypad letter for each digit, in input order. The mappings are 2:abc, 3:def, 4:ghi, 5:jkl, 6:mno, 7:pqrs, 8:tuv and 9:wxyz.",
+    "Explore each digit's letters in the listed order. Append one letter, recurse to the next digit, and remove the letter when returning. At the final digit, copy the current path into the result list. Repeated digits remain separate positions.",
+    "The visualizer accepts one to six digits when the complete animation fits its existing budgets. Some longer branching sequences are refused before execution; this is a visualizer limit, not a restriction on the general algorithm. The recursion diagram displays a bounded prefix of large trees, while the completed result list remains available in Analysis."
+  ],
+  "examples": [
+    {
+      "input": { "digits": "23" },
+      "output": "[ad, ae, af, bd, be, bf, cd, ce, cf]",
+      "answerVariable": "results",
+      "explanation": "Each of a, b and c is paired with d, e and f, giving nine distinct strings in traversal order."
+    },
+    {
+      "input": { "digits": "2" },
+      "output": "[a, b, c]",
+      "answerVariable": "results",
+      "explanation": "One position chooses one of the three letters on digit 2."
+    }
+  ],
+  "sources": [
+    { "label": "LeetCode", "url": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/" }
+  ]
+}

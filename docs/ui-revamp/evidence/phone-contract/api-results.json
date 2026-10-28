@@ -1,0 +1,207 @@
+{
+  "generated": "2026-10-28T17:52:02.437Z",
+  "realBackend": true,
+  "complete": true,
+  "problemId": "letter-combinations-phone",
+  "localPackage": {
+    "packagedAt": "2026-10-28T17:49:19.197Z",
+    "sha256": "ebf6275e683e36f7824e78f1d64dd518676130013a824456b3a0bccc51649d5a"
+  },
+  "stats": {
+    "catalogued": 431,
+    "traced": 431,
+    "untraced": 0,
+    "duplicateIds": {},
+    "orphanedTracerIds": []
+  },
+  "complexity": {
+    "timeComplexity": "O(N * P)",
+    "timeExplanation": "N is the number of digits and P is the product of their letter counts. Copying P strings of length N costs O(N * P); the worst case is O(N * 4^N).",
+    "timeWhy": "Copy each completed keypad word",
+    "spaceComplexity": "O(N)",
+    "spaceExplanation": "O(N) auxiliary space for the shared mutable path and recursive stack, plus O(N * P) returned output storage. Animation snapshots are excluded.",
+    "spaceWhy": "Path and call stack",
+    "auxiliarySpace": "Auxiliary Space: O(N)",
+    "dataStructureSpace": "O(N * P) output characters"
+  },
+  "sourceHash": "50f22432218c8fc8ae67c2a569d6d742da8161240798b10462cb8f2e4083fa38",
+  "scenarios": 5,
+  "executionRequests": 18,
+  "rows": [
+    {
+      "label": "default",
+      "input": {
+        "digits": "23"
+      },
+      "combinations": 9,
+      "steps": 22,
+      "fullBytes": 12420,
+      "deltaBytes": 8097,
+      "sourceHash": "50f22432218c8fc8ae67c2a569d6d742da8161240798b10462cb8f2e4083fa38",
+      "resultsHash": "9fd940db6b0ad7fcdac52174978ccf47aa05e92908e2ee53f6cb858530ad2a39",
+      "fullDeltaDecodedEqual": true,
+      "independentCartesianOracle": true,
+      "everyCaptureAndChoiceChecked": true,
+      "charsAndFramesDepthChecked": true,
+      "completeUnderOriginalBudgets": true,
+      "identityAndMetadataMatch": true
+    },
+    {
+      "label": "alternate",
+      "input": {
+        "digits": "2"
+      },
+      "combinations": 3,
+      "steps": 7,
+      "fullBytes": 4740,
+      "deltaBytes": 3576,
+      "sourceHash": "50f22432218c8fc8ae67c2a569d6d742da8161240798b10462cb8f2e4083fa38",
+      "resultsHash": "bafce9ad67673c6fd54c122caf72f0d33ec0bfdf75003a89ea26353d16c2e65e",
+      "fullDeltaDecodedEqual": true,
+      "independentCartesianOracle": true,
+      "everyCaptureAndChoiceChecked": true,
+      "charsAndFramesDepthChecked": true,
+      "completeUnderOriginalBudgets": true,
+      "identityAndMetadataMatch": true
+    },
+    {
+      "label": "maximum-five",
+      "input": {
+        "digits": "77777"
+      },
+      "combinations": 1024,
+      "steps": 2389,
+      "fullBytes": 1701841,
+      "deltaBytes": 1055339,
+      "sourceHash": "50f22432218c8fc8ae67c2a569d6d742da8161240798b10462cb8f2e4083fa38",
+      "resultsHash": "a664241fc2f366dabdb1b94758c9771b33418a1cc956a89838e887a774e511f0",
+      "fullDeltaDecodedEqual": true,
+      "independentCartesianOracle": true,
+      "everyCaptureAndChoiceChecked": true,
+      "charsAndFramesDepthChecked": true,
+      "completeUnderOriginalBudgets": true,
+      "identityAndMetadataMatch": true
+    },
+    {
+      "label": "safe-six",
+      "input": {
+        "digits": "222222"
+      },
+      "combinations": 729,
+      "steps": 1822,
+      "fullBytes": 1408680,
+      "deltaBytes": 893544,
+      "sourceHash": "50f22432218c8fc8ae67c2a569d6d742da8161240798b10462cb8f2e4083fa38",
+      "resultsHash": "e0dbf4ba7cb1dc9edee854e2129997ebd894254cd2096212aa2d24892536fe13",
+      "fullDeltaDecodedEqual": true,
+      "independentCartesianOracle": true,
+      "everyCaptureAndChoiceChecked": true,
+      "charsAndFramesDepthChecked": true,
+      "completeUnderOriginalBudgets": true,
+      "identityAndMetadataMatch": true
+    },
+    {
+      "label": "safe-six-late-four",
+      "input": {
+        "digits": "222227"
+      },
+      "combinations": 972,
+      "steps": 2308,
+      "fullBytes": 1797480,
+      "deltaBytes": 1134281,
+      "sourceHash": "50f22432218c8fc8ae67c2a569d6d742da8161240798b10462cb8f2e4083fa38",
+      "resultsHash": "d973086d3ae560e228b4514146f42f2e688628f6d65334d231d03cf1376bafae",
+      "fullDeltaDecodedEqual": true,
+      "independentCartesianOracle": true,
+      "everyCaptureAndChoiceChecked": true,
+      "charsAndFramesDepthChecked": true,
+      "completeUnderOriginalBudgets": true,
+      "identityAndMetadataMatch": true
+    }
+  ],
+  "refusals": [
+    {
+      "label": "over-budget-first",
+      "input": {
+        "digits": "722222"
+      },
+      "field": "digits",
+      "encoding": "full",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "label": "over-budget-first",
+      "input": {
+        "digits": "722222"
+      },
+      "field": "digits",
+      "encoding": "delta",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "label": "over-budget-maximum",
+      "input": {
+        "digits": "777777"
+      },
+      "field": "digits",
+      "encoding": "full",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "label": "over-budget-maximum",
+      "input": {
+        "digits": "777777"
+      },
+      "field": "digits",
+      "encoding": "delta",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "label": "invalid-digit",
+      "input": {
+        "digits": "201"
+      },
+      "field": "digits",
+      "encoding": "full",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "label": "invalid-digit",
+      "input": {
+        "digits": "201"
+      },
+      "field": "digits",
+      "encoding": "delta",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "label": "unknown-field",
+      "input": {
+        "digits": "23",
+        "unexpected": 1
+      },
+      "field": "unexpected",
+      "encoding": "full",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "label": "unknown-field",
+      "input": {
+        "digits": "23",
+        "unexpected": 1
+      },
+      "field": "unexpected",
+      "encoding": "delta",
+      "expected400": true,
+      "noSteps": true
+    }
+  ],
+  "limits": "Bounded authored cases. Source compilation/parity is a separate backend-test gate. Not all-input, public rollout, device, screen-reader, performance or whole-project certification."
+}

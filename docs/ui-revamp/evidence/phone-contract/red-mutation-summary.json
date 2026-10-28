@@ -1,0 +1,52 @@
+{
+  "base": "00ffc247bdc66858f72cb518c39554ecfa110b35",
+  "backend": [
+    {
+      "file": "backend-red.log",
+      "sha256": "56f6936cfecff6017e3d8caacc72c8b7e7b8f17d96e6e55cb3c22462dc13ff59",
+      "tests": 10,
+      "failures": 8,
+      "errors": 1,
+      "failureSummaries": [
+        "[ERROR]   PhoneCombinationsContractTest.actualListsAndCaptureOrderMatchTheCartesianProductForDefaultsAlternateAndSeededInputs:58->checkTrace:311 expected: <[ad, ae, af, bd, be, bf, cd, ce, cf]> but was: <null>",
+        "[ERROR]   PhoneCombinationsContractTest.bothHttpEncodingsReturnCompleteActualListsForAcceptedInputsAndFieldErrorsForUnsafeShapes:161 expected: <[aaaaaa, aaaaab, aaaaac, aaaaba, aaaabb, aaaabc, aaaaca, aaaacb, aaaacc, aaabaa, aaabab, aaabac, aaabba, aaabbb, aaabbc, aaabca, aaabcb, aaabcc, aaacaa, aaacab, aaacac, aaacba, aaacbb, aaacbc, aaacca, aaaccb, aaaccc, aabaaa, aabaab, aabaac, aababa, aababb, aababc, aabaca, aab",
+        "[ERROR]   PhoneCombinationsContractTest.branchShapesAndSafeSixDigitInputsRemainCompleteWithoutSilentlyReducingTheLengthCap:66->checkTrace:311 expected: <[ad, ae, af, bd, be, bf, cd, ce, cf]> but was: <null>",
+        "[ERROR]   PhoneCombinationsContractTest.exactDisplayedJavaCompilesWithOnlyJdkImportsAndReturnsActualListsBeyondTheVisualizationBudget:86 /tmp/junit17882332701800018713/phone-source9701599710975773500/Solution.java:14: error: cannot find symbol",
+        "[ERROR]   PhoneCombinationsContractTest.largestAcceptedShapesStayWithinExistingCapsAndFullAndDeltaDecodeIdentically:191 expected: <[ppppp, ppppq, ppppr, pppps, pppqp, pppqq, pppqr, pppqs, ppprp, ppprq, ppprr, ppprs, pppsp, pppsq, pppsr, pppss, ppqpp, ppqpq, ppqpr, ppqps, ppqqp, ppqqq, ppqqr, ppqqs, ppqrp, ppqrq, ppqrr, ppqrs, ppqsp, ppqsq, ppqsr, ppqss, pprpp, pprpq, pprpr, pprps, pprqp, pprqq, pprqr, pprqs, pprrp, p",
+        "[ERROR]   PhoneCombinationsContractTest.originalFieldDomainAndNewGeneratorHintsAreServedWithoutShrinkingTheLegalLength:133 expected: <{alphabet=23456789, minLength=1, pattern=[2-9]+, randomMaxLength=5, maxLength=6, patternHint=Digits 2-9 only.}> but was: <{maxLength=6, patternHint=Digits 2-9 only., minLength=1, pattern=[2-9]+}>",
+        "[ERROR]   PhoneCombinationsContractTest.ownerComplexityAndSourceAgreeAcrossCatalogDetailApproachesDefaultAndCustomExecution:201 expected: <O(N * P)> but was: <O(2^N)>",
+        "[ERROR]   PhoneCombinationsContractTest.sixDigitPreflightUsesTheActualTreeCostAndRefusesBeforeEmittingAnyStep:118 722222 ==> Unexpected exception type thrown, expected: <com.dsa.ui.tracer.InputValidationException> but was: <com.dsa.ui.tracer.TraceBudgetExceededException>",
+        "[ERROR]   PhoneCombinationsContractTest.authoredAndServedExamplesGiveActualListsInsteadOfOnlyTheirCounts:234 \u00bb NoSuchElement No value present"
+      ]
+    },
+    {
+      "file": "mutation-source-cost.log",
+      "sha256": "822bd57459bdd14d5eeaea49670e68336f1f5fc243399a92b6c4b439d51ce0d4",
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "failureSummaries": [
+        "[ERROR]   PhoneCombinationsContractTest.exactDisplayedJavaCompilesWithOnlyJdkImportsAndReturnsActualListsBeyondTheVisualizationBudget:98 23 ==> expected: <[ad, ae, af, bd, be, bf, cd, ce, cf]> but was: <[]>",
+        "[ERROR]   PhoneTraceBudgetTest.shapeCostExactlyMatchesRealEmitterAccountingAcrossEveryShortBranchPattern:15->assertMeasuredCost:45 2 ==> expected: <2946> but was: <2766>"
+      ]
+    }
+  ],
+  "frontend": {
+    "generatorRed": {
+      "failed": 19,
+      "passedControls": 18
+    },
+    "characterLabelsRed": {
+      "failed": 2,
+      "passedControls": 1
+    },
+    "focusedFinalPassed": 51
+  },
+  "contrastRed": {
+    "actualChromiumDarkRatio": 1.2173324260492469,
+    "completedTextLightTokenRatio": 3.7681843718971657,
+    "finalQuantitativeGuardCoversBothStatesAndThreeThemeDeclarations": true
+  },
+  "mutationsRestoredBeforeFinalSuites": true,
+  "limits": "Observed historical runs; full logs retained in the local validation directory. Not a new mutation run."
+}
