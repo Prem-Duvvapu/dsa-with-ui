@@ -1,15 +1,20 @@
 # DP solution approaches: implementation and UX plan
 
-Status: **23/56 candidates locally verified:21 merged and2 coin candidates ready for
-publication;33 candidates remain outside the verified set. Capacity-family #232 merged
+Status as of2026-10-28: **23/56 candidates verified and merged;33 remain outside the
+verified set (32 planned,1 requiring a different formulation). Minimum Coins and Coin
+Change II merged in #233 / `49a6bf6` on2026-10-24 at03:15:02Z. Exact head `75d196d`
+passed push CI40057369898 and PR CI40057376910; post-merge CI40057529626 passed at
+`49a6bf6`. The inventory has23 verified rows; publication does not certify every input,
+public browser, device or release gate. Capacity-family #232 merged
 as `f1937b6` on2026-10-23 after exact-head push
 CI39999783662 and PR CI40000017490; post-merge CI40000372715 passes. A bounded public
 API check passes18 default full/delta executions with all9 source hashes matching the
 verified reference; this does not establish all-input/public-browser acceptance.
 Minimum Coins and Coin Change II pass full suites, exact-source/oracle/mutation checks,
 104 API executions and134 browser journeys on a new branch from #232. Their2 rows are
-now UI-verified. The owner explicitly approved publication on2026-10-24; exact-head CI
-gates merge. GitHub records the final PR/checks/merge outcome; no deployment is claimed.
+now UI-verified and merged as recorded above. Their local validation paragraphs below
+are historical pre-publication evidence, not a pending publication request. No new
+public API/browser or exact deployed-binary verification is claimed for the coin batch.
 Falling Path/Triangle merged as #230 / `e35dd35`
 on2026-10-18 after approved publication and green exact-head push/PR checks; post-merge
 CI39127039341 passed. No whole-DP or broader release completion is claimed.

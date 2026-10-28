@@ -146,6 +146,15 @@ flowchart LR
 | `Interval` | 3 | IntervalCanvas | spans on a timeline |
 | `Trie` | 2 | TrieCanvas | the prefix tree |
 
+`SearchSpace` snapshots carry a complete low/high pair. The optional variable
+`searchDomain="continuous"` declares a real-number interval: its width is high−low,
+and it is never interpreted as array indices. An absent marker preserves the existing
+discrete inclusive count high−low+1; an explicit unknown marker renders an unsupported
+state. Bounds and domain are adopted together from one snapshot, including through
+commentary. A complete snapshot without `mid` clears the prior probe. Gas Stations also
+emits raw `intervalWidth`, preserving the actual bracket separately from its rounded
+five-decimal answer. Neither an intermediate candidate nor truncation implies completion.
+
 Several canvases **derive** what a tracer did not emit, rather than demanding tracer changes:
 `RecursionTreeCanvas` rebuilds the tree from call stacks, `HeapCanvas` derives whichever of
 the tree or array is missing, `WindowCanvas` finds the window from cell states. Derivation is

@@ -1982,21 +1982,37 @@ statement; adding only KEYPAD would not complete those seams.
 ## RCA-065 — Fixed real-number search iterations overstated answer precision
 
 - **Discovered:** 2026-10-14, read-only next-source preflight.
-- **Status:** Open; not part of the infix implementation.
+- **Status:** Fixed locally on `fix/gas-station-precision`; publication pending.
 - **Symptom:** Gas Stations accepts `stations=[0,1000], k=2` and reports `333.34351`.
   The exact optimum is1000/3; reported two decimals333.34 differ from333.33, contradicting
   the authored statement's “exact to two decimal places” claim. `[0,999], k=2` reports
   333.01016 instead of333; `[0,100,500,1000], k=5` reports133.34656 instead of400/3.
 - **Root cause:**15 halvings leave a possible interval width of1000/2^15 (~0.03052)
   at the declared coordinate cap. Printing five decimals is not five-decimal accuracy.
-- **Required fix:** choose a justified precision/iteration contract, correct source and
-  runtime together, and align displayed precision, examples and continuous-search bounds.
-  Check maximum-input trace budgets instead of raising them blindly. Do not certify
-  this candidate merely by filling the missing `max` helper.
-- **Evidence / guard still needed:** independent enumeration of rational candidates
-  `gap/pieces`, with exact integer feasibility, reproduces4 mismatches among9 sampled
-  legal cases. `infix-contracts/next-candidate-preflight.json` records results. No permanent
-  regression has been written yet; the next implementation must establish RED first.
+- **Fix:** runtime and complete standalone Java use40 halvings: initial width<=1000
+  leaves width<1e-9. Five-decimal output uses Locale.ROOT. Every event carries its actual
+  paired raw bounds, width and explicit continuous domain; decisions/done clear the probe.
+  The canvas uses high−low for continuous width, keeps legacy discrete inclusive counts,
+  and refuses unknown domains. Statement examples and owner metadata now agree with the
+  actual source/runtime. Existing input limits and global trace budgets are unchanged.
+- **RED-first guards:** GasStationsPrecisionTest initially fails8/10, with input/budget
+  controls passing. Exact rational feasibility independently checks280 small/seeded traced
+  cases and51,011 compiled-source entries (including repeats;50,000 cover every permitted
+  two-station gap/K pair). The new continuous canvas suite initially fails13/15, then all
+  41 new/existing canvas cases pass. Mutating source return to high+1, removing the raw high
+  snapshot, and reverting runtime to15 halvings each causes the intended guard to fail;
+  all mutations are restored. Core resource ownership now checks actual registered source
+  identity, retaining reverse coverage through CompleteSourceTracer's final resource path.
+- **Verification:** full backend8,311 cases/0 failures/errors/500 unchanged skips; normal
+  frontend891 tests/85 files; build and launcher cleanup pass. Real full/delta API checks
+  agree on eight authored scenarios plus four refusals. Both maximum-sized examples finish
+  in642 steps; the largest measured full response is664,165 bytes under the existing2MB
+  budget. Evidence and bounded browser results live in `docs/ui-revamp/evidence/gas-precision/`.
+  This closes this owner's known precision/source defect, not catalogue-wide algorithm,
+  accessibility, real-device, performance or release acceptance.
+- **Lesson:** formatting precision is not an accuracy guarantee. Prove the bracket and
+  rounding against an independent oracle, then verify the served source, metadata, budgets
+  and canvas semantics together.
 
 ## RCA-066 — Out-of-range numbers became different successful inputs
 

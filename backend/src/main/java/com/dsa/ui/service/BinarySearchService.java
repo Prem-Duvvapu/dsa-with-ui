@@ -358,6 +358,18 @@ public class BinarySearchService implements ProblemProvider {
                 // the range shrinking and labels the array as what the check reads.
                 cat.endsWith("2D Arrays") ? "Matrix" : "SearchSpace"
             ));
+            if (id.equals("minimize-max-distance-gas-station")) {
+                // Author the real owner before catalogue/approach snapshots are created.
+                problems.get(id).setComplexity(new ComplexityDetail(
+                        "O(N * I)",
+                        "N station positions give N-1 gaps. I=40 halvings each scan every gap; initial width G<=1000 leaves width below 1e-9. In general I is proportional to log2(G/epsilon).",
+                        "40 feasibility scans",
+                        "O(N)",
+                        "Store N-1 gap values plus constant search pointers; the returned scalar uses O(1) output space. Input and animation snapshots are excluded.",
+                        "Gap array",
+                        "Auxiliary Space: O(N) for the gap array and O(1) pointers.",
+                        "N-1 gap values; O(1) scalar result"));
+            }
         }
     }
 
