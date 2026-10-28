@@ -311,6 +311,24 @@ describe('design tokens', () => {
     }
   });
 
+  it('keeps unfilled recursive path text readable in both themes', () => {
+    const module = readFileSync(join(SRC, 'components/RecursionTreeCanvas.module.css'), 'utf8');
+    const themes = {
+      dark: resolveTheme(baseBlock()),
+      light: resolveTheme({ ...baseBlock(), ...rawTokens(lightStampedBlock()) }),
+      lightOS: resolveTheme({ ...baseBlock(), ...rawTokens(lightMediaBlock()) })
+    };
+    for (const state of ['stripValue', 'stripValueDone']) {
+      const declaration = module.match(new RegExp(`\\.${state}\\s*\\{([^}]+)\\}`))?.[1];
+      const ink = declaration?.match(/color:\s*var\((--[\w-]+)\)/)?.[1];
+      expect(ink).toBeTruthy();
+      for (const [name, tokens] of Object.entries(themes)) {
+        expect(contrast(tokens[ink], tokens['--surface-panel']), `${name} ${state} ink on its unfilled panel`)
+          .toBeGreaterThanOrEqual(4.5);
+      }
+    }
+  });
+
   it('redefines the same Bench tokens in both light declarations', () => {
     // Light is declared twice on purpose — once for a light OS with no explicit
     // choice, once for an explicit choice. If they drift, the toggle and the OS

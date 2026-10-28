@@ -4,18 +4,20 @@ Prepared: 2026-10-05. Inspected main: `dad2640`, merged PR #191.
 
 ### Current execution checkpoint — 2026-10-28
 
-Main is `3399213` (#234); no PR is open. DP has23/56 verified and merged candidates,
+Main is `00ffc24` (#235); no PR is open at this checkpoint. DP has23/56 verified and merged candidates,
 with33 outside verification (32 planned,1 requiring a different formulation). The coin
 batch #233 merged as `49a6bf6`, with successful exact-head and post-merge CI. These
 counts are checked against GitHub and the current56-row inventory; dated counts below
 are historical. The current [tracker](REVAMP_TRACKER.md) and
 [DP plan](DP_SOLUTION_APPROACHES_PLAN.md) record the reconciled publication state.
 
-The next coherent package is the locally verified Gas Stations correction. Its
+The Gas Stations correction merged as #235 / `00ffc24` with passing exact-head and
+post-merge CI. Its
 [verification record](evidence/gas-precision/VERIFICATION.md) identifies full suites,
-source/oracle/mutation checks, actual API/browser evidence and limits. It is not on
-main; the owner has now authorized publication. Land it with exact-head CI before starting the
-next implementation. Subsequent correctness work includes Phone Combinations, Count
+source/oracle/mutation checks, actual API/browser evidence and limits. That local
+verification snapshot predates its now-completed publication. The next
+implementation, Phone Combinations, is in final validation on a separate branch from
+the merge. Subsequent correctness work includes Count
 Squares narration and random-input joint contracts, followed by the remaining source,
 metadata, dependency and DP work in separately verified packages. Do not treat source
 compilation,431 traced owners or a green package as whole-catalogue certification.

@@ -333,7 +333,8 @@ public final class StepEmitter {
      * <p>It leans high. Under-estimating would let a trace past the ceiling it exists to
      * enforce, which is the failure that matters.
      */
-    static long estimateBytes(ExecutionStep s) {
+    // Shared with owner preflights; this is emitter accounting, not measured wire bytes.
+    public static long estimateBytes(ExecutionStep s) {
         // Envelope: field names, numbers, dsType, and the `"field":null` Jackson writes for
         // every structure this step does not carry. Measured, not guessed — an ExecutionStep
         // with an empty description, no variables and no structure serialises to 239 bytes.

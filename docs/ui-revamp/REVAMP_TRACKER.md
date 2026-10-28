@@ -15,11 +15,12 @@ test counts remain measurements of their named packages, not today's complete su
 | --- | --- | --- |
 | DP D5 rollout |23/56 verified and merged;33 outside verification | Inventory:23 verified,32 planned,1 requiring a different formulation. Coin #233 merged as `49a6bf6` on2026-10-24; exact-head push/PR CI40057369898/40057376910 and post-merge CI40057529626 passed |
 | Analytics | Merged/deployed #234 / `3399213` | Production script returns JavaScript and navigation works. Automated browsers are deliberately excluded; normal visitor collection and authenticated dashboard totals remain unconfirmed |
-| Gas Stations correctness | Verified locally; publication approved | `fix/gas-station-precision`;8,311 backend cases/500 unchanged skips,891 frontend tests/build,20 API requests and40 browser scenarios. [Verification](evidence/gas-precision/VERIFICATION.md). CI-gated publication in progress |
-| Next correctness work | Pending | Phone Combinations budget/source/results/metadata, Count Squares narration, random-input joint contracts, remaining source/metadata and dependency repairs |
+| Gas Stations correctness | Verified and merged #235 / `00ffc24` |8,311 backend cases/500 unchanged skips,891 frontend tests/build,20 API requests and40 browser scenarios. Exact-head push/PR and post-merge CI40735187978 pass. Bounded public source/default/custom checks pass. [Verification](evidence/gas-precision/VERIFICATION.md) |
+| Phone Combinations correctness | Verified locally; publication in progress |8,324 backend cases/500 unchanged skips,915 frontend tests/build,18 API requests,26 final journeys,4 visual rows and4 contrast rows. [Verification](evidence/phone-contract/VERIFICATION.md). Paired-array Randomize remains separate |
+| Next correctness work | Pending | Count Squares narration, random-input joint contracts, remaining source/metadata and dependency repairs |
 | DP D6/D7 and P7/P8/P9 | Open | Human/device/screen-reader/learner, broad performance, acceptance and release/rollback gates are not closed by the above packages |
 
-GitHub main was rechecked at `33992133f3d4daa44f555fa46b761dc943559c99`, with no open PR.
+GitHub main was rechecked at `00ffc247bdc66858f72cb518c39554ecfa110b35`, with no open PR.
 The owner's subsequent "then continue", after the explicit publication gate was explained,
 authorizes publishing the verified Gas package and continuing with Phone. Exact-head CI
 must pass before merge; GitHub records the final publication outcome.

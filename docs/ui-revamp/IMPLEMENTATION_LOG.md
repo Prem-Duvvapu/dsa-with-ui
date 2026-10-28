@@ -3281,3 +3281,56 @@ says "then continue". Publish the concrete verified Gas package: commit/push, op
 require passing exact-head CI, merge without bypasses, then continue Phone implementation
 from merged main. Main is freshly rechecked at `3399213`, no PR is open, the tested source
 is unchanged and the ports are free. Earlier approval-pending entries are historical.
+
+### 2026-10-28 — Gas merged; Phone implementation begins
+
+Gas #235 head `3d8a9b7` passes push CI40734687948, PR CI40734704437 and Vercel; squash
+merge `00ffc24` completes at17:23:00Z and post-merge CI40735187978 passes. A bounded public
+check matches the verified source hash and corrected complexity, then checks actual default
+202-step answer4.00000 and custom stations[0,1000]/K2,122-step answer333.33333, both complete
+with raw forty-halving brackets. This is not all-input/public-browser/rollback or exact
+deployed-binary proof. Earlier local/approval-pending Gas entries are historical snapshots.
+
+Continue Phone from fetched merged main on `fix/phone-combinations-contract`. Independent
+Cartesian/source/API guards start RED (8 failures,1 missing-statement error,1 control).
+Generator hints start19/37 RED; character labels start2/3 RED. Typed fields/defaults,
+length1–6 and global budgets remain; owner-specific shape preflight follows the existing
+capacity-tracer pattern before its first event, using shared emitter byte accounting.
+No broad input-validation framework is introduced. A mutable source/runtime path makes
+O(N) auxiliary space accurate; final real results supplement the existing count. Source
+keeps letterCombinations as its public entry, with dedicated isolated compilation and
+registry-wide ownership guards; the existing solve-entry source suite stays unchanged.
+Focused61 backend and51 frontend cases pass. Both source-return and omitted-stack-cost
+mutations fail, are restored, and the final complete suites/API/browser gates are in progress.
+
+### 2026-10-28 — Phone final verification and visual contrast correction
+
+Final backend8,324 cases/0 failures/errors/500 unchanged skips,432 regenerated golden
+cases and launcher cleanup pass. The only golden change is Phone:22 existing events,
+descriptions, call stacks and path/capture data retained; complete source/line anchors
+and actual final results added. All615 compiled production classes and exact source
+resource match the packaged JAR; no Maven runs during the actual API/browser phases.
+API18 requests pass; maximum-five returns1,024 combinations/2,389 steps, safe six-digit
+cases finish, and bad shapes/digits/unknown fields return400. Largest full1,797,480 bytes,
+delta1,134,281, under the unchanged2MB cap. Live stats431/431 without duplicates/orphans.
+
+A preliminary frontend run fails one existing sharing-restoration wait; no hook/test/
+assertion/timeout changes are made. The isolated7 sharing cases and a complete normal
+suite subsequently pass. Another process terminates143 before totals; it is confirmed
+terminal with no surviving worktree test process before the unchanged command restarts.
+Cause is unproven. Persistent runners complete final commands. Two initial browser
+probes expect Playground-only controls from Analysis; those attempts are excluded and
+the corrected complete phase passes. No product change was needed for those probe errors.
+
+Visual review then finds real path text at1.22:1 dark contrast. An added quantitative
+guard also catches completed text at3.77:1 light. Both strip text styles use normal theme
+ink, preserving state bars and global role colours (RCA-072). Earlier complete bundle
+artifacts are archived outside the repo. Final normal frontend915 tests/86 files passes
+in93.43s and build passes; final26 engine journeys,4 contrast and4 visual rows repeat on
+the corrected bundle. All8 screenshots are inspected. Measured actual text contrast is
+12.81:1 dark/18.20:1 light in both engines. Every final manifest matches the frozen JAR,
+source and actual served index-BfO8d-Ww.js/index-D4rQyCzb.css assets.
+
+See evidence/phone-contract/VERIFICATION.md for commands, exclusions and scope. DP stays
+23/56 verified/merged,33 outside verification; this is one owner correctness/source/UX
+package, not broad device/screen-reader/learner/performance/public/release acceptance.

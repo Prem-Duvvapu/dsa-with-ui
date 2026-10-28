@@ -6,8 +6,10 @@
  *
  * Constraint keys mirror the backend's InputValidator exactly (min/max, minLength/
  * maxLength, minValue/maxValue, requireSorted, requireDistinct, maxVertices/maxEdges,
- * maxRows/maxCols, weighted) — this file has no independent opinion about what a field
- * is allowed to hold. The server is still authoritative; this only has to produce values
+ * maxRows/maxCols, weighted). STRING generation also reads declared alphabet and
+ * randomMaxLength hints; the latter limits samples without changing validation bounds.
+ * This file has no independent opinion about what a field is allowed to hold.
+ * The server is still authoritative; this only has to produce values
  * that clear the client-side hints, since the point of "randomize" is a plausible input,
  * not an adversarial one.
  */
@@ -68,10 +70,25 @@ function randomIntList(rng, field, { allowNulls = false } = {}) {
 function randomString(rng, field) {
   const c = field.constraints || {};
   if (c.requireInfixExpression === true) return randomInfix(rng, c);
+  const hasAlphabet = Object.prototype.hasOwnProperty.call(c, 'alphabet');
+  const hasSampleCap = Object.prototype.hasOwnProperty.call(c, 'randomMaxLength');
+  if (hasAlphabet && (typeof c.alphabet !== 'string' || c.alphabet.length === 0)) {
+    throw new RangeError('STRING alphabet must be a nonempty string.');
+  }
+  if (hasSampleCap && (!Number.isSafeInteger(c.randomMaxLength) || c.randomMaxLength < 0)) {
+    throw new RangeError('STRING randomMaxLength must be a nonnegative integer.');
+  }
   const minLen = c.minLength ?? 3;
-  const maxLen = Math.min(c.maxLength ?? 10, Math.max(minLen, 10));
+  const sampleCap = hasSampleCap ? c.randomMaxLength : Math.max(minLen, 10);
+  const maxLen = Math.min(c.maxLength ?? (hasSampleCap ? sampleCap : 10), sampleCap);
+  if ((hasAlphabet || hasSampleCap) && (
+    !Number.isSafeInteger(minLen) || minLen < 0 ||
+    !Number.isSafeInteger(maxLen) || maxLen < minLen
+  )) {
+    throw new RangeError('STRING randomMaxLength and validation bounds must permit a valid length.');
+  }
   const length = intBetween(rng, minLen, maxLen);
-  const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+  const alphabet = hasAlphabet ? c.alphabet : 'abcdefghijklmnopqrstuvwxyz';
   let out = '';
   for (let i = 0; i < length; i++) {
     out += alphabet[Math.floor(rng() * alphabet.length)];

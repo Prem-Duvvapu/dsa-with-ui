@@ -1,10 +1,10 @@
 {
   "anchors" : {
-    "capture" : 9,
-    "choose" : 14,
-    "done" : 4
+    "capture" : 16,
+    "choose" : 21,
+    "done" : 12
   },
-  "code" : "public List<String> letterCombinations(String digits) {\n    List<String> res = new ArrayList<>();\n    backtrack(0, digits, \"\", res);\n    return res;\n}\n\nprivate void backtrack(int idx, String digits, String cur, List<String> res) {\n    if (idx == digits.length()) {\n        res.add(cur);\n        return;\n    }\n    String letters = KEYPAD[digits.charAt(idx) - '0'];\n    for (char c : letters.toCharArray()) {\n        backtrack(idx + 1, digits, cur + c, res);\n    }\n}",
+  "code" : "import java.util.ArrayList;\nimport java.util.List;\n\npublic class Solution {\n    private static final String[] KEYPAD = {\n        \"\", \"\", \"abc\", \"def\", \"ghi\", \"jkl\", \"mno\", \"pqrs\", \"tuv\", \"wxyz\"\n    };\n    public List<String> letterCombinations(String digits) {\n        List<String> results = new ArrayList<>();\n        if (digits == null || digits.isEmpty()) return results;\n        backtrack(0, digits, new StringBuilder(), results);\n        return results;\n    }\n    private void backtrack(int index, String digits, StringBuilder path, List<String> results) {\n        if (index == digits.length()) {\n            results.add(path.toString());\n            return;\n        }\n        String letters = KEYPAD[digits.charAt(index) - '0'];\n        for (char letter : letters.toCharArray()) {\n            path.append(letter);\n            backtrack(index + 1, digits, path, results);\n            path.deleteCharAt(path.length() - 1);\n        }\n    }\n}\n",
   "problemId" : "letter-combinations-phone",
   "resolvedInput" : {
     "digits" : "23"
@@ -12,7 +12,7 @@
   "stepCount" : 22,
   "steps" : [ {
     "stepNumber" : 1,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '2' maps to letter 'a' - append it to \"\" and recurse into digit index 1.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)" ],
@@ -35,7 +35,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 2,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '3' maps to letter 'd' - append it to \"a\" and recurse into digit index 2.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
@@ -63,7 +63,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 3,
-    "activeLine" : 9,
+    "activeLine" : 16,
     "description" : "Every digit mapped - capture \"ad\" as combination #1.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
@@ -91,7 +91,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 4,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '3' maps to letter 'e' - append it to \"a\" and recurse into digit index 2.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
@@ -119,7 +119,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 5,
-    "activeLine" : 9,
+    "activeLine" : 16,
     "description" : "Every digit mapped - capture \"ae\" as combination #2.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
@@ -147,7 +147,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 6,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '3' maps to letter 'f' - append it to \"a\" and recurse into digit index 2.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
@@ -175,7 +175,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 7,
-    "activeLine" : 9,
+    "activeLine" : 16,
     "description" : "Every digit mapped - capture \"af\" as combination #3.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
@@ -203,7 +203,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 8,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '2' maps to letter 'b' - append it to \"\" and recurse into digit index 1.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)" ],
@@ -226,7 +226,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 9,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '3' maps to letter 'd' - append it to \"b\" and recurse into digit index 2.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
@@ -254,7 +254,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 10,
-    "activeLine" : 9,
+    "activeLine" : 16,
     "description" : "Every digit mapped - capture \"bd\" as combination #4.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
@@ -282,7 +282,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 11,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '3' maps to letter 'e' - append it to \"b\" and recurse into digit index 2.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
@@ -310,7 +310,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 12,
-    "activeLine" : 9,
+    "activeLine" : 16,
     "description" : "Every digit mapped - capture \"be\" as combination #5.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
@@ -338,7 +338,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 13,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '3' maps to letter 'f' - append it to \"b\" and recurse into digit index 2.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
@@ -366,7 +366,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 14,
-    "activeLine" : 9,
+    "activeLine" : 16,
     "description" : "Every digit mapped - capture \"bf\" as combination #6.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
@@ -394,7 +394,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 15,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '2' maps to letter 'c' - append it to \"\" and recurse into digit index 1.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)" ],
@@ -417,7 +417,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 16,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '3' maps to letter 'd' - append it to \"c\" and recurse into digit index 2.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
@@ -445,7 +445,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 17,
-    "activeLine" : 9,
+    "activeLine" : 16,
     "description" : "Every digit mapped - capture \"cd\" as combination #7.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
@@ -473,7 +473,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 18,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '3' maps to letter 'e' - append it to \"c\" and recurse into digit index 2.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
@@ -501,7 +501,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 19,
-    "activeLine" : 9,
+    "activeLine" : 16,
     "description" : "Every digit mapped - capture \"ce\" as combination #8.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
@@ -529,7 +529,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 20,
-    "activeLine" : 14,
+    "activeLine" : 21,
     "description" : "Digit '3' maps to letter 'f' - append it to \"c\" and recurse into digit index 2.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)" ],
@@ -557,7 +557,7 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 21,
-    "activeLine" : 9,
+    "activeLine" : 16,
     "description" : "Every digit mapped - capture \"cf\" as combination #9.",
     "queueOrStackState" : null,
     "callStack" : [ "backtrack(idx=0)", "backtrack(idx=1)", "backtrack(idx=2)" ],
@@ -585,14 +585,15 @@
     "treeNodes" : null
   }, {
     "stepNumber" : 22,
-    "activeLine" : 4,
+    "activeLine" : 12,
     "description" : "Every digit's letters tried at every depth. 9 combinations generated.",
     "queueOrStackState" : null,
     "callStack" : [ ],
     "nodeStates" : { },
     "activeEdges" : [ ],
     "variables" : {
-      "combinations" : "9"
+      "combinations" : "9",
+      "results" : "[ad, ae, af, bd, be, bf, cd, ce, cf]"
     },
     "dsType" : "RecursionTree",
     "gridState" : null,

@@ -179,6 +179,13 @@ public class RecursionBacktrackingService implements ProblemProvider {
                 null, null, createSubsetsTreeNodes(), null, null, null, null,
                 new ComplexityDetail("O(2^N)", "Time Complexity: Exponential backtracking tree exploration.", "Recursion", "O(N)", "Space Complexity: Recursion stack depth.", "Call Stack", "Auxiliary Space: O(N)", "Memory"), bulkDsType(id).wireValue()
             ));
+            if (id.equals("letter-combinations-phone")) {
+                problems.get(id).setComplexity(new ComplexityDetail(
+                        "O(N * P)", "N is the number of digits and P is the product of their letter counts. Copying P strings of length N costs O(N * P); the worst case is O(N * 4^N).",
+                        "Copy each completed keypad word", "O(N)",
+                        "O(N) auxiliary space for the shared mutable path and recursive stack, plus O(N * P) returned output storage. Animation snapshots are excluded.",
+                        "Path and call stack", "Auxiliary Space: O(N)", "O(N * P) output characters"));
+            }
         }
     }
 

@@ -1963,7 +1963,7 @@ Randomize semantics, and test server acceptance, paired index order, determinist
 joint budgets and real editor/run/error recovery. No fix/permanent RED guard is claimed
 here. D6 input-generation work remains open; the capacity batch preserves truthful400s.
 
-### RCA-056 follow-up — 2026-10-14 Phone Combinations input budget (open)
+### RCA-056 follow-up — Phone Combinations budget/source/result contract
 
 Read-only candidate preflight finds another accepted input that cannot finish:
 `letter-combinations-phone`, `digits="777777"`, passes the declared1–6/[2-9] spec but
@@ -1973,16 +1973,38 @@ a falsely completed answer. `77777` finishes1,024 captures in2,389 steps; `22222
 finishes729 in1,822. A fix must measure worst-case branching, not blindly raise global
 budgets. Preserve rejected drafts/prior runs and disclose any visualizer-specific bound.
 
-No fix or permanent regression test has been implemented. Before closing this follow-up,
-prove largest accepted inputs finish with independent Cartesian-product results, refuse
-one over the declared budget with a field error, and exercise the actual UI. The owner
-still needs complete source, an honest enumeration-result contract and an authored
-statement; adding only KEYPAD would not complete those seams.
+Implementation on `fix/phone-combinations-contract` (2026-10-28) preserves the1–6 domain
+and measures full shape cost before the first event, using the emitter's unchanged byte
+accounting. Order matters:222227 completes972 results, but722222 has more intermediate
+events and is refused before emitting. This does not impose a blanket five-digit input cap
+or increase global budgets. A shared mutable path supports honest O(N) auxiliary space;
+time is O(N*P), with O(N*P) returned output storage. Complete standalone Java includes
+KEYPAD, actual completed results accompany the count, and authored examples agree.
+
+Generic generator hints alphabet/randomMaxLength yield valid2–9 samples of up to five
+digits without changing validation limits. The recursion strip now displays the supplied
+character label, retaining genuine numeric values when no label exists. Analysis retains
+the complete result list behind its existing full-value disclosure; the220-node diagram
+limit remains explicitly distinct from execution completion.
+
+RED guards: backend8 failures/1 missing-statement error/1 control; generator19 failures,
+18 controls; character rendering2 failures/1 numeric control. Source-return and omitted
+call-stack-cost mutations fail2/2 and are restored. Final backend8,324 cases/500 unchanged
+skips, frontend915 tests/86 files, build,432 regenerated goldens and launcher cleanup pass.
+Only the Phone golden changes: source/line anchors and actual final results; all22 default
+events, path/capture data and descriptions are preserved. Real API18 requests pass, with
+largest measured full1,797,480 bytes under the unchanged2MB budget. Final26 Chromium/
+Firefox journeys,4 visual rows/eight inspected screenshots and4 computed-contrast rows
+pass against one frozen JAR/source/assets set. Publication is in progress; no broad
+project, real-device, screen-reader, performance or public rollout closure is claimed.
 
 ## RCA-065 — Fixed real-number search iterations overstated answer precision
 
 - **Discovered:** 2026-10-14, read-only next-source preflight.
-- **Status:** Fixed locally on `fix/gas-station-precision`; publication pending.
+- **Status:** Fixed and merged in #235 / `00ffc24` on2026-10-28; exact-head push/PR
+  CI40734687948/40734704437 and post-merge CI40735187978 pass. Bounded public source,
+  default202-step answer4.00000 and custom122-step answer333.33333 checks pass; this is
+  not all-input/public-browser or exact deployed-binary certification.
 - **Symptom:** Gas Stations accepts `stations=[0,1000], k=2` and reports `333.34351`.
   The exact optimum is1000/3; reported two decimals333.34 differ from333.33, contradicting
   the authored statement's “exact to two decimal places” claim. `[0,999], k=2` reports
@@ -2169,8 +2191,10 @@ that all340 structurally exposed endpoints were individually exercised.
 ## RCA-071 — SPA fallback masked an unavailable analytics script as successful HTML
 
 - **Discovered:**2026-10-27, during the owner's Vercel Analytics setup request.
-- **Status:** Reserved-route repair in progress on `fix/vercel-analytics-routing`;
-  production script/collection and dashboard activation remain unverified.
+- **Status:** Reserved-route repair merged/deployed in #234 / `3399213`.
+  Production script delivery is verified. Normal visitor collection and authenticated
+  dashboard totals remain unconfirmed; the served SDK deliberately excludes automated
+  browsers, so headless visits do not establish collection or live-payload redaction.
 - **Symptom:** the existing Analytics React component requests
   `/_vercel/insights/script.js`, which returns HTTP200 with `text/html` and the app's
   index page. A real Chromium visit throws `Unexpected token '<'`. The Speed Insights
@@ -2188,3 +2212,22 @@ that all340 structurally exposed endpoints were individually exercised.
   confirmation. Evidence: `docs/ui-revamp/evidence/analytics/before.json`.
 - **Lesson:** SPA fallbacks must not impersonate platform endpoints; SDK installation,
   feature activation, script delivery and event collection are distinct requirements.
+
+## RCA-072 — Recursive path labels used transport numbers and fill-only ink
+
+- **Discovered:**2026-10-28 during Phone Combinations source/results work and visual review.
+- **Symptom:** the path for a captured word displays97 instead of the supplied label a.
+  Plain path text uses --role-ink, intended for coloured fills: actual Chromium/dark
+  measurement is1.22:1 (rgb20 on rgb38). The completed-value override also measures
+  only3.77:1 on the light unfilled panel in the quantitative token guard.
+- **Cause:** RecursionTreeCanvas reads numeric transport values instead of optional
+  character labels, and reuses fill-label/edge colours for unfilled small text.
+- **Fix:** render label??value, retaining real numeric zero/negative values. Both strip
+  text rules use --text-primary; state bars and global role colours are unchanged.
+- **Guards:** two meaningful label REDs with a numeric control; base and completed-text
+  contrast REDs; static4.5:1 guard across dark and both light declarations. Final actual
+  Chromium/Firefox measurements are12.81:1 dark and18.20:1 light. Full915 frontend tests/
+  build and all final Phone browser/visual phases repeat against the corrected bundle;
+  earlier artifacts are excluded, not counted as final evidence.
+- **Scope:** path-strip text, not a whole-canvas palette or screen-reader certification.
+  `evidence/phone-contract/` records source, artifact, screenshot and contrast identities.

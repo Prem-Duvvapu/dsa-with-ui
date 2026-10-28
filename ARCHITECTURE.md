@@ -85,6 +85,19 @@ in the `InputSpec`, and global trace budgets (normally5000 steps and2,000,000 JS
 New exponential approaches have separately measured input caps; canonical caps are not
 permission to advertise unrestricted recursion. Unknown approach/encoding requests are400.
 
+Some bounded owners also refuse an input whose complete animation cannot fit, before
+their first event. Phone Combinations counts the branching shape and uses the same
+`StepEmitter.estimateBytes` accounting as real snapshots; it does not generate results
+to decide whether to run. The emitter's mandatory step/byte caps remain the backstop.
+Field types, patterns and declared domains still cross `InputValidator` first.
+
+For STRING Randomize, optional `alphabet` and `randomMaxLength` constraints are generator
+hints. They do not change the accepted pattern or maximum input length. Phone samples
+use digits2–9 and at most five positions; manual six-digit inputs remain supported when
+their complete trace fits. Generic editor code consumes those hints without problem-id
+routing. Recursive path strips honor an emitted character label and otherwise retain
+the genuine numeric value.
+
 ## The tracer contract
 
 The load-bearing idea. A tracer cannot be written without declaring how it is to be checked.
