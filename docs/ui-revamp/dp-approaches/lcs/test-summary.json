@@ -1,0 +1,68 @@
+{
+  "backend": {
+    "cases": 8398,
+    "failures": 0,
+    "errors": 0,
+    "skips": 500,
+    "focused": 40
+  },
+  "preservation": {
+    "goldenCases": 432,
+    "fixtureFiles": 431,
+    "allFixtureBytesUnchanged": true,
+    "changedFixtures": [],
+    "canonicalFilesUnchanged": true,
+    "canonicalFileHashes": {
+      "backend/src/main/java/com/dsa/ui/tracer/impl/CoreRemainingDpTracers.java": "bdfeca516168ec5b400229a0198462a6c2ed4e091f5759a94ab4979b49fd3929",
+      "backend/src/main/resources/solutions/dp/longest-common-subsequence.java": "f108615147513c5ed8f2d7cb062c5fdc5de3183d01c8c7d6187c3ead27c0b760",
+      "docs/ui-revamp/dp-approaches/inventory.json": "ae7d484656b0a2f922780c86980afcdd4190f2d7459c0fecc87256747ebce5c2"
+    }
+  },
+  "frontend": {
+    "cases": 1056,
+    "files": 93,
+    "failures": 0,
+    "skips": 0,
+    "focused": 63,
+    "status": {
+      "started": "2026-11-19T18:55:09.848044+00:00",
+      "pid": 246146,
+      "testCommand": [
+        "npx",
+        "vitest",
+        "run"
+      ],
+      "buildCommand": [
+        "npx",
+        "vite",
+        "build"
+      ],
+      "sourceHashesBefore": {
+        "frontend/src/hooks/useProblemSession.js": "bc78da8e3b3129e9054b9a90f2725fac09d8095e656fe6bf870a1dcb38ad8ff7",
+        "frontend/src/hooks/useProblemSession.stringApproaches.test.jsx": "adc8eab6292ea85b6c6f71d7724eb48a1d7c09befa16c96c9cbb51a767b04abe",
+        "frontend/src/workspace/ApproachSelector.strings.test.jsx": "d795636956bfd8d8d3766f63ca683691c6429b0b822832c76d0f5856c7866f29"
+      },
+      "testExit": 0,
+      "buildExit": 0,
+      "sourceHashesAfter": {
+        "frontend/src/hooks/useProblemSession.js": "bc78da8e3b3129e9054b9a90f2725fac09d8095e656fe6bf870a1dcb38ad8ff7",
+        "frontend/src/hooks/useProblemSession.stringApproaches.test.jsx": "adc8eab6292ea85b6c6f71d7724eb48a1d7c09befa16c96c9cbb51a767b04abe",
+        "frontend/src/workspace/ApproachSelector.strings.test.jsx": "d795636956bfd8d8d3766f63ca683691c6429b0b822832c76d0f5856c7866f29"
+      },
+      "sourceUnchanged": true,
+      "finished": "2026-11-19T18:57:37.459047+00:00"
+    }
+  },
+  "evidenceContractTests": 86,
+  "scope": "Package checks; broader project acceptance remains open.",
+  "inventoryContract": {
+    "cases": 1,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "finished": "2026-11-19T19:21:40Z"
+  },
+  "browserJourneys": 54,
+  "apiRequests": 64,
+  "inspectedScreenshots": 12
+}

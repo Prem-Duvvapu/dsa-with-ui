@@ -71,6 +71,9 @@ jobs:
         working-directory: frontend
         run: npx vitest run
 
+      - name: Check DP evidence contracts
+        run: node --test docs/ui-revamp/dp-approaches/*.test.cjs
+
       # The build catches what the tests cannot: an unresolved import or a syntax error
       # in a component no test happens to render.
       - name: Production build

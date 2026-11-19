@@ -3518,3 +3518,49 @@ lock changes. LCS's next-candidate preflight is ready; no new candidate status a
 DP remains23/56 verified/merged with33 outside verification. Broader D6/D7, source,
 dependency, device/human, performance and release gates remain open. Exact-head CI governs
 publication of this concrete package.
+
+### Subsequent LCS work — implementation and local verification complete
+
+The coin/subset package merges as #240 / `f3490b5` at17:38:20Z, with exact-head push/PR
+CI44578839668/44578898212 and post-merge CI44579335922 passing. A bounded public check
+confirms all10 declared work limits at the production input-spec endpoints; this is
+metadata evidence, not an exact public binary or browser certificate.
+
+The next branch `feat/lcs-solution-approaches` starts from that merged main. It adds real
+prefix recursion and nullable memoization, complete standalone Java sources and teaching,
+preserving the canonical implementation/source/defaults/alternate/12-character domain.
+Recursion uses at most4 characters per string; memo at most8. Registration is RED1/1
+before the new provider. Focused40 backend cases pass, including independent subsequence
+answers/source invocation, empty public-source bases, exact139-call/488-event recursion,
+129-call/453-event memoization, cached zero, unknown states and bounded full/delta payloads.
+
+Two-string defaults also expose an existing restoration seam: omitted fields were seeded
+from the previous approach. New hook contracts are RED6/9 before the requested-definition
+lookup fix, with raw server submissions and late user edits preserved. That initial59
+focused/full1,052-test pass and index-DeOY8670 build are preliminary. Independent review
+then finds real-summary/late-definition and bare-reset variants. Permanent actual-summary
+fixtures fail4/14 before the additional candidate-spec guard and ownership reset. Final63
+focused and normal full1,056/93 frontend cases/build pass; no standard worker, timeout or
+assertion is weakened. Final assets are index-BW7qIb8i.js/index-DL2roZqZ.css.
+
+Full clean backend8,398 cases/500 unchanged skips,432 golden checks and all431 fixture
+bytes pass/preserve; the canonical source and owner stay exact. Package/startup pass,
+and all1,106 class/resource files match frozen JAR63bde9ec. Independent Java-source review
+checks739 cases per alternative with a separate oracle. All86 Node evidence-contract
+tests pass and now run in CI; missing/mismatched navigation, recovery, sampler, source
+or artifact evidence blocks LCS inventory verification.
+
+Actual standard/sampler API64 requests pass, maximum full1,465,450 bytes. All54 browser
+journeys pass across Chromium/Firefox, both themes, phone/desktop, native200% zoom,
+maximum trees, comparison, input recovery, independent navigation and legacy coin-family
+compatibility. The latter's historical evidence stays byte-identical. Navigation covers
+12 contexts/56 real upstream requests, including unchanged held actual responses and
+late metadata/edits. All12 selected screenshots are inspected; big trees/source lines
+scroll locally, without claiming every node fits simultaneously on a phone. Final audit
+captures exit0 with matching sources/assets/package timing. Owned services are stopped.
+
+The refreshed inventory changes only LCS's alternative specs/safety/status:24/56 locally
+verified,31 planned and1 different formulation. A post-refresh backend inventory check
+passes. Publication requires exact-head CI; the previous23 candidates are merged at this
+checkpoint. See dp-approaches/lcs/VERIFICATION.md. The active project goal remains
+unfinished; broader source, human/device, performance and release gates stay open.

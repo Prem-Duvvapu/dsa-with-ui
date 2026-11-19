@@ -54,6 +54,10 @@ async function edit(page,id,input) {
   const open = page.getByRole('button',{name:'Edit input',exact:true});
   if(await open.isVisible()) await open.click();
   const authored=cases.find(c=>c.id===id);
+  if(authored?.stringLabels){
+    for(const [key,label] of Object.entries(authored.stringLabels))await page.getByLabel(label,{exact:true}).fill(String(input[key]));
+    return;
+  }
   if(authored?.arrayLabels){
     for(const [key,label] of Object.entries(authored.arrayLabels)){
       const group=page.getByRole('group',{name:label,exact:true}),values=input[key];
@@ -100,6 +104,10 @@ async function edit(page,id,input) {
 }
 async function assertDraft(page,id,input) {
   const authored=cases.find(c=>c.id===id);
+  if(authored?.stringLabels){
+    for(const [key,label] of Object.entries(authored.stringLabels))assert.equal(await page.getByLabel(label,{exact:true}).inputValue(),String(input[key]));
+    return;
+  }
   if(authored?.arrayLabels){
     for(const [key,label] of Object.entries(authored.arrayLabels))
       assert.deepEqual(await page.getByRole('group',{name:label,exact:true}).getByRole('spinbutton',{name:/^Position \d+ value$/}).evaluateAll(es=>es.map(e=>Number(e.value))),input[key]);
