@@ -58,7 +58,12 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
       defaultTreeNodes: null, defaultList: null, defaultTrie: null
     } : {})
   } : baseProblem), [baseProblem, problemId, run, shownApproach, defaultApproachId]);
-  const inputSpec = baseProblem?.id === problemId ? selectedApproach?.inputSpec ?? baseProblem?.inputSpec : null;
+  // A catalogue summary describes only the canonical executable. An explicit
+  // candidate must wait for its own definition rather than borrow those defaults.
+  const selectedSpec = selectedApproach?.id === candidateId ? selectedApproach.inputSpec : null;
+  const inputSpec = baseProblem?.id === problemId
+    ? selectedSpec ?? ((candidateId === null || candidateId === defaultApproachId) ? baseProblem?.inputSpec : null)
+    : null;
   const draft = useInputDraft(problemId, inputSpec);
   const { replace: replaceDraft, defaults: draftDefaults, preserve: preserveDraft } = draft;
 
@@ -79,8 +84,6 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
   }, []);
   const problemIdRef = useRef(problemId);
   problemIdRef.current = problemId;
-  const inputSpecRef = useRef(inputSpec);
-  inputSpecRef.current = inputSpec;
   const runRef = useRef(run);
   runRef.current = run;
   const defaultsRef = useRef(draftDefaults);
@@ -130,13 +133,21 @@ export default function useProblemSession({ problemId, catalogEntry, initialSpee
       // Seed the editor with what the link asks for BEFORE it runs, so the fields say what
       // is running and anything the learner types meanwhile is theirs - nothing the
       // response does later writes over the draft.
-      const spec = inputSpecRef.current;
+      // A restored link names its executable before the candidate state commits.
+      // Fill omitted fields from that definition, never the previous candidate's
+      // defaults. If metadata has not arrived, keep the raw partial draft: the
+      // selected spec will supply only its omitted fields when it becomes known.
+      const requestedId = view.approachId ?? defaultApproachRef.current;
+      const spec = approaches.find(option => option.id === requestedId)?.inputSpec
+        ?? (view.approachId === null && baseProblem?.id === problemId ? baseProblem.inputSpec : null);
       if (view.input.status === 'valid') {
         replaceDraft(spec?.fields?.length
           ? { ...defaultInput(spec), ...specFieldsOf(view.input.value, spec) }
           : view.input.value);
-      } else if (resetToDefault && spec?.fields?.length) {
-        replaceDraft(defaultInput(spec));
+      } else if (resetToDefault) {
+        // Reset ownership now, even before the requested definition arrives. Later
+        // defaults fill this empty map; edits made meanwhile remain owned.
+        replaceDraft(spec?.fields?.length ? defaultInput(spec) : {});
       }
     }
   });

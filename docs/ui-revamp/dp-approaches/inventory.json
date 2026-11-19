@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23T18:59:23.580Z",
+  "generated": "2026-11-19T19:19:18.719Z",
   "stats": {
     "catalogued": 431,
     "traced": 431,
@@ -2154,8 +2154,80 @@
         "auxiliarySpace": "Auxiliary Space: O(M * N)",
         "dataStructureSpace": "Memory"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 4,
+                  "minLength": 1,
+                  "pattern": "[a-z]+",
+                  "patternHint": "Lowercase letters a-z only."
+                },
+                "defaultValue": "abcd",
+                "help": "Up to four lowercase letters keeps every recursive call visible. Select Memoization for longer inputs.",
+                "label": "First string",
+                "name": "first",
+                "type": "STRING"
+              },
+              {
+                "constraints": {
+                  "maxLength": 4,
+                  "minLength": 1,
+                  "pattern": "[a-z]+",
+                  "patternHint": "Lowercase letters a-z only."
+                },
+                "defaultValue": "acd",
+                "help": "Up to four lowercase letters keeps every recursive call visible. Select Memoization for longer inputs.",
+                "label": "Second string",
+                "name": "second",
+                "type": "STRING"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "minLength": 1,
+                  "pattern": "[a-z]+",
+                  "patternHint": "Lowercase letters a-z only."
+                },
+                "defaultValue": "abcde",
+                "help": "Prefix memo states fit strings of up to eight lowercase letters; unvisited cells stay unknown.",
+                "label": "First string",
+                "name": "first",
+                "type": "STRING"
+              },
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "minLength": 1,
+                  "pattern": "[a-z]+",
+                  "patternHint": "Lowercase letters a-z only."
+                },
+                "defaultValue": "ace",
+                "help": "Prefix memo states fit strings of up to eight lowercase letters; unvisited cells stay unknown.",
+                "label": "Second string",
+                "name": "second",
+                "type": "STRING"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "longest-common-substring",

@@ -139,6 +139,50 @@ test('coin evidence cannot certify absent roots or clipped state coordinates',()
     docs['firefox-maximum-zoom1.json'].rows[0].allStateCoordinatesVisible=false;assert.equal(check(),false);
   }
 });
+function lcsDocuments(){
+  const docs=documents();
+  for(const doc of Object.values(docs))for(const row of doc.rows){row.problemId='longest-common-subsequence';row.rootCount=1;row.allStateCoordinatesVisible=true;}
+  Object.assign(docs,require('./lcs-evidence-fixture.cjs')());
+  return docs;
+}
+test('LCS evidence cannot certify missing roots or clipped prefix coordinates',()=>{
+  const docs=lcsDocuments();
+  const check=()=>verified(docs,'lcs','longest-common-subsequence');
+  assert.equal(check(),true);
+  docs['firefox-maximum-zoom1.json'].rows[0].rootCount=0;assert.equal(check(),false);
+  docs['firefox-maximum-zoom1.json'].rows[0].rootCount=1;
+  docs['firefox-maximum-zoom1.json'].rows[0].allStateCoordinatesVisible=false;assert.equal(check(),false);
+});
+test('LCS needs its own default restoration and long-string recovery evidence',()=>{
+  const docs=lcsDocuments(),check=()=>verified(docs,'lcs','longest-common-subsequence');
+  assert.equal(check(),true);
+  docs['input-recovery-results.json'].rows[0].bareRecursiveLinkUsesOwnDefaults=false;assert.equal(check(),false);
+  docs['input-recovery-results.json'].rows[0].bareRecursiveLinkUsesOwnDefaults=true;
+  docs['input-recovery-results.json'].rows[0].longRetainedStringWarning=false;assert.equal(check(),false);
+  docs['input-recovery-results.json'].rows[0].longRetainedStringWarning=true;
+  delete docs['input-recovery-results.json'];assert.equal(check(),false);
+});
+test('LCS cannot advance without matching actual sampler/source/artifact proof',()=>{
+  for(const mutate of [
+    docs=>{delete docs['sampler-api-results.json'];},
+    docs=>{docs['sampler-api-results.json'].rows[0].fullDeltaEqual=false;},
+    docs=>{docs['sampler-api-results.json'].rows[0].expected=999;},
+    docs=>{docs['input-recovery-results.json'].rows[0].sourceHash='f'.repeat(64);},
+    docs=>{docs['input-recovery-results.json'].localPackage={...docs['input-recovery-results.json'].localPackage,sha256:'f'.repeat(64)};}
+  ]){const docs=lcsDocuments();mutate(docs);assert.equal(verified(docs,'lcs','longest-common-subsequence'),false);}
+});
+test('LCS cannot advance without its independently reviewed late-summary navigation proof',()=>{
+  for(const mutate of [
+    docs=>{delete docs['navigation-results.json'];},
+    docs=>{docs['navigation-results.json'].rows[0].coldCanonicalSummaryCannotSupplyUnknownRecursiveEditor=false;},
+    docs=>{docs['navigation-results.json'].rows[0].coldNoInputResetRetiresOldDraftBeforeLateEdits=false;},
+    docs=>{docs['navigation-results.json'].screenshots[0].inspected=false;},
+    docs=>{docs['navigation-results.json'].servedBuild.assets=['/assets/old.js','/assets/old.css'];}
+  ]){
+    const docs=lcsDocuments();assert.equal(verified(docs,'lcs','longest-common-subsequence'),true);
+    mutate(docs);assert.equal(verified(docs,'lcs','longest-common-subsequence'),false);
+  }
+});
 test('independent references match authored examples and zero/base/boundary controls',()=>{
   const {cases,oracle}=require('./linear-grid-cases.cjs');
   for(const c of cases)assert.equal(String(oracle(c.id,c.input)),c.answer);

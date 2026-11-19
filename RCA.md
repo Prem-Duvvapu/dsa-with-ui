@@ -1457,6 +1457,35 @@ class, and the reason is worth stating rather than rediscovering.
 - **Lesson:** when a screen describes a run, every part of that description must be read
   from the run itself, never from the component that happened to submit it.
 
+### RCA-054 follow-up — 2026-11-19 restoration used another approach's defaults
+
+Two-string LCS preflight exposes a generic same-page/cold-link seam: restoring a
+different approach can seed omitted draft fields from inputSpecRef before the requested
+candidate commits. The server correctly normalizes the raw partial input against the
+requested approach, so the run/echo can use its defaults while the editor retains the
+previous approach's defaults. A bare recursive link can likewise leave an over-limit
+canonical example in the editor after a successful smaller default run.
+
+New explicitly fictional two-STRING hook contracts reproduce6 failures/9 cases without
+pretending those fixtures are genuine LCS API evidence. The fix resolves the requested
+definition's spec before seeding. If that metadata is late or unavailable, raw partial
+values stay partial and derived defaults fill only omitted fields when the correct spec
+arrives. Unknown approach defaults are never guessed from the current candidate. Server
+submissions remain exact; responses never overwrite edits made while pending. The unused
+old-spec ref is removed. The first focused59/full1,052-test pass was preliminary.
+Independent review then reproduced two variants with the actual catalogue-summary shape
+(canonical inputSpec but no approach definitions): an explicit candidate borrowed that
+canonical spec while metadata was late, and a bare candidate reset retained old draft
+ownership when its spec was unknown. Permanent real-summary fixtures are RED4/14 before
+the additional guard/reset fix. An unresolved explicit candidate now waits for its own
+spec; a default reset clears ownership immediately, with later defaults filling only
+omitted fields. Final focused63 and normal full frontend1,056/93 files plus build pass,
+without retries, relaxed settings or weakened assertions. Four real Chromium/Firefox
+navigation rows cover12 contexts/56 upstream requests with held actual metadata/POST
+bodies, late edits, bare/partial links, Back/Forward and rejected runs. Five independent
+review probes also pass. The LCS package's full backend/API/browser gates pass; exact-head
+CI governs publication. See docs/ui-revamp/dp-approaches/lcs/VERIFICATION.md.
+
 ### RCA-054 follow-up — 2026-10-07 DP approach identity
 
 Approach selection extends the same atomic-run contract: preparing another solution must

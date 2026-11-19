@@ -1,0 +1,1350 @@
+{
+  "generated": "2026-11-19T19:12:16.960Z",
+  "realBackend": true,
+  "buildMode": "production-preview",
+  "servedBuild": {
+    "assets": [
+      "/assets/index-BW7qIb8i.js",
+      "/assets/index-DL2roZqZ.css"
+    ]
+  },
+  "localPackage": {
+    "packagedAt": "2026-11-19T18:43:17.091Z",
+    "sha256": "63bde9ec02cf9ef5f0f560533d2cd4e81eddbdc602de63d34283946a53688a59"
+  },
+  "rows": [
+    {
+      "engine": "chromium",
+      "width": 320,
+      "theme": "dark",
+      "passed": true,
+      "screenshots": [
+        "chromium-320-dark-navigation-editor.png",
+        "chromium-320-dark-navigation-source.png"
+      ],
+      "warmRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:11:13.902Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:15.002Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:16.102Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcd",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 24
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:17.203Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:18.303Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "uv"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "uv",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:19.402Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:20.504Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "uv"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "uv",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:21.603Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "mn"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "mn",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:22.703Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "waytoolong"
+          },
+          "status": 400,
+          "resolvedInput": null,
+          "sourceHash": null,
+          "stepCount": null
+        }
+      ],
+      "coldPartialRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:11:23.803Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:24.902Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        }
+      ],
+      "coldNoInputRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:11:26.002Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:27.103Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:28.202Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcd",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 24
+        }
+      ],
+      "bareRequestedDefaults": true,
+      "partialDefaultsBothDirections": true,
+      "backForward": true,
+      "realPostBodyDelayPreservesLaterSecondEdit": true,
+      "rejectedLinkKeepsCommittedIdentity": true,
+      "currentSourceAndStep": true,
+      "coldCanonicalSummaryCannotSupplyUnknownRecursiveEditor": true,
+      "coldDetailReleaseFillsOnlyRequestedDefaults": true,
+      "coldNoInputResetRetiresOldDraftBeforeLateEdits": true,
+      "noOverflowOrPageErrors": true
+    },
+    {
+      "engine": "chromium",
+      "width": 1366,
+      "theme": "light",
+      "passed": true,
+      "screenshots": [
+        "chromium-1366-light-navigation-editor.png",
+        "chromium-1366-light-navigation-source.png"
+      ],
+      "warmRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:11:29.302Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:30.562Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:31.663Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcd",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 24
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:32.762Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:33.862Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "uv"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "uv",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:34.962Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:36.062Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "uv"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "uv",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:37.162Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "mn"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "mn",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:38.262Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "waytoolong"
+          },
+          "status": 400,
+          "resolvedInput": null,
+          "sourceHash": null,
+          "stepCount": null
+        }
+      ],
+      "coldPartialRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:11:39.363Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:40.463Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        }
+      ],
+      "coldNoInputRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:11:41.563Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:42.663Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:43.762Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcd",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 24
+        }
+      ],
+      "bareRequestedDefaults": true,
+      "partialDefaultsBothDirections": true,
+      "backForward": true,
+      "realPostBodyDelayPreservesLaterSecondEdit": true,
+      "rejectedLinkKeepsCommittedIdentity": true,
+      "currentSourceAndStep": true,
+      "coldCanonicalSummaryCannotSupplyUnknownRecursiveEditor": true,
+      "coldDetailReleaseFillsOnlyRequestedDefaults": true,
+      "coldNoInputResetRetiresOldDraftBeforeLateEdits": true,
+      "noOverflowOrPageErrors": true
+    },
+    {
+      "engine": "firefox",
+      "width": 320,
+      "theme": "dark",
+      "passed": true,
+      "screenshots": [
+        "firefox-320-dark-navigation-editor.png",
+        "firefox-320-dark-navigation-source.png"
+      ],
+      "warmRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:11:46.409Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:47.511Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:48.610Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcd",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 24
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:49.710Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:50.810Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "uv"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "uv",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:51.911Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:53.010Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "uv"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "uv",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:54.109Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "mn"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "mn",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:55.210Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "waytoolong"
+          },
+          "status": 400,
+          "resolvedInput": null,
+          "sourceHash": null,
+          "stepCount": null
+        }
+      ],
+      "coldPartialRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:11:56.360Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:57.462Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        }
+      ],
+      "coldNoInputRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:11:58.561Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:11:59.661Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:00.760Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcd",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 24
+        }
+      ],
+      "bareRequestedDefaults": true,
+      "partialDefaultsBothDirections": true,
+      "backForward": true,
+      "realPostBodyDelayPreservesLaterSecondEdit": true,
+      "rejectedLinkKeepsCommittedIdentity": true,
+      "currentSourceAndStep": true,
+      "coldCanonicalSummaryCannotSupplyUnknownRecursiveEditor": true,
+      "coldDetailReleaseFillsOnlyRequestedDefaults": true,
+      "coldNoInputResetRetiresOldDraftBeforeLateEdits": true,
+      "noOverflowOrPageErrors": true
+    },
+    {
+      "engine": "firefox",
+      "width": 1366,
+      "theme": "light",
+      "passed": true,
+      "screenshots": [
+        "firefox-1366-light-navigation-editor.png",
+        "firefox-1366-light-navigation-source.png"
+      ],
+      "warmRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:12:01.860Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:03.854Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:04.060Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcd",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 24
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:05.161Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:06.261Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "uv"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "uv",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:07.361Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:08.460Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "uv"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "uv",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:09.560Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "mn"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "mn",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:10.661Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "waytoolong"
+          },
+          "status": 400,
+          "resolvedInput": null,
+          "sourceHash": null,
+          "stepCount": null
+        }
+      ],
+      "coldPartialRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:12:11.760Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:12.861Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "first": "xy"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "xy",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 68
+        }
+      ],
+      "coldNoInputRequests": [
+        {
+          "dispatchedAt": "2026-11-19T19:12:13.960Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcde",
+            "second": "ace"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 17
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:15.061Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "first": "abc",
+            "second": "ac"
+          },
+          "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+          "stepCount": 8
+        },
+        {
+          "dispatchedAt": "2026-11-19T19:12:16.160Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "first": "abcd",
+            "second": "acd"
+          },
+          "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+          "stepCount": 24
+        }
+      ],
+      "bareRequestedDefaults": true,
+      "partialDefaultsBothDirections": true,
+      "backForward": true,
+      "realPostBodyDelayPreservesLaterSecondEdit": true,
+      "rejectedLinkKeepsCommittedIdentity": true,
+      "currentSourceAndStep": true,
+      "coldCanonicalSummaryCannotSupplyUnknownRecursiveEditor": true,
+      "coldDetailReleaseFillsOnlyRequestedDefaults": true,
+      "coldNoInputResetRetiresOldDraftBeforeLateEdits": true,
+      "noOverflowOrPageErrors": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "chromium-320-dark-navigation-editor.png",
+      "engine": "chromium",
+      "width": 320,
+      "theme": "dark",
+      "phase": "editor-and-input-echo",
+      "scope": "viewport",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1431
+      },
+      "targetRect": {
+        "top": 60.953125,
+        "right": 304,
+        "bottom": 146.953125,
+        "left": 16,
+        "width": 288,
+        "height": 86
+      },
+      "railRect": {
+        "top": 0,
+        "right": 320,
+        "bottom": 49,
+        "left": 0,
+        "width": 320,
+        "height": 49
+      },
+      "inputRects": [
+        {
+          "id": ":r3:-first-input",
+          "value": "mn",
+          "rect": {
+            "top": 399.125,
+            "right": 285,
+            "bottom": 443.125,
+            "left": 33,
+            "width": 252,
+            "height": 44
+          }
+        },
+        {
+          "id": ":r3:-second-input",
+          "value": "zz",
+          "rect": {
+            "top": 559.515625,
+            "right": 285,
+            "bottom": 603.515625,
+            "left": 33,
+            "width": 252,
+            "height": 44
+          }
+        }
+      ],
+      "expectedDraft": {
+        "first": "mn",
+        "second": "zz"
+      },
+      "expectedCommittedInput": {
+        "first": "mn",
+        "second": "acd"
+      },
+      "inspected": true,
+      "sha256": "3895bcf4be22c840dfb6846d14ce434275829df82dbffe3e8f4af1c013b2b571",
+      "reviewedAt": "2026-11-19T19:15:03.497009+00:00"
+    },
+    {
+      "file": "chromium-320-dark-navigation-source.png",
+      "engine": "chromium",
+      "width": 320,
+      "theme": "dark",
+      "phase": "committed-code-source",
+      "scope": "viewport",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scroll": {
+        "x": 0,
+        "y": 765
+      },
+      "targetRect": {
+        "top": 61.140625,
+        "right": 286,
+        "bottom": 357.75,
+        "left": 34,
+        "width": 252,
+        "height": 296.609375
+      },
+      "railRect": {
+        "top": 0,
+        "right": 320,
+        "bottom": 49,
+        "left": 0,
+        "width": 320,
+        "height": 49
+      },
+      "inputRects": [],
+      "expectedSourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+      "inspected": true,
+      "sha256": "ce3f92960349fcd447c9837e02b536deb6c63134bd082f24659ad97d035d02c5",
+      "reviewedAt": "2026-11-19T19:15:03.497009+00:00"
+    },
+    {
+      "file": "chromium-1366-light-navigation-editor.png",
+      "engine": "chromium",
+      "width": 1366,
+      "theme": "light",
+      "phase": "editor-and-input-echo",
+      "scope": "viewport",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "scroll": {
+        "x": 0,
+        "y": 907
+      },
+      "targetRect": {
+        "top": 88.890625,
+        "right": 1334,
+        "bottom": 132.890625,
+        "left": 32,
+        "width": 1302,
+        "height": 44
+      },
+      "railRect": {
+        "top": 0,
+        "right": 1366,
+        "bottom": 45,
+        "left": 0,
+        "width": 1366,
+        "height": 45
+      },
+      "inputRects": [
+        {
+          "id": ":r3:-first-input",
+          "value": "mn",
+          "rect": {
+            "top": 276.28125,
+            "right": 1307,
+            "bottom": 320.28125,
+            "left": 57,
+            "width": 1250,
+            "height": 44
+          }
+        },
+        {
+          "id": ":r3:-second-input",
+          "value": "zz",
+          "rect": {
+            "top": 395.078125,
+            "right": 1307,
+            "bottom": 439.078125,
+            "left": 57,
+            "width": 1250,
+            "height": 44
+          }
+        }
+      ],
+      "expectedDraft": {
+        "first": "mn",
+        "second": "zz"
+      },
+      "expectedCommittedInput": {
+        "first": "mn",
+        "second": "acd"
+      },
+      "inspected": true,
+      "sha256": "477086330f6e341cfead11769600d31cefd8505bced3cb19209aa8f7ca5f28ee",
+      "reviewedAt": "2026-11-19T19:15:03.497009+00:00"
+    },
+    {
+      "file": "chromium-1366-light-navigation-source.png",
+      "engine": "chromium",
+      "width": 1366,
+      "theme": "light",
+      "phase": "committed-code-source",
+      "scope": "viewport",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "scroll": {
+        "x": 0,
+        "y": 376
+      },
+      "targetRect": {
+        "top": 56.578125,
+        "right": 1307.984375,
+        "bottom": 549.984375,
+        "left": 818.796875,
+        "width": 489.1875,
+        "height": 493.40625
+      },
+      "railRect": {
+        "top": 0,
+        "right": 1366,
+        "bottom": 45,
+        "left": 0,
+        "width": 1366,
+        "height": 45
+      },
+      "inputRects": [],
+      "expectedSourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+      "inspected": true,
+      "sha256": "52be0680f5935f60b12920c1716fe2ed7d5c3581378de42e6864d78e39de583d",
+      "reviewedAt": "2026-11-19T19:15:03.497009+00:00"
+    },
+    {
+      "file": "firefox-320-dark-navigation-editor.png",
+      "engine": "firefox",
+      "width": 320,
+      "theme": "dark",
+      "phase": "editor-and-input-echo",
+      "scope": "viewport",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1431
+      },
+      "targetRect": {
+        "top": 61,
+        "right": 304,
+        "bottom": 147,
+        "left": 16,
+        "width": 288,
+        "height": 86
+      },
+      "railRect": {
+        "top": 0,
+        "right": 320,
+        "bottom": 49,
+        "left": 0,
+        "width": 320,
+        "height": 49
+      },
+      "inputRects": [
+        {
+          "id": ":r3:-first-input",
+          "value": "mn",
+          "rect": {
+            "top": 399.20001220703125,
+            "right": 285,
+            "bottom": 443.20001220703125,
+            "left": 33,
+            "width": 252,
+            "height": 44
+          }
+        },
+        {
+          "id": ":r3:-second-input",
+          "value": "zz",
+          "rect": {
+            "top": 559.5999755859375,
+            "right": 285,
+            "bottom": 603.5999755859375,
+            "left": 33,
+            "width": 252,
+            "height": 44
+          }
+        }
+      ],
+      "expectedDraft": {
+        "first": "mn",
+        "second": "zz"
+      },
+      "expectedCommittedInput": {
+        "first": "mn",
+        "second": "acd"
+      },
+      "inspected": true,
+      "sha256": "a62433c227c0b3c01285ef6e70830311a3c58341b3a00aec63499641074ce816",
+      "reviewedAt": "2026-11-19T19:15:03.497009+00:00"
+    },
+    {
+      "file": "firefox-320-dark-navigation-source.png",
+      "engine": "firefox",
+      "width": 320,
+      "theme": "dark",
+      "phase": "committed-code-source",
+      "scope": "viewport",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scroll": {
+        "x": 0,
+        "y": 765
+      },
+      "targetRect": {
+        "top": 61.19999694824219,
+        "right": 286,
+        "bottom": 357.8000030517578,
+        "left": 34,
+        "width": 252,
+        "height": 296.6000061035156
+      },
+      "railRect": {
+        "top": 0,
+        "right": 320,
+        "bottom": 49,
+        "left": 0,
+        "width": 320,
+        "height": 49
+      },
+      "inputRects": [],
+      "expectedSourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+      "inspected": true,
+      "sha256": "5b17b4587ff8d062770685aec04342c3fab2d0d410282b1839efc28e0cd7b759",
+      "reviewedAt": "2026-11-19T19:15:03.497009+00:00"
+    },
+    {
+      "file": "firefox-1366-light-navigation-editor.png",
+      "engine": "firefox",
+      "width": 1366,
+      "theme": "light",
+      "phase": "editor-and-input-echo",
+      "scope": "viewport",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "scroll": {
+        "x": 0,
+        "y": 907
+      },
+      "targetRect": {
+        "top": 88.89999389648438,
+        "right": 1334,
+        "bottom": 132.89999389648438,
+        "left": 32,
+        "width": 1302,
+        "height": 44
+      },
+      "railRect": {
+        "top": 0,
+        "right": 1366,
+        "bottom": 45,
+        "left": 0,
+        "width": 1366,
+        "height": 45
+      },
+      "inputRects": [
+        {
+          "id": ":r3:-first-input",
+          "value": "mn",
+          "rect": {
+            "top": 276.29998779296875,
+            "right": 1307,
+            "bottom": 320.29998779296875,
+            "left": 57,
+            "width": 1250,
+            "height": 44
+          }
+        },
+        {
+          "id": ":r3:-second-input",
+          "value": "zz",
+          "rect": {
+            "top": 395.1000061035156,
+            "right": 1307,
+            "bottom": 439.1000061035156,
+            "left": 57,
+            "width": 1250,
+            "height": 44
+          }
+        }
+      ],
+      "expectedDraft": {
+        "first": "mn",
+        "second": "zz"
+      },
+      "expectedCommittedInput": {
+        "first": "mn",
+        "second": "acd"
+      },
+      "inspected": true,
+      "sha256": "dc18b12ac83497fd6fdd7b444ba514d52328bbfa3f4ed1854a6cd760c62b9006",
+      "reviewedAt": "2026-11-19T19:15:03.497009+00:00"
+    },
+    {
+      "file": "firefox-1366-light-navigation-source.png",
+      "engine": "firefox",
+      "width": 1366,
+      "theme": "light",
+      "phase": "committed-code-source",
+      "scope": "viewport",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "scroll": {
+        "x": 0,
+        "y": 376
+      },
+      "targetRect": {
+        "top": 56.600006103515625,
+        "right": 1308,
+        "bottom": 550,
+        "left": 818.7999877929688,
+        "width": 489.20001220703125,
+        "height": 493.3999938964844
+      },
+      "railRect": {
+        "top": 0,
+        "right": 1366,
+        "bottom": 45,
+        "left": 0,
+        "width": 1366,
+        "height": 45
+      },
+      "inputRects": [],
+      "expectedSourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+      "inspected": true,
+      "sha256": "7870faef9272458640765cbe0e6ae5e1f9f3df04b7c55939a18676b1c0709c03",
+      "reviewedAt": "2026-11-19T19:15:03.497009+00:00"
+    }
+  ],
+  "delayMechanism": "Only real upstream response bodies are delayed; exact actual responses are fulfilled unchanged. All executions paced1100ms globally within this script.",
+  "limits": "Four automated engine/viewport rows; not real-device, human-screen-reader, learner, performance or all-input acceptance.",
+  "visualReview": {
+    "file": "navigation-visual-review.json",
+    "reviewer": "root",
+    "reviewedAt": "2026-11-19T19:15:03.497009+00:00"
+  }
+}

@@ -1,5 +1,27 @@
 # DP solution approaches: implementation and UX plan
 
+## Current work — 2026-11-19
+
+The verified inventory is now24/56 locally, with LCS publication governed by exact-head
+CI. The previous23 are merged. Contract repairs #239/#240 are merged with passing CI;
+they do not add DP candidates. LCS is on `feat/lcs-solution-approaches`, based on
+#240 / `f3490b5`.
+
+Its real prefix recursion and nullable memoization implementations and complete Java
+sources are written, preserving canonical source/defaults/alternate/12-character limits.
+New recursion is capped at4 characters per string (139 worst-case calls); memoization
+at8 (129 worst-case calls,453 events), with exact source/runtime and response-budget
+checks. Focused backend40 cases and clean full8,398 cases/500 unchanged skips pass.
+Differing-default session cases are RED6/9; independent review then exposes real-summary
+and deferred-reset variants, RED4/14 before the additional fix. Final focused63 cases,
+normal full1,056 frontend cases/build,432 unchanged golden checks and86 evidence-contract
+tests pass. Frozen API64 requests and54 browser journeys pass, including late metadata,
+Back/Forward, actual held response bodies, source identity, native zoom and bounded legacy
+compatibility. All12 selected screenshots are inspected. The refreshed inventory changes
+only LCS's alternative status/specs/safety notes and has24 verified,31 planned and one
+different-formulation row. [Verification](dp-approaches/lcs/VERIFICATION.md) records
+artifact hashes, counts, exclusions and scope. D6/D7 and broad acceptance remain open.
+
 Status as of2026-10-28: **23/56 candidates verified and merged;33 remain outside the
 verified set (32 planned,1 requiring a different formulation). Minimum Coins and Coin
 Change II merged in #233 / `49a6bf6` on2026-10-24 at03:15:02Z. Exact head `75d196d`

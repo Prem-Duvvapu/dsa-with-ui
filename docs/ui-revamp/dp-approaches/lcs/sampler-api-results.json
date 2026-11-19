@@ -1,0 +1,268 @@
+{
+  "generated": "2026-11-19T18:51:17.397Z",
+  "realBackend": true,
+  "complete": true,
+  "localPackage": {
+    "packagedAt": "2026-11-19T18:43:17.091Z",
+    "sha256": "63bde9ec02cf9ef5f0f560533d2cd4e81eddbdc602de63d34283946a53688a59"
+  },
+  "samplerHash": "c1868e298c53e5d42b7b69e24497110d3c42811d0ab0b1aa6cc852af0c466ef0",
+  "requests": 18,
+  "specifications": [
+    {
+      "form": "recursion",
+      "inputSpec": {
+        "fields": [
+          {
+            "name": "first",
+            "label": "First string",
+            "type": "STRING",
+            "defaultValue": "abcd",
+            "help": "Up to four lowercase letters keeps every recursive call visible. Select Memoization for longer inputs.",
+            "constraints": {
+              "patternHint": "Lowercase letters a-z only.",
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 4
+            }
+          },
+          {
+            "name": "second",
+            "label": "Second string",
+            "type": "STRING",
+            "defaultValue": "acd",
+            "help": "Up to four lowercase letters keeps every recursive call visible. Select Memoization for longer inputs.",
+            "constraints": {
+              "patternHint": "Lowercase letters a-z only.",
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 4
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377"
+    },
+    {
+      "form": "memoization",
+      "inputSpec": {
+        "fields": [
+          {
+            "name": "first",
+            "label": "First string",
+            "type": "STRING",
+            "defaultValue": "abcde",
+            "help": "Prefix memo states fit strings of up to eight lowercase letters; unvisited cells stay unknown.",
+            "constraints": {
+              "patternHint": "Lowercase letters a-z only.",
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 8
+            }
+          },
+          {
+            "name": "second",
+            "label": "Second string",
+            "type": "STRING",
+            "defaultValue": "ace",
+            "help": "Prefix memo states fit strings of up to eight lowercase letters; unvisited cells stay unknown.",
+            "constraints": {
+              "patternHint": "Lowercase letters a-z only.",
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 8
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "sourceHash": "7d2a88907bf2a936824014cebd4823989e682d613bf4a4b5df58d1f9d2333dca"
+    },
+    {
+      "form": "canonical",
+      "inputSpec": {
+        "fields": [
+          {
+            "name": "first",
+            "label": "First string",
+            "type": "STRING",
+            "defaultValue": "abcde",
+            "help": "",
+            "constraints": {
+              "patternHint": "Lowercase letters a-z only.",
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12
+            }
+          },
+          {
+            "name": "second",
+            "label": "Second string",
+            "type": "STRING",
+            "defaultValue": "ace",
+            "help": "",
+            "constraints": {
+              "patternHint": "Lowercase letters a-z only.",
+              "minLength": 1,
+              "pattern": "[a-z]+",
+              "maxLength": 12
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c"
+    }
+  ],
+  "rows": [
+    {
+      "form": "recursion",
+      "profile": "high",
+      "input": {
+        "first": "zzzz",
+        "second": "zzzz"
+      },
+      "expected": 4,
+      "steps": 21,
+      "fullBytes": 11250,
+      "deltaBytes": 7207,
+      "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "recursion",
+      "profile": "low",
+      "input": {
+        "first": "a",
+        "second": "a"
+      },
+      "expected": 1,
+      "steps": 9,
+      "fullBytes": 5405,
+      "deltaBytes": 3852,
+      "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "recursion",
+      "profile": "seeded",
+      "input": {
+        "first": "zh",
+        "second": "r"
+      },
+      "expected": 0,
+      "steps": 19,
+      "fullBytes": 10031,
+      "deltaBytes": 6552,
+      "sourceHash": "eec0978bc49b6a8e30d1f205ec969267717e38ffca4c8a25efdec08d78e70377",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "memoization",
+      "profile": "high",
+      "input": {
+        "first": "zzzzzzzz",
+        "second": "zzzzzzzz"
+      },
+      "expected": 8,
+      "steps": 37,
+      "fullBytes": 118195,
+      "deltaBytes": 62790,
+      "sourceHash": "7d2a88907bf2a936824014cebd4823989e682d613bf4a4b5df58d1f9d2333dca",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "memoization",
+      "profile": "low",
+      "input": {
+        "first": "a",
+        "second": "a"
+      },
+      "expected": 1,
+      "steps": 9,
+      "fullBytes": 7811,
+      "deltaBytes": 5326,
+      "sourceHash": "7d2a88907bf2a936824014cebd4823989e682d613bf4a4b5df58d1f9d2333dca",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "memoization",
+      "profile": "seeded",
+      "input": {
+        "first": "zhb",
+        "second": "zxdnnh"
+      },
+      "expected": 2,
+      "steps": 118,
+      "fullBytes": 180553,
+      "deltaBytes": 105921,
+      "sourceHash": "7d2a88907bf2a936824014cebd4823989e682d613bf4a4b5df58d1f9d2333dca",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "canonical",
+      "profile": "high",
+      "input": {
+        "first": "zzzzzzzzzz",
+        "second": "zzzzzzzzzz"
+      },
+      "expected": 10,
+      "steps": 102,
+      "fullBytes": 430004,
+      "deltaBytes": 412120,
+      "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "canonical",
+      "profile": "low",
+      "input": {
+        "first": "a",
+        "second": "a"
+      },
+      "expected": 1,
+      "steps": 3,
+      "fullBytes": 2928,
+      "deltaBytes": 2500,
+      "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "canonical",
+      "profile": "seeded",
+      "input": {
+        "first": "zhbr",
+        "second": "xdnnhfpond"
+      },
+      "expected": 1,
+      "steps": 42,
+      "fullBytes": 92790,
+      "deltaBytes": 85420,
+      "sourceHash": "761ec51e9951cef007febd68fba67903580e8079ec3806174d50e232e274d25c",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    }
+  ],
+  "limits": "Three actual sampler profiles per LCS form; source compilation and exhaustive semantics are separate backend gates. Not all inputs, human/devices/performance/public rollout or project acceptance."
+}

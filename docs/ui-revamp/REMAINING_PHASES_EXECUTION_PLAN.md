@@ -4,8 +4,9 @@ Prepared: 2026-10-05. Inspected main: `dad2640`, merged PR #191.
 
 ### Current execution checkpoint — 2026-11-19
 
-Main is `a5c31d7` (#239); no PR is open at this checkpoint. DP has23/56 verified and merged candidates,
-with33 outside verification (32 planned,1 requiring a different formulation). The coin
+Main at the start of the LCS package is `f3490b5` (#240). DP has24/56 locally verified
+candidates, with LCS publication governed by exact-head CI; the previous23 are merged.
+The remaining32 comprise31 planned candidates and1 requiring a different formulation. The coin
 batch #233 merged as `49a6bf6`, with successful exact-head and post-merge CI. These
 counts are checked against GitHub and the current56-row inventory; dated counts below
 are historical. The current [tracker](REVAMP_TRACKER.md) and
@@ -28,9 +29,15 @@ CI40759405428 passing, and verifies all6 forms with unchanged225/80-cell and220-
 policies. The requested publication/stop completed. The owner has now resumed the goal
 and requested another hour of work. The direct coin/subset package exposes10 existing
 work limits and fixes distinct-value generation. Its full backend8,392/frontend1,038,
-unchanged goldens,124 API executions and40 engine journeys pass; exact-head CI governs
-publication. Parity-derived budgets remain open. A read-only LCS preflight is ready
-for the next D5 candidate; no candidate status advances from these contract repairs.
+unchanged goldens,124 API executions and40 engine journeys pass. It merges as #240 /
+`f3490b5` with exact-head and post-merge CI44579335922 passing. Parity-derived budgets
+remain open. The LCS D5 package implements real recursion/memoization and verifies
+approach-specific string defaults through the session lifecycle, including real late
+metadata and held response bodies. Its full local gates pass:8,398 backend cases/500
+unchanged skips,1,056 frontend cases/build,432 unchanged golden checks,86 Node evidence
+tests,64 API requests,54 browser journeys and12 inspected screenshots. The refreshed
+inventory changes only LCS's alternative status/specs/safety notes. Publication still
+requires exact-head CI; this is bounded evidence, not whole-project acceptance.
 Remaining source, metadata, dependency and DP work still needs separately verified
 packages. Do not treat source
 compilation,431 traced owners or a green package as whole-catalogue certification.
