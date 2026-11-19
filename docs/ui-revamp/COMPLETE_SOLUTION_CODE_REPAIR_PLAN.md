@@ -2,6 +2,24 @@
 
 Baseline: `9d0aa10`, 2026-10-07. Implementation authorized after the owner requested this plan.
 
+## Current checkpoint — 2026-11-19
+
+The original27 DP sketches below were repaired in #211; the original diagnosis is
+historical. A fresh catalogue-derived audit captures all431 default sources and48
+additional registered approaches from the frozen coin/subset package. Java17 compilation
+with documented JDK context yields317 compiling defaults,36 other Java failures,
+77 unresolved platform-node contexts and1 intentional C++ listing with Java presentation.
+All48 additional approaches compile, giving365 compiler successes among479 sources.
+The [full audit](evidence/source-code/compile-refresh-nov19.json) records hashes and
+diagnostics. Only Phone's source changed since the Oct28 source audit; it now compiles.
+
+These counts are compilation evidence, not complete standalone files or algorithm
+certification. Method wrappers/imports are supplied; no node definitions or algorithm
+helpers are invented, and node-only errors may mask further omissions. The public
+binary is not certified. Remaining work includes the36 failures, authoritative node
+contexts, language honesty and independent source/trace semantics. The coin/subset
+work-limit package changes none of these source strings or repair statuses.
+
 ## Confirmed defect
 
 A read-only scan of all 431 live problem-detail responses found 27 containing the exact

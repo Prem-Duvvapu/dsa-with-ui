@@ -11,16 +11,17 @@ final class SubsetCountRecursiveTracer implements AlgorithmTracer {
     public DsType dsType() { return DsType.RECURSION_TREE; }
     public String annotatedCode() { return SolutionSource.read("/solutions/dp-approaches/" + id() + "/" + (memo ? "memoization" : "recursion") + ".java"); }
     public InputSpec inputSpec() {
-        return InputSpec.of(InputField.of("nums", FieldType.INT_ARRAY).label("Values").length(1, memo ? 10 : 6)
+        InputSpec spec = InputSpec.of(InputField.of("nums", FieldType.INT_ARRAY).label("Values").length(1, memo ? 10 : 6)
                         .values(1, 15).defaultValue(List.of(1, 2, 2, 3)).help("Positive values, matching tabulation's existing domain; equal values at different indices are distinct items. "
                                 + (memo ? "Memo needs (n+1) × (k+1) ≤ 80 cells." : "Up to 6 items keeps the complete recursive tree below 220 calls.")).build(),
                 InputField.of("k", FieldType.INT).label("Target sum K").range(0, 60).defaultValue(3).build());
+        return memo ? spec.withWorkLimit(new InputWorkLimit(InputWorkLimit.Kind.CAPACITY_TABLE_CELLS,
+                "nums", "k", 80, false, "nums",
+                "Memo tracing needs (n+1) × (k+1) ≤ 80 cells; use fewer numbers or a smaller k.")) : spec;
     }
     public Map<String, Object> alternateInput() { return Map.of("nums", List.of(5, 10), "k", 3); }
     public void run(Inputs in, StepEmitter emit) {
         int[] nums = in.getIntArray("nums"); int target = in.getInt("k");
-        if (memo && (long) (nums.length + 1) * (target + 1) > 80)
-            throw new InputValidationException(Map.of("nums", "Memo tracing needs (n+1) × (k+1) ≤ 80 cells; use fewer numbers or a smaller k."));
         var execution = new RecursiveDpExecution(emit, memo, 1, RecursiveDpExecution.labels("n=", nums.length + 1), RecursiveDpExecution.labels("s=", target + 1), null, "count");
         var root = state(nums.length, target);
         execution.start(root, "Count indexed subsets reaching sum " + target + ". Duplicate values at different positions remain separate choices.");

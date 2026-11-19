@@ -110,8 +110,10 @@ actual bounds, then each array's own values; it changes only the draft. Table-ar
 recursive-call and other cross-field semantics remain separately enforced owner guards
 and are not yet all represented by generator metadata.
 
-For both Knapsack DP owners, optional immutable `workLimits` now exposes the existing
-225-cell canonical,80-cell memo and220-call recursion guards. The only kinds are
+Optional immutable `workLimits` exposes the existing225-cell canonical,80-cell memo
+and220-call recursion guards for both Knapsack DP owners. The direct amount/target
+coin and subset owners also declare their canonical/memo table limits, and both coin
+recursions declare their reusable skip/take call limit. The only kinds are
 CAPACITY_TABLE_CELLS, meaning `(array length+1)*(capacity+1)`, and SKIP_TAKE_CALLS,
 counting the uncached skip/take tree with explicit reuse semantics. Shared validation
 checks normalized inputs before tracing. A bounded iterative counter stops at limit+1;
@@ -120,6 +122,14 @@ first, then draws capacity directly within the feasible interval. Call counts ar
 monotone in capacity for fixed positive weights, so binary search finds that interval.
 No ID/prose routing, retries, draft repair, endpoint or dependency is involved. Other
 families' derived targets and work guards remain separate contracts.
+
+For generated INT_ARRAY/LINKED_LIST fields declaring `requireDistinct`, a sparse
+partial shuffle samples without replacement in space proportional to the selected
+length, even across the full signed32-bit range. Generated lengths, including paired
+lengths, intersect the available numeric cardinality; impossible or malformed sample
+metadata is rejected before drawing. Sorting applies only when declared. This changes
+generated drafts only, never submitted values or validation bounds. Sparse binary-tree
+generation and graph/grid contracts remain separate paths.
 
 ## The tracer contract
 

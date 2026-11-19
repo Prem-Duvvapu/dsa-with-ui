@@ -1,0 +1,343 @@
+{
+  "backend": {
+    "scope": {
+      "canonicalTable225": [
+        "minimum-coins-dp",
+        "coin-change-2",
+        "subset-sum-equal-target",
+        "count-subsets-with-sum-k"
+      ],
+      "memoTable80": [
+        "minimum-coins-dp",
+        "coin-change-2",
+        "subset-sum-equal-target",
+        "count-subsets-with-sum-k"
+      ],
+      "coinReuseCalls220": [
+        "minimum-coins-dp",
+        "coin-change-2"
+      ],
+      "changedSpecs": 10,
+      "derivedAndSubsetRecursionUntouched": true
+    },
+    "red": {
+      "cases": 41,
+      "failures": 20,
+      "errors": 0,
+      "controls": 21
+    },
+    "focused": {
+      "cases": 111,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    },
+    "fullClean": {
+      "cases": 8392,
+      "failures": 0,
+      "errors": 0,
+      "skips": 500
+    },
+    "golden": {
+      "goldenTestCases": 432,
+      "fixtureFiles": 431,
+      "changedFiles": [],
+      "allByteIdentical": true
+    },
+    "artifact": {
+      "jarSha256": "e244fc2a8c3ab7fa8e1edb64bd776fa3e64a07c894d08bc42ea823be7bb9af25",
+      "targetClassCount": 617,
+      "jarClassCount": 617,
+      "allClassHashesMatch": true,
+      "mismatchedClasses": [],
+      "deletedCoinTraceBoundsAbsent": true
+    },
+    "startup": {
+      "jar": "/home/prem/dsa-p8/backend/target/dsa-backend-1.0.0.jar",
+      "port": 38369,
+      "httpStatus": 200,
+      "stats": {
+        "catalogued": 431,
+        "traced": 431,
+        "untraced": 0,
+        "duplicateIds": {},
+        "orphanedTracerIds": []
+      },
+      "stopped": true,
+      "pid": 89080
+    },
+    "inventory": {
+      "changedSpecs": [
+        [
+          "coin-change-2",
+          "canonical"
+        ],
+        [
+          "coin-change-2",
+          "recursion"
+        ],
+        [
+          "coin-change-2",
+          "memoization"
+        ],
+        [
+          "count-subsets-with-sum-k",
+          "canonical"
+        ],
+        [
+          "count-subsets-with-sum-k",
+          "memoization"
+        ],
+        [
+          "minimum-coins-dp",
+          "canonical"
+        ],
+        [
+          "minimum-coins-dp",
+          "recursion"
+        ],
+        [
+          "minimum-coins-dp",
+          "memoization"
+        ],
+        [
+          "subset-sum-equal-target",
+          "canonical"
+        ],
+        [
+          "subset-sum-equal-target",
+          "memoization"
+        ]
+      ],
+      "onlyAddedWorkLimits": true,
+      "candidates": 56
+    },
+    "excludedAttempts": [
+      "backend-focused-green.log stopped before tests after inventory script had a backend-relative docs path; corrected before accepted final focused run"
+    ],
+    "mavenOwnershipReturned": true,
+    "ownedServicesStopped": true
+  },
+  "frontend": {
+    "cases": 1038,
+    "files": 91,
+    "failures": 0,
+    "skips": 0,
+    "status": {
+      "started": "2026-11-19T17:23:00.385954+00:00",
+      "pid": 89761,
+      "testCommand": [
+        "npx",
+        "vitest",
+        "run"
+      ],
+      "buildCommand": null,
+      "buildSkipped": "Separately frozen build; preserve served assets during live evidence.",
+      "testExit": 0,
+      "buildExit": null,
+      "finished": "2026-11-19T17:27:13.547219+00:00"
+    },
+    "build": {
+      "started": "2026-11-19T17:18:47.627284+00:00",
+      "command": [
+        "npx",
+        "vite",
+        "build"
+      ],
+      "exit": 0,
+      "finished": "2026-11-19T17:19:04.489753+00:00",
+      "assets": [
+        {
+          "file": "index-CAbCzZ8l.js",
+          "bytes": 396027,
+          "sha256": "5b8309b032bfa1bbcb62808a5c4722ecdeb0fa7ca767af0c94218e39548ad1b6"
+        },
+        {
+          "file": "index-DL2roZqZ.css",
+          "bytes": 99092,
+          "sha256": "eb4f6bec44a27d20c1b4344ebae01871fcd0d3575962dc49cc3d2ee9324b1fe7"
+        }
+      ]
+    },
+    "focusedAndExcludedAttempts": {
+      "generated": "2026-11-19T17:27:53.179655+00:00",
+      "productionFiles": [
+        "frontend/src/input/randomizeInput.js"
+      ],
+      "newTests": {
+        "randomizeInput.distinct.test.js": 23,
+        "randomizeInput.coinSubset.test.js": 23
+      },
+      "regressionFirst": {
+        "initialDistinct": {
+          "cases": 21,
+          "failed": 19,
+          "controlsPassed": 2,
+          "log": "distinct-red.log"
+        },
+        "emptyOnlyReviewCase": {
+          "selectedCases": 1,
+          "failed": 1,
+          "log": "distinct-empty-red.log"
+        },
+        "omittedMaximumReviewCase": {
+          "selectedCases": 1,
+          "failed": 1,
+          "log": "distinct-omitted-max-red.log"
+        },
+        "coinSubsetFixtures": "Generic declaration controls; not all claimed RED. Actual served metadata RED belongs to backend evidence."
+      },
+      "focused": {
+        "cases": 158,
+        "files": 5,
+        "passed": 158,
+        "log": "frontend-focused-final.log"
+      },
+      "unchangedIntegrationRechecks": {
+        "approachesAndLifecycle": {
+          "passed": 2,
+          "unselected": 37,
+          "log": "frontend-preliminary-failures-focused.log"
+        },
+        "sharing": {
+          "passed": 7,
+          "log": "frontend-sharing-focused.log"
+        }
+      },
+      "normalFull": {
+        "command": [
+          "npx",
+          "vitest",
+          "run"
+        ],
+        "cases": 1038,
+        "files": 91,
+        "passed": 1038,
+        "failed": 0,
+        "skipped": 0,
+        "durationSeconds": 246.04,
+        "status": {
+          "started": "2026-11-19T17:23:00.385954+00:00",
+          "pid": 89761,
+          "testCommand": [
+            "npx",
+            "vitest",
+            "run"
+          ],
+          "buildCommand": null,
+          "buildSkipped": "Separately frozen build; preserve served assets during live evidence.",
+          "testExit": 0,
+          "buildExit": null,
+          "finished": "2026-11-19T17:27:13.547219+00:00"
+        },
+        "log": "frontend-full.log"
+      },
+      "build": {
+        "started": "2026-11-19T17:18:47.627284+00:00",
+        "command": [
+          "npx",
+          "vite",
+          "build"
+        ],
+        "exit": 0,
+        "finished": "2026-11-19T17:19:04.489753+00:00",
+        "assets": [
+          {
+            "file": "index-CAbCzZ8l.js",
+            "bytes": 396027,
+            "sha256": "5b8309b032bfa1bbcb62808a5c4722ecdeb0fa7ca767af0c94218e39548ad1b6"
+          },
+          {
+            "file": "index-DL2roZqZ.css",
+            "bytes": 99092,
+            "sha256": "eb4f6bec44a27d20c1b4344ebae01871fcd0d3575962dc49cc3d2ee9324b1fe7"
+          }
+        ]
+      },
+      "samplerSha256": "c1868e298c53e5d42b7b69e24497110d3c42811d0ab0b1aa6cc852af0c466ef0",
+      "excludedAttempts": [
+        {
+          "status": "frontend-preliminary-status.json",
+          "log": "frontend-preliminary-full.log",
+          "passed": 1035,
+          "failed": 3,
+          "reason": "Intentionally observed omitted-max regression plus unchanged Approaches timeout and Lifecycle restore-readiness failure. Followed by real helper correction and unchanged focused rechecks."
+        },
+        {
+          "status": "frontend-attempt2-status.json",
+          "log": "frontend-attempt2-full.log",
+          "passed": 1036,
+          "failed": 2,
+          "reason": "Two unchanged Sharing ready() assertions saw step0 instead of2 within the existing wait. Entire unchanged Sharing suite subsequently passed7/7 focused; final normal full passes all1038. No timeout/worker/config mitigation."
+        }
+      ],
+      "permutationPreflight": {
+        "artifact": "distinct-permutation-preflight.json",
+        "actualSampler": true,
+        "exhaustiveBranchPaths": 873,
+        "domainSizes": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ]
+      },
+      "preserved": "Submitted inputs/defaults/spec bounds are not repaired. Unflagged lists may repeat. Binary-tree generator and sparse null behavior are unchanged; no distinct-tree certification. No new dependency, timeout, worker or test config changes. Dist assets and sampler stayed immutable after frozen build during final tests."
+    }
+  },
+  "proofScope": "Focused and full checks for this package; no broad project acceptance claim.",
+  "goldenComparison": {
+    "goldenTestCases": 432,
+    "fixtureFiles": 431,
+    "changedFiles": [],
+    "allByteIdentical": true
+  },
+  "inventoryComparison": {
+    "changedSpecs": [
+      [
+        "coin-change-2",
+        "canonical"
+      ],
+      [
+        "coin-change-2",
+        "recursion"
+      ],
+      [
+        "coin-change-2",
+        "memoization"
+      ],
+      [
+        "count-subsets-with-sum-k",
+        "canonical"
+      ],
+      [
+        "count-subsets-with-sum-k",
+        "memoization"
+      ],
+      [
+        "minimum-coins-dp",
+        "canonical"
+      ],
+      [
+        "minimum-coins-dp",
+        "recursion"
+      ],
+      [
+        "minimum-coins-dp",
+        "memoization"
+      ],
+      [
+        "subset-sum-equal-target",
+        "canonical"
+      ],
+      [
+        "subset-sum-equal-target",
+        "memoization"
+      ]
+    ],
+    "onlyAddedWorkLimits": true,
+    "candidates": 56
+  }
+}

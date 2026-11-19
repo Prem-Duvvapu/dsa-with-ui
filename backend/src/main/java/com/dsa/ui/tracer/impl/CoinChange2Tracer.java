@@ -53,7 +53,8 @@ public class CoinChange2Tracer implements AlgorithmTracer {
                                 + "exactly this amount.")
                         .range(1, 40)
                         .defaultValue(5)
-                        .build());
+                        .build()).withWorkLimit(new InputWorkLimit(InputWorkLimit.Kind.CAPACITY_TABLE_CELLS,
+                        "coins", "amount", DpTraceSupport.MAX_TABLE_CELLS, false, "amount", "Use a smaller amount or fewer coins."));
     }
 
     /** coins = [3], amount = 5: only multiples of 3 are reachable, so the count stays 0 —
@@ -102,7 +103,6 @@ public class CoinChange2Tracer implements AlgorithmTracer {
         int amount = in.getInt("amount");
         int n = coins.length;
 
-        DpTraceSupport.requireTableFits(n + 1, amount + 1, "amount", "Use a smaller amount or fewer coins.");
         int[][] dp = new int[n + 1][amount + 1];
         boolean[][] settled = new boolean[n + 1][amount + 1];
         List<String> rowLabels = CoinChangeDpTable.rowLabels(coins);

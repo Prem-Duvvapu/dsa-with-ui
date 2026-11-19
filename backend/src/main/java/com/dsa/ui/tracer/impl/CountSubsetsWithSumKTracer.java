@@ -54,7 +54,8 @@ public class CountSubsetsWithSumKTracer implements AlgorithmTracer {
                         .help("How many subsets sum to exactly this value.")
                         .range(0, 60)
                         .defaultValue(3)
-                        .build());
+                        .build()).withWorkLimit(new InputWorkLimit(InputWorkLimit.Kind.CAPACITY_TABLE_CELLS,
+                        "nums", "k", DpTraceSupport.MAX_TABLE_CELLS, false, "k", "Use a smaller k or fewer numbers."));
     }
 
     /** No subset of a two-item array with both values above the target can ever reach it —
@@ -91,7 +92,6 @@ public class CountSubsetsWithSumKTracer implements AlgorithmTracer {
         int[] nums = in.getIntArray("nums");
         int k = in.getInt("k");
         int n = nums.length;
-        DpTraceSupport.requireTableFits(n + 1, k + 1, "k", "Use a smaller k or fewer numbers.");
         int[][] dp = new int[n + 1][k + 1];
         boolean[][] settled = new boolean[n + 1][k + 1];
         List<String> rowLabels = SubsetCountDpTable.rowLabels(nums);

@@ -26,35 +26,55 @@ function randomInt(rng, field) {
   return intBetween(rng, min, max);
 }
 
+// A sparse partial shuffle samples without replacement in O(selected length) space,
+// even when the declared signed-int domain contains billions of possible values.
+// This only governs generated INT_ARRAY/LINKED_LIST values, never submitted drafts.
+function distinctListBounds(field) {
+  const c = field.constraints || {};
+  const min = c.minValue ?? -50, max = c.maxValue ?? 50;
+  const minLength = c.minLength ?? (c.maxLength === 0 ? 0 : 1);
+  const maxLength = c.maxLength ?? Math.max(minLength, 10);
+  if (![min, max].every(value => Number.isInteger(value) && value >= -2147483648 && value <= 2147483647) ||
+      min > max || ![minLength, maxLength].every(value => Number.isSafeInteger(value) && value >= 0) ||
+      minLength > maxLength) {
+    throw new RangeError('Distinct lists need valid integer value and length bounds.');
+  }
+  const size = max - min + 1;
+  const sampleMax = Math.min(maxLength, Math.max(minLength, 10), size);
+  if (minLength > sampleMax) throw new RangeError('Distinct list minimum exceeds its available values.');
+  return { min, max, size, minLength, maxLength: sampleMax };
+}
+
 function randomIntList(rng, field, { allowNulls = false, length: sharedLength } = {}) {
   const c = field.constraints || {};
-  const minLen = c.minLength ?? (allowNulls ? 1 : 1);
+  const distinct = c.requireDistinct ? distinctListBounds(field) : null;
+  const minLen = distinct?.minLength ?? c.minLength ?? 1;
   // Cap the generated length well under maxLength so a "randomize" click stays readable,
   // even when the spec permits up to 40+ elements.
-  const maxLen = Math.min(c.maxLength ?? 10, Math.max(minLen, 10));
+  const maxLen = distinct?.maxLength ?? Math.min(c.maxLength ?? 10, Math.max(minLen, 10));
   const length = sharedLength ?? intBetween(rng, minLen, maxLen);
   const minVal = c.minValue ?? -50;
   const maxVal = c.maxValue ?? 50;
 
   const values = [];
-  const seen = new Set();
+  const shuffled = new Map();
+  let remaining = distinct?.size;
   for (let i = 0; i < length; i++) {
     if (allowNulls && i > 0 && rng() < 0.25) {
       values.push(null);
       continue;
     }
-    let v = intBetween(rng, minVal, maxVal);
-    if (c.requireDistinct) {
-      // Bounded retries: a tiny range with requireDistinct can't always satisfy length,
-      // so fall through to whatever was drawn last rather than looping forever.
-      let attempts = 0;
-      while (seen.has(v) && attempts < 20) {
-        v = intBetween(rng, minVal, maxVal);
-        attempts += 1;
-      }
-      seen.add(v);
+    if (distinct) {
+      const index = intBetween(rng, 0, remaining - 1);
+      const selected = shuffled.get(index) ?? index;
+      const last = remaining - 1;
+      shuffled.set(index, shuffled.get(last) ?? last);
+      shuffled.delete(last);
+      remaining--;
+      values.push(minVal + selected);
+    } else {
+      values.push(intBetween(rng, minVal, maxVal));
     }
-    values.push(v);
   }
 
   if (c.requireSorted) {
@@ -238,6 +258,7 @@ function equalLengthRanges(inputSpec) {
       }
       min = Math.max(min, constraints.minLength ?? 0);
       max = Math.min(max, constraints.maxLength ?? Infinity);
+      if (constraints.requireDistinct) max = Math.min(max, distinctListBounds(matches[0]).size);
     }
     if (min > max) throw new RangeError('equalLengthGroups length bounds have no common intersection.');
     // Unspecified minima permit empty arrays on the server. Prefer the existing
@@ -344,6 +365,15 @@ function feasibleCapacity(rule, values) {
 /** A full { fieldName: value } map for every field in an InputSpec. */
 export function randomizeInput(inputSpec, rng = Math.random) {
   const lengthRanges = equalLengthRanges(inputSpec);
+  // Validate every distinct declaration before the first RNG call. Standalone lists
+  // join the same length plan as paired lists, so later work limits retain that cap.
+  for (const field of inputSpec?.fields || []) {
+    if (!['INT_ARRAY', 'LINKED_LIST'].includes(field.type) || !field.constraints?.requireDistinct) continue;
+    const bounds = distinctListBounds(field);
+    if (!lengthRanges.some(range => range.names.includes(field.name))) {
+      lengthRanges.push({ names: [field.name], min: bounds.minLength, max: bounds.maxLength });
+    }
+  }
   const rules = workLimitRules(inputSpec, lengthRanges);
   const deferred = new Set(rules.map(rule => rule.scalarField));
   const lengths = new Map();

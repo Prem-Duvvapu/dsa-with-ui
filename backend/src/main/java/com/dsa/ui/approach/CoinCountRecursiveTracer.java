@@ -13,10 +13,14 @@ final class CoinCountRecursiveTracer implements AlgorithmTracer {
     public InputSpec inputSpec(){return InputSpec.of(
             InputField.of("coins",FieldType.INT_ARRAY).label("Coin denominations").length(1,8).values(1,25).distinct().defaultValue(List.of(1,2,5))
                     .help("Distinct denominations with unlimited reuse. "+(memo?"Memo needs (n+1) × (amount+1) ≤ 80 cells.":"The complete tree must fit 220 calls; coin values and amount affect its size.")).build(),
-            InputField.of("amount",FieldType.INT).label("Target amount").range(1,40).defaultValue(5).help("Count combinations, not permutations, summing to exactly this amount.").build());}
+            InputField.of("amount",FieldType.INT).label("Target amount").range(1,40).defaultValue(5).help("Count combinations, not permutations, summing to exactly this amount.").build())
+            .withWorkLimit(new InputWorkLimit(memo ? InputWorkLimit.Kind.CAPACITY_TABLE_CELLS : InputWorkLimit.Kind.SKIP_TAKE_CALLS,
+                    "coins","amount",memo ? 80 : 220,!memo,"coins",memo
+                    ? "Memo tracing needs (n+1) × (amount+1) ≤ 80 cells; use fewer denominations or a smaller amount."
+                    : "This input needs more than 220 recursive calls. Use fewer denominations, a smaller amount or larger coins, or select Memoization."));}
     public Map<String,Object> alternateInput(){return Map.of("coins",List.of(3),"amount",5);}
     public void run(Inputs in,StepEmitter emit){
-        int[] coins=in.getIntArray("coins");int amount=in.getInt("amount");CoinTraceBounds.requireFits(coins,amount,memo);
+        int[] coins=in.getIntArray("coins");int amount=in.getInt("amount");
         var execution=new RecursiveDpExecution(emit,memo,1,RecursiveDpExecution.labels("n=",coins.length+1),RecursiveDpExecution.labels("a=",amount+1),null,"ways");
         var root=state(coins.length,amount);
         execution.start(root,"Count denomination combinations for exact amount "+amount+"; taking a coin keeps its denomination available.");
