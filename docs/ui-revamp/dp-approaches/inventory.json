@@ -493,7 +493,18 @@
           }
         ],
         "maxSteps": 5000,
-        "maxBytes": 2000000
+        "maxBytes": 2000000,
+        "workLimits": [
+          {
+            "kind": "CAPACITY_TABLE_CELLS",
+            "arrayField": "coins",
+            "scalarField": "amount",
+            "limit": 225,
+            "reuse": false,
+            "errorField": "amount",
+            "message": "Use a smaller amount or fewer coins."
+          }
+        ]
       },
       "canonicalComplexity": {
         "timeComplexity": "O(N * (A + 1))",
@@ -543,7 +554,18 @@
               }
             ],
             "maxBytes": 2000000,
-            "maxSteps": 5000
+            "maxSteps": 5000,
+            "workLimits": [
+              {
+                "kind": "SKIP_TAKE_CALLS",
+                "arrayField": "coins",
+                "scalarField": "amount",
+                "limit": 220,
+                "reuse": true,
+                "errorField": "coins",
+                "message": "This input needs more than 220 recursive calls. Use fewer denominations, a smaller amount or larger coins, or select Memoization."
+              }
+            ]
           }
         },
         {
@@ -581,7 +603,18 @@
               }
             ],
             "maxBytes": 2000000,
-            "maxSteps": 5000
+            "maxSteps": 5000,
+            "workLimits": [
+              {
+                "kind": "CAPACITY_TABLE_CELLS",
+                "arrayField": "coins",
+                "scalarField": "amount",
+                "limit": 80,
+                "reuse": false,
+                "errorField": "coins",
+                "message": "Memo tracing needs (n+1) × (amount+1) ≤ 80 cells; use fewer denominations or a smaller amount."
+              }
+            ]
           }
         }
       ]
@@ -888,7 +921,18 @@
           }
         ],
         "maxSteps": 5000,
-        "maxBytes": 2000000
+        "maxBytes": 2000000,
+        "workLimits": [
+          {
+            "kind": "CAPACITY_TABLE_CELLS",
+            "arrayField": "nums",
+            "scalarField": "k",
+            "limit": 225,
+            "reuse": false,
+            "errorField": "k",
+            "message": "Use a smaller k or fewer numbers."
+          }
+        ]
       },
       "canonicalComplexity": {
         "timeComplexity": "O(N * (S + 1))",
@@ -976,7 +1020,18 @@
               }
             ],
             "maxBytes": 2000000,
-            "maxSteps": 5000
+            "maxSteps": 5000,
+            "workLimits": [
+              {
+                "kind": "CAPACITY_TABLE_CELLS",
+                "arrayField": "nums",
+                "scalarField": "k",
+                "limit": 80,
+                "reuse": false,
+                "errorField": "nums",
+                "message": "Memo tracing needs (n+1) × (k+1) ≤ 80 cells; use fewer numbers or a smaller k."
+              }
+            ]
           }
         }
       ]
@@ -2943,7 +2998,18 @@
           }
         ],
         "maxSteps": 5000,
-        "maxBytes": 2000000
+        "maxBytes": 2000000,
+        "workLimits": [
+          {
+            "kind": "CAPACITY_TABLE_CELLS",
+            "arrayField": "coins",
+            "scalarField": "amount",
+            "limit": 225,
+            "reuse": false,
+            "errorField": "amount",
+            "message": "Use a smaller amount or fewer coins."
+          }
+        ]
       },
       "canonicalComplexity": {
         "timeComplexity": "O(N * (A + 1))",
@@ -2992,7 +3058,18 @@
               }
             ],
             "maxBytes": 2000000,
-            "maxSteps": 5000
+            "maxSteps": 5000,
+            "workLimits": [
+              {
+                "kind": "SKIP_TAKE_CALLS",
+                "arrayField": "coins",
+                "scalarField": "amount",
+                "limit": 220,
+                "reuse": true,
+                "errorField": "coins",
+                "message": "This input needs more than 220 recursive calls. Use fewer denominations, a smaller amount or larger coins, or select Memoization."
+              }
+            ]
           }
         },
         {
@@ -3029,7 +3106,18 @@
               }
             ],
             "maxBytes": 2000000,
-            "maxSteps": 5000
+            "maxSteps": 5000,
+            "workLimits": [
+              {
+                "kind": "CAPACITY_TABLE_CELLS",
+                "arrayField": "coins",
+                "scalarField": "amount",
+                "limit": 80,
+                "reuse": false,
+                "errorField": "coins",
+                "message": "Memo tracing needs (n+1) × (amount+1) ≤ 80 cells; use fewer denominations or a smaller amount."
+              }
+            ]
           }
         }
       ]
@@ -4383,7 +4471,18 @@
           }
         ],
         "maxSteps": 5000,
-        "maxBytes": 2000000
+        "maxBytes": 2000000,
+        "workLimits": [
+          {
+            "kind": "CAPACITY_TABLE_CELLS",
+            "arrayField": "nums",
+            "scalarField": "target",
+            "limit": 225,
+            "reuse": false,
+            "errorField": "target",
+            "message": "Use a smaller target or fewer numbers."
+          }
+        ]
       },
       "canonicalComplexity": {
         "timeComplexity": "O(N * (S + 1))",
@@ -4471,7 +4570,18 @@
               }
             ],
             "maxBytes": 2000000,
-            "maxSteps": 5000
+            "maxSteps": 5000,
+            "workLimits": [
+              {
+                "kind": "CAPACITY_TABLE_CELLS",
+                "arrayField": "nums",
+                "scalarField": "target",
+                "limit": 80,
+                "reuse": false,
+                "errorField": "nums",
+                "message": "Memo tracing needs (n+1) × (target+1) ≤ 80 cells; use fewer/smaller values or a smaller target."
+              }
+            ]
           }
         }
       ]

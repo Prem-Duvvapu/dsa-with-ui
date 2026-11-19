@@ -2,9 +2,9 @@
 
 Prepared: 2026-10-05. Inspected main: `dad2640`, merged PR #191.
 
-### Current execution checkpoint — 2026-10-28
+### Current execution checkpoint — 2026-11-19
 
-Main is `6548b87` (#238); no PR is open at this checkpoint. DP has23/56 verified and merged candidates,
+Main is `a5c31d7` (#239); no PR is open at this checkpoint. DP has23/56 verified and merged candidates,
 with33 outside verification (32 planned,1 requiring a different formulation). The coin
 batch #233 merged as `49a6bf6`, with successful exact-head and post-merge CI. These
 counts are checked against GitHub and the current56-row inventory; dated counts below
@@ -23,9 +23,14 @@ with exact-head and post-merge CI40749101387 passing. Subsequent correctness wor
 other DP table/derived-target budgets and joint contracts. Equal-length pairing for three
 Knapsack owners/four capacity approaches merged in #238, with phone echo readability
 corrected and successful post-merge CI40754541772; it does not certify all generated inputs.
-The current Knapsack work-limit package separately verifies all6 forms with unchanged
-225/80-cell and220-call policies. The owner now requests publication of current work and
-then a stop to new changes; further development is paused after that publication.
+The Knapsack work-limit package merged as #239 / `a5c31d7`, with exact-head and post-merge
+CI40759405428 passing, and verifies all6 forms with unchanged225/80-cell and220-call
+policies. The requested publication/stop completed. The owner has now resumed the goal
+and requested another hour of work. The direct coin/subset package exposes10 existing
+work limits and fixes distinct-value generation. Its full backend8,392/frontend1,038,
+unchanged goldens,124 API executions and40 engine journeys pass; exact-head CI governs
+publication. Parity-derived budgets remain open. A read-only LCS preflight is ready
+for the next D5 candidate; no candidate status advances from these contract repairs.
 Remaining source, metadata, dependency and DP work still needs separately verified
 packages. Do not treat source
 compilation,431 traced owners or a green package as whole-catalogue certification.

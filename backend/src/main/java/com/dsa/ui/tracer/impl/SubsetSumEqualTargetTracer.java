@@ -56,7 +56,8 @@ public class SubsetSumEqualTargetTracer implements AlgorithmTracer {
                         .help("The exact sum some subset must reach.")
                         .range(0, 40)
                         .defaultValue(6)
-                        .build());
+                        .build()).withWorkLimit(new InputWorkLimit(InputWorkLimit.Kind.CAPACITY_TABLE_CELLS,
+                        "nums", "target", DpTraceSupport.MAX_TABLE_CELLS, false, "target", "Use a smaller target or fewer numbers."));
     }
 
     /** A target no subset of even numbers can reach, so the "not found" branch runs. */
@@ -93,7 +94,6 @@ public class SubsetSumEqualTargetTracer implements AlgorithmTracer {
         int target = in.getInt("target");
         int n = nums.length;
 
-        DpTraceSupport.requireTableFits(n + 1, target + 1, "target", "Use a smaller target or fewer numbers.");
         boolean[][] dp = new boolean[n + 1][target + 1];
         boolean[][] settled = new boolean[n + 1][target + 1];
 

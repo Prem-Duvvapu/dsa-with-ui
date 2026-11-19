@@ -1,0 +1,2232 @@
+{
+  "generated": "2026-11-19T17:25:59.869Z",
+  "realBackend": true,
+  "complete": true,
+  "localPackage": {
+    "packagedAt": "2026-11-19T17:22:05.070Z",
+    "sha256": "e244fc2a8c3ab7fa8e1edb64bd776fa3e64a07c894d08bc42ea823be7bb9af25"
+  },
+  "samplerHash": "c1868e298c53e5d42b7b69e24497110d3c42811d0ab0b1aa6cc852af0c466ef0",
+  "specifications": [
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "coins",
+          "scalarField": "amount",
+          "limit": 225,
+          "reuse": false,
+          "errorField": "amount",
+          "message": "Use a smaller amount or fewer coins."
+        }
+      ],
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972"
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "coins",
+          "scalarField": "amount",
+          "limit": 80,
+          "reuse": false,
+          "errorField": "coins",
+          "message": "Memo tracing needs (n+1) × (amount+1) ≤ 80 cells; use fewer denominations or a smaller amount."
+        }
+      ],
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1"
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "workLimits": [
+        {
+          "kind": "SKIP_TAKE_CALLS",
+          "arrayField": "coins",
+          "scalarField": "amount",
+          "limit": 220,
+          "reuse": true,
+          "errorField": "coins",
+          "message": "This input needs more than 220 recursive calls. Use fewer denominations, a smaller amount or larger coins, or select Memoization."
+        }
+      ],
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0"
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "coins",
+          "scalarField": "amount",
+          "limit": 225,
+          "reuse": false,
+          "errorField": "amount",
+          "message": "Use a smaller amount or fewer coins."
+        }
+      ],
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5"
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "coins",
+          "scalarField": "amount",
+          "limit": 80,
+          "reuse": false,
+          "errorField": "coins",
+          "message": "Memo tracing needs (n+1) × (amount+1) ≤ 80 cells; use fewer denominations or a smaller amount."
+        }
+      ],
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6"
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "workLimits": [
+        {
+          "kind": "SKIP_TAKE_CALLS",
+          "arrayField": "coins",
+          "scalarField": "amount",
+          "limit": 220,
+          "reuse": true,
+          "errorField": "coins",
+          "message": "This input needs more than 220 recursive calls. Use fewer denominations, a smaller amount or larger coins, or select Memoization."
+        }
+      ],
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc"
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "nums",
+          "scalarField": "target",
+          "limit": 225,
+          "reuse": false,
+          "errorField": "target",
+          "message": "Use a smaller target or fewer numbers."
+        }
+      ],
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d"
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "nums",
+          "scalarField": "target",
+          "limit": 80,
+          "reuse": false,
+          "errorField": "nums",
+          "message": "Memo tracing needs (n+1) × (target+1) ≤ 80 cells; use fewer/smaller values or a smaller target."
+        }
+      ],
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2"
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "nums",
+          "scalarField": "k",
+          "limit": 225,
+          "reuse": false,
+          "errorField": "k",
+          "message": "Use a smaller k or fewer numbers."
+        }
+      ],
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec"
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "workLimits": [
+        {
+          "kind": "CAPACITY_TABLE_CELLS",
+          "arrayField": "nums",
+          "scalarField": "k",
+          "limit": 80,
+          "reuse": false,
+          "errorField": "nums",
+          "message": "Memo tracing needs (n+1) × (k+1) ≤ 80 cells; use fewer numbers or a smaller k."
+        }
+      ],
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42"
+    }
+  ],
+  "executionRequests": 124,
+  "rows": [
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "label": "actual-generator-seed",
+      "input": {
+        "coins": [
+          7,
+          8,
+          13,
+          15
+        ],
+        "amount": 39
+      },
+      "work": 200,
+      "limit": 225,
+      "expected": 3,
+      "actual": 3,
+      "steps": 160,
+      "fullBytes": 1150692,
+      "deltaBytes": 1122567,
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "label": "actual-generator-high",
+      "input": {
+        "coins": [
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "amount": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": -1,
+      "actual": -1,
+      "steps": 196,
+      "fullBytes": 1530692,
+      "deltaBytes": 1496159,
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "label": "actual-generator-low",
+      "input": {
+        "coins": [
+          1
+        ],
+        "amount": 1
+      },
+      "work": 4,
+      "limit": 225,
+      "expected": 1,
+      "actual": 1,
+      "steps": 5,
+      "fullBytes": 4900,
+      "deltaBytes": 4116,
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "label": "semantic",
+      "input": {
+        "coins": [
+          2
+        ],
+        "amount": 3
+      },
+      "work": 8,
+      "limit": 225,
+      "expected": -1,
+      "actual": -1,
+      "steps": 7,
+      "fullBytes": 7502,
+      "deltaBytes": 6362,
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "label": "accepted-boundary",
+      "input": {
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "amount": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": 24,
+      "actual": 24,
+      "steps": 196,
+      "fullBytes": 1537525,
+      "deltaBytes": 1502992,
+      "sourceHash": "b275eaa5130330b97dd917d474dcee696ecc0929104a2c5d365293f56910e972",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "label": "actual-generator-seed",
+      "input": {
+        "coins": [
+          7,
+          8,
+          13,
+          15
+        ],
+        "amount": 15
+      },
+      "work": 80,
+      "limit": 80,
+      "expected": 1,
+      "actual": 1,
+      "steps": 67,
+      "fullBytes": 221131,
+      "deltaBytes": 130482,
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "label": "actual-generator-high",
+      "input": {
+        "coins": [
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "amount": 7
+      },
+      "work": 72,
+      "limit": 80,
+      "expected": -1,
+      "actual": -1,
+      "steps": 37,
+      "fullBytes": 113450,
+      "deltaBytes": 62752,
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "label": "actual-generator-low",
+      "input": {
+        "coins": [
+          1
+        ],
+        "amount": 1
+      },
+      "work": 4,
+      "limit": 80,
+      "expected": 1,
+      "actual": 1,
+      "steps": 12,
+      "fullBytes": 11171,
+      "deltaBytes": 7874,
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "label": "semantic",
+      "input": {
+        "coins": [
+          2
+        ],
+        "amount": 3
+      },
+      "work": 8,
+      "limit": 80,
+      "expected": -1,
+      "actual": -1,
+      "steps": 16,
+      "fullBytes": 16921,
+      "deltaBytes": 11415,
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "label": "accepted-boundary",
+      "input": {
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "amount": 9
+      },
+      "work": 80,
+      "limit": 80,
+      "expected": 9,
+      "actual": 9,
+      "steps": 446,
+      "fullBytes": 1495325,
+      "deltaBytes": 895235,
+      "sourceHash": "65eca5b9daa01d4a68a0b4885bf0fc1a48cf0b0074c70d55b8d04ab7236067c1",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "label": "actual-generator-seed",
+      "input": {
+        "coins": [
+          7,
+          8,
+          13,
+          15
+        ],
+        "amount": 39
+      },
+      "work": 124,
+      "limit": 220,
+      "expected": 3,
+      "actual": 3,
+      "steps": 448,
+      "fullBytes": 272497,
+      "deltaBytes": 165759,
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "label": "actual-generator-high",
+      "input": {
+        "coins": [
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25,
+          25
+        ],
+        "amount": 40
+      },
+      "work": 53,
+      "limit": 220,
+      "expected": -1,
+      "actual": -1,
+      "steps": 205,
+      "fullBytes": 126325,
+      "deltaBytes": 76373,
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "label": "actual-generator-low",
+      "input": {
+        "coins": [
+          1
+        ],
+        "amount": 1
+      },
+      "work": 3,
+      "limit": 220,
+      "expected": 1,
+      "actual": 1,
+      "steps": 12,
+      "fullBytes": 6939,
+      "deltaBytes": 4811,
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "label": "semantic",
+      "input": {
+        "coins": [
+          2
+        ],
+        "amount": 3
+      },
+      "work": 4,
+      "limit": 220,
+      "expected": -1,
+      "actual": -1,
+      "steps": 16,
+      "fullBytes": 9210,
+      "deltaBytes": 6273,
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "label": "accepted-boundary",
+      "input": {
+        "coins": [
+          23,
+          6,
+          7,
+          15,
+          3,
+          11
+        ],
+        "amount": 23
+      },
+      "work": 220,
+      "limit": 220,
+      "expected": 1,
+      "actual": 1,
+      "steps": 825,
+      "fullBytes": 530799,
+      "deltaBytes": 318635,
+      "sourceHash": "9d272b639790cec8a183e1ec386c86514bfe90085c3ad1416a2690d3637bbdf0",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "label": "actual-generator-seed",
+      "input": {
+        "coins": [
+          7,
+          25,
+          12,
+          14
+        ],
+        "amount": 39
+      },
+      "work": 200,
+      "limit": 225,
+      "expected": 2,
+      "actual": 2,
+      "steps": 160,
+      "fullBytes": 1126020,
+      "deltaBytes": 1097895,
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "label": "actual-generator-high",
+      "input": {
+        "coins": [
+          25,
+          24,
+          23,
+          22,
+          21,
+          20,
+          19,
+          18
+        ],
+        "amount": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": 1,
+      "actual": 1,
+      "steps": 196,
+      "fullBytes": 1493088,
+      "deltaBytes": 1458555,
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "label": "actual-generator-low",
+      "input": {
+        "coins": [
+          1
+        ],
+        "amount": 1
+      },
+      "work": 4,
+      "limit": 225,
+      "expected": 1,
+      "actual": 1,
+      "steps": 5,
+      "fullBytes": 4938,
+      "deltaBytes": 4154,
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "label": "semantic",
+      "input": {
+        "coins": [
+          2
+        ],
+        "amount": 3
+      },
+      "work": 8,
+      "limit": 225,
+      "expected": 0,
+      "actual": 0,
+      "steps": 7,
+      "fullBytes": 7441,
+      "deltaBytes": 6301,
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "label": "accepted-boundary",
+      "input": {
+        "coins": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "amount": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": 919,
+      "actual": 919,
+      "steps": 196,
+      "fullBytes": 1535463,
+      "deltaBytes": 1500930,
+      "sourceHash": "694e252147b447ac5fbac2648008cd2f864ac61c7ae1d3fc336ca38d53bbbef5",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "label": "actual-generator-seed",
+      "input": {
+        "coins": [
+          7,
+          25,
+          12,
+          14
+        ],
+        "amount": 15
+      },
+      "work": 80,
+      "limit": 80,
+      "expected": 0,
+      "actual": 0,
+      "steps": 65,
+      "fullBytes": 205388,
+      "deltaBytes": 115795,
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "label": "actual-generator-high",
+      "input": {
+        "coins": [
+          25,
+          24,
+          23,
+          22,
+          21,
+          20,
+          19,
+          18
+        ],
+        "amount": 7
+      },
+      "work": 72,
+      "limit": 80,
+      "expected": 0,
+      "actual": 0,
+      "steps": 37,
+      "fullBytes": 108242,
+      "deltaBytes": 57724,
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "label": "actual-generator-low",
+      "input": {
+        "coins": [
+          1
+        ],
+        "amount": 1
+      },
+      "work": 4,
+      "limit": 80,
+      "expected": 1,
+      "actual": 1,
+      "steps": 12,
+      "fullBytes": 9560,
+      "deltaBytes": 6279,
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "label": "semantic",
+      "input": {
+        "coins": [
+          2
+        ],
+        "amount": 3
+      },
+      "work": 8,
+      "limit": 80,
+      "expected": 0,
+      "actual": 0,
+      "steps": 16,
+      "fullBytes": 14562,
+      "deltaBytes": 9092,
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "label": "accepted-boundary",
+      "input": {
+        "coins": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "amount": 9
+      },
+      "work": 80,
+      "limit": 80,
+      "expected": 28,
+      "actual": 28,
+      "steps": 242,
+      "fullBytes": 773728,
+      "deltaBytes": 442395,
+      "sourceHash": "e20ab219080ffc1f9e19321ef213cb51116d696b4fc8d24b5220f3de21bcc6f6",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "label": "actual-generator-seed",
+      "input": {
+        "coins": [
+          7,
+          25,
+          12,
+          14
+        ],
+        "amount": 39
+      },
+      "work": 75,
+      "limit": 220,
+      "expected": 2,
+      "actual": 2,
+      "steps": 274,
+      "fullBytes": 152291,
+      "deltaBytes": 90637,
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "label": "actual-generator-high",
+      "input": {
+        "coins": [
+          25,
+          24,
+          23,
+          22,
+          21,
+          20,
+          19,
+          18
+        ],
+        "amount": 40
+      },
+      "work": 101,
+      "limit": 220,
+      "expected": 3,
+      "actual": 3,
+      "steps": 388,
+      "fullBytes": 225616,
+      "deltaBytes": 132303,
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "label": "actual-generator-low",
+      "input": {
+        "coins": [
+          1
+        ],
+        "amount": 1
+      },
+      "work": 3,
+      "limit": 220,
+      "expected": 1,
+      "actual": 1,
+      "steps": 12,
+      "fullBytes": 6479,
+      "deltaBytes": 4363,
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "label": "semantic",
+      "input": {
+        "coins": [
+          2
+        ],
+        "amount": 3
+      },
+      "work": 4,
+      "limit": 220,
+      "expected": 0,
+      "actual": 0,
+      "steps": 16,
+      "fullBytes": 8420,
+      "deltaBytes": 5505,
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "label": "accepted-boundary",
+      "input": {
+        "coins": [
+          23,
+          6,
+          7,
+          15,
+          3,
+          11
+        ],
+        "amount": 23
+      },
+      "work": 220,
+      "limit": 220,
+      "expected": 6,
+      "actual": 6,
+      "steps": 825,
+      "fullBytes": 498608,
+      "deltaBytes": 292470,
+      "sourceHash": "3d0650c89643fc5d370da2f70c61215e9433520a38aa4122f4c02d1a08cfdfbc",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "label": "actual-generator-seed",
+      "input": {
+        "nums": [
+          5,
+          5,
+          10,
+          12,
+          20
+        ],
+        "target": 10
+      },
+      "work": 66,
+      "limit": 225,
+      "expected": true,
+      "actual": true,
+      "steps": 58,
+      "fullBytes": 156241,
+      "deltaBytes": 146106,
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "label": "actual-generator-high",
+      "input": {
+        "nums": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "target": 19
+      },
+      "work": 220,
+      "limit": 225,
+      "expected": false,
+      "actual": false,
+      "steps": 203,
+      "fullBytes": 1511245,
+      "deltaBytes": 1475549,
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "label": "actual-generator-low",
+      "input": {
+        "nums": [
+          0
+        ],
+        "target": 0
+      },
+      "work": 2,
+      "limit": 225,
+      "expected": true,
+      "actual": true,
+      "steps": 4,
+      "fullBytes": 3540,
+      "deltaBytes": 2934,
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "label": "semantic",
+      "input": {
+        "nums": [
+          0,
+          0,
+          2
+        ],
+        "target": 0
+      },
+      "work": 4,
+      "limit": 225,
+      "expected": true,
+      "actual": true,
+      "steps": 6,
+      "fullBytes": 5370,
+      "deltaBytes": 4408,
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "label": "accepted-boundary",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "target": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": false,
+      "actual": false,
+      "steps": 203,
+      "fullBytes": 1550601,
+      "deltaBytes": 1514905,
+      "sourceHash": "60086e1b4333aef69691c0ffb35adcdf6582927a73887917770301bdb369cb6d",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "label": "actual-generator-seed",
+      "input": {
+        "nums": [
+          5,
+          5,
+          10,
+          12,
+          20
+        ],
+        "target": 3
+      },
+      "work": 24,
+      "limit": 80,
+      "expected": false,
+      "actual": false,
+      "steps": 25,
+      "fullBytes": 38919,
+      "deltaBytes": 23270,
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "label": "actual-generator-high",
+      "input": {
+        "nums": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ],
+        "target": 6
+      },
+      "work": 77,
+      "limit": 80,
+      "expected": false,
+      "actual": false,
+      "steps": 45,
+      "fullBytes": 145851,
+      "deltaBytes": 79654,
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "label": "actual-generator-low",
+      "input": {
+        "nums": [
+          0
+        ],
+        "target": 0
+      },
+      "work": 2,
+      "limit": 80,
+      "expected": true,
+      "actual": true,
+      "steps": 12,
+      "fullBytes": 10309,
+      "deltaBytes": 7334,
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "label": "semantic",
+      "input": {
+        "nums": [
+          0,
+          0,
+          2
+        ],
+        "target": 0
+      },
+      "work": 4,
+      "limit": 80,
+      "expected": true,
+      "actual": true,
+      "steps": 23,
+      "fullBytes": 20840,
+      "deltaBytes": 13950,
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "label": "accepted-boundary",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "target": 9
+      },
+      "work": 80,
+      "limit": 80,
+      "expected": false,
+      "actual": false,
+      "steps": 201,
+      "fullBytes": 663224,
+      "deltaBytes": 398268,
+      "sourceHash": "88a2d4f6216dcf53f40ce53d08b49be6fb21f01ab6fdf6383a9be8809b1483b2",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "label": "actual-generator-seed",
+      "input": {
+        "nums": [
+          4,
+          5,
+          8,
+          9,
+          15
+        ],
+        "k": 10
+      },
+      "work": 66,
+      "limit": 225,
+      "expected": 0,
+      "actual": 0,
+      "steps": 58,
+      "fullBytes": 159580,
+      "deltaBytes": 149445,
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "label": "actual-generator-high",
+      "input": {
+        "nums": [
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        "k": 19
+      },
+      "work": 220,
+      "limit": 225,
+      "expected": 0,
+      "actual": 0,
+      "steps": 203,
+      "fullBytes": 1528247,
+      "deltaBytes": 1492551,
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "label": "actual-generator-low",
+      "input": {
+        "nums": [
+          1
+        ],
+        "k": 0
+      },
+      "work": 2,
+      "limit": 225,
+      "expected": 1,
+      "actual": 1,
+      "steps": 4,
+      "fullBytes": 3494,
+      "deltaBytes": 2888,
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "label": "semantic",
+      "input": {
+        "nums": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "k": 3
+      },
+      "work": 20,
+      "limit": 225,
+      "expected": 3,
+      "actual": 3,
+      "steps": 19,
+      "fullBytes": 25575,
+      "deltaBytes": 22299,
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "label": "accepted-boundary",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 24
+      },
+      "work": 225,
+      "limit": 225,
+      "expected": 0,
+      "actual": 0,
+      "steps": 203,
+      "fullBytes": 1566704,
+      "deltaBytes": 1531008,
+      "sourceHash": "07f69d9dc0faf6517e66fb20d625de16fff80c15d737640cc63f373a7bbe08ec",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "label": "actual-generator-seed",
+      "input": {
+        "nums": [
+          4,
+          5,
+          8,
+          9,
+          15
+        ],
+        "k": 3
+      },
+      "work": 24,
+      "limit": 80,
+      "expected": 0,
+      "actual": 0,
+      "steps": 25,
+      "fullBytes": 35495,
+      "deltaBytes": 19954,
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "label": "actual-generator-high",
+      "input": {
+        "nums": [
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15,
+          15
+        ],
+        "k": 6
+      },
+      "work": 77,
+      "limit": 80,
+      "expected": 0,
+      "actual": 0,
+      "steps": 45,
+      "fullBytes": 139384,
+      "deltaBytes": 73550,
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "label": "actual-generator-low",
+      "input": {
+        "nums": [
+          1
+        ],
+        "k": 0
+      },
+      "work": 2,
+      "limit": 80,
+      "expected": 1,
+      "actual": 1,
+      "steps": 9,
+      "fullBytes": 6887,
+      "deltaBytes": 4658,
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "actualSampler": true,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "label": "semantic",
+      "input": {
+        "nums": [
+          1,
+          2,
+          2,
+          3
+        ],
+        "k": 3
+      },
+      "work": 20,
+      "limit": 80,
+      "expected": 3,
+      "actual": 3,
+      "steps": 56,
+      "fullBytes": 70870,
+      "deltaBytes": 40861,
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "label": "accepted-boundary",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 9
+      },
+      "work": 80,
+      "limit": 80,
+      "expected": 0,
+      "actual": 0,
+      "steps": 201,
+      "fullBytes": 634505,
+      "deltaBytes": 370962,
+      "sourceHash": "d5ce5d6fa7245acbf5d3db49c78fc53bdb431ffeb56a875ad43ac43dcb3c7b42",
+      "actualSampler": false,
+      "independentWorkAndAnswer": true,
+      "fullDeltaDecodedEqual": true,
+      "complete": true
+    }
+  ],
+  "refusals": [
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "input": {
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "amount": 25
+      },
+      "encoding": "full",
+      "work": 234,
+      "limit": 225,
+      "field": "amount",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "input": {
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "amount": 25
+      },
+      "encoding": "delta",
+      "work": 234,
+      "limit": 225,
+      "field": "amount",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "input": {
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "amount": 8
+      },
+      "encoding": "full",
+      "work": 81,
+      "limit": 80,
+      "field": "coins",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "input": {
+        "coins": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "amount": 8
+      },
+      "encoding": "delta",
+      "work": 81,
+      "limit": 80,
+      "field": "coins",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "input": {
+        "coins": [
+          7,
+          23,
+          25,
+          6,
+          5,
+          20
+        ],
+        "amount": 31
+      },
+      "encoding": "full",
+      "work": 221,
+      "limit": 220,
+      "field": "coins",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "input": {
+        "coins": [
+          7,
+          23,
+          25,
+          6,
+          5,
+          20
+        ],
+        "amount": 31
+      },
+      "encoding": "delta",
+      "work": 221,
+      "limit": 220,
+      "field": "coins",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "input": {
+        "coins": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "amount": 25
+      },
+      "encoding": "full",
+      "work": 234,
+      "limit": 225,
+      "field": "amount",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "input": {
+        "coins": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "amount": 25
+      },
+      "encoding": "delta",
+      "work": 234,
+      "limit": 225,
+      "field": "amount",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "input": {
+        "coins": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "amount": 8
+      },
+      "encoding": "full",
+      "work": 81,
+      "limit": 80,
+      "field": "coins",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "input": {
+        "coins": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "amount": 8
+      },
+      "encoding": "delta",
+      "work": 81,
+      "limit": 80,
+      "field": "coins",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "input": {
+        "coins": [
+          7,
+          23,
+          25,
+          6,
+          5,
+          20
+        ],
+        "amount": 31
+      },
+      "encoding": "full",
+      "work": 221,
+      "limit": 220,
+      "field": "coins",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "input": {
+        "coins": [
+          7,
+          23,
+          25,
+          6,
+          5,
+          20
+        ],
+        "amount": 31
+      },
+      "encoding": "delta",
+      "work": 221,
+      "limit": 220,
+      "field": "coins",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "target": 25
+      },
+      "encoding": "full",
+      "work": 234,
+      "limit": 225,
+      "field": "target",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "target": 25
+      },
+      "encoding": "delta",
+      "work": 234,
+      "limit": 225,
+      "field": "target",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "target": 8
+      },
+      "encoding": "full",
+      "work": 81,
+      "limit": 80,
+      "field": "nums",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "target": 8
+      },
+      "encoding": "delta",
+      "work": 81,
+      "limit": 80,
+      "field": "nums",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 25
+      },
+      "encoding": "full",
+      "work": 234,
+      "limit": 225,
+      "field": "k",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 25
+      },
+      "encoding": "delta",
+      "work": 234,
+      "limit": 225,
+      "field": "k",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 8
+      },
+      "encoding": "full",
+      "work": 81,
+      "limit": 80,
+      "field": "nums",
+      "expected400": true,
+      "noSteps": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "input": {
+        "nums": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "k": 8
+      },
+      "encoding": "delta",
+      "work": 81,
+      "limit": 80,
+      "field": "nums",
+      "expected400": true,
+      "noSteps": true
+    }
+  ],
+  "frontendMetadataControls": [
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "label": "duplicate-scalar",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "canonical",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "label": "duplicate-scalar",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "memoization",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "label": "duplicate-scalar",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "minimum-coins-dp",
+      "form": "recursion",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "label": "duplicate-scalar",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "canonical",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "label": "duplicate-scalar",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "memoization",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "label": "duplicate-scalar",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "coin-change-2",
+      "form": "recursion",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "label": "duplicate-scalar",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "canonical",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "label": "duplicate-scalar",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "memoization",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "label": "duplicate-scalar",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "canonical",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "label": "unknown-kind",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "label": "duplicate-scalar",
+      "rejectedBeforeRng": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "memoization",
+      "label": "wrong-scalar-type",
+      "rejectedBeforeRng": true
+    }
+  ],
+  "unchangedScopeControls": [
+    {
+      "id": "partition-equal-subset-sum",
+      "form": "memoization",
+      "encoding": "full",
+      "oddInput": {
+        "nums": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          19
+        ]
+      },
+      "oddCompleteWithoutCalls": true,
+      "evenInput": {
+        "nums": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ]
+      },
+      "evenDerivedTableStillRefused": true,
+      "workMetadataStillAbsent": true
+    },
+    {
+      "id": "partition-equal-subset-sum",
+      "form": "memoization",
+      "encoding": "delta",
+      "oddInput": {
+        "nums": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          19
+        ]
+      },
+      "oddCompleteWithoutCalls": true,
+      "evenInput": {
+        "nums": [
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20,
+          20
+        ]
+      },
+      "evenDerivedTableStillRefused": true,
+      "workMetadataStillAbsent": true
+    },
+    {
+      "id": "subset-sum-equal-target",
+      "form": "recursion",
+      "sixItemBoundUnchanged": true,
+      "workMetadataStillAbsent": true
+    },
+    {
+      "id": "count-subsets-with-sum-k",
+      "form": "recursion",
+      "sixItemBoundUnchanged": true,
+      "workMetadataStillAbsent": true
+    }
+  ],
+  "limits": "Ten declared direct-target/amount specifications; actual sampler profiles, semantic cases and exact boundaries. Not derived-target/parity budgets, all-input/source compilation, real devices, screen readers, performance, public rollout or whole-project acceptance."
+}

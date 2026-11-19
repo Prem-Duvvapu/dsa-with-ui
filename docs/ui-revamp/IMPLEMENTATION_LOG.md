@@ -3469,3 +3469,52 @@ During verification the owner says to commit, push and merge current changes, th
 making new changes. Complete only this concrete package's verification/publication;
 development pauses afterward. No further feature package is started. DP remains23/56
 verified/merged,33 outside verification; broader source/dependency/human/release work remains.
+
+## 2026-11-19 — coin/subset generated-input correctness
+
+The owner resumes the completion goal and requests another hour of work. Knapsack #239
+is merged as `a5c31d7`, with exact-head/post-merge CI green. The next medium branch,
+`fix/coin-subset-work-limits`, starts from that fetched main; no original OneDrive edits
+are used. The requested earlier pause is superseded by this resumption.
+
+Four direct amount/target canonical owners and their memo forms declare existing225/80-cell
+limits; both coin recursions declare the existing220-call reusable skip/take limit.
+Shared validation replaces equivalent duplicate guards; CoinTraceBounds is removed.
+Subset recursion stays capped at6 items; zero-valued feasibility and positive indexed
+subset counts remain distinct contracts. Partition parity/impossibility shortcuts and
+derived limits are untouched. Only10 workLimits additions change the inventory.
+
+Repeated RNG exposes a separate declared-distinct defect: after20 retries the old sampler
+emits duplicates. Sparse partial sampling without replacement fixes numeric lists in
+O(selected length) memory, including signed32-bit domains and paired-length feasibility.
+Manual drafts/defaults/domains and sparse-tree generation remain unchanged. Initial
+distinct RED19/21 plus2 independently added edge-case RED checks lead to23 final cases;
+23 coin/subset fixture controls exercise existing generic work-limit support. Backend
+RED20/41 independently proves missing served metadata and shared refusal behavior.
+
+Focused checks pass111 backend and158 frontend cases. Clean full backend passes8,392
+cases/500 unchanged skips; all432 golden checks pass and431 fixture files stay byte-identical.
+Final normal frontend passes1,038/91 files in246.04 seconds. Two earlier failed full
+attempts are retained/excluded, including unchanged restoration/sharing cases that pass
+in the final full run. No assertions, workers, timeouts or lifecycle code are weakened.
+Build/startup pass; JS395.86kB/126.21gzip, CSS99.09kB/17.96gzip.
+
+Independent freeze verifies617 class files and93 Java solution resources against JAR
+`e244fc2a8c3ab7fa8e1edb64bd776fa3e64a07c894d08bc42ea823be7bb9af25`, with no retired helper.
+No Maven runs during live proof. Real API124 executions cover generated/semantic/boundary
+maps, both encodings, independent BFS/quantity/subset answers and parity-order controls.
+Largest full/delta responses1,566,704/1,531,008 bytes; accepted runs finish untruncated.
+Chromium/Firefox each pass20 journeys, with actual editor/Run/share/source/focus/view and
+400 recovery checks. All8 viewport screenshots are inspected; no overflow/page errors.
+Both engines agree on frozen index-CAbCzZ8l.js/index-DL2roZqZ.css and sampler/JAR hashes.
+All10 actual specs match inventory; stats remain431/431,0 duplicates/orphans. Owned
+services stop and both ports are free. See `evidence/coin-subset-work-limits/VERIFICATION.md`.
+
+Read-only source refresh captures479 actual listings:365 compile with documented JDK
+context,36 other Java failures,77 node-only unresolved contexts and1 C++/Java-label mismatch.
+Only Phone's source differs from the Oct28 audit; compiler success is not algorithm or
+standalone certification. The locked npm audit still reports9 affected entries, without
+lock changes. LCS's next-candidate preflight is ready; no new candidate status advances.
+DP remains23/56 verified/merged with33 outside verification. Broader D6/D7, source,
+dependency, device/human, performance and release gates remain open. Exact-head CI governs
+publication of this concrete package.

@@ -2010,6 +2010,31 @@ work-limit schema. `evidence/knapsack-work-limits/VERIFICATION.md` records artif
 measurements, preserved failure keys and scope. The owner requests current publication and
 then a stop to new changes; broader D6 and release gates remain open.
 
+### RCA-064 follow-up — 2026-11-19 coin/subset limits and distinct sampling
+
+The owner resumed work after #239. Four direct amount/target table owners and their
+memo forms still enforced visualization budgets only inside run(), so Randomize could
+not see those bounds. Both coin recursions use exactly the existing reusable skip/take
+call shape. The declarations now expose the unchanged225/80-cell and220-call limits
+at the shared input boundary. Equal-partition's parity shortcut and derived table guard
+remain local; attaching an unconditional table rule there would reject valid fast answers.
+
+Coin Change II also declares distinct denominations. The old generic list generator
+retried duplicate draws20 times and then emitted the duplicate anyway. A repeated high
+RNG value produced eight25s, which the unchanged server correctly refused. Sparse
+sampling without replacement fixes generation without sorting unless requested, inventing
+fallback values, changing manual drafts, or shrinking validation bounds. Generated
+lengths intersect numeric cardinality and joint length bounds. The separate sparse-tree
+path is preserved.
+
+Initial regressions:20/41 backend checks fail (all10 served declarations and all10
+shared-boundary refusals);21 existing behavior controls pass. The distinct generator's
+initial21 cases fail19 with2 controls. Additional targeted regressions catch empty-only
+and missing-maximum length handling before final verification. The package's
+`evidence/coin-subset-work-limits/VERIFICATION.md` records final gates and exclusions.
+No broad D6, derived-budget, source, human, performance or release gate is closed by
+these ten existing contracts.
+
 ### RCA-056 follow-up — Phone Combinations budget/source/result contract
 
 Read-only candidate preflight finds another accepted input that cannot finish:

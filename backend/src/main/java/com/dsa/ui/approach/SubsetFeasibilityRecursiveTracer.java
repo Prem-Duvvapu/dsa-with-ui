@@ -19,8 +19,12 @@ final class SubsetFeasibilityRecursiveTracer implements AlgorithmTracer {
                 .help("Non-negative indexed values; zero is allowed. " + (memo
                         ? "Memo needs (n+1) × (target+1) ≤ 80 cells; partition derives target=sum/2 after its parity check."
                         : "Up to 6 items keeps the full recursive tree below 220 calls.")).build();
-        return kind == Kind.EQUAL_PARTITION ? InputSpec.of(nums) : InputSpec.of(nums,
+        if (kind == Kind.EQUAL_PARTITION) return InputSpec.of(nums);
+        InputSpec spec = InputSpec.of(nums,
                 InputField.of("target", FieldType.INT).label("Target sum K").range(0, 40).defaultValue(6).build());
+        return memo ? spec.withWorkLimit(new InputWorkLimit(InputWorkLimit.Kind.CAPACITY_TABLE_CELLS,
+                "nums", "target", 80, false, "nums",
+                "Memo tracing needs (n+1) × (target+1) ≤ 80 cells; use fewer/smaller values or a smaller target.")) : spec;
     }
     public Map<String, Object> alternateInput() { return kind == Kind.SUBSET ? Map.of("nums", List.of(2, 4), "target", 3) : Map.of("nums", List.of(1, 2, 3, 5)); }
     public void run(Inputs in, StepEmitter emit) {
@@ -36,7 +40,7 @@ final class SubsetFeasibilityRecursiveTracer implements AlgorithmTracer {
             }
             target = sum / 2;
         } else target = in.getInt("target");
-        if (memo && (long) (nums.length + 1) * (target + 1) > 80)
+        if (memo && kind == Kind.EQUAL_PARTITION && (long) (nums.length + 1) * (target + 1) > 80)
             throw new InputValidationException(Map.of("nums", "Memo tracing needs (n+1) × (target+1) ≤ 80 cells; use fewer/smaller values or a smaller target."));
         var execution = new RecursiveBooleanDpExecution(emit, memo, nums.length, target);
         var root = new RecursiveBooleanDpExecution.State(nums.length, target);

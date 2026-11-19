@@ -53,7 +53,8 @@ public class MinimumCoinsDpTracer implements AlgorithmTracer {
                         .help("The exact amount to make with the fewest coins.")
                         .range(1, 40)
                         .defaultValue(11)
-                        .build());
+                        .build()).withWorkLimit(new InputWorkLimit(InputWorkLimit.Kind.CAPACITY_TABLE_CELLS,
+                        "coins", "amount", DpTraceSupport.MAX_TABLE_CELLS, false, "amount", "Use a smaller amount or fewer coins."));
     }
 
     /** coins = [2], amount = 3: 2 never sums to an odd number, so the target is unreachable
@@ -106,7 +107,6 @@ public class MinimumCoinsDpTracer implements AlgorithmTracer {
         int n = coins.length;
         int inf = CoinChangeDpTable.INFINITY;
 
-        DpTraceSupport.requireTableFits(n + 1, amount + 1, "amount", "Use a smaller amount or fewer coins.");
         int[][] dp = new int[n + 1][amount + 1];
         boolean[][] settled = new boolean[n + 1][amount + 1];
         List<String> rowLabels = CoinChangeDpTable.rowLabels(coins);
