@@ -1,0 +1,52 @@
+{
+  "firstAttempt": {
+    "status": {
+      "started": "2026-11-19T19:34:52.934331+00:00",
+      "pid": 402659,
+      "testCommand": [
+        "npx",
+        "vitest",
+        "run"
+      ],
+      "buildCommand": [
+        "npx",
+        "vite",
+        "build"
+      ],
+      "sourceHashesBefore": {
+        "frontend/src/hooks/useProblemSession.js": "bc78da8e3b3129e9054b9a90f2725fac09d8095e656fe6bf870a1dcb38ad8ff7",
+        "frontend/src/hooks/useProblemSession.stringApproaches.test.jsx": "adc8eab6292ea85b6c6f71d7724eb48a1d7c09befa16c96c9cbb51a767b04abe",
+        "frontend/src/workspace/ApproachSelector.strings.test.jsx": "d795636956bfd8d8d3766f63ca683691c6429b0b822832c76d0f5856c7866f29"
+      },
+      "testExit": 1,
+      "buildExit": null,
+      "sourceHashesAfter": {
+        "frontend/src/hooks/useProblemSession.js": "bc78da8e3b3129e9054b9a90f2725fac09d8095e656fe6bf870a1dcb38ad8ff7",
+        "frontend/src/hooks/useProblemSession.stringApproaches.test.jsx": "adc8eab6292ea85b6c6f71d7724eb48a1d7c09befa16c96c9cbb51a767b04abe",
+        "frontend/src/workspace/ApproachSelector.strings.test.jsx": "d795636956bfd8d8d3766f63ca683691c6429b0b822832c76d0f5856c7866f29"
+      },
+      "sourceUnchanged": true,
+      "finished": "2026-11-19T19:38:46.395105+00:00"
+    },
+    "passed": 1055,
+    "failed": 1,
+    "failure": "productionReachability.test.js timed out in its unchanged30000ms real production build check.",
+    "excludedFromFinalProof": true
+  },
+  "isolatedCheck": {
+    "command": "npx vitest run src/productionReachability.test.js",
+    "passed": 9,
+    "failed": 0,
+    "testTimeMs": 26668,
+    "exit": 0
+  },
+  "finalAttempt": {
+    "passed": 1056,
+    "files": 93,
+    "failed": 0,
+    "testExit": 0,
+    "buildExit": 0,
+    "sourceUnchanged": true
+  },
+  "limits": "Observed shared-host contention and a long wall-clock gap. Functional assertion results only; no performance claim and no altered workers/timeouts/assertions."
+}

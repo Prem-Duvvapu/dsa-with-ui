@@ -1,0 +1,1095 @@
+{
+  "basis": "Exhaustive restricted-growth equality patterns; pure count arithmetic, no production execution, API or JVM",
+  "childOrder": "drop text prefix before drop reversed prefix; equal characters use diagonal only",
+  "events": "3*calls + uncached nonbase evaluations + 2 start/done",
+  "rows": [
+    {
+      "n": 1,
+      "recursion": {
+        "calls": {
+          "value": 2,
+          "witness": "a",
+          "shape": {
+            "calls": 2,
+            "branchEvents": 1,
+            "events": 9,
+            "maxStack": 2
+          },
+          "ties": 1
+        },
+        "branchEvents": {
+          "value": 1,
+          "witness": "a",
+          "shape": {
+            "calls": 2,
+            "branchEvents": 1,
+            "events": 9,
+            "maxStack": 2
+          },
+          "ties": 1
+        },
+        "events": {
+          "value": 9,
+          "witness": "a",
+          "shape": {
+            "calls": 2,
+            "branchEvents": 1,
+            "events": 9,
+            "maxStack": 2
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 2,
+          "witness": "a",
+          "shape": {
+            "calls": 2,
+            "branchEvents": 1,
+            "events": 9,
+            "maxStack": 2
+          },
+          "ties": 1
+        }
+      },
+      "memoization": {
+        "calls": {
+          "value": 2,
+          "witness": "a",
+          "shape": {
+            "calls": 2,
+            "hits": 0,
+            "branchEvents": 1,
+            "maxStack": 2,
+            "events": 9,
+            "evaluations": 2,
+            "answer": 1
+          },
+          "ties": 1
+        },
+        "hits": {
+          "value": 0,
+          "witness": "a",
+          "shape": {
+            "calls": 2,
+            "hits": 0,
+            "branchEvents": 1,
+            "maxStack": 2,
+            "events": 9,
+            "evaluations": 2,
+            "answer": 1
+          },
+          "ties": 1
+        },
+        "branchEvents": {
+          "value": 1,
+          "witness": "a",
+          "shape": {
+            "calls": 2,
+            "hits": 0,
+            "branchEvents": 1,
+            "maxStack": 2,
+            "events": 9,
+            "evaluations": 2,
+            "answer": 1
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 2,
+          "witness": "a",
+          "shape": {
+            "calls": 2,
+            "hits": 0,
+            "branchEvents": 1,
+            "maxStack": 2,
+            "events": 9,
+            "evaluations": 2,
+            "answer": 1
+          },
+          "ties": 1
+        },
+        "events": {
+          "value": 9,
+          "witness": "a",
+          "shape": {
+            "calls": 2,
+            "hits": 0,
+            "branchEvents": 1,
+            "maxStack": 2,
+            "events": 9,
+            "evaluations": 2,
+            "answer": 1
+          },
+          "ties": 1
+        },
+        "evaluations": {
+          "value": 2,
+          "witness": "a",
+          "shape": {
+            "calls": 2,
+            "hits": 0,
+            "branchEvents": 1,
+            "maxStack": 2,
+            "events": 9,
+            "evaluations": 2,
+            "answer": 1
+          },
+          "ties": 1
+        }
+      },
+      "equalityPatterns": 1
+    },
+    {
+      "n": 2,
+      "recursion": {
+        "calls": {
+          "value": 5,
+          "witness": "ab",
+          "shape": {
+            "calls": 5,
+            "branchEvents": 3,
+            "events": 20,
+            "maxStack": 3
+          },
+          "ties": 1
+        },
+        "branchEvents": {
+          "value": 3,
+          "witness": "ab",
+          "shape": {
+            "calls": 5,
+            "branchEvents": 3,
+            "events": 20,
+            "maxStack": 3
+          },
+          "ties": 1
+        },
+        "events": {
+          "value": 20,
+          "witness": "ab",
+          "shape": {
+            "calls": 5,
+            "branchEvents": 3,
+            "events": 20,
+            "maxStack": 3
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 3,
+          "witness": "aa",
+          "shape": {
+            "calls": 3,
+            "branchEvents": 2,
+            "events": 13,
+            "maxStack": 3
+          },
+          "ties": 2
+        }
+      },
+      "memoization": {
+        "calls": {
+          "value": 5,
+          "witness": "ab",
+          "shape": {
+            "calls": 5,
+            "hits": 0,
+            "branchEvents": 3,
+            "maxStack": 3,
+            "events": 20,
+            "evaluations": 5,
+            "answer": 1
+          },
+          "ties": 1
+        },
+        "hits": {
+          "value": 0,
+          "witness": "aa",
+          "shape": {
+            "calls": 3,
+            "hits": 0,
+            "branchEvents": 2,
+            "maxStack": 3,
+            "events": 13,
+            "evaluations": 3,
+            "answer": 2
+          },
+          "ties": 2
+        },
+        "branchEvents": {
+          "value": 3,
+          "witness": "ab",
+          "shape": {
+            "calls": 5,
+            "hits": 0,
+            "branchEvents": 3,
+            "maxStack": 3,
+            "events": 20,
+            "evaluations": 5,
+            "answer": 1
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 3,
+          "witness": "aa",
+          "shape": {
+            "calls": 3,
+            "hits": 0,
+            "branchEvents": 2,
+            "maxStack": 3,
+            "events": 13,
+            "evaluations": 3,
+            "answer": 2
+          },
+          "ties": 2
+        },
+        "events": {
+          "value": 20,
+          "witness": "ab",
+          "shape": {
+            "calls": 5,
+            "hits": 0,
+            "branchEvents": 3,
+            "maxStack": 3,
+            "events": 20,
+            "evaluations": 5,
+            "answer": 1
+          },
+          "ties": 1
+        },
+        "evaluations": {
+          "value": 5,
+          "witness": "ab",
+          "shape": {
+            "calls": 5,
+            "hits": 0,
+            "branchEvents": 3,
+            "maxStack": 3,
+            "events": 20,
+            "evaluations": 5,
+            "answer": 1
+          },
+          "ties": 1
+        }
+      },
+      "equalityPatterns": 2
+    },
+    {
+      "n": 3,
+      "recursion": {
+        "calls": {
+          "value": 15,
+          "witness": "abc",
+          "shape": {
+            "calls": 15,
+            "branchEvents": 9,
+            "events": 56,
+            "maxStack": 5
+          },
+          "ties": 1
+        },
+        "branchEvents": {
+          "value": 9,
+          "witness": "abc",
+          "shape": {
+            "calls": 15,
+            "branchEvents": 9,
+            "events": 56,
+            "maxStack": 5
+          },
+          "ties": 1
+        },
+        "events": {
+          "value": 56,
+          "witness": "abc",
+          "shape": {
+            "calls": 15,
+            "branchEvents": 9,
+            "events": 56,
+            "maxStack": 5
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 5,
+          "witness": "aab",
+          "shape": {
+            "calls": 11,
+            "branchEvents": 7,
+            "events": 42,
+            "maxStack": 5
+          },
+          "ties": 3
+        }
+      },
+      "memoization": {
+        "calls": {
+          "value": 12,
+          "witness": "abc",
+          "shape": {
+            "calls": 12,
+            "hits": 1,
+            "branchEvents": 7,
+            "maxStack": 5,
+            "events": 45,
+            "evaluations": 11,
+            "answer": 1
+          },
+          "ties": 1
+        },
+        "hits": {
+          "value": 1,
+          "witness": "aab",
+          "shape": {
+            "calls": 11,
+            "hits": 1,
+            "branchEvents": 7,
+            "maxStack": 5,
+            "events": 42,
+            "evaluations": 10,
+            "answer": 2
+          },
+          "ties": 3
+        },
+        "branchEvents": {
+          "value": 7,
+          "witness": "aab",
+          "shape": {
+            "calls": 11,
+            "hits": 1,
+            "branchEvents": 7,
+            "maxStack": 5,
+            "events": 42,
+            "evaluations": 10,
+            "answer": 2
+          },
+          "ties": 3
+        },
+        "maxStack": {
+          "value": 5,
+          "witness": "aab",
+          "shape": {
+            "calls": 11,
+            "hits": 1,
+            "branchEvents": 7,
+            "maxStack": 5,
+            "events": 42,
+            "evaluations": 10,
+            "answer": 2
+          },
+          "ties": 3
+        },
+        "events": {
+          "value": 45,
+          "witness": "abc",
+          "shape": {
+            "calls": 12,
+            "hits": 1,
+            "branchEvents": 7,
+            "maxStack": 5,
+            "events": 45,
+            "evaluations": 11,
+            "answer": 1
+          },
+          "ties": 1
+        },
+        "evaluations": {
+          "value": 11,
+          "witness": "abc",
+          "shape": {
+            "calls": 12,
+            "hits": 1,
+            "branchEvents": 7,
+            "maxStack": 5,
+            "events": 45,
+            "evaluations": 11,
+            "answer": 1
+          },
+          "ties": 1
+        }
+      },
+      "equalityPatterns": 5
+    },
+    {
+      "n": 4,
+      "recursion": {
+        "calls": {
+          "value": 47,
+          "witness": "abcd",
+          "shape": {
+            "calls": 47,
+            "branchEvents": 27,
+            "events": 170,
+            "maxStack": 7
+          },
+          "ties": 1
+        },
+        "branchEvents": {
+          "value": 27,
+          "witness": "abcd",
+          "shape": {
+            "calls": 47,
+            "branchEvents": 27,
+            "events": 170,
+            "maxStack": 7
+          },
+          "ties": 1
+        },
+        "events": {
+          "value": 170,
+          "witness": "abcd",
+          "shape": {
+            "calls": 47,
+            "branchEvents": 27,
+            "events": 170,
+            "maxStack": 7
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 7,
+          "witness": "aaab",
+          "shape": {
+            "calls": 20,
+            "branchEvents": 13,
+            "events": 75,
+            "maxStack": 7
+          },
+          "ties": 9
+        }
+      },
+      "memoization": {
+        "calls": {
+          "value": 23,
+          "witness": "abbc",
+          "shape": {
+            "calls": 23,
+            "hits": 3,
+            "branchEvents": 14,
+            "maxStack": 7,
+            "events": 85,
+            "evaluations": 20,
+            "answer": 2
+          },
+          "ties": 2
+        },
+        "hits": {
+          "value": 4,
+          "witness": "aabb",
+          "shape": {
+            "calls": 21,
+            "hits": 4,
+            "branchEvents": 13,
+            "maxStack": 7,
+            "events": 78,
+            "evaluations": 17,
+            "answer": 2
+          },
+          "ties": 4
+        },
+        "branchEvents": {
+          "value": 14,
+          "witness": "abbc",
+          "shape": {
+            "calls": 23,
+            "hits": 3,
+            "branchEvents": 14,
+            "maxStack": 7,
+            "events": 85,
+            "evaluations": 20,
+            "answer": 2
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 7,
+          "witness": "aabb",
+          "shape": {
+            "calls": 21,
+            "hits": 4,
+            "branchEvents": 13,
+            "maxStack": 7,
+            "events": 78,
+            "evaluations": 17,
+            "answer": 2
+          },
+          "ties": 8
+        },
+        "events": {
+          "value": 85,
+          "witness": "abbc",
+          "shape": {
+            "calls": 23,
+            "hits": 3,
+            "branchEvents": 14,
+            "maxStack": 7,
+            "events": 85,
+            "evaluations": 20,
+            "answer": 2
+          },
+          "ties": 1
+        },
+        "evaluations": {
+          "value": 20,
+          "witness": "abbc",
+          "shape": {
+            "calls": 23,
+            "hits": 3,
+            "branchEvents": 14,
+            "maxStack": 7,
+            "events": 85,
+            "evaluations": 20,
+            "answer": 2
+          },
+          "ties": 1
+        }
+      },
+      "equalityPatterns": 15
+    },
+    {
+      "n": 5,
+      "recursion": {
+        "calls": {
+          "value": 155,
+          "witness": "abcde",
+          "shape": {
+            "calls": 155,
+            "branchEvents": 85,
+            "events": 552,
+            "maxStack": 9
+          },
+          "ties": 1
+        },
+        "branchEvents": {
+          "value": 85,
+          "witness": "abcde",
+          "shape": {
+            "calls": 155,
+            "branchEvents": 85,
+            "events": 552,
+            "maxStack": 9
+          },
+          "ties": 1
+        },
+        "events": {
+          "value": 552,
+          "witness": "abcde",
+          "shape": {
+            "calls": 155,
+            "branchEvents": 85,
+            "events": 552,
+            "maxStack": 9
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 9,
+          "witness": "aaaab",
+          "shape": {
+            "calls": 32,
+            "branchEvents": 21,
+            "events": 119,
+            "maxStack": 9
+          },
+          "ties": 32
+        }
+      },
+      "memoization": {
+        "calls": {
+          "value": 38,
+          "witness": "abbcd",
+          "shape": {
+            "calls": 38,
+            "hits": 8,
+            "branchEvents": 22,
+            "maxStack": 9,
+            "events": 138,
+            "evaluations": 30,
+            "answer": 2
+          },
+          "ties": 3
+        },
+        "hits": {
+          "value": 9,
+          "witness": "aabcc",
+          "shape": {
+            "calls": 36,
+            "hits": 9,
+            "branchEvents": 21,
+            "maxStack": 9,
+            "events": 131,
+            "evaluations": 27,
+            "answer": 2
+          },
+          "ties": 4
+        },
+        "branchEvents": {
+          "value": 23,
+          "witness": "abbbc",
+          "shape": {
+            "calls": 36,
+            "hits": 5,
+            "branchEvents": 23,
+            "maxStack": 9,
+            "events": 133,
+            "evaluations": 31,
+            "answer": 3
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 9,
+          "witness": "aabbb",
+          "shape": {
+            "calls": 32,
+            "hits": 7,
+            "branchEvents": 20,
+            "maxStack": 9,
+            "events": 118,
+            "evaluations": 25,
+            "answer": 3
+          },
+          "ties": 24
+        },
+        "events": {
+          "value": 138,
+          "witness": "abbcd",
+          "shape": {
+            "calls": 38,
+            "hits": 8,
+            "branchEvents": 22,
+            "maxStack": 9,
+            "events": 138,
+            "evaluations": 30,
+            "answer": 2
+          },
+          "ties": 2
+        },
+        "evaluations": {
+          "value": 31,
+          "witness": "abbbc",
+          "shape": {
+            "calls": 36,
+            "hits": 5,
+            "branchEvents": 23,
+            "maxStack": 9,
+            "events": 133,
+            "evaluations": 31,
+            "answer": 3
+          },
+          "ties": 1
+        }
+      },
+      "equalityPatterns": 52
+    },
+    {
+      "n": 6,
+      "recursion": {
+        "calls": {
+          "value": 535,
+          "witness": "abcdef",
+          "shape": {
+            "calls": 535,
+            "branchEvents": 283,
+            "events": 1890,
+            "maxStack": 11
+          },
+          "ties": 1
+        },
+        "branchEvents": {
+          "value": 283,
+          "witness": "abcdef",
+          "shape": {
+            "calls": 535,
+            "branchEvents": 283,
+            "events": 1890,
+            "maxStack": 11
+          },
+          "ties": 1
+        },
+        "events": {
+          "value": 1890,
+          "witness": "abcdef",
+          "shape": {
+            "calls": 535,
+            "branchEvents": 283,
+            "events": 1890,
+            "maxStack": 11
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 11,
+          "witness": "aaaaab",
+          "shape": {
+            "calls": 47,
+            "branchEvents": 31,
+            "events": 174,
+            "maxStack": 11
+          },
+          "ties": 131
+        }
+      },
+      "memoization": {
+        "calls": {
+          "value": 57,
+          "witness": "abbccd",
+          "shape": {
+            "calls": 57,
+            "hits": 14,
+            "branchEvents": 33,
+            "maxStack": 11,
+            "events": 206,
+            "evaluations": 43,
+            "answer": 2
+          },
+          "ties": 5
+        },
+        "hits": {
+          "value": 16,
+          "witness": "aabcdd",
+          "shape": {
+            "calls": 55,
+            "hits": 16,
+            "branchEvents": 31,
+            "maxStack": 11,
+            "events": 198,
+            "evaluations": 39,
+            "answer": 2
+          },
+          "ties": 4
+        },
+        "branchEvents": {
+          "value": 34,
+          "witness": "abbbbc",
+          "shape": {
+            "calls": 51,
+            "hits": 7,
+            "branchEvents": 34,
+            "maxStack": 11,
+            "events": 189,
+            "evaluations": 44,
+            "answer": 4
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 11,
+          "witness": "aabbbb",
+          "shape": {
+            "calls": 44,
+            "hits": 10,
+            "branchEvents": 28,
+            "maxStack": 11,
+            "events": 162,
+            "evaluations": 34,
+            "answer": 4
+          },
+          "ties": 82
+        },
+        "events": {
+          "value": 206,
+          "witness": "abbccd",
+          "shape": {
+            "calls": 57,
+            "hits": 14,
+            "branchEvents": 33,
+            "maxStack": 11,
+            "events": 206,
+            "evaluations": 43,
+            "answer": 2
+          },
+          "ties": 1
+        },
+        "evaluations": {
+          "value": 44,
+          "witness": "abbbbc",
+          "shape": {
+            "calls": 51,
+            "hits": 7,
+            "branchEvents": 34,
+            "maxStack": 11,
+            "events": 189,
+            "evaluations": 44,
+            "answer": 4
+          },
+          "ties": 1
+        }
+      },
+      "equalityPatterns": 203
+    },
+    {
+      "n": 7,
+      "recursion": {
+        "calls": {
+          "value": 1911,
+          "witness": "abcdefg",
+          "shape": {
+            "calls": 1911,
+            "branchEvents": 987,
+            "events": 6722,
+            "maxStack": 13
+          },
+          "ties": 1
+        },
+        "branchEvents": {
+          "value": 987,
+          "witness": "abcdefg",
+          "shape": {
+            "calls": 1911,
+            "branchEvents": 987,
+            "events": 6722,
+            "maxStack": 13
+          },
+          "ties": 1
+        },
+        "events": {
+          "value": 6722,
+          "witness": "abcdefg",
+          "shape": {
+            "calls": 1911,
+            "branchEvents": 987,
+            "events": 6722,
+            "maxStack": 13
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 13,
+          "witness": "aaaaaab",
+          "shape": {
+            "calls": 65,
+            "branchEvents": 43,
+            "events": 240,
+            "maxStack": 13
+          },
+          "ties": 594
+        }
+      },
+      "memoization": {
+        "calls": {
+          "value": 80,
+          "witness": "abbccde",
+          "shape": {
+            "calls": 80,
+            "hits": 23,
+            "branchEvents": 45,
+            "maxStack": 13,
+            "events": 287,
+            "evaluations": 57,
+            "answer": 2
+          },
+          "ties": 8
+        },
+        "hits": {
+          "value": 25,
+          "witness": "aabcdee",
+          "shape": {
+            "calls": 78,
+            "hits": 25,
+            "branchEvents": 43,
+            "maxStack": 13,
+            "events": 279,
+            "evaluations": 53,
+            "answer": 2
+          },
+          "ties": 4
+        },
+        "branchEvents": {
+          "value": 47,
+          "witness": "abbbbbc",
+          "shape": {
+            "calls": 68,
+            "hits": 9,
+            "branchEvents": 47,
+            "maxStack": 13,
+            "events": 253,
+            "evaluations": 59,
+            "answer": 5
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 13,
+          "witness": "aabbbbb",
+          "shape": {
+            "calls": 57,
+            "hits": 13,
+            "branchEvents": 37,
+            "maxStack": 13,
+            "events": 210,
+            "evaluations": 44,
+            "answer": 5
+          },
+          "ties": 311
+        },
+        "events": {
+          "value": 287,
+          "witness": "abbccde",
+          "shape": {
+            "calls": 80,
+            "hits": 23,
+            "branchEvents": 45,
+            "maxStack": 13,
+            "events": 287,
+            "evaluations": 57,
+            "answer": 2
+          },
+          "ties": 3
+        },
+        "evaluations": {
+          "value": 59,
+          "witness": "abbbbbc",
+          "shape": {
+            "calls": 68,
+            "hits": 9,
+            "branchEvents": 47,
+            "maxStack": 13,
+            "events": 253,
+            "evaluations": 59,
+            "answer": 5
+          },
+          "ties": 1
+        }
+      },
+      "equalityPatterns": 877
+    },
+    {
+      "n": 8,
+      "recursion": {
+        "calls": {
+          "value": 6991,
+          "witness": "abcdefgh",
+          "shape": {
+            "calls": 6991,
+            "branchEvents": 3559,
+            "events": 24534,
+            "maxStack": 15
+          },
+          "ties": 1
+        },
+        "branchEvents": {
+          "value": 3559,
+          "witness": "abcdefgh",
+          "shape": {
+            "calls": 6991,
+            "branchEvents": 3559,
+            "events": 24534,
+            "maxStack": 15
+          },
+          "ties": 1
+        },
+        "events": {
+          "value": 24534,
+          "witness": "abcdefgh",
+          "shape": {
+            "calls": 6991,
+            "branchEvents": 3559,
+            "events": 24534,
+            "maxStack": 15
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 15,
+          "witness": "aaaaaaab",
+          "shape": {
+            "calls": 86,
+            "branchEvents": 57,
+            "events": 317,
+            "maxStack": 15
+          },
+          "ties": 2925
+        }
+      },
+      "memoization": {
+        "calls": {
+          "value": 107,
+          "witness": "abbccdde",
+          "shape": {
+            "calls": 107,
+            "hits": 33,
+            "branchEvents": 60,
+            "maxStack": 15,
+            "events": 383,
+            "evaluations": 74,
+            "answer": 2
+          },
+          "ties": 13
+        },
+        "hits": {
+          "value": 36,
+          "witness": "aabcdeff",
+          "shape": {
+            "calls": 105,
+            "hits": 36,
+            "branchEvents": 57,
+            "maxStack": 15,
+            "events": 374,
+            "evaluations": 69,
+            "answer": 2
+          },
+          "ties": 4
+        },
+        "branchEvents": {
+          "value": 62,
+          "witness": "abbbbbbc",
+          "shape": {
+            "calls": 87,
+            "hits": 11,
+            "branchEvents": 62,
+            "maxStack": 15,
+            "events": 325,
+            "evaluations": 76,
+            "answer": 6
+          },
+          "ties": 1
+        },
+        "maxStack": {
+          "value": 15,
+          "witness": "aabbbbbb",
+          "shape": {
+            "calls": 71,
+            "hits": 16,
+            "branchEvents": 47,
+            "maxStack": 15,
+            "events": 262,
+            "evaluations": 55,
+            "answer": 6
+          },
+          "ties": 1307
+        },
+        "events": {
+          "value": 383,
+          "witness": "abbccdde",
+          "shape": {
+            "calls": 107,
+            "hits": 33,
+            "branchEvents": 60,
+            "maxStack": 15,
+            "events": 383,
+            "evaluations": 74,
+            "answer": 2
+          },
+          "ties": 1
+        },
+        "evaluations": {
+          "value": 76,
+          "witness": "abbbbbbc",
+          "shape": {
+            "calls": 87,
+            "hits": 11,
+            "branchEvents": 62,
+            "maxStack": 15,
+            "events": 325,
+            "evaluations": 76,
+            "answer": 6
+          },
+          "ties": 1
+        }
+      },
+      "equalityPatterns": 4140
+    }
+  ]
+}

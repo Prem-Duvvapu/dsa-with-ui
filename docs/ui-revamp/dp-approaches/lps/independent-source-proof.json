@@ -1,0 +1,23 @@
+[
+  {
+    "form": "recursion",
+    "sourceSha256": "1d11999c1bba0b59fa58d21769c1eddedc41c748db92d6243a76a85d7b65a9b3",
+    "cases": 6282,
+    "result": "6282 independent interval-oracle cases passed",
+    "oracle": "Independent interval LPS DP over original text, never prefix LCS against reversal. Includes every equality pattern through length8, ternary strings through6, empty base and seeded controls. Not runtime/cap certification."
+  },
+  {
+    "form": "memoization",
+    "sourceSha256": "1a60a563fafaadc5457b0bd8d8a21e418f9a767e1bddeeb4bd41483b146db6d0",
+    "cases": 6382,
+    "result": "6382 independent interval-oracle cases passed",
+    "oracle": "Independent interval LPS DP over original text, never prefix LCS against reversal. Includes every equality pattern through length8, ternary strings through6, empty base and seeded controls. Not runtime/cap certification."
+  },
+  {
+    "form": "canonical",
+    "sourceSha256": "6a4a88ca44103d6a724966b0f8ef462050a4e4efbcb6f4377cc338f4d12f3d1a",
+    "cases": 6382,
+    "result": "6382 independent interval-oracle cases passed",
+    "oracle": "Independent interval LPS DP over original text, never prefix LCS against reversal. Includes every equality pattern through length8, ternary strings through6, empty base and seeded controls. Not runtime/cap certification."
+  }
+]

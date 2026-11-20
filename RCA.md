@@ -2362,6 +2362,23 @@ that all340 structurally exposed endpoints were individually exercised.
   input limits, dependencies, session behavior or global budgets change. Final gate
   evidence and exclusions are in `evidence/count-squares/VERIFICATION.md`.
 
+### RCA-073 metadata follow-up — 2026-11-19 LPS full-table storage
+
+The next LPS approach package finds the same catalogue-fallback defect: the canonical
+owner compares text with its reversal using a full square prefix table, while generic
+metadata advertises undefined N/K time and O(N) space. A dedicated canonical metadata
+check fails before the owner-specific declaration is added; missing registration is the
+second independent RED (2/2). The owner now declares O(N^2) time and auxiliary space,
+explicitly accounting for O(N) reversed text, O(1) scalar output and excluded animation
+snapshots. Canonical source, execution, examples and input spec remain unchanged.
+
+The focused LPS tests check catalogue, detail, nested canonical approach and full/delta
+execution metadata together, rather than updating an inventory to agree with itself.
+They also compare all three actual source/runtime forms with direct palindrome answers.
+Full build, live proof and publication remain separately gated; see the LPS package's
+verification record when those gates complete. This repairs one owner's metadata, not
+all remaining generic catalogue declarations.
+
 ## RCA-074 — A phone input echo had labels but no readable values
 
 - **Status:** fixed and merged in #238 / `6548b87`; exact-head and post-merge CI pass.

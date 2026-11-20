@@ -1,0 +1,220 @@
+{
+  "generated": "2026-11-20T04:56:31.189Z",
+  "realBackend": true,
+  "complete": true,
+  "localPackage": {
+    "packagedAt": "2026-11-20T04:51:39.711Z",
+    "sha256": "16ae9ad09fca6276e291d48eb363fe9df588bdf078671b63b09f18e6a4b38435"
+  },
+  "samplerHash": "c1868e298c53e5d42b7b69e24497110d3c42811d0ab0b1aa6cc852af0c466ef0",
+  "requests": 18,
+  "specifications": [
+    {
+      "form": "recursion",
+      "inputSpec": {
+        "fields": [
+          {
+            "name": "text",
+            "label": "Text",
+            "type": "STRING",
+            "defaultValue": "bbbab",
+            "help": "Up to five lowercase letters keeps every actual recursive call visible. Select Memoization for longer input.",
+            "constraints": {
+              "maxLength": 5,
+              "pattern": "[a-z]+",
+              "minLength": 1,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e"
+    },
+    {
+      "form": "memoization",
+      "inputSpec": {
+        "fields": [
+          {
+            "name": "text",
+            "label": "Text",
+            "type": "STRING",
+            "defaultValue": "bbbab",
+            "help": "Up to eight lowercase letters keeps the prefix memo table visible; unvisited cells stay unknown.",
+            "constraints": {
+              "maxLength": 8,
+              "pattern": "[a-z]+",
+              "minLength": 1,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "sourceHash": "d417b859af3901c1a74dfec55b53d26929356ba2bc6386cc7a9ae64aa5aa859d"
+    },
+    {
+      "form": "canonical",
+      "inputSpec": {
+        "fields": [
+          {
+            "name": "text",
+            "label": "Text",
+            "type": "STRING",
+            "defaultValue": "bbbab",
+            "help": "",
+            "constraints": {
+              "maxLength": 12,
+              "pattern": "[a-z]+",
+              "minLength": 1,
+              "patternHint": "Lowercase letters a-z only."
+            }
+          }
+        ],
+        "maxSteps": 5000,
+        "maxBytes": 2000000
+      },
+      "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3"
+    }
+  ],
+  "rows": [
+    {
+      "form": "recursion",
+      "profile": "high",
+      "input": {
+        "text": "zzzzz"
+      },
+      "expected": 5,
+      "steps": 25,
+      "fullBytes": 13903,
+      "deltaBytes": 8958,
+      "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "recursion",
+      "profile": "low",
+      "input": {
+        "text": "a"
+      },
+      "expected": 1,
+      "steps": 9,
+      "fullBytes": 5806,
+      "deltaBytes": 4253,
+      "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "recursion",
+      "profile": "seeded",
+      "input": {
+        "text": "zh"
+      },
+      "expected": 1,
+      "steps": 20,
+      "fullBytes": 10960,
+      "deltaBytes": 7262,
+      "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "memoization",
+      "profile": "high",
+      "input": {
+        "text": "zzzzzzzz"
+      },
+      "expected": 8,
+      "steps": 37,
+      "fullBytes": 118820,
+      "deltaBytes": 63415,
+      "sourceHash": "d417b859af3901c1a74dfec55b53d26929356ba2bc6386cc7a9ae64aa5aa859d",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "memoization",
+      "profile": "low",
+      "input": {
+        "text": "a"
+      },
+      "expected": 1,
+      "steps": 9,
+      "fullBytes": 8156,
+      "deltaBytes": 5671,
+      "sourceHash": "d417b859af3901c1a74dfec55b53d26929356ba2bc6386cc7a9ae64aa5aa859d",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "memoization",
+      "profile": "seeded",
+      "input": {
+        "text": "zhb"
+      },
+      "expected": 1,
+      "steps": 45,
+      "fullBytes": 51636,
+      "deltaBytes": 30396,
+      "sourceHash": "d417b859af3901c1a74dfec55b53d26929356ba2bc6386cc7a9ae64aa5aa859d",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "canonical",
+      "profile": "high",
+      "input": {
+        "text": "zzzzzzzzzz"
+      },
+      "expected": 10,
+      "steps": 102,
+      "fullBytes": 429608,
+      "deltaBytes": 411724,
+      "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "canonical",
+      "profile": "low",
+      "input": {
+        "text": "a"
+      },
+      "expected": 1,
+      "steps": 3,
+      "fullBytes": 3215,
+      "deltaBytes": 2787,
+      "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    },
+    {
+      "form": "canonical",
+      "profile": "seeded",
+      "input": {
+        "text": "zhbr"
+      },
+      "expected": 1,
+      "steps": 18,
+      "fullBytes": 24054,
+      "deltaBytes": 20956,
+      "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+      "actualFrontendSampler": true,
+      "fullDeltaEqual": true,
+      "independentAnswerAndKnownCells": true
+    }
+  ],
+  "limits": "Three actual sampler profiles per LPS form; source compilation and exhaustive semantics are separate backend gates. Not all inputs, human/devices/performance/public rollout or project acceptance."
+}

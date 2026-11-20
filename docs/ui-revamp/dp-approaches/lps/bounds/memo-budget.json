@@ -1,0 +1,32 @@
+{
+  "basis": "Conservative existing StepEmitter estimator arithmetic, not actual runtime/wire measurement",
+  "assumptions": [
+    "lps or lcs function; i=/j= prefix labels; single 9x9 table",
+    "helper vars only; no slice/domain vars; no other structures",
+    "narration <=256 printable ASCII chars; charge2 bytes each for escaping",
+    "all cells unknown max34; every frame maximally long on every event",
+    "base envelope240; null DP formula/substitution overcharged16"
+  ],
+  "variablesUpper": {
+    "event": "cache-hit",
+    "state": "i=8,j=8",
+    "calls": "129",
+    "cacheHits": "129",
+    "stateEvaluations": "81",
+    "computedStates": "81",
+    "callId": "129",
+    "value": "8",
+    "answer": "8"
+  },
+  "variableBytes": 174,
+  "tableBytes": 2950,
+  "stackBytes": 336,
+  "narrationBytes": 512,
+  "baseBytes": 240,
+  "perStepUpperEstimate": 4212,
+  "genericEventsUpper": 453,
+  "genericTotalUpperEstimate": 1908036,
+  "reverseSpecificEventsUpper": 383,
+  "reverseSpecificTotalUpperEstimate": 1613196,
+  "under2000000": true
+}

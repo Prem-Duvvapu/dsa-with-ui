@@ -1,0 +1,1293 @@
+{
+  "generated": "2026-11-20T05:05:13.067Z",
+  "realBackend": true,
+  "buildMode": "production-preview",
+  "servedBuild": {
+    "assets": [
+      "/assets/index-BW7qIb8i.js",
+      "/assets/index-DL2roZqZ.css"
+    ]
+  },
+  "localPackage": {
+    "packagedAt": "2026-11-20T04:51:39.711Z",
+    "sha256": "16ae9ad09fca6276e291d48eb363fe9df588bdf078671b63b09f18e6a4b38435"
+  },
+  "rows": [
+    {
+      "problemId": "longest-palindromic-subsequence",
+      "engine": "chromium",
+      "width": 320,
+      "theme": "dark",
+      "passed": true,
+      "screenshots": [
+        "chromium-320-dark-navigation-editor.png",
+        "chromium-320-dark-navigation-source.png"
+      ],
+      "warmRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:04:02.300Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:03.400Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:04.501Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:05.601Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:06.700Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:07.801Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:08.900Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "cbd"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "cbd"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:10.000Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:11.101Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "cbd"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "cbd"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:12.200Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 56
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:13.300Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "text": "abcdef"
+          },
+          "status": 400,
+          "resolvedInput": null,
+          "sourceHash": null,
+          "stepCount": null
+        }
+      ],
+      "coldPartialRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:04:14.400Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:15.501Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        }
+      ],
+      "coldNoInputRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:04:16.600Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:17.700Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:18.800Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        }
+      ],
+      "bareRequestedDefaults": true,
+      "partialDefaultsBothDirections": true,
+      "reverseCanonicalEmptyMapResetsDirtyDraft": true,
+      "backForward": true,
+      "realPostBodyDelayPreservesLaterTextEdit": true,
+      "rejectedLinkKeepsCommittedIdentity": true,
+      "currentSourceAndStep": true,
+      "coldCanonicalSummaryCannotSupplyUnknownRecursiveEditor": true,
+      "coldDetailReleaseFillsOnlyRequestedDefaults": true,
+      "coldNoInputResetRetiresOldDraftBeforeLateEdits": true,
+      "noOverflowOrPageErrors": true
+    },
+    {
+      "problemId": "longest-palindromic-subsequence",
+      "engine": "chromium",
+      "width": 1366,
+      "theme": "light",
+      "passed": true,
+      "screenshots": [
+        "chromium-1366-light-navigation-editor.png",
+        "chromium-1366-light-navigation-source.png"
+      ],
+      "warmRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:04:19.900Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:21.000Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:22.102Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:23.749Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:24.300Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:25.401Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:26.500Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "cbd"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "cbd"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:27.602Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:28.701Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "cbd"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "cbd"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:29.801Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 56
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:30.900Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "text": "abcdef"
+          },
+          "status": 400,
+          "resolvedInput": null,
+          "sourceHash": null,
+          "stepCount": null
+        }
+      ],
+      "coldPartialRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:04:32.000Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:33.101Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        }
+      ],
+      "coldNoInputRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:04:34.201Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:35.302Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:36.400Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        }
+      ],
+      "bareRequestedDefaults": true,
+      "partialDefaultsBothDirections": true,
+      "reverseCanonicalEmptyMapResetsDirtyDraft": true,
+      "backForward": true,
+      "realPostBodyDelayPreservesLaterTextEdit": true,
+      "rejectedLinkKeepsCommittedIdentity": true,
+      "currentSourceAndStep": true,
+      "coldCanonicalSummaryCannotSupplyUnknownRecursiveEditor": true,
+      "coldDetailReleaseFillsOnlyRequestedDefaults": true,
+      "coldNoInputResetRetiresOldDraftBeforeLateEdits": true,
+      "noOverflowOrPageErrors": true
+    },
+    {
+      "problemId": "longest-palindromic-subsequence",
+      "engine": "firefox",
+      "width": 320,
+      "theme": "dark",
+      "passed": true,
+      "screenshots": [
+        "firefox-320-dark-navigation-editor.png",
+        "firefox-320-dark-navigation-source.png"
+      ],
+      "warmRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:04:38.316Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:39.417Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:40.517Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:41.616Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:42.717Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:43.817Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:44.917Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "cbd"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "cbd"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:46.018Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:47.116Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "cbd"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "cbd"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:48.217Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 56
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:49.317Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "text": "abcdef"
+          },
+          "status": 400,
+          "resolvedInput": null,
+          "sourceHash": null,
+          "stepCount": null
+        }
+      ],
+      "coldPartialRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:04:50.416Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:51.516Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        }
+      ],
+      "coldNoInputRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:04:52.617Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:53.716Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:54.817Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        }
+      ],
+      "bareRequestedDefaults": true,
+      "partialDefaultsBothDirections": true,
+      "reverseCanonicalEmptyMapResetsDirtyDraft": true,
+      "backForward": true,
+      "realPostBodyDelayPreservesLaterTextEdit": true,
+      "rejectedLinkKeepsCommittedIdentity": true,
+      "currentSourceAndStep": true,
+      "coldCanonicalSummaryCannotSupplyUnknownRecursiveEditor": true,
+      "coldDetailReleaseFillsOnlyRequestedDefaults": true,
+      "coldNoInputResetRetiresOldDraftBeforeLateEdits": true,
+      "noOverflowOrPageErrors": true
+    },
+    {
+      "problemId": "longest-palindromic-subsequence",
+      "engine": "firefox",
+      "width": 1366,
+      "theme": "light",
+      "passed": true,
+      "screenshots": [
+        "firefox-1366-light-navigation-editor.png",
+        "firefox-1366-light-navigation-source.png"
+      ],
+      "warmRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:04:56.073Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:57.174Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:58.274Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:04:59.374Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:05:00.473Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:05:01.574Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:05:02.674Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "cbd"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "cbd"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:05:03.774Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:05:04.874Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "cbd"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "cbd"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:05:05.974Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 56
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:05:07.074Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {
+            "text": "abcdef"
+          },
+          "status": 400,
+          "resolvedInput": null,
+          "sourceHash": null,
+          "stepCount": null
+        }
+      ],
+      "coldPartialRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:05:08.173Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:05:09.274Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        }
+      ],
+      "coldNoInputRequests": [
+        {
+          "dispatchedAt": "2026-11-20T05:05:10.373Z",
+          "method": "GET",
+          "approach": "canonical",
+          "input": null,
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 27
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:05:11.474Z",
+          "method": "POST",
+          "approach": "canonical",
+          "input": {
+            "text": "abc"
+          },
+          "status": 200,
+          "resolvedInput": {
+            "text": "abc"
+          },
+          "sourceHash": "860eb7c890a82fea6b32a10cc98990be7077198903e63aeb34774a707d4a09b3",
+          "stepCount": 11
+        },
+        {
+          "dispatchedAt": "2026-11-20T05:05:12.573Z",
+          "method": "POST",
+          "approach": "recursion",
+          "input": {},
+          "status": 200,
+          "resolvedInput": {
+            "text": "bbbab"
+          },
+          "sourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+          "stepCount": 76
+        }
+      ],
+      "bareRequestedDefaults": true,
+      "partialDefaultsBothDirections": true,
+      "reverseCanonicalEmptyMapResetsDirtyDraft": true,
+      "backForward": true,
+      "realPostBodyDelayPreservesLaterTextEdit": true,
+      "rejectedLinkKeepsCommittedIdentity": true,
+      "currentSourceAndStep": true,
+      "coldCanonicalSummaryCannotSupplyUnknownRecursiveEditor": true,
+      "coldDetailReleaseFillsOnlyRequestedDefaults": true,
+      "coldNoInputResetRetiresOldDraftBeforeLateEdits": true,
+      "noOverflowOrPageErrors": true
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "chromium-320-dark-navigation-editor.png",
+      "engine": "chromium",
+      "width": 320,
+      "theme": "dark",
+      "phase": "editor-and-input-echo",
+      "scope": "viewport",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1461
+      },
+      "targetRect": {
+        "top": 60.84375,
+        "right": 304,
+        "bottom": 146.84375,
+        "left": 16,
+        "width": 288,
+        "height": 86
+      },
+      "railRect": {
+        "top": 0,
+        "right": 320,
+        "bottom": 49,
+        "left": 0,
+        "width": 320,
+        "height": 49
+      },
+      "inputRects": [
+        {
+          "id": ":r5:-text-input",
+          "value": "xyxy",
+          "rect": {
+            "top": 399.015625,
+            "right": 285,
+            "bottom": 443.015625,
+            "left": 33,
+            "width": 252,
+            "height": 44
+          }
+        }
+      ],
+      "expectedDraft": {
+        "text": "xyxy"
+      },
+      "expectedCommittedInput": {
+        "text": "abc"
+      },
+      "inspected": true
+    },
+    {
+      "file": "chromium-320-dark-navigation-source.png",
+      "engine": "chromium",
+      "width": 320,
+      "theme": "dark",
+      "phase": "committed-code-source",
+      "scope": "viewport",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scroll": {
+        "x": 0,
+        "y": 795
+      },
+      "targetRect": {
+        "top": 61.03125,
+        "right": 286,
+        "bottom": 357.640625,
+        "left": 34,
+        "width": 252,
+        "height": 296.609375
+      },
+      "railRect": {
+        "top": 0,
+        "right": 320,
+        "bottom": 49,
+        "left": 0,
+        "width": 320,
+        "height": 49
+      },
+      "inputRects": [],
+      "expectedSourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+      "inspected": true
+    },
+    {
+      "file": "chromium-1366-light-navigation-editor.png",
+      "engine": "chromium",
+      "width": 1366,
+      "theme": "light",
+      "phase": "editor-and-input-echo",
+      "scope": "viewport",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "scroll": {
+        "x": 0,
+        "y": 788
+      },
+      "targetRect": {
+        "top": 207.890625,
+        "right": 1334,
+        "bottom": 251.890625,
+        "left": 32,
+        "width": 1302,
+        "height": 44
+      },
+      "railRect": {
+        "top": 0,
+        "right": 1366,
+        "bottom": 45,
+        "left": 0,
+        "width": 1366,
+        "height": 45
+      },
+      "inputRects": [
+        {
+          "id": ":r5:-text-input",
+          "value": "xyxy",
+          "rect": {
+            "top": 395.28125,
+            "right": 1307,
+            "bottom": 439.28125,
+            "left": 57,
+            "width": 1250,
+            "height": 44
+          }
+        }
+      ],
+      "expectedDraft": {
+        "text": "xyxy"
+      },
+      "expectedCommittedInput": {
+        "text": "abc"
+      },
+      "inspected": true
+    },
+    {
+      "file": "chromium-1366-light-navigation-source.png",
+      "engine": "chromium",
+      "width": 1366,
+      "theme": "light",
+      "phase": "committed-code-source",
+      "scope": "viewport",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "scroll": {
+        "x": 0,
+        "y": 376
+      },
+      "targetRect": {
+        "top": 56.578125,
+        "right": 1307.984375,
+        "bottom": 549.984375,
+        "left": 818.796875,
+        "width": 489.1875,
+        "height": 493.40625
+      },
+      "railRect": {
+        "top": 0,
+        "right": 1366,
+        "bottom": 45,
+        "left": 0,
+        "width": 1366,
+        "height": 45
+      },
+      "inputRects": [],
+      "expectedSourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+      "inspected": true
+    },
+    {
+      "file": "firefox-320-dark-navigation-editor.png",
+      "engine": "firefox",
+      "width": 320,
+      "theme": "dark",
+      "phase": "editor-and-input-echo",
+      "scope": "viewport",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scroll": {
+        "x": 0,
+        "y": 1461
+      },
+      "targetRect": {
+        "top": 60.899993896484375,
+        "right": 304,
+        "bottom": 146.89999389648438,
+        "left": 16,
+        "width": 288,
+        "height": 86
+      },
+      "railRect": {
+        "top": 0,
+        "right": 320,
+        "bottom": 49,
+        "left": 0,
+        "width": 320,
+        "height": 49
+      },
+      "inputRects": [
+        {
+          "id": ":r5:-text-input",
+          "value": "xyxy",
+          "rect": {
+            "top": 399.1000061035156,
+            "right": 285,
+            "bottom": 443.1000061035156,
+            "left": 33,
+            "width": 252,
+            "height": 44
+          }
+        }
+      ],
+      "expectedDraft": {
+        "text": "xyxy"
+      },
+      "expectedCommittedInput": {
+        "text": "abc"
+      },
+      "inspected": true
+    },
+    {
+      "file": "firefox-320-dark-navigation-source.png",
+      "engine": "firefox",
+      "width": 320,
+      "theme": "dark",
+      "phase": "committed-code-source",
+      "scope": "viewport",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "scroll": {
+        "x": 0,
+        "y": 795
+      },
+      "targetRect": {
+        "top": 61.100006103515625,
+        "right": 286,
+        "bottom": 357.6999816894531,
+        "left": 34,
+        "width": 252,
+        "height": 296.5999755859375
+      },
+      "railRect": {
+        "top": 0,
+        "right": 320,
+        "bottom": 49,
+        "left": 0,
+        "width": 320,
+        "height": 49
+      },
+      "inputRects": [],
+      "expectedSourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+      "inspected": true
+    },
+    {
+      "file": "firefox-1366-light-navigation-editor.png",
+      "engine": "firefox",
+      "width": 1366,
+      "theme": "light",
+      "phase": "editor-and-input-echo",
+      "scope": "viewport",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "scroll": {
+        "x": 0,
+        "y": 788
+      },
+      "targetRect": {
+        "top": 207.89999389648438,
+        "right": 1334,
+        "bottom": 251.89999389648438,
+        "left": 32,
+        "width": 1302,
+        "height": 44
+      },
+      "railRect": {
+        "top": 0,
+        "right": 1366,
+        "bottom": 45,
+        "left": 0,
+        "width": 1366,
+        "height": 45
+      },
+      "inputRects": [
+        {
+          "id": ":r5:-text-input",
+          "value": "xyxy",
+          "rect": {
+            "top": 395.29998779296875,
+            "right": 1307,
+            "bottom": 439.29998779296875,
+            "left": 57,
+            "width": 1250,
+            "height": 44
+          }
+        }
+      ],
+      "expectedDraft": {
+        "text": "xyxy"
+      },
+      "expectedCommittedInput": {
+        "text": "abc"
+      },
+      "inspected": true
+    },
+    {
+      "file": "firefox-1366-light-navigation-source.png",
+      "engine": "firefox",
+      "width": 1366,
+      "theme": "light",
+      "phase": "committed-code-source",
+      "scope": "viewport",
+      "viewport": {
+        "width": 1366,
+        "height": 768
+      },
+      "scroll": {
+        "x": 0,
+        "y": 376
+      },
+      "targetRect": {
+        "top": 56.600006103515625,
+        "right": 1308,
+        "bottom": 550,
+        "left": 818.7999877929688,
+        "width": 489.20001220703125,
+        "height": 493.3999938964844
+      },
+      "railRect": {
+        "top": 0,
+        "right": 1366,
+        "bottom": 45,
+        "left": 0,
+        "width": 1366,
+        "height": 45
+      },
+      "inputRects": [],
+      "expectedSourceHash": "1c16a68499eb1cedda7130585ab8b7c0ec3594d9f0755039c5913de872cef15e",
+      "inspected": true
+    }
+  ],
+  "delayMechanism": "Only real upstream response bodies are delayed; exact actual responses are fulfilled unchanged. All executions paced1100ms globally within this script.",
+  "limits": "Four automated engine/viewport rows; not real-device, human-screen-reader, learner, performance or all-input acceptance."
+}

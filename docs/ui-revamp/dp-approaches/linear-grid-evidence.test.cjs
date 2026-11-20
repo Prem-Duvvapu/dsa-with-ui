@@ -171,6 +171,23 @@ test('LCS cannot advance without matching actual sampler/source/artifact proof',
     docs=>{docs['input-recovery-results.json'].localPackage={...docs['input-recovery-results.json'].localPackage,sha256:'f'.repeat(64)};}
   ]){const docs=lcsDocuments();mutate(docs);assert.equal(verified(docs,'lcs','longest-common-subsequence'),false);}
 });
+test('LPS cannot borrow a complete generic matrix without its own API and string evidence',()=>{
+  const docs=documents();
+  for(const doc of Object.values(docs))for(const row of doc.rows){row.problemId='longest-palindromic-subsequence';row.rootCount=1;row.allStateCoordinatesVisible=true;}
+  assert.equal(verified(docs,'lps','longest-palindromic-subsequence'),false);
+});
+test('LPS admits its complete one-field proof and still requires real roots and own navigation',()=>{
+  const docs=documents();
+  for(const doc of Object.values(docs))for(const row of doc.rows){row.problemId='longest-palindromic-subsequence';row.rootCount=1;row.allStateCoordinatesVisible=true;}
+  Object.assign(docs,require('./lps-evidence-fixture.cjs')());
+  const check=()=>verified(docs,'lps','longest-palindromic-subsequence');
+  assert.equal(check(),true);
+  docs['firefox-maximum-zoom1.json'].rows[0].rootCount=0;assert.equal(check(),false);
+  docs['firefox-maximum-zoom1.json'].rows[0].rootCount=1;
+  docs['firefox-maximum-zoom1.json'].rows[0].allStateCoordinatesVisible=false;assert.equal(check(),false);
+  docs['firefox-maximum-zoom1.json'].rows[0].allStateCoordinatesVisible=true;
+  delete docs['navigation-results.json'];assert.equal(check(),false);
+});
 test('LCS cannot advance without its independently reviewed late-summary navigation proof',()=>{
   for(const mutate of [
     docs=>{delete docs['navigation-results.json'];},
