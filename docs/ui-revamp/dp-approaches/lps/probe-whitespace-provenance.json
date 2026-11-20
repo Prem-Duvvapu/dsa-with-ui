@@ -1,0 +1,30 @@
+{
+  "generated": "2026-11-20T05:10:42.082129+00:00",
+  "reason": "Final staged diff check flagged extra blank EOF lines in four new probe/validator files. Removed only extra trailing LF bytes after runtime; application/backend/frontend/artifact bytes unchanged. Original runtime hashes remain in captured proof; mapping below makes this explicit.",
+  "files": [
+    {
+      "file": "docs/ui-revamp/dp-approaches/lps-evidence-contract.cjs",
+      "runtimeOrPreparedSha256": "33debc8c09da6c12d521a0bfe3b511b94411b9370d260a568f6114604aa1639e",
+      "committedSha256": "743c0ba37f3ef9fb5b7d1b0f864344592b9facf3f8c9bdcd5c616db20b9ca933",
+      "onlyRemovedExtraTrailingLf": true
+    },
+    {
+      "file": "docs/ui-revamp/dp-approaches/lps-evidence-fixture.cjs",
+      "runtimeOrPreparedSha256": "556e707a48cf9b92f7088a68b6808e10249583f3cba454fbf11795ee43a9aa20",
+      "committedSha256": "c1ae8641227c845d36fbe0f6d1a753c2f728f1ba42958ed5767afd297ac25094",
+      "onlyRemovedExtraTrailingLf": true
+    },
+    {
+      "file": "docs/ui-revamp/dp-approaches/lps-navigation.cjs",
+      "runtimeOrPreparedSha256": "9058cbef279a437f24a97d3c7d08c062b6bf6403551b8c8262dcb9bf917fd0ec",
+      "committedSha256": "72e982318e21a8046f3ade4d792b3278ee8c772655c587570875f0d16988c367",
+      "onlyRemovedExtraTrailingLf": true
+    },
+    {
+      "file": "docs/ui-revamp/dp-approaches/lps-recovery.cjs",
+      "runtimeOrPreparedSha256": "f3c6d93192252eb73f9e045eb1ab26ab77a56cbf15bd0e1c15a674c40381df44",
+      "committedSha256": "002611f244044c1499351ce4a7acb3cd8977752140d82c9ec198800c64ee7d6f",
+      "onlyRemovedExtraTrailingLf": true
+    }
+  ]
+}

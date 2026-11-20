@@ -1,6 +1,29 @@
 # DP solution approaches: implementation and UX plan
 
-## Current work — 2026-11-19
+## Current verification checkpoint — 2026-11-20
+
+LPS implementation and local verification are complete on `feat/lps-solution-approaches`,
+based on #241 / `dc1c04a`. Real recursion and nullable memoization preserve the existing
+prefix LCS(text, reverse(text)) formulation. Canonical execution/source/spec/examples
+remain unchanged; its full-table complexity is corrected to O(N²) time and space.
+Recursion/memoization/canonical caps are 5/8/12, with the same `bbbab` / `cbbd` examples.
+
+Registration and metadata are RED2/2 before implementation. Final gates pass: 8,407
+backend cases with 500 unchanged skips; 1,056 frontend tests/build; 432 golden checks
+with all 431 fixture files unchanged; 143 Node evidence tests; 66 standalone API requests;
+52 browser journeys and 12 inspected screenshots. The strengthened reverse-default
+navigation case is RED2/48 before its guard change, then actually passes in both engines
+as part of 64 navigation executions. Frozen JAR/source/assets and prior LCS evidence match.
+See [verification](dp-approaches/lps/VERIFICATION.md) for hashes, exclusions and scope.
+
+The inventory now has 25 locally verified candidates, 30 planned and one requiring a
+different formulation. The previous 24 are merged; exact-head CI governs LPS publication,
+and GitHub records the final outcome. The owner requested committing, pushing and merging
+the existing work, then stopping new changes. No subsequent feature package is started.
+Edit Distance remains a future item when the owner resumes. D6/D7 and broader source,
+device/human, performance and release/rollback gates remain open.
+
+### LCS pre-publication verification checkpoint — 2026-11-19
 
 The verified inventory is now24/56 locally, with LCS publication governed by exact-head
 CI. The previous23 are merged. Contract repairs #239/#240 are merged with passing CI;

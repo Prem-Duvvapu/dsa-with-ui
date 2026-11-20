@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-19T19:19:18.719Z",
+  "generated": "2026-11-20T05:07:44.100Z",
   "stats": {
     "catalogued": 431,
     "traced": 431,
@@ -2442,17 +2442,63 @@
         "maxBytes": 2000000
       },
       "canonicalComplexity": {
-        "timeComplexity": "O(N * K)",
-        "timeExplanation": "Time Complexity: Optimal DP table state transitions.",
-        "timeWhy": "Dynamic Programming",
-        "spaceComplexity": "O(N)",
-        "spaceExplanation": "Space Complexity: 1D / 2D DP array space.",
-        "spaceWhy": "Memory",
-        "auxiliarySpace": "Auxiliary Space: O(N)",
-        "dataStructureSpace": "Memory"
+        "timeComplexity": "O(N^2)",
+        "timeExplanation": "Compares all N by N prefix pairs of the text and its reversal, with constant work per cell.",
+        "timeWhy": "Prefix LCS against reversal",
+        "spaceComplexity": "O(N^2)",
+        "spaceExplanation": "Retains the full (N+1) by (N+1) table. Reversing the text uses O(N) additional storage; the scalar output uses O(1). Animation snapshots are excluded.",
+        "spaceWhy": "Full prefix table and reversal",
+        "auxiliarySpace": "Auxiliary Space: O(N^2)",
+        "dataStructureSpace": "Full DP table; scalar output"
       },
-      "alternativeStatus": "planned",
-      "alternativeSafetyBounds": "Not measured yet; canonical caps do not authorize exponential recursion."
+      "alternativeStatus": "backend-and-UI-candidate-verified; family rollout pending",
+      "alternativeSafetyBounds": "Published alternative bounds below; consult this problem's measurement evidence in the DP plan. Evidence for another problem does not certify these bounds.",
+      "publishedAlternativeInputSpecs": [
+        {
+          "id": "recursion",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 5,
+                  "minLength": 1,
+                  "pattern": "[a-z]+",
+                  "patternHint": "Lowercase letters a-z only."
+                },
+                "defaultValue": "bbbab",
+                "help": "Up to five lowercase letters keeps every actual recursive call visible. Select Memoization for longer input.",
+                "label": "Text",
+                "name": "text",
+                "type": "STRING"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        },
+        {
+          "id": "memoization",
+          "inputSpec": {
+            "fields": [
+              {
+                "constraints": {
+                  "maxLength": 8,
+                  "minLength": 1,
+                  "pattern": "[a-z]+",
+                  "patternHint": "Lowercase letters a-z only."
+                },
+                "defaultValue": "bbbab",
+                "help": "Up to eight lowercase letters keeps the prefix memo table visible; unvisited cells stay unknown.",
+                "label": "Text",
+                "name": "text",
+                "type": "STRING"
+              }
+            ],
+            "maxBytes": 2000000,
+            "maxSteps": 5000
+          }
+        }
+      ]
     },
     {
       "id": "longest-string-chain",

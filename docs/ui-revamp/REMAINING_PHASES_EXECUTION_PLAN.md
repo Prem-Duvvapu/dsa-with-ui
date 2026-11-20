@@ -2,7 +2,17 @@
 
 Prepared: 2026-10-05. Inspected main: `dad2640`, merged PR #191.
 
-### Current execution checkpoint — 2026-11-19
+### Current execution checkpoint — 2026-11-20
+
+LPS's implementation, full local suites, package/startup, API/browser proof, screenshots
+and inventory reconciliation pass. The pre-publication snapshot is 25/56 locally verified,
+with the previous24 merged. Exact-head CI governs this package's publication. See the
+current [DP plan](DP_SOLUTION_APPROACHES_PLAN.md) and [verification](dp-approaches/lps/VERIFICATION.md).
+The latest owner request is commit/push/merge existing changes, then stop. Finish those
+publication gates and pause new work. No Edit Distance or other feature package starts;
+remaining source, dependency, human/device, performance and release gates remain open.
+
+#### Previous LCS verification checkpoint
 
 Main at the start of the LCS package is `f3490b5` (#240). DP has24/56 locally verified
 candidates, with LCS publication governed by exact-head CI; the previous23 are merged.

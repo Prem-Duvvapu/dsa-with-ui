@@ -1,0 +1,97 @@
+{
+  "registration-metadata-red": {
+    "tests": 2,
+    "failures": 2,
+    "errors": 0,
+    "skips": 0,
+    "terminal": "BUILD FAILURE"
+  },
+  "focused-lps": {
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "terminal": "BUILD SUCCESS"
+  },
+  "backend-full-clean": {
+    "tests": 8407,
+    "failures": 0,
+    "errors": 0,
+    "skips": 500,
+    "terminal": "BUILD SUCCESS"
+  },
+  "golden": {
+    "tests": 432,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "preservation": {
+      "allUnchanged": true,
+      "goldenFiles": 431,
+      "otherSourceControls": 5,
+      "changed": []
+    }
+  },
+  "frontend": {
+    "tests": 1056,
+    "files": 93,
+    "failures": 0,
+    "skips": 0,
+    "status": {
+      "started": "2026-11-19T19:43:07.498438+00:00",
+      "pid": 475007,
+      "testCommand": [
+        "npx",
+        "vitest",
+        "run"
+      ],
+      "buildCommand": [
+        "npx",
+        "vite",
+        "build"
+      ],
+      "sourceHashesBefore": {
+        "frontend/src/hooks/useProblemSession.js": "bc78da8e3b3129e9054b9a90f2725fac09d8095e656fe6bf870a1dcb38ad8ff7",
+        "frontend/src/hooks/useProblemSession.stringApproaches.test.jsx": "adc8eab6292ea85b6c6f71d7724eb48a1d7c09befa16c96c9cbb51a767b04abe",
+        "frontend/src/workspace/ApproachSelector.strings.test.jsx": "d795636956bfd8d8d3766f63ca683691c6429b0b822832c76d0f5856c7866f29"
+      },
+      "testExit": 0,
+      "buildExit": 0,
+      "sourceHashesAfter": {
+        "frontend/src/hooks/useProblemSession.js": "bc78da8e3b3129e9054b9a90f2725fac09d8095e656fe6bf870a1dcb38ad8ff7",
+        "frontend/src/hooks/useProblemSession.stringApproaches.test.jsx": "adc8eab6292ea85b6c6f71d7724eb48a1d7c09befa16c96c9cbb51a767b04abe",
+        "frontend/src/workspace/ApproachSelector.strings.test.jsx": "d795636956bfd8d8d3766f63ca683691c6429b0b822832c76d0f5856c7866f29"
+      },
+      "sourceUnchanged": true,
+      "finished": "2026-11-20T04:51:28.992941+00:00"
+    }
+  },
+  "evidenceContractTests": 143,
+  "startup": {
+    "ownedProcessStopped": true,
+    "pid": 480724,
+    "ephemeralPort": 43123,
+    "status": 200,
+    "stats": {
+      "catalogued": 431,
+      "traced": 431,
+      "untraced": 0,
+      "duplicateIds": {},
+      "orphanedTracerIds": []
+    },
+    "exitCode": 143
+  },
+  "limits": "Build and source checks only; real API/browser and publication gates recorded separately. Long wall-clock gap is not a performance measure.",
+  "standaloneApiRequests": 66,
+  "browserJourneys": 52,
+  "navigationExecutions": 64,
+  "inspectedScreenshots": 12,
+  "inventoryContract": {
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "finished": "2026-11-20T05:08:56Z"
+  },
+  "postInventoryPackagedIdentityUnchanged": true
+}

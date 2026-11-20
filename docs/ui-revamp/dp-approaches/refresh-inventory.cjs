@@ -69,7 +69,7 @@ function requestedCandidateUiVerified(problemId) {
   });
 }
 function linearGridCandidateUiVerified(problemId, folder = 'linear-grid') {
-  const profile = ['circular-activity-obstacles','falling-triangle','subset-family','capacity-family','coin-family','lcs'].includes(folder) ? require(`./${folder}-cases.cjs`) : null;
+  const profile = ['circular-activity-obstacles','falling-triangle','subset-family','capacity-family','coin-family','lcs','lps'].includes(folder) ? require(`./${folder}-cases.cjs`) : null;
   const candidate = profile?.cases.find(c=>c.id===problemId);
   if (profile && !candidate) return false;
   const rootsFor = form => typeof candidate?.roots === 'function'
@@ -92,14 +92,16 @@ function linearGridCandidateUiVerified(problemId, folder = 'linear-grid') {
     ['firefox-maximum-zoom1', 'firefox', 1, ['320x568','1366x768']]
   ];
   const identity = JSON.stringify(comparison.servedBuild?.assets);
-  if(folder==='lcs'){
+  if(folder==='lcs'||folder==='lps'){
     const names=['input-recovery-results.json','sampler-api-results.json','api-results.json','navigation-results.json'];
     const documents=names.map(name=>{
       const file=path.join(__dirname,folder,name);
       return fs.existsSync(file)?JSON.parse(fs.readFileSync(file,'utf8')):null;
     });
-    if(!require('./lcs-evidence-contract.cjs').validateLcsEvidenceManifest({recovery:documents[0],sampler:documents[1],
-      transport:documents[2],navigation:documents[3],assets:comparison.servedBuild?.assets}))return false;
+    if(documents.some(document=>!document))return false;
+    const validate=folder==='lcs'?require('./lcs-evidence-contract.cjs').validateLcsEvidenceManifest
+      :require('./lps-evidence-contract.cjs').validateLpsEvidenceManifest;
+    if(!validate({recovery:documents[0],sampler:documents[1],transport:documents[2],navigation:documents[3],assets:comparison.servedBuild?.assets}))return false;
   }
   return expected.every(([name, engine, zoom, sizes]) => {
     const file = path.join(__dirname, folder, `${name}.json`);
@@ -155,7 +157,7 @@ function linearGridCandidateUiVerified(problemId, folder = 'linear-grid') {
       canonicalInputSpec: detail.inputSpec, canonicalComplexity: detail.complexity,
       alternativeStatus: detail.approaches?.length > 1 ? (problem.id === 'climbing-stairs' && verifiedPilot
         ? verifiedTeachingComparison ? 'backend-and-UI-teaching-comparison-pilot-verified; family rollout pending'
-          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id) || requestedCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id, 'circular-activity-obstacles') || linearGridCandidateUiVerified(problem.id, 'falling-triangle') || linearGridCandidateUiVerified(problem.id, 'subset-family') || linearGridCandidateUiVerified(problem.id, 'capacity-family') || linearGridCandidateUiVerified(problem.id, 'coin-family') || linearGridCandidateUiVerified(problem.id, 'lcs')
+          : 'backend-and-UI-pilot-verified; family rollout pending' : candidateUiVerified(problem.id) || requestedCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id) || linearGridCandidateUiVerified(problem.id, 'circular-activity-obstacles') || linearGridCandidateUiVerified(problem.id, 'falling-triangle') || linearGridCandidateUiVerified(problem.id, 'subset-family') || linearGridCandidateUiVerified(problem.id, 'capacity-family') || linearGridCandidateUiVerified(problem.id, 'coin-family') || linearGridCandidateUiVerified(problem.id, 'lcs') || linearGridCandidateUiVerified(problem.id, 'lps')
             ? 'backend-and-UI-candidate-verified; family rollout pending' : 'backend-pilot; UI pending')
         : reviewed.get(problem.id).plannedForms.length ? 'planned' : 'requires-different-formulation',
       alternativeSafetyBounds: detail.approaches?.length > 1

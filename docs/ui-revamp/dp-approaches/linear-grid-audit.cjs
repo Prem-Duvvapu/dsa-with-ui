@@ -50,6 +50,13 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
     assert(require('./lcs-evidence-contract.cjs').validateLcsEvidenceManifest({recovery:lcsRecovery,
       sampler:read('sampler-api-results.json'),transport,navigation:lcsNavigation,assets:comparison.servedBuild.assets}));
   }
+  const lpsRecovery=family==='lps'?read('input-recovery-results.json'):null;
+  const lpsNavigation=family==='lps'?read('navigation-results.json'):null;
+  if(lpsRecovery){
+    assert(Date.parse(lpsRecovery.generated)>=packaged);
+    assert(require('./lps-evidence-contract.cjs').validateLpsEvidenceManifest({recovery:lpsRecovery,
+      sampler:read('sampler-api-results.json'),transport,navigation:lpsNavigation,assets:comparison.servedBuild.assets}));
+  }
   const edges=['subset-family','capacity-family','coin-family'].includes(family)?read('edge-results.json'):null;
   if(edges){
     assert(edges.realBackend&&edges.buildMode==='production-preview'&&Date.parse(edges.generated)>=packaged);
@@ -109,7 +116,7 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
       if(row.approachId!=='recursion')assert(row.tableSummaryMatchesActualCells&&row.tableCellLabelsMatchActualCells);
     }
   }
-  const compatibilityFamily=family==='circular-activity-obstacles'?'linear-grid':family==='falling-triangle'?'circular-activity-obstacles':family==='subset-family'?'falling-triangle':family==='capacity-family'?'subset-family':family==='coin-family'?'capacity-family':family==='lcs'?'coin-family':null;
+  const compatibilityFamily=family==='circular-activity-obstacles'?'linear-grid':family==='falling-triangle'?'circular-activity-obstacles':family==='subset-family'?'falling-triangle':family==='capacity-family'?'subset-family':family==='coin-family'?'capacity-family':family==='lcs'?'coin-family':family==='lps'?'lcs':null;
   const compatibility=compatibilityFamily?read(`${compatibilityFamily==='circular-activity-obstacles'?'circular':compatibilityFamily}-compatibility/chromium-standard-zoom1.json`):null;
   if(compatibility){
     assert(compatibility.realBackend&&compatibility.buildMode==='production-preview'&&compatibility.engine==='chromium');
@@ -124,7 +131,7 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
     }
   }
   const assets=documents[0].servedBuild.assets;
-  for(const doc of [...documents,comparison,...(recovery?[recovery]:[]),...(lcsRecovery?[lcsRecovery]:[]),...(lcsNavigation?[lcsNavigation]:[]),...(compatibility?[compatibility]:[]),...(shapes?[shapes]:[]),...(edges?[edges]:[])])assert.deepEqual(doc.servedBuild.assets,assets);
+  for(const doc of [...documents,comparison,...(recovery?[recovery]:[]),...(lcsRecovery?[lcsRecovery]:[]),...(lcsNavigation?[lcsNavigation]:[]),...(lpsRecovery?[lpsRecovery]:[]),...(lpsNavigation?[lpsNavigation]:[]),...(compatibility?[compatibility]:[]),...(shapes?[shapes]:[]),...(edges?[edges]:[])])assert.deepEqual(doc.servedBuild.assets,assets);
   const html=fs.readFileSync(path.resolve(__dirname,'../../../frontend/dist/index.html'),'utf8');
   for(const asset of assets)assert(html.includes(asset));
   for(const doc of documents)for(const row of doc.rows) {
@@ -139,13 +146,13 @@ const read=name=>JSON.parse(fs.readFileSync(path.join(out,name),'utf8'));
   const rows=documents.flatMap(doc=>doc.rows);
   const result={generated:new Date().toISOString(),passed:true,sourceHashes:Object.fromEntries(hashes),
     packagedBackendAt:new Date(packaged).toISOString(),assets,apiScenarios:scenarios,apiRequests:scenarios*2,
-    browserJourneys:rows.length,comparisonJourneys:comparison.rows.length,inputRecoveryJourneys:recovery?.rows.length??lcsRecovery?.rows.length??0,
-    navigationJourneys:lcsNavigation?.rows.length??0,navigationScreenshots:lcsNavigation?.screenshots.length??0,
-    navigationRequests:lcsNavigation?.rows.reduce((sum,row)=>sum+row.warmRequests.length+row.coldPartialRequests.length+row.coldNoInputRequests.length,0)??0,
+    browserJourneys:rows.length,comparisonJourneys:comparison.rows.length,inputRecoveryJourneys:recovery?.rows.length??lcsRecovery?.rows.length??lpsRecovery?.rows.length??0,
+    navigationJourneys:lcsNavigation?.rows.length??lpsNavigation?.rows.length??0,navigationScreenshots:lcsNavigation?.screenshots.length??lpsNavigation?.screenshots.length??0,
+    navigationRequests:(lcsNavigation??lpsNavigation)?.rows.reduce((sum,row)=>sum+row.warmRequests.length+row.coldPartialRequests.length+row.coldNoInputRequests.length,0)??0,
     shapeJourneys:shapes?.rows.length??0,
     edgeJourneys:edges?.rows.length??0,
     legacyCompatibilityJourneys:compatibility?.rows.length??0,
-    totalJourneys:rows.length+comparison.rows.length+(recovery?.rows.length??0)+(lcsRecovery?.rows.length??0)+(lcsNavigation?.rows.length??0)+(compatibility?.rows.length??0)+(shapes?.rows.length??0)+(edges?.rows.length??0),
+    totalJourneys:rows.length+comparison.rows.length+(recovery?.rows.length??0)+(lcsRecovery?.rows.length??0)+(lcsNavigation?.rows.length??0)+(lpsRecovery?.rows.length??0)+(lpsNavigation?.rows.length??0)+(compatibility?.rows.length??0)+(shapes?.rows.length??0)+(edges?.rows.length??0),
     perProblem:cases.map(c=>({problemId:c.id,browserRows:rows.filter(r=>r.problemId===c.id).length,
       comparisonRows:comparison.rows.filter(r=>r.problemId===c.id).length})),
     maxFullResponseBytes:Math.max(...transport.rows.map(r=>r.fullBytes)),

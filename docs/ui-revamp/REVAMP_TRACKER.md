@@ -6,14 +6,14 @@ P0 design decisions: [REFERENCE_DESIGN.md](REFERENCE_DESIGN.md). Evidence narrat
 Status vocabulary: planned → in progress → review → done. A package is done only after
 its gate and evidence are complete.
 
-## Current completion checkpoint — 2026-11-19
+## Current completion checkpoint — 2026-11-20
 
 This checkpoint supersedes the older dated coverage/publication counts below. Historical
 test counts remain measurements of their named packages, not today's complete suite.
 
 | Area | Current state | Evidence / remaining gate |
 | --- | --- | --- |
-| DP D5 rollout |24/56 locally verified; LCS publication governed by CI | Inventory:24 verified,31 planned,1 requiring a different formulation. The previous23 are merged; LCS passes its full local gates in this package. Publication outcome is the GitHub record |
+| DP D5 rollout |25/56 locally verified; LPS publication governed by CI | Inventory:25 verified,30 planned,1 requiring a different formulation. Previous24 merged, including LCS #241 / `dc1c04a` with exact-head and post-merge CI44599018212 passing. This is the LPS pre-publication snapshot; GitHub records its merge outcome |
 | Analytics | Merged/deployed #234 / `3399213` | Production script returns JavaScript and navigation works. Automated browsers are deliberately excluded; normal visitor collection and authenticated dashboard totals remain unconfirmed |
 | Gas Stations correctness | Verified and merged #235 / `00ffc24` |8,311 backend cases/500 unchanged skips,891 frontend tests/build,20 API requests and40 browser scenarios. Exact-head push/PR and post-merge CI40735187978 pass. Bounded public source/default/custom checks pass. [Verification](evidence/gas-precision/VERIFICATION.md) |
 | Phone Combinations correctness | Verified and merged #236 / `eae15a4` |8,324 backend cases/500 unchanged skips,915 frontend tests/build,18 API requests,26 final journeys,4 visual rows and4 contrast rows. Exact-head push/PR CI40745695300/40745711138 and post-merge CI40746203161 pass. Bounded public default/unsafe-input checks pass. [Verification](evidence/phone-contract/VERIFICATION.md). Paired-array Randomize remains separate |
@@ -21,19 +21,21 @@ test counts remain measurements of their named packages, not today's complete su
 | Paired-array Randomize | Verified and merged #238 / `6548b87` |3 canonical owners +4 approaches declare equal-length groups;8,343 backend cases/500 unchanged skips,948 frontend tests/build,48 API requests,8 final engine journeys and8 inspected screenshots. Push/PR CI40754015496/40754229303 and post-merge CI40754541772 pass. Phone input echo clipping also fixed. [Verification](evidence/paired-input/VERIFICATION.md) |
 | Knapsack work-limit Randomize | Verified and merged #239 / `a5c31d7` |6 forms declare their unchanged225/80-cell and220-call guards.8,351 backend cases/500 skips,992 frontend tests,432 unchanged goldens,60 API executions and24 engine journeys. Corrected fixture matrix also passes full exact-head CI; post-merge CI40759405428 passes. [Verification](evidence/knapsack-work-limits/VERIFICATION.md) |
 | Coin/subset work-limit Randomize | Verified and merged #240 / `f3490b5` |10 forms declare existing225/80-cell and220-call limits; distinct generation is constructive.8,392 backend cases/500 unchanged skips,1,038 frontend cases/build,432 unchanged golden checks,124 API executions,40 browser journeys and8 inspected screenshots. Exact-head push/PR CI44578839668/44578898212 and post-merge CI44579335922 pass. [Verification](evidence/coin-subset-work-limits/VERIFICATION.md); derived-target generation remains open |
-| LCS three-form rollout | Implementation and local verification complete |8,398 backend cases/500 unchanged skips,1,056 frontend tests/build,432 unchanged golden checks,86 evidence-contract tests,64 API requests,54 browser journeys and12 inspected screenshots. Session restoration's late-summary/default-reset bugs are fixed RED-first. [Verification](dp-approaches/lcs/VERIFICATION.md); exact-head CI gates publication |
-| Remaining correctness work | Resumed at the owner's request |Other DP table/derived-target budgets and joint contracts, remaining source/metadata and dependency repairs |
+| LCS three-form rollout | Verified and merged #241 / `dc1c04a` |8,398 backend cases/500 unchanged skips,1,056 frontend tests/build,432 unchanged golden checks,86 evidence-contract tests,64 API requests,54 browser journeys and12 inspected screenshots. Session restoration's late-summary/default-reset bugs are fixed RED-first. [Verification](dp-approaches/lcs/VERIFICATION.md); exact-head and post-merge CI pass |
+| LPS three-form rollout | Implementation and local verification complete |8,407 backend cases/500 unchanged skips,1,056 frontend tests/build,432 unchanged golden checks,143 Node tests,66 API requests,52 browser journeys,12 inspected screenshots. Canonical source/runtime/spec preserved; full-table complexity corrected. [Verification](dp-approaches/lps/VERIFICATION.md); exact-head CI gates publication |
+| Remaining correctness work | Stop after publishing current package, as requested |Other DP table/derived-target budgets and joint contracts, remaining source/metadata and dependency repairs |
 | Displayed-source refresh | Read-only audit complete; repairs remain open |479 served listings:365 compile with documented JDK context,36 other Java failures,77 unresolved node contexts,1 C++ listing with Java presentation. [Audit](evidence/source-code/compile-refresh-nov19.json). Compilation is not semantic or standalone certification |
 | DP D6/D7 and P7/P8/P9 | Open | Human/device/screen-reader/learner, broad performance, acceptance and release/rollback gates are not closed by the above packages |
 
-GitHub main at the start of the LCS package is `f3490b5b645612620c2e453b052c080535d016f8`, with no open PR.
+GitHub main at the start of the LPS package is `dc1c04aefbaf420209e8416ee9513716ceba3d5d`, with no open PR.
 The owner's subsequent "then continue", after the explicit publication gate was explained,
 authorizes publishing the verified packages and continuing the pending work. Exact-head CI
 must pass before merge; GitHub records the final publication outcome.
 
-The earlier requested publication/stop was completed with #239. The owner has now
-resumed the completion goal and requested another hour of work. Continue medium packages
-with independent checks and exact-head CI; the remaining project gates stay open.
+The latest owner instruction is to commit, push and merge the existing LPS work, then
+stop making new changes. This supersedes the earlier resume request. Finish the current
+publication gates and stop; no next feature package is authorized by this checkpoint.
+The broader project remains unfinished, with the remaining gates open.
 
 ## Package ledger
 

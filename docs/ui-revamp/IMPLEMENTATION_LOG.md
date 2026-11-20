@@ -3564,3 +3564,56 @@ verified,31 planned and1 different formulation. A post-refresh backend inventory
 passes. Publication requires exact-head CI; the previous23 candidates are merged at this
 checkpoint. See dp-approaches/lcs/VERIFICATION.md. The active project goal remains
 unfinished; broader source, human/device, performance and release gates stay open.
+
+
+### LCS publication and next LPS package — 2026-11-19
+
+LCS merges as #241 / `dc1c04a` at 19:30:26Z. Exact-head push/PR CI
+44598668412/44598729230 and post-merge CI44599018212 pass; security and Vercel checks
+also succeed. Two independent final reviewers find no blockers in the bounded package.
+The previous local verification record now has a completed publication outcome.
+DP is 24/56 verified and merged, with 31 planned and one requiring a different formulation.
+
+A fresh branch `feat/lps-solution-approaches` starts from that merged main. Backend,
+browser-profile and session-recovery work are delegated with separate file ownership.
+LPS retains the actual prefix LCS(text, reverse(text)) formulation and returns a length;
+it does not promise palindrome reconstruction or silently change to interval DP.
+The missing-registration and canonical-complexity tests fail 2/2 before production edits.
+Canonical source/runtime/spec/examples and all 431 golden hashes are frozen as controls.
+This next candidate remains planned until its own complete gates pass. The active project
+goal and the broader human/device, source, performance and release gates remain open.
+
+
+### LPS local gates complete; publication and stop requested — 2026-11-20
+
+Real recursion and nullable memoization preserve this owner's prefix-LCS-with-reversal
+formulation, canonical source/runtime/spec/examples and all431 golden files. Only its
+previously generic canonical complexity intentionally changes to O(N²) time/space.
+Caps5/8/12 retain bbbab/cbbd on all forms. Registration/metadata are RED2/2 before the fix;
+all9 focused and8,407 full backend cases pass, with500 unchanged skips. All432 golden
+checks pass; package/startup and1,110 class/resource identities match frozen JAR16ae9ad0.
+Independent Java-source checks cover6,282 recursion and6,382 memo/canonical cases each
+using interval LPS as a separate oracle. Finite cap arithmetic is preserved separately.
+
+The normal frontend full rerun passes1,056/93 files and build. One earlier unchanged
+reachability test times out under shared-host contention; raw failure is retained and
+excluded, isolated9-case check and final full/build pass. No workers/timeouts/assertions
+or dependencies change. Long wall-clock gaps in logs are not performance measurements.
+
+All143 Node evidence guards pass. Independent review catches an overstated reverse-default
+navigation claim before runtime; the strengthened actual canonical{} reset is RED2/48
+before guard changes and then executes successfully. Navigation covers4rows/12contexts/
+64real executions including late metadata, held real bodies, edits, Back/Forward and
+refusals. Recovery adds8rows/40requests. Standard/sampler API66requests pass; maximum
+full/delta1,236,792/801,690 bytes. All52 browser journeys pass across engines/themes,
+phone/desktop, native200% zoom, maximum trees, comparison and prior-LCS compatibility.
+All12 selected screenshots are directly inspected; large trees/source lines scroll
+locally, without claiming all nodes fit simultaneously. All33 historical LCS files stay
+byte-identical. Metadata-only audit captures exit0 with matching current sources/assets.
+
+Inventory changes only LPS's alternative status/specs/safety and corrected canonical
+complexity, preserving its canonical digest/spec and every other row:25 locally verified,
+30 planned,1 different formulation. Owned services stop before the final ledger check.
+The owner now requests committing, pushing and merging these existing changes, then
+stopping new work. Exact-head CI gates publication; GitHub records its final outcome.
+No next feature package is started. The broader completion goal remains unfinished.

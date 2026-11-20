@@ -215,6 +215,16 @@ public class DpService implements ProblemProvider {
 
     private static ComplexityDetail bulkComplexity(String id) {
         return switch (id) {
+            case "longest-palindromic-subsequence" -> new ComplexityDetail(
+                    "O(N^2)",
+                    "Compares all N by N prefix pairs of the text and its reversal, with constant work per cell.",
+                    "Prefix LCS against reversal",
+                    "O(N^2)",
+                    "Retains the full (N+1) by (N+1) table. Reversing the text uses O(N) additional storage; "
+                            + "the scalar output uses O(1). Animation snapshots are excluded.",
+                    "Full prefix table and reversal",
+                    "Auxiliary Space: O(N^2)",
+                    "Full DP table; scalar output");
             case "count-square-submatrices" -> new ComplexityDetail(
                     "O(R * C)",
                     "Visits each of R rows and C columns once, inspecting at most three neighbours per cell.",
